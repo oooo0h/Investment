@@ -1,0 +1,18 @@
+# Runtime dependencies
+node_modules/
+**/node_modules/
+
+# Python caches
+**/__pycache__/
+*.py[cod]
+
+# Regenerable previews and processing caches
+**/tmp/
+**/临时资料/表格校验/
+**/临时资料/报告分析/*_extracted/
+*.inspect.ndjson
+
+# OS and Office temporary files
+.DS_Store
+Thumbs.db
+~$*

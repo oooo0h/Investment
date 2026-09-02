@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-07-24",
+  "timezone": "Asia/Shanghai",
+  "amounts_stored": false,
+  "privacy_policy": {
+    "display_holding_amounts_by_default": false,
+    "require_two_step_confirmation": true,
+    "confirmation_scope": "single_response",
+    "also_hide": [
+      "cost_amount",
+      "profit_loss_amount",
+      "portfolio_total"
+    ]
+  },
+  "response_preferences": {
+    "style": [
+      "客观",
+      "全面",
+      "明确"
+    ],
+    "requirements": [
+      "先给结论，再给证据和条件",
+      "区分已确认事实、市场定价和研究判断",
+      "不把可能性表述为确定事件",
+      "涉及最新市场与政策信息时重新联网核验"
+    ]
+  },
+  "active_positions": [
+    {
+      "code": "005698",
+      "name": "华夏全球科技先锋混合(QDII)A",
+      "role": "海外科技卫星/高波动",
+      "dca_cny_per_trading_day": 0,
+      "action": "持有，暂不新增"
+    },
+    {
+      "code": "270023",
+      "name": "广发全球精选股票(QDII)A",
+      "role": "海外科技核心",
+      "dca_cny_per_trading_day": 0,
+      "action": "持有，暂不新增"
+    },
+    {
+      "code": "009608",
+      "name": "广发中证500指数增强A",
+      "role": "国内中小盘成长宽基",
+      "dca_cny_per_trading_day": 100,
+      "action": "继续定投；不视为防守资产"
+    },
+    {
+      "code": "022459",
+      "name": "易方达中证A500ETF联接A",
+      "role": "国内较均衡宽基",
+      "dca_cny_per_trading_day": 0,
+      "user_plan": "收益率达到3%时清仓",
+      "analysis_note": "3%成本锚定缺少组合依据；建议改为长期核心，或若坚持只持中证500则直接清理"
+    },
+    {
+      "code": "015789",
+      "name": "永赢高端装备智选混合A",
+      "role": "航空航天/高端装备主题卫星",
+      "dca_cny_per_trading_day": 10,
+      "action": "主题仓合计达到3%后停止定投"
+    },
+    {
+      "code": "000216",
+      "name": "华安黄金ETF联接A",
+      "role": "非权益缓冲",
+      "dca_cny_per_trading_day": 100,
+      "action": "达到组合10%-12%后降低或暂停定投"
+    },
+    {
+      "code": "018124",
+      "name": "永赢先进制造智选混合A",
+      "role": "机器人/汽车零部件主题卫星",
+      "dca_cny_per_trading_day": 10,
+      "action": "主题仓合计达到3%后停止定投"
+    },
+    {
+      "code": "006485",
+      "name": "广发中债1-3年国开行债券指数C",
+      "role": "低波动债券",
+      "dca_cny_per_trading_day": 0,
+      "user_plan": "2026年8月清仓",
+      "action": "交易前重新核验C类赎回费和持有期限"
+    }
+  ],
+  "closed_positions": [
+    {
+      "code": null,
+      "name": "永赢科技智选混合A",
+      "status": "已清仓，2026-07-10到账"
+    },
+    {
+      "code": "018956",
+      "name": "中航机遇领航混合A",
+      "status": "已清仓，2026-07-10到账"
+    },
+    {
+      "code": null,
+      "name": "永赢先锋半导体智选混合A",
+      "status": "此前已清仓"
+    },
+    {
+      "code": null,
+      "name": "华夏中证电网设备主题ETF联接A",
+      "status": "此前已清仓"
+    },
+    {
+      "code": null,
+      "name": "宏利半导体产业混合A",
+      "status": "此前已清仓"
+    }
+  ],
+  "derived_structure_percent": {
+    "basis": "不保存金额；基于2026-07-10截图内部计算",
+    "after_today_closed_before_future_exits": {
+      "qdii_combined_approx": 95.3,
+      "china_broad_combined_approx": 1.2,
+      "gold_approx": 1.2,
+      "two_manufacturing_themes_combined_approx": 1.5,
+      "bond_approx": 0.7
+    },
+    "after_a500_and_bond_planned_exits": {
+      "qdii_combined": 96.07,
+      "csi500": 1.19,
+      "gold": 1.24,
+      "two_manufacturing_themes_combined": 1.49
+    },
+    "one_year_flat_price_simulation": {
+      "assumed_trading_days": 242,
+      "qdii_combined": 79.17,
+      "csi500": 8.98,
+      "gold": 9.02,
+      "two_manufacturing_themes_combined": 2.83,
+      "notes": "不含收益、费用与清仓款再投资；仅用于说明稀释速度"
+    }
+  },
+  "recommended_target_percent": {
+    "qdii_combined": "60-65",
+    "china_broad": "20-25",
+    "gold": "10-12",
+    "thematic_funds_combined": "约3，硬上限5"
+  },
+  "stress_test": {
+    "scenario": "一年后：QDII -30%，中证500 -20%，两只制造主题 -30%，黄金 +10%",
+    "estimated_portfolio_return_percent": -25.5,
+    "warning": "情景测试，不是预测"
+  }
+}
