@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f4f7fb">
+  <title>融资与市场 · A股走势对比</title>
+  <meta name="description" content="从2024年起，对比融资资金比例、沪深300、中证银行与全指信息，支持双纵轴、图例切换与区间自适应缩放。">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="vendor/echarts.min.js"></script>
+  <script defer src="data/market-data.js"></script>
+  <script defer src="chart-core.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <main class="workspace">
+    <header class="page-header">
+      <div>
+        <div class="eyebrow"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 18V6m0 12h18M6 14l4-5 4 3 6-7"/></svg>市场观察 <span>/</span> A-SHARE MONITOR</div>
+        <h1>融资与市场<span class="title-dot">.</span></h1>
+        <p class="subtitle">把资金活跃度与市场走势，放在一起看。</p>
+      </div>
+      <div class="header-actions">
+        <span id="as-of" class="data-stamp">正在读取本地数据</span>
+        <button id="refresh" class="button" type="button"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M16 6a7 7 0 1 0 .8 7M16 2v4h-4"/></svg>更新数据</button>
+      </div>
+    </header>
+
+    <section class="chart-panel" aria-label="融资与指数走势分析">
+      <div class="panel-heading">
+        <div class="view-tabs" role="tablist" aria-label="数据视图">
+          <button id="chart-tab" class="tab active" role="tab" aria-selected="true" aria-controls="chart-view" type="button">走势对比</button>
+          <button id="table-tab" class="tab" role="tab" aria-selected="false" aria-controls="table-view" tabindex="-1" type="button">数据明细</button>
+        </div>
+        <button id="open-method" class="text-button" type="button"><span class="info-icon" aria-hidden="true">i</span>数据口径</button>
+      </div>
+
+      <div class="legend-caption"><span>点击图例，显示或隐藏曲线</span><span id="selection-count">4 条曲线</span></div>
+      <div id="series-legend" class="series-legend" aria-label="曲线图例"></div>
+
+      <div class="toolbar">
+        <div id="presets" class="range-presets" aria-label="快捷时间区间">
+          <button data-range="all" class="active" aria-pressed="true" type="button">2024 至今</button>
+          <button data-range="ytd" aria-pressed="false" type="button">今年</button>
+          <button data-range="1y" aria-pressed="false" type="button">近一年</button>
+          <button data-range="6m" aria-pressed="false" type="button">近半年</button>
+          <button data-range="3m" aria-pressed="false" type="button">近三月</button>
+        </div>
+        <div class="date-range">
+          <label><span class="sr-only">开始日期</span><input id="start-date" type="date" required></label>
+          <span aria-hidden="true">—</span>
+          <label><span class="sr-only">结束日期</span><input id="end-date" type="date" required></label>
+        </div>
+      </div>
+
+      <div class="chart-settings">
+        <div class="axis-key"><span class="axis-glyph" aria-hidden="true">↥</span><span id="left-axis-label">左轴 · 累计涨跌幅</span><span class="right-axis-key"><span class="mini-line"></span>右轴 · 融资资金比例</span></div>
+        <div class="settings-actions">
+          <label class="mode-label"><span class="sr-only">指数显示方式</span><select id="value-mode"><option value="return">累计涨跌幅</option><option value="points">原始点位</option></select></label>
+          <button id="reset" class="text-button" type="button" title="恢复全部曲线和完整时间区间">重置视图</button>
+        </div>
+      </div>
+
+      <div id="chart-view" role="tabpanel" aria-labelledby="chart-tab">
+        <div class="chart-wrap">
+          <div id="chart" role="img" aria-label="双纵轴折线图。可用上方图例和日期控件调整，也可切换到数据明细读取所有数值。"></div>
+          <div id="empty-state" class="empty-state" hidden><span class="empty-mark">∿</span><h2>选一条曲线，开始比较</h2><p>点击上方图例，或恢复全部曲线。</p><button id="show-all" class="button primary" type="button">显示全部曲线</button></div>
+        </div>
+        <div class="chart-footnote"><span id="baseline-note"></span><span><span class="auto-icon" aria-hidden="true">↕</span>纵轴自动适配 <span class="separator">·</span> 拖动底部选框缩放</span></div>
+      </div>
+
+      <div id="table-view" role="tabpanel" aria-labelledby="table-tab" hidden>
+        <div class="table-scroll" tabindex="0" aria-label="每日原始数据"><table><thead id="table-head"></thead><tbody id="table-body"></tbody></table></div>
+        <div class="table-footer"><span id="table-count"></span><span>融资比例为百分比，指数为原始收盘点位</span></div>
+      </div>
+      <div id="status" class="status" role="status" aria-live="polite" hidden></div>
+    </section>
+
+    <footer class="page-footer"><span id="coverage"></span><span>日频数据 <span class="separator">/</span> 非实时行情</span></footer>
+
+    <details id="method" class="method">
+      <summary>计算方式与数据来源<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m6 8 4 4 4-4"/></svg></summary>
+      <div class="method-grid">
+        <section><h2>融资资金比例 <span class="pill">右轴</span></h2><p>融资买入额 ÷ A股成交额 × 100%。采用<strong>沪深市场，不含北交所</strong>。分子为交易所融资买入汇总（包括ETF等融资标的），分母为沪深A股成交额；不使用融资净买入额或融资余额。</p><p>融资数据通常晚于行情公布。缺失数据留空，不补零、不插值。融资线与指数使用各自的纵轴刻度，曲线交叉不代表数值相等。</p></section>
+        <section><h2>指数走势 <span class="pill">左轴</span></h2><p>大盘：沪深300（000300）；银行：中证银行（399986）；科技：中证全指信息技术（000993）。科技指数代表信息技术行业，不覆盖所有科技主题。</p><p>累计涨跌幅 =（当日收盘点位 ÷ 2024年首个共同交易日收盘点位 − 1）× 100%。切换时间区间时基准日保持不变；可切换为原始点位。价格指数不包含分红再投资。</p></section>
+      </div>
+      <div id="sources" class="source-links"></div>
+      <p id="fetched-at" class="fetched-at"></p>
+    </details>
+  </main>
+  <noscript>请启用 JavaScript 查看交互图表。</noscript>
+</body>
+</html>

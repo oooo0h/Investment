@@ -1,0 +1,11 @@
+{
+  "name": "a-share-market-chart",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A股融资比例与指数双纵轴交互图表",
+  "scripts": {
+    "start": "node server.cjs",
+    "refresh": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/refresh-data.ps1",
+    "test": "node --test tests/*.test.cjs"
+  }
+}

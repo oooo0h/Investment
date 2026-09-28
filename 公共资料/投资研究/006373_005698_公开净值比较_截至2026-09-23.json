@@ -1,0 +1,2740 @@
+{
+  "data_as_of": "2026-09-23",
+  "fetched_at": "2026-09-28",
+  "share_classes": "人民币A",
+  "sources": {
+    "006373": "https://fund.eastmoney.com/pingzhongdata/006373.js",
+    "005698": "https://fund.eastmoney.com/pingzhongdata/005698.js"
+  },
+  "method": "NAV ratio; no distribution/split events found; annualization uses actual days/365.25; maximum drawdown from own daily observations within the common date range; net of fund expenses, before investor subscription/redemption fees.",
+  "windows": {
+    "1": {
+      "006373": {
+        "start": "2025-09-23",
+        "end": "2026-09-23",
+        "return_pct": 67.9135,
+        "annualized_pct": 67.9731,
+        "maximum_drawdown_pct": -29.7239,
+        "peak_date": "2026-06-22",
+        "trough_date": "2026-07-29",
+        "recovery_date": null,
+        "nav_observations": 243
+      },
+      "005698": {
+        "start": "2025-09-23",
+        "end": "2026-09-23",
+        "return_pct": 34.0287,
+        "annualized_pct": 34.0556,
+        "maximum_drawdown_pct": -41.9659,
+        "peak_date": "2026-06-22",
+        "trough_date": "2026-07-30",
+        "recovery_date": null,
+        "nav_observations": 243
+      }
+    },
+    "3": {
+      "006373": {
+        "start": "2023-09-22",
+        "end": "2026-09-23",
+        "return_pct": 205.9545,
+        "annualized_pct": 45.1113,
+        "maximum_drawdown_pct": -29.7239,
+        "peak_date": "2026-06-22",
+        "trough_date": "2026-07-29",
+        "recovery_date": null,
+        "nav_observations": 729
+      },
+      "005698": {
+        "start": "2023-09-22",
+        "end": "2026-09-23",
+        "return_pct": 137.3224,
+        "annualized_pct": 33.343,
+        "maximum_drawdown_pct": -41.9659,
+        "peak_date": "2026-06-22",
+        "trough_date": "2026-07-30",
+        "recovery_date": null,
+        "nav_observations": 729
+      }
+    },
+    "5": {
+      "006373": {
+        "start": "2021-09-23",
+        "end": "2026-09-23",
+        "return_pct": 198.2874,
+        "annualized_pct": 24.4343,
+        "maximum_drawdown_pct": -34.5328,
+        "peak_date": "2021-11-19",
+        "trough_date": "2022-10-14",
+        "recovery_date": "2023-12-12",
+        "nav_observations": 1216
+      },
+      "005698": {
+        "start": "2021-09-23",
+        "end": "2026-09-23",
+        "return_pct": 89.4337,
+        "annualized_pct": 13.6316,
+        "maximum_drawdown_pct": -45.4416,
+        "peak_date": "2021-11-08",
+        "trough_date": "2023-01-05",
+        "recovery_date": "2024-02-22",
+        "nav_observations": 1216
+      }
+    },
+    "7": {
+      "006373": {
+        "start": "2019-09-23",
+        "end": "2026-09-23",
+        "return_pct": 482.8016,
+        "annualized_pct": 28.6321,
+        "maximum_drawdown_pct": -34.5328,
+        "peak_date": "2021-11-19",
+        "trough_date": "2022-10-14",
+        "recovery_date": "2023-12-12",
+        "nav_observations": 1702
+      },
+      "005698": {
+        "start": "2019-09-23",
+        "end": "2026-09-23",
+        "return_pct": 151.9563,
+        "annualized_pct": 14.1108,
+        "maximum_drawdown_pct": -54.2771,
+        "peak_date": "2021-02-10",
+        "trough_date": "2023-01-05",
+        "recovery_date": "2024-12-04",
+        "nav_observations": 1677
+      }
+    }
+  },
+  "calendar_returns": {
+    "2019": {
+      "006373": 34.0255,
+      "005698": 33.1302
+    },
+    "2020": {
+      "006373": 57.9947,
+      "005698": 25.7249
+    },
+    "2021": {
+      "006373": 14.8566,
+      "005698": -4.7815
+    },
+    "2022": {
+      "006373": -26.4618,
+      "005698": -38.1684
+    },
+    "2023": {
+      "006373": 45.6547,
+      "005698": 58.1901
+    },
+    "2024": {
+      "006373": 31.367,
+      "005698": 34.6488
+    },
+    "2025": {
+      "006373": 26.7136,
+      "005698": 15.4934
+    },
+    "2026": {
+      "006373": 60.4992,
+      "005698": 32.2313
+    }
+  },
+  "rolling_month_end": {
+    "3": {
+      "count": 58,
+      "guofu_outperformance_percent": 96.55,
+      "median_annualized_pct": {
+        "006373": 16.16,
+        "005698": 5.4
+      },
+      "samples": [
+        {
+          "start": "2018-11-30",
+          "end": "2021-11-30",
+          "funds": {
+            "006373": {
+              "start": "2018-11-30",
+              "end": "2021-11-30",
+              "return_pct": 153.0941,
+              "annualized_pct": 36.2689,
+              "maximum_drawdown_pct": -22.9141,
+              "peak_date": "2020-02-19",
+              "trough_date": "2020-03-18",
+              "recovery_date": "2020-05-11",
+              "nav_observations": 721
+            },
+            "005698": {
+              "start": "2018-11-30",
+              "end": "2021-11-30",
+              "return_pct": 58.5129,
+              "annualized_pct": 16.5931,
+              "maximum_drawdown_pct": -31.713,
+              "peak_date": "2021-02-10",
+              "trough_date": "2021-05-13",
+              "recovery_date": null,
+              "nav_observations": 681
+            }
+          }
+        },
+        {
+          "start": "2018-12-31",
+          "end": "2021-12-31",
+          "funds": {
+            "006373": {
+              "start": "2018-12-31",
+              "end": "2021-12-31",
+              "return_pct": 143.2125,
+              "annualized_pct": 34.4722,
+              "maximum_drawdown_pct": -22.9141,
+              "peak_date": "2020-02-19",
+              "trough_date": "2020-03-18",
+              "recovery_date": "2020-05-11",
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2018-12-31",
+              "end": "2021-12-31",
+              "return_pct": 59.3746,
+              "annualized_pct": 16.804,
+              "maximum_drawdown_pct": -31.713,
+              "peak_date": "2021-02-10",
+              "trough_date": "2021-05-13",
+              "recovery_date": null,
+              "nav_observations": 689
+            }
+          }
+        },
+        {
+          "start": "2019-01-28",
+          "end": "2022-01-28",
+          "funds": {
+            "006373": {
+              "start": "2019-01-28",
+              "end": "2022-01-28",
+              "return_pct": 119.8225,
+              "annualized_pct": 30.0164,
+              "maximum_drawdown_pct": -22.9141,
+              "peak_date": "2020-02-19",
+              "trough_date": "2020-03-18",
+              "recovery_date": "2020-05-11",
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2019-01-28",
+              "end": "2022-01-28",
+              "return_pct": 37.42,
+              "annualized_pct": 11.1747,
+              "maximum_drawdown_pct": -34.3138,
+              "peak_date": "2021-02-10",
+              "trough_date": "2022-01-27",
+              "recovery_date": null,
+              "nav_observations": 690
+            }
+          }
+        },
+        {
+          "start": "2019-02-27",
+          "end": "2022-02-28",
+          "funds": {
+            "006373": {
+              "start": "2019-02-27",
+              "end": "2022-02-28",
+              "return_pct": 110.9082,
+              "annualized_pct": 28.2059,
+              "maximum_drawdown_pct": -22.9141,
+              "peak_date": "2020-02-19",
+              "trough_date": "2020-03-18",
+              "recovery_date": "2020-05-11",
+              "nav_observations": 731
+            },
+            "005698": {
+              "start": "2019-02-27",
+              "end": "2022-02-28",
+              "return_pct": 25.3457,
+              "annualized_pct": 7.8117,
+              "maximum_drawdown_pct": -37.012,
+              "peak_date": "2021-02-10",
+              "trough_date": "2022-02-23",
+              "recovery_date": null,
+              "nav_observations": 692
+            }
+          }
+        },
+        {
+          "start": "2019-03-29",
+          "end": "2022-03-31",
+          "funds": {
+            "006373": {
+              "start": "2019-03-29",
+              "end": "2022-03-31",
+              "return_pct": 102.8023,
+              "annualized_pct": 26.5167,
+              "maximum_drawdown_pct": -23.8339,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-03-14",
+              "recovery_date": null,
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2019-03-29",
+              "end": "2022-03-31",
+              "return_pct": 23.7418,
+              "annualized_pct": 7.3435,
+              "maximum_drawdown_pct": -39.6183,
+              "peak_date": "2021-02-10",
+              "trough_date": "2022-03-14",
+              "recovery_date": null,
+              "nav_observations": 695
+            }
+          }
+        },
+        {
+          "start": "2019-04-26",
+          "end": "2022-04-29",
+          "funds": {
+            "006373": {
+              "start": "2019-04-26",
+              "end": "2022-04-29",
+              "return_pct": 80.2479,
+              "annualized_pct": 21.6292,
+              "maximum_drawdown_pct": -23.8339,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-03-14",
+              "recovery_date": null,
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2019-04-26",
+              "end": "2022-04-29",
+              "return_pct": 3.2909,
+              "annualized_pct": 1.0819,
+              "maximum_drawdown_pct": -40.77,
+              "peak_date": "2021-02-10",
+              "trough_date": "2022-04-29",
+              "recovery_date": null,
+              "nav_observations": 698
+            }
+          }
+        },
+        {
+          "start": "2019-05-31",
+          "end": "2022-05-31",
+          "funds": {
+            "006373": {
+              "start": "2019-05-31",
+              "end": "2022-05-31",
+              "return_pct": 94.009,
+              "annualized_pct": 24.715,
+              "maximum_drawdown_pct": -26.7549,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-05-24",
+              "recovery_date": null,
+              "nav_observations": 729
+            },
+            "005698": {
+              "start": "2019-05-31",
+              "end": "2022-05-31",
+              "return_pct": 19.2695,
+              "annualized_pct": 6.0484,
+              "maximum_drawdown_pct": -45.1281,
+              "peak_date": "2021-02-10",
+              "trough_date": "2022-05-24",
+              "recovery_date": null,
+              "nav_observations": 699
+            }
+          }
+        },
+        {
+          "start": "2019-06-30",
+          "end": "2022-06-30",
+          "funds": {
+            "006373": {
+              "start": "2019-06-30",
+              "end": "2022-06-30",
+              "return_pct": 77.0182,
+              "annualized_pct": 20.9634,
+              "maximum_drawdown_pct": -27.9557,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-06-16",
+              "recovery_date": null,
+              "nav_observations": 730
+            },
+            "005698": {
+              "start": "2019-06-30",
+              "end": "2022-06-30",
+              "return_pct": 1.7177,
+              "annualized_pct": 0.5692,
+              "maximum_drawdown_pct": -46.5178,
+              "peak_date": "2021-02-10",
+              "trough_date": "2022-06-16",
+              "recovery_date": null,
+              "nav_observations": 700
+            }
+          }
+        },
+        {
+          "start": "2019-07-29",
+          "end": "2022-07-29",
+          "funds": {
+            "006373": {
+              "start": "2019-07-29",
+              "end": "2022-07-29",
+              "return_pct": 73.185,
+              "annualized_pct": 20.084,
+              "maximum_drawdown_pct": -27.9557,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-06-16",
+              "recovery_date": null,
+              "nav_observations": 730
+            },
+            "005698": {
+              "start": "2019-07-29",
+              "end": "2022-07-29",
+              "return_pct": 6.1971,
+              "annualized_pct": 2.024,
+              "maximum_drawdown_pct": -46.5178,
+              "peak_date": "2021-02-10",
+              "trough_date": "2022-06-16",
+              "recovery_date": null,
+              "nav_observations": 702
+            }
+          }
+        },
+        {
+          "start": "2019-08-30",
+          "end": "2022-08-31",
+          "funds": {
+            "006373": {
+              "start": "2019-08-30",
+              "end": "2022-08-31",
+              "return_pct": 67.2979,
+              "annualized_pct": 18.6894,
+              "maximum_drawdown_pct": -27.9557,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-06-16",
+              "recovery_date": null,
+              "nav_observations": 729
+            },
+            "005698": {
+              "start": "2019-08-30",
+              "end": "2022-08-31",
+              "return_pct": -2.4993,
+              "annualized_pct": -0.8392,
+              "maximum_drawdown_pct": -46.5178,
+              "peak_date": "2021-02-10",
+              "trough_date": "2022-06-16",
+              "recovery_date": null,
+              "nav_observations": 701
+            }
+          }
+        },
+        {
+          "start": "2019-09-26",
+          "end": "2022-09-30",
+          "funds": {
+            "006373": {
+              "start": "2019-09-26",
+              "end": "2022-09-30",
+              "return_pct": 47.0544,
+              "annualized_pct": 13.6607,
+              "maximum_drawdown_pct": -31.504,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-09-30",
+              "recovery_date": null,
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2019-09-26",
+              "end": "2022-09-30",
+              "return_pct": -11.351,
+              "annualized_pct": -3.9217,
+              "maximum_drawdown_pct": -48.2697,
+              "peak_date": "2021-02-10",
+              "trough_date": "2022-09-30",
+              "recovery_date": null,
+              "nav_observations": 707
+            }
+          }
+        },
+        {
+          "start": "2019-10-31",
+          "end": "2022-10-31",
+          "funds": {
+            "006373": {
+              "start": "2019-10-31",
+              "end": "2022-10-31",
+              "return_pct": 40.5846,
+              "annualized_pct": 12.0215,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 728
+            },
+            "005698": {
+              "start": "2019-10-31",
+              "end": "2022-10-31",
+              "return_pct": -14.9969,
+              "annualized_pct": -5.2709,
+              "maximum_drawdown_pct": -51.368,
+              "peak_date": "2021-02-10",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 707
+            }
+          }
+        },
+        {
+          "start": "2019-11-29",
+          "end": "2022-11-30",
+          "funds": {
+            "006373": {
+              "start": "2019-11-29",
+              "end": "2022-11-30",
+              "return_pct": 55.2336,
+              "annualized_pct": 15.7682,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 729
+            },
+            "005698": {
+              "start": "2019-11-29",
+              "end": "2022-11-30",
+              "return_pct": -10.9719,
+              "annualized_pct": -3.7956,
+              "maximum_drawdown_pct": -51.368,
+              "peak_date": "2021-02-10",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 709
+            }
+          }
+        },
+        {
+          "start": "2019-12-31",
+          "end": "2022-12-31",
+          "funds": {
+            "006373": {
+              "start": "2019-12-31",
+              "end": "2022-12-31",
+              "return_pct": 33.4478,
+              "annualized_pct": 10.0933,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 730
+            },
+            "005698": {
+              "start": "2019-12-31",
+              "end": "2022-12-31",
+              "return_pct": -25.9793,
+              "annualized_pct": -9.5391,
+              "maximum_drawdown_pct": -53.8877,
+              "peak_date": "2021-02-10",
+              "trough_date": "2022-12-28",
+              "recovery_date": null,
+              "nav_observations": 712
+            }
+          }
+        },
+        {
+          "start": "2020-01-17",
+          "end": "2023-01-31",
+          "funds": {
+            "006373": {
+              "start": "2020-01-17",
+              "end": "2023-01-31",
+              "return_pct": 35.1512,
+              "annualized_pct": 10.4198,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 734
+            },
+            "005698": {
+              "start": "2020-01-17",
+              "end": "2023-01-31",
+              "return_pct": -20.7716,
+              "annualized_pct": -7.3754,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 716
+            }
+          }
+        },
+        {
+          "start": "2020-02-27",
+          "end": "2023-02-28",
+          "funds": {
+            "006373": {
+              "start": "2020-02-27",
+              "end": "2023-02-28",
+              "return_pct": 40.2291,
+              "annualized_pct": 11.9155,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 731
+            },
+            "005698": {
+              "start": "2020-02-27",
+              "end": "2023-02-28",
+              "return_pct": -16.0124,
+              "annualized_pct": -5.6445,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 718
+            }
+          }
+        },
+        {
+          "start": "2020-03-31",
+          "end": "2023-03-31",
+          "funds": {
+            "006373": {
+              "start": "2020-03-31",
+              "end": "2023-03-31",
+              "return_pct": 58.2587,
+              "annualized_pct": 16.5471,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 731
+            },
+            "005698": {
+              "start": "2020-03-31",
+              "end": "2023-03-31",
+              "return_pct": 3.5367,
+              "annualized_pct": 1.1661,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 719
+            }
+          }
+        },
+        {
+          "start": "2020-04-27",
+          "end": "2023-04-28",
+          "funds": {
+            "006373": {
+              "start": "2020-04-27",
+              "end": "2023-04-28",
+              "return_pct": 43.3984,
+              "annualized_pct": 12.7638,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2020-04-27",
+              "end": "2023-04-28",
+              "return_pct": -9.7857,
+              "annualized_pct": -3.3737,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 724
+            }
+          }
+        },
+        {
+          "start": "2020-05-29",
+          "end": "2023-05-31",
+          "funds": {
+            "006373": {
+              "start": "2020-05-29",
+              "end": "2023-05-31",
+              "return_pct": 43.4764,
+              "annualized_pct": 12.7718,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 731
+            },
+            "005698": {
+              "start": "2020-05-29",
+              "end": "2023-05-31",
+              "return_pct": -0.0852,
+              "annualized_pct": -0.0284,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 727
+            }
+          }
+        },
+        {
+          "start": "2020-06-30",
+          "end": "2023-06-30",
+          "funds": {
+            "006373": {
+              "start": "2020-06-30",
+              "end": "2023-06-30",
+              "return_pct": 38.6184,
+              "annualized_pct": 11.508,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 731
+            },
+            "005698": {
+              "start": "2020-06-30",
+              "end": "2023-06-30",
+              "return_pct": 0.9315,
+              "annualized_pct": 0.3098,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 729
+            }
+          }
+        },
+        {
+          "start": "2020-07-31",
+          "end": "2023-07-31",
+          "funds": {
+            "006373": {
+              "start": "2020-07-31",
+              "end": "2023-07-31",
+              "return_pct": 27.3803,
+              "annualized_pct": 8.4072,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 729
+            },
+            "005698": {
+              "start": "2020-07-31",
+              "end": "2023-07-31",
+              "return_pct": -0.2687,
+              "annualized_pct": -0.0897,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 729
+            }
+          }
+        },
+        {
+          "start": "2020-08-31",
+          "end": "2023-08-31",
+          "funds": {
+            "006373": {
+              "start": "2020-08-31",
+              "end": "2023-08-31",
+              "return_pct": 23.6298,
+              "annualized_pct": 7.3319,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 731
+            },
+            "005698": {
+              "start": "2020-08-31",
+              "end": "2023-08-31",
+              "return_pct": -5.1644,
+              "annualized_pct": -1.7532,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 731
+            }
+          }
+        },
+        {
+          "start": "2020-09-28",
+          "end": "2023-09-28",
+          "funds": {
+            "006373": {
+              "start": "2020-09-28",
+              "end": "2023-09-28",
+              "return_pct": 22.8805,
+              "annualized_pct": 7.1145,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 731
+            },
+            "005698": {
+              "start": "2020-09-28",
+              "end": "2023-09-28",
+              "return_pct": -5.1961,
+              "annualized_pct": -1.7641,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 731
+            }
+          }
+        },
+        {
+          "start": "2020-10-30",
+          "end": "2023-10-31",
+          "funds": {
+            "006373": {
+              "start": "2020-10-30",
+              "end": "2023-10-31",
+              "return_pct": 22.2116,
+              "annualized_pct": 6.9131,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 730
+            },
+            "005698": {
+              "start": "2020-10-30",
+              "end": "2023-10-31",
+              "return_pct": -11.4337,
+              "annualized_pct": -3.9656,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 730
+            }
+          }
+        },
+        {
+          "start": "2020-11-30",
+          "end": "2023-11-30",
+          "funds": {
+            "006373": {
+              "start": "2020-11-30",
+              "end": "2023-11-30",
+              "return_pct": 22.1692,
+              "annualized_pct": 6.9072,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 731
+            },
+            "005698": {
+              "start": "2020-11-30",
+              "end": "2023-11-30",
+              "return_pct": -7.1719,
+              "annualized_pct": -2.4518,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 731
+            }
+          }
+        },
+        {
+          "start": "2020-12-31",
+          "end": "2023-12-31",
+          "funds": {
+            "006373": {
+              "start": "2020-12-31",
+              "end": "2023-12-31",
+              "return_pct": 23.025,
+              "annualized_pct": 7.1564,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 730
+            },
+            "005698": {
+              "start": "2020-12-31",
+              "end": "2023-12-31",
+              "return_pct": -6.8654,
+              "annualized_pct": -2.3445,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 730
+            }
+          }
+        },
+        {
+          "start": "2021-01-29",
+          "end": "2024-01-31",
+          "funds": {
+            "006373": {
+              "start": "2021-01-29",
+              "end": "2024-01-31",
+              "return_pct": 17.3188,
+              "annualized_pct": 5.462,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2021-01-29",
+              "end": "2024-01-31",
+              "return_pct": -10.584,
+              "annualized_pct": -3.6562,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 732
+            }
+          }
+        },
+        {
+          "start": "2021-02-26",
+          "end": "2024-02-29",
+          "funds": {
+            "006373": {
+              "start": "2021-02-26",
+              "end": "2024-02-29",
+              "return_pct": 22.1193,
+              "annualized_pct": 6.8732,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2021-02-26",
+              "end": "2024-02-29",
+              "return_pct": 1.2124,
+              "annualized_pct": 0.4017,
+              "maximum_drawdown_pct": -48.1577,
+              "peak_date": "2021-03-01",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 732
+            }
+          }
+        },
+        {
+          "start": "2021-03-29",
+          "end": "2024-03-29",
+          "funds": {
+            "006373": {
+              "start": "2021-03-29",
+              "end": "2024-03-29",
+              "return_pct": 28.3876,
+              "annualized_pct": 8.6841,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2021-03-29",
+              "end": "2024-03-29",
+              "return_pct": 18.285,
+              "annualized_pct": 5.7558,
+              "maximum_drawdown_pct": -47.8733,
+              "peak_date": "2021-07-12",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-03-04",
+              "nav_observations": 732
+            }
+          }
+        },
+        {
+          "start": "2021-04-30",
+          "end": "2024-04-30",
+          "funds": {
+            "006373": {
+              "start": "2021-04-30",
+              "end": "2024-04-30",
+              "return_pct": 19.1834,
+              "annualized_pct": 6.0228,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 729
+            },
+            "005698": {
+              "start": "2021-04-30",
+              "end": "2024-04-30",
+              "return_pct": 7.191,
+              "annualized_pct": 2.3412,
+              "maximum_drawdown_pct": -47.8733,
+              "peak_date": "2021-07-12",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-03-04",
+              "nav_observations": 729
+            }
+          }
+        },
+        {
+          "start": "2021-05-31",
+          "end": "2024-05-31",
+          "funds": {
+            "006373": {
+              "start": "2021-05-31",
+              "end": "2024-05-31",
+              "return_pct": 29.1239,
+              "annualized_pct": 8.8914,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 731
+            },
+            "005698": {
+              "start": "2021-05-31",
+              "end": "2024-05-31",
+              "return_pct": 13.2449,
+              "annualized_pct": 4.2323,
+              "maximum_drawdown_pct": -47.8733,
+              "peak_date": "2021-07-12",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-03-04",
+              "nav_observations": 731
+            }
+          }
+        },
+        {
+          "start": "2021-06-30",
+          "end": "2024-06-30",
+          "funds": {
+            "006373": {
+              "start": "2021-06-30",
+              "end": "2024-06-30",
+              "return_pct": 28.3786,
+              "annualized_pct": 8.6816,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 730
+            },
+            "005698": {
+              "start": "2021-06-30",
+              "end": "2024-06-30",
+              "return_pct": 9.7771,
+              "annualized_pct": 3.1575,
+              "maximum_drawdown_pct": -47.8733,
+              "peak_date": "2021-07-12",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-03-04",
+              "nav_observations": 730
+            }
+          }
+        },
+        {
+          "start": "2021-07-30",
+          "end": "2024-07-31",
+          "funds": {
+            "006373": {
+              "start": "2021-07-30",
+              "end": "2024-07-31",
+              "return_pct": 29.8325,
+              "annualized_pct": 9.0816,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 731
+            },
+            "005698": {
+              "start": "2021-07-30",
+              "end": "2024-07-31",
+              "return_pct": 2.401,
+              "annualized_pct": 0.7931,
+              "maximum_drawdown_pct": -47.2654,
+              "peak_date": "2021-07-30",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-03-01",
+              "nav_observations": 731
+            }
+          }
+        },
+        {
+          "start": "2021-08-30",
+          "end": "2024-08-30",
+          "funds": {
+            "006373": {
+              "start": "2021-08-30",
+              "end": "2024-08-30",
+              "return_pct": 30.9003,
+              "annualized_pct": 9.3884,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2021-08-30",
+              "end": "2024-08-30",
+              "return_pct": 3.873,
+              "annualized_pct": 1.2744,
+              "maximum_drawdown_pct": -46.3996,
+              "peak_date": "2021-08-30",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-03-01",
+              "nav_observations": 732
+            }
+          }
+        },
+        {
+          "start": "2021-09-30",
+          "end": "2024-09-30",
+          "funds": {
+            "006373": {
+              "start": "2021-09-30",
+              "end": "2024-09-30",
+              "return_pct": 38.212,
+              "annualized_pct": 11.3879,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 730
+            },
+            "005698": {
+              "start": "2021-09-30",
+              "end": "2024-09-30",
+              "return_pct": 20.7196,
+              "annualized_pct": 6.4763,
+              "maximum_drawdown_pct": -45.4416,
+              "peak_date": "2021-11-08",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-02-22",
+              "nav_observations": 730
+            }
+          }
+        },
+        {
+          "start": "2021-10-29",
+          "end": "2024-10-31",
+          "funds": {
+            "006373": {
+              "start": "2021-10-29",
+              "end": "2024-10-31",
+              "return_pct": 34.9214,
+              "annualized_pct": 10.4769,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2021-10-29",
+              "end": "2024-10-31",
+              "return_pct": 11.6585,
+              "annualized_pct": 3.7364,
+              "maximum_drawdown_pct": -45.4416,
+              "peak_date": "2021-11-08",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-02-22",
+              "nav_observations": 732
+            }
+          }
+        },
+        {
+          "start": "2021-11-29",
+          "end": "2024-11-29",
+          "funds": {
+            "006373": {
+              "start": "2021-11-29",
+              "end": "2024-11-29",
+              "return_pct": 36.7122,
+              "annualized_pct": 10.9836,
+              "maximum_drawdown_pct": -33.4494,
+              "peak_date": "2021-11-29",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-11-20",
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2021-11-29",
+              "end": "2024-11-29",
+              "return_pct": 15.8877,
+              "annualized_pct": 5.0367,
+              "maximum_drawdown_pct": -44.416,
+              "peak_date": "2021-11-29",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-02-22",
+              "nav_observations": 732
+            }
+          }
+        },
+        {
+          "start": "2021-12-31",
+          "end": "2024-12-31",
+          "funds": {
+            "006373": {
+              "start": "2021-12-31",
+              "end": "2024-12-31",
+              "return_pct": 40.7096,
+              "annualized_pct": 12.0547,
+              "maximum_drawdown_pct": -31.6388,
+              "peak_date": "2022-01-04",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-07-17",
+              "nav_observations": 730
+            },
+            "005698": {
+              "start": "2021-12-31",
+              "end": "2024-12-31",
+              "return_pct": 31.702,
+              "annualized_pct": 9.6112,
+              "maximum_drawdown_pct": -40.1091,
+              "peak_date": "2021-12-31",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-01-18",
+              "nav_observations": 730
+            }
+          }
+        },
+        {
+          "start": "2022-01-27",
+          "end": "2025-01-27",
+          "funds": {
+            "006373": {
+              "start": "2022-01-27",
+              "end": "2025-01-27",
+              "return_pct": 59.3725,
+              "annualized_pct": 16.8035,
+              "maximum_drawdown_pct": -27.9866,
+              "peak_date": "2022-02-10",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-06-12",
+              "nav_observations": 730
+            },
+            "005698": {
+              "start": "2022-01-27",
+              "end": "2025-01-27",
+              "return_pct": 47.2176,
+              "annualized_pct": 13.7559,
+              "maximum_drawdown_pct": -36.0605,
+              "peak_date": "2022-03-29",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2023-11-14",
+              "nav_observations": 730
+            }
+          }
+        },
+        {
+          "start": "2022-02-28",
+          "end": "2025-02-28",
+          "funds": {
+            "006373": {
+              "start": "2022-02-28",
+              "end": "2025-02-28",
+              "return_pct": 53.4384,
+              "annualized_pct": 15.3357,
+              "maximum_drawdown_pct": -24.4795,
+              "peak_date": "2022-02-28",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-05-26",
+              "nav_observations": 731
+            },
+            "005698": {
+              "start": "2022-02-28",
+              "end": "2025-02-28",
+              "return_pct": 39.1029,
+              "annualized_pct": 11.6266,
+              "maximum_drawdown_pct": -36.0605,
+              "peak_date": "2022-03-29",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2023-11-14",
+              "nav_observations": 731
+            }
+          }
+        },
+        {
+          "start": "2022-03-31",
+          "end": "2025-03-31",
+          "funds": {
+            "006373": {
+              "start": "2022-03-31",
+              "end": "2025-03-31",
+              "return_pct": 46.1063,
+              "annualized_pct": 13.469,
+              "maximum_drawdown_pct": -22.1678,
+              "peak_date": "2022-03-31",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-05-18",
+              "nav_observations": 729
+            },
+            "005698": {
+              "start": "2022-03-31",
+              "end": "2025-03-31",
+              "return_pct": 19.6901,
+              "annualized_pct": 6.1728,
+              "maximum_drawdown_pct": -33.4802,
+              "peak_date": "2022-03-31",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2023-07-13",
+              "nav_observations": 729
+            }
+          }
+        },
+        {
+          "start": "2022-04-29",
+          "end": "2025-04-30",
+          "funds": {
+            "006373": {
+              "start": "2022-04-29",
+              "end": "2025-04-30",
+              "return_pct": 60.7938,
+              "annualized_pct": 17.1327,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": null,
+              "nav_observations": 731
+            },
+            "005698": {
+              "start": "2022-04-29",
+              "end": "2025-04-30",
+              "return_pct": 46.6405,
+              "annualized_pct": 13.5939,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": null,
+              "nav_observations": 731
+            }
+          }
+        },
+        {
+          "start": "2022-05-30",
+          "end": "2025-05-30",
+          "funds": {
+            "006373": {
+              "start": "2022-05-30",
+              "end": "2025-05-30",
+              "return_pct": 77.0458,
+              "annualized_pct": 20.9696,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": null,
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2022-05-30",
+              "end": "2025-05-30",
+              "return_pct": 57.7029,
+              "annualized_pct": 16.3943,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": null,
+              "nav_observations": 732
+            }
+          }
+        },
+        {
+          "start": "2022-06-30",
+          "end": "2025-06-30",
+          "funds": {
+            "006373": {
+              "start": "2022-06-30",
+              "end": "2025-06-30",
+              "return_pct": 95.5568,
+              "annualized_pct": 25.0457,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-06-24",
+              "nav_observations": 730
+            },
+            "005698": {
+              "start": "2022-06-30",
+              "end": "2025-06-30",
+              "return_pct": 90.3277,
+              "annualized_pct": 23.9213,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": null,
+              "nav_observations": 730
+            }
+          }
+        },
+        {
+          "start": "2022-07-29",
+          "end": "2025-07-31",
+          "funds": {
+            "006373": {
+              "start": "2022-07-29",
+              "end": "2025-07-31",
+              "return_pct": 98.1644,
+              "annualized_pct": 25.5468,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-06-24",
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2022-07-29",
+              "end": "2025-07-31",
+              "return_pct": 84.5548,
+              "annualized_pct": 22.6102,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-07-30",
+              "nav_observations": 732
+            }
+          }
+        },
+        {
+          "start": "2022-08-29",
+          "end": "2025-08-29",
+          "funds": {
+            "006373": {
+              "start": "2022-08-29",
+              "end": "2025-08-29",
+              "return_pct": 101.9521,
+              "annualized_pct": 26.3939,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-06-24",
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2022-08-29",
+              "end": "2025-08-29",
+              "return_pct": 84.4814,
+              "annualized_pct": 22.6396,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-07-30",
+              "nav_observations": 732
+            }
+          }
+        },
+        {
+          "start": "2022-09-30",
+          "end": "2025-09-30",
+          "funds": {
+            "006373": {
+              "start": "2022-09-30",
+              "end": "2025-09-30",
+              "return_pct": 137.5435,
+              "annualized_pct": 33.4195,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-06-24",
+              "nav_observations": 731
+            },
+            "005698": {
+              "start": "2022-09-30",
+              "end": "2025-09-30",
+              "return_pct": 121.2292,
+              "annualized_pct": 30.2931,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-07-30",
+              "nav_observations": 731
+            }
+          }
+        },
+        {
+          "start": "2022-10-31",
+          "end": "2025-10-31",
+          "funds": {
+            "006373": {
+              "start": "2022-10-31",
+              "end": "2025-10-31",
+              "return_pct": 146.9176,
+              "annualized_pct": 35.1515,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-06-24",
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2022-10-31",
+              "end": "2025-10-31",
+              "return_pct": 133.5869,
+              "annualized_pct": 32.6747,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-07-30",
+              "nav_observations": 732
+            }
+          }
+        },
+        {
+          "start": "2022-11-28",
+          "end": "2025-11-28",
+          "funds": {
+            "006373": {
+              "start": "2022-11-28",
+              "end": "2025-11-28",
+              "return_pct": 125.2503,
+              "annualized_pct": 31.0775,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-06-24",
+              "nav_observations": 732
+            },
+            "005698": {
+              "start": "2022-11-28",
+              "end": "2025-11-28",
+              "return_pct": 127.9758,
+              "annualized_pct": 31.604,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-07-30",
+              "nav_observations": 732
+            }
+          }
+        },
+        {
+          "start": "2022-12-31",
+          "end": "2025-12-31",
+          "funds": {
+            "006373": {
+              "start": "2022-12-31",
+              "end": "2025-12-31",
+              "return_pct": 142.4566,
+              "annualized_pct": 34.3328,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-06-24",
+              "nav_observations": 730
+            },
+            "005698": {
+              "start": "2022-12-31",
+              "end": "2025-12-31",
+              "return_pct": 146.0023,
+              "annualized_pct": 34.9843,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-07-30",
+              "nav_observations": 730
+            }
+          }
+        },
+        {
+          "start": "2023-01-30",
+          "end": "2026-01-30",
+          "funds": {
+            "006373": {
+              "start": "2023-01-30",
+              "end": "2026-01-30",
+              "return_pct": 159.0923,
+              "annualized_pct": 37.3367,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-06-24",
+              "nav_observations": 735
+            },
+            "005698": {
+              "start": "2023-01-30",
+              "end": "2026-01-30",
+              "return_pct": 150.3238,
+              "annualized_pct": 35.77,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-07-30",
+              "nav_observations": 735
+            }
+          }
+        },
+        {
+          "start": "2023-02-27",
+          "end": "2026-02-27",
+          "funds": {
+            "006373": {
+              "start": "2023-02-27",
+              "end": "2026-02-27",
+              "return_pct": 166.6601,
+              "annualized_pct": 38.6608,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-06-24",
+              "nav_observations": 729
+            },
+            "005698": {
+              "start": "2023-02-27",
+              "end": "2026-02-27",
+              "return_pct": 156.4389,
+              "annualized_pct": 36.8664,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-07-30",
+              "nav_observations": 729
+            }
+          }
+        },
+        {
+          "start": "2023-03-31",
+          "end": "2026-03-31",
+          "funds": {
+            "006373": {
+              "start": "2023-03-31",
+              "end": "2026-03-31",
+              "return_pct": 131.0423,
+              "annualized_pct": 32.1913,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-06-24",
+              "nav_observations": 727
+            },
+            "005698": {
+              "start": "2023-03-31",
+              "end": "2026-03-31",
+              "return_pct": 122.6156,
+              "annualized_pct": 30.5646,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-07-30",
+              "nav_observations": 727
+            }
+          }
+        },
+        {
+          "start": "2023-04-28",
+          "end": "2026-04-30",
+          "funds": {
+            "006373": {
+              "start": "2023-04-28",
+              "end": "2026-04-30",
+              "return_pct": 202.8965,
+              "annualized_pct": 44.5781,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-06-24",
+              "nav_observations": 729
+            },
+            "005698": {
+              "start": "2023-04-28",
+              "end": "2026-04-30",
+              "return_pct": 201.2973,
+              "annualized_pct": 44.3238,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-07-30",
+              "nav_observations": 729
+            }
+          }
+        },
+        {
+          "start": "2023-05-29",
+          "end": "2026-05-29",
+          "funds": {
+            "006373": {
+              "start": "2023-05-29",
+              "end": "2026-05-29",
+              "return_pct": 226.5906,
+              "annualized_pct": 48.3527,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-06-24",
+              "nav_observations": 729
+            },
+            "005698": {
+              "start": "2023-05-29",
+              "end": "2026-05-29",
+              "return_pct": 204.3482,
+              "annualized_pct": 44.9062,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-07-30",
+              "nav_observations": 729
+            }
+          }
+        },
+        {
+          "start": "2023-06-30",
+          "end": "2026-06-30",
+          "funds": {
+            "006373": {
+              "start": "2023-06-30",
+              "end": "2026-06-30",
+              "return_pct": 245.6047,
+              "annualized_pct": 51.177,
+              "maximum_drawdown_pct": -22.2591,
+              "peak_date": "2025-01-23",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-06-24",
+              "nav_observations": 728
+            },
+            "005698": {
+              "start": "2023-06-30",
+              "end": "2026-06-30",
+              "return_pct": 224.7116,
+              "annualized_pct": 48.0677,
+              "maximum_drawdown_pct": -31.1381,
+              "peak_date": "2024-12-16",
+              "trough_date": "2025-04-08",
+              "recovery_date": "2025-07-30",
+              "nav_observations": 728
+            }
+          }
+        },
+        {
+          "start": "2023-07-31",
+          "end": "2026-07-31",
+          "funds": {
+            "006373": {
+              "start": "2023-07-31",
+              "end": "2026-07-31",
+              "return_pct": 163.5399,
+              "annualized_pct": 38.1179,
+              "maximum_drawdown_pct": -29.7239,
+              "peak_date": "2026-06-22",
+              "trough_date": "2026-07-29",
+              "recovery_date": null,
+              "nav_observations": 730
+            },
+            "005698": {
+              "start": "2023-07-31",
+              "end": "2026-07-31",
+              "return_pct": 92.1419,
+              "annualized_pct": 24.3137,
+              "maximum_drawdown_pct": -41.9659,
+              "peak_date": "2026-06-22",
+              "trough_date": "2026-07-30",
+              "recovery_date": null,
+              "nav_observations": 730
+            }
+          }
+        },
+        {
+          "start": "2023-08-31",
+          "end": "2026-08-31",
+          "funds": {
+            "006373": {
+              "start": "2023-08-31",
+              "end": "2026-08-31",
+              "return_pct": 172.5312,
+              "annualized_pct": 39.6708,
+              "maximum_drawdown_pct": -29.7239,
+              "peak_date": "2026-06-22",
+              "trough_date": "2026-07-29",
+              "recovery_date": null,
+              "nav_observations": 728
+            },
+            "005698": {
+              "start": "2023-08-31",
+              "end": "2026-08-31",
+              "return_pct": 109.1773,
+              "annualized_pct": 27.8833,
+              "maximum_drawdown_pct": -41.9659,
+              "peak_date": "2026-06-22",
+              "trough_date": "2026-07-30",
+              "recovery_date": null,
+              "nav_observations": 728
+            }
+          }
+        }
+      ]
+    },
+    "5": {
+      "count": 34,
+      "guofu_outperformance_percent": 100.0,
+      "median_annualized_pct": {
+        "006373": 20.64,
+        "005698": 9.27
+      },
+      "samples": [
+        {
+          "start": "2018-11-30",
+          "end": "2023-11-30",
+          "funds": {
+            "006373": {
+              "start": "2018-11-30",
+              "end": "2023-11-30",
+              "return_pct": 155.8432,
+              "annualized_pct": 20.6718,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": null,
+              "nav_observations": 1208
+            },
+            "005698": {
+              "start": "2018-11-30",
+              "end": "2023-11-30",
+              "return_pct": 37.2518,
+              "annualized_pct": 6.5387,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 1168
+            }
+          }
+        },
+        {
+          "start": "2018-12-31",
+          "end": "2023-12-31",
+          "funds": {
+            "006373": {
+              "start": "2018-12-31",
+              "end": "2023-12-31",
+              "return_pct": 160.5093,
+              "annualized_pct": 21.1089,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1218
+            },
+            "005698": {
+              "start": "2018-12-31",
+              "end": "2023-12-31",
+              "return_pct": 55.8867,
+              "annualized_pct": 9.2866,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 1175
+            }
+          }
+        },
+        {
+          "start": "2019-01-30",
+          "end": "2024-01-31",
+          "funds": {
+            "006373": {
+              "start": "2019-01-30",
+              "end": "2024-01-31",
+              "return_pct": 166.8774,
+              "annualized_pct": 21.6823,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1219
+            },
+            "005698": {
+              "start": "2019-01-30",
+              "end": "2024-01-31",
+              "return_pct": 57.2136,
+              "annualized_pct": 9.4667,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 1177
+            }
+          }
+        },
+        {
+          "start": "2019-02-27",
+          "end": "2024-02-29",
+          "funds": {
+            "006373": {
+              "start": "2019-02-27",
+              "end": "2024-02-29",
+              "return_pct": 170.412,
+              "annualized_pct": 21.9895,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1219
+            },
+            "005698": {
+              "start": "2019-02-27",
+              "end": "2024-02-29",
+              "return_pct": 58.7129,
+              "annualized_pct": 9.669,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 1180
+            }
+          }
+        },
+        {
+          "start": "2019-03-29",
+          "end": "2024-03-29",
+          "funds": {
+            "006373": {
+              "start": "2019-03-29",
+              "end": "2024-03-29",
+              "return_pct": 174.0373,
+              "annualized_pct": 22.328,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1218
+            },
+            "005698": {
+              "start": "2019-03-29",
+              "end": "2024-03-29",
+              "return_pct": 51.1924,
+              "annualized_pct": 8.6154,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 1181
+            }
+          }
+        },
+        {
+          "start": "2019-04-26",
+          "end": "2024-04-30",
+          "funds": {
+            "006373": {
+              "start": "2019-04-26",
+              "end": "2024-04-30",
+              "return_pct": 151.7043,
+              "annualized_pct": 20.2182,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1219
+            },
+            "005698": {
+              "start": "2019-04-26",
+              "end": "2024-04-30",
+              "return_pct": 42.5271,
+              "annualized_pct": 7.3247,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 1185
+            }
+          }
+        },
+        {
+          "start": "2019-05-31",
+          "end": "2024-05-31",
+          "funds": {
+            "006373": {
+              "start": "2019-05-31",
+              "end": "2024-05-31",
+              "return_pct": 191.2395,
+              "annualized_pct": 23.826,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1217
+            },
+            "005698": {
+              "start": "2019-05-31",
+              "end": "2024-05-31",
+              "return_pct": 73.8218,
+              "annualized_pct": 11.6866,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 1187
+            }
+          }
+        },
+        {
+          "start": "2019-06-30",
+          "end": "2024-06-30",
+          "funds": {
+            "006373": {
+              "start": "2019-06-30",
+              "end": "2024-06-30",
+              "return_pct": 191.1414,
+              "annualized_pct": 23.8177,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1217
+            },
+            "005698": {
+              "start": "2019-06-30",
+              "end": "2024-06-30",
+              "return_pct": 74.7129,
+              "annualized_pct": 11.8008,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 1187
+            }
+          }
+        },
+        {
+          "start": "2019-07-31",
+          "end": "2024-07-31",
+          "funds": {
+            "006373": {
+              "start": "2019-07-31",
+              "end": "2024-07-31",
+              "return_pct": 172.1879,
+              "annualized_pct": 22.1625,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1217
+            },
+            "005698": {
+              "start": "2019-07-31",
+              "end": "2024-07-31",
+              "return_pct": 61.9489,
+              "annualized_pct": 10.118,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 1189
+            }
+          }
+        },
+        {
+          "start": "2019-08-30",
+          "end": "2024-08-30",
+          "funds": {
+            "006373": {
+              "start": "2019-08-30",
+              "end": "2024-08-30",
+              "return_pct": 172.6053,
+              "annualized_pct": 22.2,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1217
+            },
+            "005698": {
+              "start": "2019-08-30",
+              "end": "2024-08-30",
+              "return_pct": 54.5506,
+              "annualized_pct": 9.0934,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 1189
+            }
+          }
+        },
+        {
+          "start": "2019-09-26",
+          "end": "2024-09-30",
+          "funds": {
+            "006373": {
+              "start": "2019-09-26",
+              "end": "2024-09-30",
+              "return_pct": 166.8429,
+              "annualized_pct": 21.627,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1218
+            },
+            "005698": {
+              "start": "2019-09-26",
+              "end": "2024-09-30",
+              "return_pct": 56.9959,
+              "annualized_pct": 9.4148,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 1193
+            }
+          }
+        },
+        {
+          "start": "2019-10-31",
+          "end": "2024-10-31",
+          "funds": {
+            "006373": {
+              "start": "2019-10-31",
+              "end": "2024-10-31",
+              "return_pct": 163.1625,
+              "annualized_pct": 21.3418,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1216
+            },
+            "005698": {
+              "start": "2019-10-31",
+              "end": "2024-10-31",
+              "return_pct": 52.7948,
+              "annualized_pct": 8.8445,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 1195
+            }
+          }
+        },
+        {
+          "start": "2019-11-29",
+          "end": "2024-11-29",
+          "funds": {
+            "006373": {
+              "start": "2019-11-29",
+              "end": "2024-11-29",
+              "return_pct": 170.7446,
+              "annualized_pct": 22.0328,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1216
+            },
+            "005698": {
+              "start": "2019-11-29",
+              "end": "2024-11-29",
+              "return_pct": 56.6276,
+              "annualized_pct": 9.385,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": null,
+              "nav_observations": 1196
+            }
+          }
+        },
+        {
+          "start": "2019-12-31",
+          "end": "2024-12-31",
+          "funds": {
+            "006373": {
+              "start": "2019-12-31",
+              "end": "2024-12-31",
+              "return_pct": 155.342,
+              "annualized_pct": 20.6121,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1216
+            },
+            "005698": {
+              "start": "2019-12-31",
+              "end": "2024-12-31",
+              "return_pct": 57.6649,
+              "annualized_pct": 9.5294,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1198
+            }
+          }
+        },
+        {
+          "start": "2020-01-17",
+          "end": "2025-01-27",
+          "funds": {
+            "006373": {
+              "start": "2020-01-17",
+              "end": "2025-01-27",
+              "return_pct": 138.2627,
+              "annualized_pct": 18.842,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1222
+            },
+            "005698": {
+              "start": "2020-01-17",
+              "end": "2025-01-27",
+              "return_pct": 50.6402,
+              "annualized_pct": 8.4875,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1204
+            }
+          }
+        },
+        {
+          "start": "2020-02-27",
+          "end": "2025-02-28",
+          "funds": {
+            "006373": {
+              "start": "2020-02-27",
+              "end": "2025-02-28",
+              "return_pct": 139.9306,
+              "annualized_pct": 19.1089,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1217
+            },
+            "005698": {
+              "start": "2020-02-27",
+              "end": "2025-02-28",
+              "return_pct": 47.9596,
+              "annualized_pct": 8.1424,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1204
+            }
+          }
+        },
+        {
+          "start": "2020-03-31",
+          "end": "2025-03-31",
+          "funds": {
+            "006373": {
+              "start": "2020-03-31",
+              "end": "2025-03-31",
+              "return_pct": 138.2349,
+              "annualized_pct": 18.9629,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1215
+            },
+            "005698": {
+              "start": "2020-03-31",
+              "end": "2025-03-31",
+              "return_pct": 51.1524,
+              "annualized_pct": 8.6145,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1203
+            }
+          }
+        },
+        {
+          "start": "2020-04-27",
+          "end": "2025-04-30",
+          "funds": {
+            "006373": {
+              "start": "2020-04-27",
+              "end": "2025-04-30",
+              "return_pct": 125.1135,
+              "annualized_pct": 17.5911,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1218
+            },
+            "005698": {
+              "start": "2020-04-27",
+              "end": "2025-04-30",
+              "return_pct": 44.6075,
+              "annualized_pct": 7.644,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1210
+            }
+          }
+        },
+        {
+          "start": "2020-05-29",
+          "end": "2025-05-30",
+          "funds": {
+            "006373": {
+              "start": "2020-05-29",
+              "end": "2025-05-30",
+              "return_pct": 123.3785,
+              "annualized_pct": 17.4302,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1216
+            },
+            "005698": {
+              "start": "2020-05-29",
+              "end": "2025-05-30",
+              "return_pct": 50.8352,
+              "annualized_pct": 8.564,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1212
+            }
+          }
+        },
+        {
+          "start": "2020-06-30",
+          "end": "2025-06-30",
+          "funds": {
+            "006373": {
+              "start": "2020-06-30",
+              "end": "2025-06-30",
+              "return_pct": 117.7754,
+              "annualized_pct": 16.8452,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1216
+            },
+            "005698": {
+              "start": "2020-06-30",
+              "end": "2025-06-30",
+              "return_pct": 52.9591,
+              "annualized_pct": 8.873,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1214
+            }
+          }
+        },
+        {
+          "start": "2020-07-31",
+          "end": "2025-07-31",
+          "funds": {
+            "006373": {
+              "start": "2020-07-31",
+              "end": "2025-07-31",
+              "return_pct": 104.5787,
+              "annualized_pct": 15.3933,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1216
+            },
+            "005698": {
+              "start": "2020-07-31",
+              "end": "2025-07-31",
+              "return_pct": 54.6362,
+              "annualized_pct": 9.1107,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1216
+            }
+          }
+        },
+        {
+          "start": "2020-08-28",
+          "end": "2025-08-29",
+          "funds": {
+            "006373": {
+              "start": "2020-08-28",
+              "end": "2025-08-29",
+              "return_pct": 101.1505,
+              "annualized_pct": 14.9951,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1217
+            },
+            "005698": {
+              "start": "2020-08-28",
+              "end": "2025-08-29",
+              "return_pct": 42.6396,
+              "annualized_pct": 7.3582,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1217
+            }
+          }
+        },
+        {
+          "start": "2020-09-30",
+          "end": "2025-09-30",
+          "funds": {
+            "006373": {
+              "start": "2020-09-30",
+              "end": "2025-09-30",
+              "return_pct": 121.1424,
+              "annualized_pct": 17.2044,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1216
+            },
+            "005698": {
+              "start": "2020-09-30",
+              "end": "2025-09-30",
+              "return_pct": 63.7018,
+              "annualized_pct": 10.3612,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1216
+            }
+          }
+        },
+        {
+          "start": "2020-10-30",
+          "end": "2025-10-31",
+          "funds": {
+            "006373": {
+              "start": "2020-10-30",
+              "end": "2025-10-31",
+              "return_pct": 132.5056,
+              "annualized_pct": 18.3741,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1217
+            },
+            "005698": {
+              "start": "2020-10-30",
+              "end": "2025-10-31",
+              "return_pct": 69.055,
+              "annualized_pct": 11.0675,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1217
+            }
+          }
+        },
+        {
+          "start": "2020-11-27",
+          "end": "2025-11-28",
+          "funds": {
+            "006373": {
+              "start": "2020-11-27",
+              "end": "2025-11-28",
+              "return_pct": 106.5054,
+              "annualized_pct": 15.6007,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1217
+            },
+            "005698": {
+              "start": "2020-11-27",
+              "end": "2025-11-28",
+              "return_pct": 52.1269,
+              "annualized_pct": 8.7492,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1217
+            }
+          }
+        },
+        {
+          "start": "2020-12-31",
+          "end": "2025-12-31",
+          "funds": {
+            "006373": {
+              "start": "2020-12-31",
+              "end": "2025-12-31",
+              "return_pct": 104.7872,
+              "annualized_pct": 15.4168,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1216
+            },
+            "005698": {
+              "start": "2020-12-31",
+              "end": "2025-12-31",
+              "return_pct": 44.8341,
+              "annualized_pct": 7.6908,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1216
+            }
+          }
+        },
+        {
+          "start": "2021-01-29",
+          "end": "2026-01-30",
+          "funds": {
+            "006373": {
+              "start": "2021-01-29",
+              "end": "2026-01-30",
+              "return_pct": 119.9487,
+              "annualized_pct": 17.0675,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1216
+            },
+            "005698": {
+              "start": "2021-01-29",
+              "end": "2026-01-30",
+              "return_pct": 45.1461,
+              "annualized_pct": 7.7328,
+              "maximum_drawdown_pct": -54.2771,
+              "peak_date": "2021-02-10",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-12-04",
+              "nav_observations": 1216
+            }
+          }
+        },
+        {
+          "start": "2021-02-26",
+          "end": "2026-02-27",
+          "funds": {
+            "006373": {
+              "start": "2021-02-26",
+              "end": "2026-02-27",
+              "return_pct": 128.0858,
+              "annualized_pct": 17.9207,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1215
+            },
+            "005698": {
+              "start": "2021-02-26",
+              "end": "2026-02-27",
+              "return_pct": 62.286,
+              "annualized_pct": 10.1638,
+              "maximum_drawdown_pct": -48.1577,
+              "peak_date": "2021-03-01",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-03-07",
+              "nav_observations": 1215
+            }
+          }
+        },
+        {
+          "start": "2021-03-31",
+          "end": "2026-03-31",
+          "funds": {
+            "006373": {
+              "start": "2021-03-31",
+              "end": "2026-03-31",
+              "return_pct": 109.592,
+              "annualized_pct": 15.9535,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1214
+            },
+            "005698": {
+              "start": "2021-03-31",
+              "end": "2026-03-31",
+              "return_pct": 70.6207,
+              "annualized_pct": 11.2789,
+              "maximum_drawdown_pct": -47.8733,
+              "peak_date": "2021-07-12",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-03-04",
+              "nav_observations": 1214
+            }
+          }
+        },
+        {
+          "start": "2021-04-30",
+          "end": "2026-04-30",
+          "funds": {
+            "006373": {
+              "start": "2021-04-30",
+              "end": "2026-04-30",
+              "return_pct": 164.79,
+              "annualized_pct": 21.5044,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1214
+            },
+            "005698": {
+              "start": "2021-04-30",
+              "end": "2026-04-30",
+              "return_pct": 114.1196,
+              "annualized_pct": 16.4502,
+              "maximum_drawdown_pct": -47.8733,
+              "peak_date": "2021-07-12",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-03-04",
+              "nav_observations": 1214
+            }
+          }
+        },
+        {
+          "start": "2021-05-28",
+          "end": "2026-05-29",
+          "funds": {
+            "006373": {
+              "start": "2021-05-28",
+              "end": "2026-05-29",
+              "return_pct": 222.0206,
+              "annualized_pct": 26.3383,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1215
+            },
+            "005698": {
+              "start": "2021-05-28",
+              "end": "2026-05-29",
+              "return_pct": 158.2996,
+              "annualized_pct": 20.8901,
+              "maximum_drawdown_pct": -47.8733,
+              "peak_date": "2021-07-12",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-03-04",
+              "nav_observations": 1215
+            }
+          }
+        },
+        {
+          "start": "2021-06-30",
+          "end": "2026-06-30",
+          "funds": {
+            "006373": {
+              "start": "2021-06-30",
+              "end": "2026-06-30",
+              "return_pct": 235.7928,
+              "annualized_pct": 27.4174,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1214
+            },
+            "005698": {
+              "start": "2021-06-30",
+              "end": "2026-06-30",
+              "return_pct": 160.6361,
+              "annualized_pct": 21.1207,
+              "maximum_drawdown_pct": -47.8733,
+              "peak_date": "2021-07-12",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-03-04",
+              "nav_observations": 1214
+            }
+          }
+        },
+        {
+          "start": "2021-07-30",
+          "end": "2026-07-31",
+          "funds": {
+            "006373": {
+              "start": "2021-07-30",
+              "end": "2026-07-31",
+              "return_pct": 172.4118,
+              "annualized_pct": 22.1826,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1215
+            },
+            "005698": {
+              "start": "2021-07-30",
+              "end": "2026-07-31",
+              "return_pct": 55.6907,
+              "annualized_pct": 9.2538,
+              "maximum_drawdown_pct": -47.2654,
+              "peak_date": "2021-07-30",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-03-01",
+              "nav_observations": 1215
+            }
+          }
+        },
+        {
+          "start": "2021-08-31",
+          "end": "2026-08-31",
+          "funds": {
+            "006373": {
+              "start": "2021-08-31",
+              "end": "2026-08-31",
+              "return_pct": 172.52,
+              "annualized_pct": 22.2057,
+              "maximum_drawdown_pct": -34.5328,
+              "peak_date": "2021-11-19",
+              "trough_date": "2022-10-14",
+              "recovery_date": "2023-12-12",
+              "nav_observations": 1214
+            },
+            "005698": {
+              "start": "2021-08-31",
+              "end": "2026-08-31",
+              "return_pct": 72.0051,
+              "annualized_pct": 11.4589,
+              "maximum_drawdown_pct": -45.8296,
+              "peak_date": "2021-08-31",
+              "trough_date": "2023-01-05",
+              "recovery_date": "2024-02-29",
+              "nav_observations": 1214
+            }
+          }
+        }
+      ]
+    }
+  }
+}

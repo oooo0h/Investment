@@ -1,0 +1,11 @@
+# Preserve binary documents and images without line-ending conversion.
+*.pdf binary
+*.xls binary
+*.xlsx binary
+*.xlsm binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.zip binary
