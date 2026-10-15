@@ -158,6 +158,8 @@
   .application-counts dt { color: var(--muted); font-size: 11px; }
   .application-counts dd { font-size: 22px; }
   .application-notice { border-top: 1px solid var(--line); padding-top: 11px; }
+  .estimated-summary .summary-grid { padding: 18px 0; }
+  .estimated-summary > summary { font-size: 12px; line-height: 1.7; }
   .mode-explanation { color: var(--muted); font-size: 12px; padding-top: 12px; min-height: 54px; }
   .summary-main { padding: 22px 0 21px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 15px; }
   .summary-main .card-value { font-size: 32px; margin-top: 5px; }
