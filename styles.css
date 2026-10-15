@@ -124,8 +124,6 @@
   .card-label { color: var(--muted); font-size: 11px; margin-bottom: 5px; }
   .card-value { font-size: 21px; line-height: 1.5; }
   .card-return { font-size: 20px; }
-  .card-date { font-size: 17px; line-height: 1.8; overflow-wrap: anywhere; }
-  .record-unit { margin-left: 5px; font: 12px var(--font); color: var(--muted); }
   .enter-arrow { border-radius: 50%; width: 35px; height: 35px; display: grid; place-items: center; color: var(--muted); background: var(--paper-2); transition: transform .2s, background .2s; }
   .fund-card:hover .enter-arrow { transform: translateX(3px); color: var(--blue); background: var(--blue-tint); }
   .home-bottom { display: grid; grid-template-columns: 1.25fr 1fr; gap: 20px; margin-top: 28px; }
@@ -150,16 +148,6 @@
   .mode-control button:disabled { cursor: not-allowed; opacity: .55; }
   .source-note { display: flex; gap: 8px; padding: 11px 12px; margin: 12px 0 0; border: 1px solid var(--line); border-radius: 8px; background: var(--paper-2); color: var(--muted); font-size: 12px; line-height: 1.8; }
   .source-note .icon { width: 16px; height: 16px; margin-top: 3px; }
-  .application-overview .section-heading { margin-bottom: 10px; }
-  .application-dates { font-size: 12px; color: var(--muted); }
-  .application-dates strong { color: var(--text); font-weight: 500; }
-  .application-dates > span { display: block; margin-top: 3px; font-size: 11px; }
-  .application-counts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 13px 0; }
-  .application-counts dt { color: var(--muted); font-size: 11px; }
-  .application-counts dd { font-size: 22px; }
-  .application-notice { border-top: 1px solid var(--line); padding-top: 11px; }
-  .estimated-summary .summary-grid { padding: 18px 0; }
-  .estimated-summary > summary { font-size: 12px; line-height: 1.7; }
   .mode-explanation { color: var(--muted); font-size: 12px; padding-top: 12px; min-height: 54px; }
   .summary-main { padding: 22px 0 21px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 15px; }
   .summary-main .card-value { font-size: 32px; margin-top: 5px; }
@@ -295,8 +283,6 @@
     .nav-panel { order: 1; width: 100%; }
     .ledger-panel { order: 2; width: 100%; }
     .fee-panel { order: 3; width: 100%; }
-    .application-page .ledger-panel { order: 1; }
-    .application-page .nav-panel { order: 2; }
     .fund-title-line { gap: 11px; }
     .fund-title-line h1 { font-size: 21px; line-height: 1.5; }
     .fund-title-line .fund-initial { width: 40px; height: 44px; font-size: 17px; }

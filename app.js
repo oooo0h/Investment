@@ -274,11 +274,7 @@ function homePage() {
     <div class="fund-list">${FUNDS.map(fund => {
       const { summary } = ledger(fund.code);
       const book = getBook(fund.code);
-      if (book.incomplete) {
-        const info = applicationInfo(book);
-        return `<a class="fund-card brand-${fund.brand}" href="#/fund/${fund.code}" aria-label="进入${fund.fullName}账本"><div class="fund-id"><span class="fund-initial">${fund.initial}</span><div><h3 class="fund-name">${fund.name}</h3><p class="fund-description"><span class="fund-code">${fund.code}</span>${fund.category}</p></div></div><div><p class="card-label">估算市值</p><p class="card-value num">${sensitive(summary.marketValue)}</p><p class="helper">${info.count} 条记录 · ${summary.estimatedCount} 条估算</p><p class="helper">最近申请 ${esc(info.lastDate)}</p></div><div><p class="card-label">估算持有收益率</p><p class="card-return num ${signClass(summary.holdingReturn)}">${percent(summary.holdingReturn)}</p><p class="helper">${summary.includedCount ? `净值日期 ${esc(summary.valuationDate)}` : '正在匹配历史净值'}</p></div><span class="enter-arrow">${icon('arrow')}</span></a>`;
-      }
-      return `<a class="fund-card brand-${fund.brand}" href="#/fund/${fund.code}" aria-label="进入${fund.fullName}账本"><div class="fund-id"><span class="fund-initial">${fund.initial}</span><div><h3 class="fund-name">${fund.name}</h3><p class="fund-description"><span class="fund-code">${fund.code}</span>${fund.category}</p></div></div><div><p class="card-label">当前市值</p><p class="card-value num">${sensitive(summary.marketValue)}</p><p class="helper">${book.transactions.length ? `${book.transactions.length} 笔交易` : '尚无交易'} · ${book.mode === 'principal-first' ? '本金优先' : '利润优先'}</p>${summary.lastDate ? `<p class="helper">最近交易 ${esc(summary.lastDate)}</p>` : ''}</div><div><p class="card-label">持有收益率</p><p class="card-return num ${signClass(summary.holdingReturn)}">${percent(summary.holdingReturn)}</p><p class="helper">${summary.valid ? summary.valuationDate ? `净值日期 ${esc(summary.valuationDate)}` : '等待净值' : '有交易待修正'}</p></div><span class="enter-arrow">${icon('arrow')}</span></a>`;
+      return `<a class="fund-card brand-${fund.brand}" href="#/fund/${fund.code}" aria-label="进入${fund.fullName}账本"><div class="fund-id"><span class="fund-initial">${fund.initial}</span><div><h3 class="fund-name">${fund.name}${summary.estimatedCount ? ' <span class="row-status">含估算</span>' : ''}</h3><p class="fund-description"><span class="fund-code">${fund.code}</span>${fund.category}</p></div></div><div><p class="card-label">当前市值</p><p class="card-value num">${sensitive(summary.marketValue)}</p><p class="helper">${book.transactions.length ? `${book.transactions.length} 笔交易` : '尚无交易'} · ${book.mode === 'principal-first' ? '本金优先' : '利润优先'}</p>${summary.lastDate ? `<p class="helper">最近交易 ${esc(summary.lastDate)}</p>` : ''}</div><div><p class="card-label">持有收益率</p><p class="card-return num ${signClass(summary.holdingReturn)}">${percent(summary.holdingReturn)}</p><p class="helper">${summary.valid ? summary.valuationDate ? `净值日期 ${esc(summary.valuationDate)}` : '等待净值' : '有交易待修正'}</p></div><span class="enter-arrow">${icon('arrow')}</span></a>`;
     }).join('')}</div>
     <div class="home-bottom"><section class="panel"><h2>两种模式，同一本账</h2><div class="method-inline"><div><h3>利润优先</h3><p>卖出到账先提取当时可用利润，剩余部分冲减本金。</p></div><div><h3>本金优先</h3><p>卖出到账先回收本金，超过剩余本金的部分计作提取利润。</p></div></div><p class="helper details-box">在基金页随时切换，全部历史交易会按所选口径重新计算。</p></section><section class="panel"><h2>使用提醒</h2><ul class="quiet-list"><li>以交易确认单的净值、份额和实际手续费为准。</li><li>QDII 净值可能延迟公布，请留意估值采用的日期。</li><li>账本展示已发布的数据快照，数据更新后重新发布。</li></ul></section></div>
   </main>`;
@@ -291,27 +287,23 @@ function metric(label, value, digits = 2, extra = '') {
 function fundPage(fund) {
   const book = getBook(fund.code);
   const result = ledger(fund.code);
-  if (book.incomplete) return applicationPage(fund, book, result);
   const { summary, errors } = result;
-  const principalState = book.incomplete ? '成交资料待补充' : !book.transactions.length ? '尚未配置交易数据' : { empty: '当前无持仓', recovered: '本金已全部回收', invested: '仍有本金在持' }[summary.principalStatus] || '请先修正交易';
-  return `<main id="main" class="workspace fund-page brand-${fund.brand}"><a class="back-link" href="#/">${icon('back')}我的基金</a><div class="page-heading"><div class="fund-title-line"><span class="fund-initial">${fund.initial}</span><div><h1>${fund.name}</h1><p class="fund-subtitle"><span class="fund-code">${fund.code}</span>${fund.category}</p></div></div><span class="status-chip dot">已发布账本</span></div>
+  const principalState = !book.transactions.length ? '尚未配置交易数据' : { empty: '当前无持仓', recovered: '本金已全部回收', invested: '仍有本金在持' }[summary.principalStatus] || '请先修正交易';
+  const info = book.incomplete ? applicationInfo(book) : null;
+  const sourceDescription = book.incomplete
+    ? `估算仅覆盖截图记录 ${info.firstDate} 至 ${info.lastDate}，按全额申购成功和参考费率推算；限购、比例确认及实际成交可能不同，以平台确认为准。`
+    : book.sourceNote ? state.visible ? book.sourceNote : '来源说明已隐藏' : '';
+  return `<main id="main" class="workspace fund-page brand-${fund.brand}"><a class="back-link" href="#/">${icon('back')}我的基金</a><div class="page-heading"><div class="fund-title-line"><span class="fund-initial">${fund.initial}</span><div><h1>${fund.name}</h1><p class="fund-subtitle"><span class="fund-code">${fund.code}</span>${fund.category}</p></div></div><span class="status-chip dot">${summary.estimatedCount ? '含估算记录' : '已发布账本'}</span></div>
     <div class="fund-layout"><div class="main-column"><section class="panel summary-panel"><div class="section-heading"><h2>持仓与收益</h2><span class="status-chip">${principalState}</span></div>
       ${summary.lastDate ? `<p class="helper">最近交易日期 ${esc(summary.lastDate)}</p>` : ''}
-      ${book.sourceNote ? `<p class="source-note">${icon('info')}<span>${esc(book.sourceNote)}</span></p>` : ''}
-      <div class="mode-control ${book.mode}" role="group" aria-label="卖出到账分配模式"><button data-action="mode" data-mode="profit-first" aria-pressed="${book.mode === 'profit-first'}" ${book.incomplete ? 'disabled' : ''}>利润优先</button><button data-action="mode" data-mode="principal-first" aria-pressed="${book.mode === 'principal-first'}" ${book.incomplete ? 'disabled' : ''}>本金优先</button></div><p class="mode-explanation">${book.incomplete ? '目前仅展示申请记录。补充已确认净值、份额和手续费后，才能计算本金与收益。' : `${book.mode === 'profit-first' ? '到账先提取当时可用利润，再回收本金。' : '到账先回收剩余本金，超出部分计为提取利润。'} 切换会重算全部历史。`}</p>
+      ${sourceDescription ? `<p class="source-note">${icon('info')}<span>${esc(sourceDescription)}</span></p>` : ''}
+      <div class="mode-control ${book.mode}" role="group" aria-label="卖出到账分配模式"><button data-action="mode" data-mode="profit-first" aria-pressed="${book.mode === 'profit-first'}">利润优先</button><button data-action="mode" data-mode="principal-first" aria-pressed="${book.mode === 'principal-first'}">本金优先</button></div><p class="mode-explanation">${book.mode === 'profit-first' ? '到账先提取当时可用利润，再回收本金。' : '到账先回收剩余本金，超出部分计为提取利润。'} 切换会重算全部历史。</p>
       ${errors.length ? `<div class="error-note" role="alert">第 ${errors[0].index} 笔交易待修正：${esc(errors[0].message)}<br>修正前暂停展示汇总结果。</div>` : ''}
-      <div class="summary-main"><div><p class="card-label">当前市值（元）</p><p class="card-value num">${sensitive(summary.marketValue)}</p><p class="helper">${book.incomplete ? '成交资料待补充，暂不估值' : `估值净值日期 ${esc(summary.valuationDate || '尚无可用净值')}`}</p></div><div class="summary-return"><p class="card-label">持有收益率</p><span class="num ${signClass(summary.holdingReturn)}">${percent(summary.holdingReturn)}</span></div></div>
+      <div class="summary-main"><div><p class="card-label">当前市值（元）</p><p class="card-value num">${sensitive(summary.marketValue)}</p><p class="helper">估值净值日期 ${esc(summary.valuationDate || '尚无可用净值')}</p></div><div class="summary-return"><p class="card-label">持有收益率</p><span class="num ${signClass(summary.holdingReturn)}">${percent(summary.holdingReturn)}</span></div></div>
       <dl class="summary-grid">${metric('剩余本金（元）', summary.principal)}${metric('持有收益（元）', summary.holdingProfit, 2, signClass(summary.holdingProfit))}${metric('持有份额', summary.shares, 6)}${metric('累计投入（元）', summary.totalInvested)}${metric('累计到账（元）', summary.totalRecovered)}${metric('已提取利润（元）', summary.totalProfitWithdrawn)}${metric('累计收益（元）', summary.totalProfit, 2, signClass(summary.totalProfit))}<div><dt>累计收益率</dt><dd class="num ${signClass(summary.totalReturn)}">${percent(summary.totalReturn)}</dd></div>${metric('清仓损失（元）', summary.totalClosedLoss)}</dl>
-      <p class="summary-foot">${icon('info')}<span>${book.incomplete ? `${book.transactions.length} 条申请记录 · ${summary.pendingCount} 条待确认或待核验。所有申请记录均未计入持仓、成本或收益，已撤单记录仅供追溯。` : `${summary.includedCount} 笔计入 · ${summary.pendingCount} 笔待确认或待修正 · ${summary.estimatedCount} 笔历史估算。累计收益率为累计收益 ÷ 累计投入，非年化。`}</span></p>
+      <p class="summary-foot">${icon('info')}<span>${summary.includedCount} 笔计入 · ${summary.pendingCount} 笔待确认或待修正 · ${summary.estimatedCount} 笔历史估算。累计收益率为累计收益 ÷ 累计投入，非年化。未确认及撤单不计入持仓和收益。</span></p>
     </section>${ledgerPanel(result, book)}</div><aside class="side-column">${navPanel(fund)}${feePanel(fund, book)}</aside></div></main>`;
 }
-
-function applicationPage(fund, book, result) {
-  const info = applicationInfo(book);
-  const { summary } = result;
-  return `<main id="main" class="workspace fund-page application-page brand-${fund.brand}"><a class="back-link" href="#/">${icon('back')}我的基金</a><div class="page-heading"><div class="fund-title-line"><span class="fund-initial">${fund.initial}</span><div><h1>${fund.name}</h1><p class="fund-subtitle"><span class="fund-code">${fund.code}</span>${fund.category}</p></div></div></div><div class="fund-layout"><div class="main-column"><section class="panel summary-panel application-overview"><div class="section-heading"><h2>已导入 ${info.count} 条申请记录</h2><span class="status-chip">按净值推算</span></div><p class="application-dates">最近申请 <strong class="num">${esc(info.lastDate)}</strong><span>记录范围 ${esc(info.firstDate)} 至 ${esc(info.lastDate)}</span></p><dl class="application-counts"><div><dt>已估算</dt><dd class="num">${summary.estimatedCount}</dd></div><div><dt>待确认</dt><dd class="num">${summary.pendingCount}</dd></div><div><dt>已撤单</dt><dd class="num">${info.cancelled}</dd></div></dl><p class="helper application-notice">按申请金额、对应交易日净值及 0.15% 买入费率推算。假设全额申购成功，实际可能受限购或比例确认影响，以平台确认为准。进行中与撤单不计入估算。</p>${summary.includedCount ? `<details class="details-box estimated-summary"><summary>查看估算持仓与收益 · 净值 ${esc(summary.valuationDate)}</summary><dl class="summary-grid">${metric('估算市值（元）', summary.marketValue)}${metric('估算本金（元）', summary.principal)}${metric('估算持有份额', summary.shares, 2)}${metric('估算持有收益（元）', summary.holdingProfit, 2, signClass(summary.holdingProfit))}<div><dt>估算持有收益率</dt><dd class="num ${signClass(summary.holdingReturn)}">${percent(summary.holdingReturn)}</dd></div></dl><p class="helper">仅汇总本截图可推算的记录，不代表完整账户持仓。金额与份额默认隐藏。</p></details>` : ''}</section>${ledgerPanel(result, book)}</div><aside class="side-column">${navPanel(fund)}${feePanel(fund, book)}</aside></div></main>`;
-}
-
 function sparkline(history) {
   const points = history.slice(-60);
   if (points.length < 2) return '';
@@ -339,39 +331,49 @@ function feePanel(fund, book) {
   return `<section class="panel fee-panel"><h2>费用与口径</h2><dl class="fee-display"><dt>买入参考费率</dt>${book.rate === null ? '<dd class="fee-unknown">以实际确认为准</dd>' : `<dd class="num">${esc(book.rate)}<small>%</small></dd>`}</dl><p class="helper">${book.incomplete ? '按你确认的买入费率推算费用和份额，估算结果以实际成交确认为准。' : `${book.rate === null ? '参考费率尚未配置，' : '平台优惠费率仅供参考，'}账本计算使用每笔交易的实际手续费。`}</p><details class="details-box"><summary>查看计算说明</summary><ul class="quiet-list"><li>买入和定投：本金按含手续费的总支出累计。</li><li>红利再投：增加份额，不增加投入本金。</li><li>现金分红：按实际到账金额处理。</li><li>卖出：实际到账按所选模式分配给本金与利润。</li><li>撤单、失败、关闭与待确认交易不计入持仓。</li><li>全部份额卖出时，未收回本金计入清仓损失。</li></ul></details></section>`;
 }
 function ledgerPanel(result, book) {
-  const filtered = result.rows.filter(row => (state.filter === 'all' || row.type === state.filter) && (state.statusFilter === 'all' || row.status === state.statusFilter || (book.incomplete && row.sourceStatus === state.statusFilter) || (state.statusFilter === 'error' && row.status === 'blocked')));
+  const filtered = result.rows.filter(row => (state.filter === 'all' || row.type === state.filter) && (state.statusFilter === 'all' || row.status === state.statusFilter || (state.statusFilter === 'error' && row.status === 'blocked')));
   const shown = filtered.slice().reverse().slice(0, state.limit);
-  const statusOptions = book.incomplete ? [['all', '全部状态'], ['included', '估算成交'], ['pending', '待确认'], ['excluded', '已撤单']] : [['all', '全部状态'], ['included', '已计入'], ['pending', '待确认'], ['excluded', '未计入'], ['error', '待修正']];
-  return `<section class="panel ledger-panel"><div class="section-heading"><div><h2>${book.incomplete ? '交易记录与推算' : '逐笔交易'}</h2><p class="helper">${book.incomplete ? '最近记录在前 · 展开查看净值、费用、份额和收益' : '最近交易在前 · 展开查看分配明细'}</p></div><span class="fund-code">${book.transactions.length} ${book.incomplete ? '条' : '笔'}</span></div>
+  const statusOptions = [['all', '全部状态'], ['included', '已计入'], ['pending', '待确认'], ['excluded', '未计入'], ['error', '待修正']];
+  return `<section class="panel ledger-panel"><div class="section-heading"><div><h2>逐笔交易</h2><p class="helper">最近交易在前 · 展开查看分配明细</p></div><span class="fund-code">${book.transactions.length} 笔</span></div>
     <div class="ledger-toolbar"><select id="type-filter" aria-label="筛选交易类型"><option value="all">全部类型</option>${Object.entries(TYPE_NAMES).map(([key, label]) => `<option value="${key}" ${state.filter === key ? 'selected' : ''}>${label}</option>`).join('')}</select><select id="status-filter" aria-label="筛选记录状态">${statusOptions.map(([key, label]) => `<option value="${key}" ${state.statusFilter === key ? 'selected' : ''}>${label}</option>`).join('')}</select></div>
     <div class="transaction-list">${shown.length ? shown.map(row => transactionCard(row, book)).join('') : `<div class="empty-state">${icon('book')}<h3>${book.transactions.length ? '没有符合条件的交易' : '尚未配置交易数据'}</h3><p>${book.transactions.length ? '调整类型或状态筛选，查看其他记录。' : '此账本已准备好，更新交易数据并重新发布后即可查看。'}</p>${book.transactions.length ? '<button class="button" data-action="reset-filter">清除筛选</button>' : ''}</div>`}</div>${filtered.length > shown.length ? `<button class="button more-button" data-action="more">再显示 25 笔 · 还有 ${filtered.length - shown.length} 笔</button>` : ''}</section>`;
 }
 
-function applicationCard(row, book) {
-  const tx = book.transactions.find(item => item.id === row.id) || row;
-  const estimated = row.status === 'included' && row.estimated === true;
-  const label = estimated ? '估算成交' : row.status === 'excluded' ? '已撤单' : tx.sourceStatus === 'processing' ? '进行中' : '待净值或核验';
-  const latest = valuation('006373');
-  const currentValue = estimated && latest && latest.date >= row.date ? Math.round(row.shares * latest.nav * 100) / 100 : null;
-  const currentProfit = currentValue === null ? null : Math.round((currentValue - row.amount) * 100) / 100;
-  const currentReturn = currentProfit === null ? null : currentProfit / row.amount;
-  return `<article class="transaction"><div class="transaction-top"><div class="transaction-label"><span class="transaction-type-icon">${icon('down')}</span><div><p class="transaction-title">${esc(TYPE_NAMES[row.type] || '买入')}<span class="row-status">${label}</span></p><p class="transaction-date">申请 ${esc(tx.submittedAt || '待补充')} · 第 ${row.index} 条</p></div></div><p class="transaction-amount num">${sensitive(tx.amount)}<small>申请金额 · 元</small></p></div>${estimated ? `<dl class="transaction-stats"><div><dt>采用净值 · ${esc(row.date)}</dt><dd class="num">${number(row.nav, 4)}</dd></div>${metric('估算手续费', row.fee)}${metric('推算份额', row.shares, 2)}</dl>` : ''}<details class="transaction-detail" data-id="${esc(row.id)}"><summary>${estimated ? '查看份额、费用与收益推算' : '查看申请状态'}</summary><div class="detail-inner">${estimated ? `<dl class="transaction-stats">${metric('净申购金额', row.netAmount)}${metric('估算手续费', row.fee)}${metric('推算份额', row.shares, 2)}${metric('本笔估算市值', currentValue)}${metric('本笔估算收益', currentProfit, 2, signClass(currentProfit))}<div><dt>本笔估算收益率</dt><dd class="num ${signClass(currentReturn)}">${percent(currentReturn)}</dd></div></dl><p class="helper detail-date-note">净申购金额＝申请金额 ÷ (1＋0.15%)；手续费＝申请金额－净申购金额；份额＝净申购金额 ÷ 对应净值。金额、份额四舍五入保留两位。收益采用 ${esc(latest?.date || '待更新')} 净值。</p>` : ''}<p class="helper detail-date-note">${esc(row.estimateReason || (row.status === 'excluded' ? '此笔已撤单，不计入持仓和收益。' : '申请仍在进行中，不计入持仓和收益。'))}</p>${estimated ? `<p class="helper detail-date-note">申请日期 ${esc(tx.submittedAt)} · 估算净值日期 ${esc(row.date)}。以上按全额成交推算，未将原申请状态改为已确认。</p>` : ''}</div></details></article>`;
-}
-
 function transactionCard(row, book) {
-  if (book.incomplete) return applicationCard(row, book);
   const tx = book.transactions.find(item => item.id === row.id) || row;
+  const included = row.status === 'included';
+  const estimated = included && (row.estimated === true || ['estimated', '历史估算'].includes(tx.status));
+  const values = included ? row : {};
   const out = row.type === 'sell' || row.type === 'dividend';
-  const label = book.incomplete ? row.status === 'excluded' ? '已撤单' : { processing: '进行中', unverified: '待核验' }[tx.sourceStatus] || '待确认' : row.status === 'included' ? (['estimated', '历史估算'].includes(tx.status) ? '历史估算' : '已确认') : { pending: '待确认', excluded: STATUS_NAMES[tx.status] || tx.status || '未计入', error: '待修正', blocked: '前序待修正' }[row.status];
+  const label = included ? estimated ? '估算成交' : '已确认'
+    : row.status === 'excluded' ? ['cancelled', '撤单'].includes(tx.status) || tx.sourceStatus === 'cancelled' ? '已撤单' : STATUS_NAMES[tx.status] || '未计入'
+    : row.status === 'pending' ? tx.sourceStatus === 'processing' ? '进行中' : tx.sourceStatus === 'unverified' ? '待核验' : '待确认'
+    : row.status === 'error' ? '待修正' : '前序待修正';
   const hasNote = tx.note !== undefined && tx.note !== null && String(tx.note).trim() !== '';
-  const dateNote = book.incomplete ? `净值日期：${esc(tx.date || '待确认')} · 申请日期：${esc(tx.submittedAt || '待补充')}。申请日期不用于持仓估值。` : `净值日期：${esc(tx.date || '待填')}${tx.recordedAt ? ` · 录入日期：${esc(String(tx.recordedAt).slice(0, 10))}` : ' · 录入日期：原表未记录'}。两者含义不同。`;
-  const detailMetrics = [metric('成交净值', null), metric('确认份额', tx.shares, 6), metric('实际手续费', tx.fee), metric('本笔份额变动', row.shareChange, 6), metric('交易后份额', row.sharesAfter, 6), metric('交易前市值', row.valueBefore), metric('当时可用利润', row.availableProfit), metric('本笔提取利润', row.profitWithdrawn), metric('本笔回收本金', row.principalRecovered), metric('交易后本金', row.principalAfter), metric('交易后市值', row.valueAfter), metric('本笔清仓损失', row.closedLoss), metric('累计投入', row.totalInvested), metric('累计到账', row.totalRecovered), metric('累计提取利润', row.totalProfitWithdrawn), metric('累计清仓损失', row.totalClosedLoss), metric('累计收益', row.totalProfit)];
-  detailMetrics[0] = `<div><dt>成交净值</dt><dd class="num">${number(tx.nav, 4)}</dd></div>`;
-  return `<article class="transaction"><div class="transaction-top"><div class="transaction-label"><span class="transaction-type-icon ${out ? 'out' : ''}">${icon(out ? 'up' : row.type === 'reinvest' ? 'coins' : 'down')}</span><div><p class="transaction-title">${esc(TYPE_NAMES[row.type] || '未知类型')}${book.incomplete ? '申请' : ''}<span class="row-status">${esc(label)}</span></p><p class="transaction-date">${book.incomplete ? `申请日期 ${esc(tx.submittedAt || '待补充')}` : esc(row.date || '净值日期待填')} · 第 ${row.index} ${book.incomplete ? '条' : '笔'}</p></div></div><p class="transaction-amount num">${row.type === 'reinvest' ? sensitive(tx.shares, 6) : sensitive(row.amount ?? tx.amount ?? tx.cost)}<small>${book.incomplete ? '申请金额 · 元' : row.type === 'reinvest' ? '增加份额 · 份' : out ? '实际到账 · 元' : '确认支出 · 元'}</small></p></div>
-    ${book.incomplete ? '' : `<dl class="transaction-stats">${metric('剩余本金', row.principalAfter)}${metric('交易后收益', row.holdingProfit, 2, signClass(row.holdingProfit))}<div><dt>交易后收益率</dt><dd class="num ${signClass(row.holdingReturn)}">${percent(row.holdingReturn)}</dd></div></dl>`}${row.error ? `<p class="row-error">${esc(row.error)}</p>` : ''}
-    <details class="transaction-detail" data-id="${esc(row.id)}"><summary>${book.incomplete ? '申请信息与待补充成交资料' : '成交与分配明细'}</summary><div class="detail-inner">${book.incomplete ? '<p class="helper detail-date-note">成交净值、确认份额与实际手续费尚待补充。</p>' : `<dl class="transaction-stats">${detailMetrics.join('')}</dl>`}<p class="helper detail-date-note">${dateNote}</p>${hasNote ? `<p class="transaction-note">${state.visible ? `备注：${esc(tx.note)}` : '备注已隐藏'}</p>` : ''}</div></details></article>`;
+  const displayDate = included && row.date ? `${estimated ? '估算净值日期' : '净值日期'} ${esc(row.date)}` : tx.submittedAt ? `申请日期 ${esc(tx.submittedAt)}` : esc(row.date || '净值日期待填');
+  const dateNote = tx.submittedAt
+    ? `申请日期：${esc(tx.submittedAt)} · ${estimated ? '估算净值日期' : '净值日期'}：${esc(row.date || '待确认')}。申请日期与净值日期含义不同。`
+    : `净值日期：${esc(row.date || '待填')}${tx.recordedAt ? ` · 录入日期：${esc(String(tx.recordedAt).slice(0, 10))}` : ' · 录入日期：原表未记录'}。两者含义不同。`;
+  const detailMetrics = [
+    `<div><dt>成交净值</dt><dd class="num">${number(values.nav, 4)}</dd></div>`,
+    metric('确认份额', values.shares, 6), metric('实际手续费', values.fee),
+    metric('本笔份额变动', values.shareChange, 6), metric('交易后份额', values.sharesAfter, 6),
+    metric('交易前市值', values.valueBefore), metric('当时可用利润', values.availableProfit),
+    metric('本笔提取利润', values.profitWithdrawn), metric('本笔回收本金', values.principalRecovered),
+    metric('交易后本金', values.principalAfter), metric('交易后市值', values.valueAfter),
+    metric('本笔清仓损失', values.closedLoss), metric('累计投入', values.totalInvested),
+    metric('累计到账', values.totalRecovered), metric('累计提取利润', values.totalProfitWithdrawn),
+    metric('累计清仓损失', values.totalClosedLoss), metric('累计收益', values.totalProfit),
+  ];
+  const latest = valuation(selectedCode());
+  const currentValue = row.estimated === true && included && latest && latest.date >= row.date ? Math.round(row.shares * latest.nav * 100) / 100 : null;
+  const currentProfit = currentValue === null ? null : Math.round((currentValue - row.amount) * 100) / 100;
+  const currentReturn = currentProfit === null || !(row.amount > 0) ? null : currentProfit / row.amount;
+  const estimateExtras = row.estimated === true && included ? `<dl class="transaction-stats">${metric('估算净申购金额', row.netAmount)}${metric('本笔估算市值', currentValue)}${metric('本笔估算收益', currentProfit, 2, signClass(currentProfit))}<div><dt>本笔估算收益率</dt><dd class="num ${signClass(currentReturn)}">${percent(currentReturn)}</dd></div></dl><p class="helper detail-date-note">净申购金额＝申请金额 ÷ (1＋参考费率)，份额＝净申购金额 ÷ 对应净值；金额及估算份额四舍五入保留两位。本笔当前估算收益采用 ${esc(latest?.date || '待更新')} 净值，按全额成交推算。</p>` : '';
+  return `<article class="transaction"><div class="transaction-top"><div class="transaction-label"><span class="transaction-type-icon ${out ? 'out' : ''}">${icon(out ? 'up' : row.type === 'reinvest' ? 'coins' : 'down')}</span><div><p class="transaction-title">${esc(TYPE_NAMES[row.type] || '未知类型')}<span class="row-status">${esc(label)}</span></p><p class="transaction-date">${displayDate} · 第 ${row.index} 笔</p></div></div><p class="transaction-amount num">${row.type === 'reinvest' ? sensitive(values.shares, 6) : sensitive(row.amount ?? tx.amount ?? tx.cost)}<small>${!included ? '记录金额 · 元' : row.type === 'reinvest' ? '增加份额 · 份' : estimated ? '估算支出 · 元' : out ? '实际到账 · 元' : '确认支出 · 元'}</small></p></div>
+    <dl class="transaction-stats">${metric('剩余本金', values.principalAfter)}${metric('交易后收益', values.holdingProfit, 2, signClass(values.holdingProfit))}<div><dt>交易后收益率</dt><dd class="num ${signClass(values.holdingReturn)}">${percent(values.holdingReturn)}</dd></div></dl>${row.error ? `<p class="row-error">${esc(row.error)}</p>` : ''}
+    <details class="transaction-detail" data-id="${esc(row.id)}"><summary>成交与分配明细</summary><div class="detail-inner"><dl class="transaction-stats">${detailMetrics.join('')}</dl><p class="helper detail-date-note">${dateNote}</p>${row.estimateReason ? `<p class="helper detail-date-note">${esc(row.estimateReason)}</p>` : ''}${estimateExtras}${hasNote ? `<p class="transaction-note">${state.visible ? `备注：${esc(tx.note)}` : '备注已隐藏'}</p>` : ''}</div></details></article>`;
 }
-
 app.addEventListener('submit', event => {
   if (event.target.id === 'unlock-form') return unlock(event);
 });
@@ -417,7 +419,6 @@ function actionClick(event) {
   }
   if (action === 'lock') lock();
   if (action === 'mode') {
-    if (getBook(selectedCode()).incomplete) return;
     getBook(selectedCode()).mode = target.dataset.mode;
     const position = scrollY;
     animateChange(() => { render(); scrollTo({ top: position, behavior: 'instant' }); });
