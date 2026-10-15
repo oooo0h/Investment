@@ -8,7 +8,7 @@ const FUNDS = [
 ];
 const TYPE_NAMES = { buy: '买入', sip: '定投', sell: '卖出', reinvest: '红利再投', dividend: '现金分红', 'transfer-in': '转换转入' };
 const STATUS_NAMES = { confirmed: '已确认', estimated: '历史估算', pending: '待确认', cancelled: '撤单', failed: '交易失败', closed: '交易关闭' };
-const state = { unlocked: false, visible: false, funds: {}, nav: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null };
+const state = { unlocked: false, visible: false, funds: {}, nav: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null, deadline: 0, dayDeadline: 0, sessionDay: null };
 const app = document.querySelector('#app');
 const icons = {
   book: '<path d="M6 3h13v18H6zM3 6h5M3 12h5M3 18h5M11 8h5M11 12h5M11 16h3"/>',
@@ -39,6 +39,51 @@ const currentTheme = () => document.documentElement.dataset.theme;
 let toastTimer;
 let transitioning = false;
 let activeTransition = null;
+let sessionInterval = null;
+let sessionTimeout = null;
+let dailyCodeReader = null;
+let unlockGeneration = 0;
+const SESSION_DURATION = 180000;
+
+function stopSessionTimers() {
+  clearInterval(sessionInterval);
+  clearTimeout(sessionTimeout);
+  sessionInterval = null;
+  sessionTimeout = null;
+}
+
+function remainingTime() {
+  const seconds = Math.max(0, Math.ceil((Math.min(state.deadline, state.dayDeadline || state.deadline) - Date.now()) / 1000));
+  return `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+}
+
+function updateSessionTimer() {
+  const timer = document.querySelector('#session-timer');
+  if (!timer) return;
+  timer.textContent = `剩余 ${remainingTime()}`;
+  timer.dataset.urgent = String(state.deadline - Date.now() <= 30000);
+}
+
+function checkSession() {
+  if (!state.unlocked) return false;
+  if (Date.now() >= state.deadline) { lock('timeout'); return false; }
+  if (!dailyCodeReader || dailyCodeReader() !== state.sessionDay) { lock('day-change'); return false; }
+  updateSessionTimer();
+  return true;
+}
+
+function startSession(day, getDailyCode) {
+  stopSessionTimers();
+  const now = Date.now();
+  const dayLength = 24 * 60 * 60 * 1000;
+  const beijingOffset = 8 * 60 * 60 * 1000;
+  state.deadline = now + SESSION_DURATION;
+  state.dayDeadline = (Math.floor((now + beijingOffset) / dayLength) + 1) * dayLength - beijingOffset;
+  state.sessionDay = day;
+  dailyCodeReader = getDailyCode;
+  sessionInterval = setInterval(checkSession, 1000);
+  sessionTimeout = setTimeout(checkSession, Math.min(SESSION_DURATION, state.dayDeadline - now));
+}
 function animateChange(update) {
   if (!document.startViewTransition || transitioning) { update(); return; }
   transitioning = true;
@@ -67,22 +112,24 @@ function themeButton() {
   return `<button class="icon-button" type="button" data-action="theme" title="切换到${dark ? '白天' : '黑夜'}模式" aria-label="切换到${dark ? '白天' : '黑夜'}模式">${icon(dark ? 'sun' : 'moon')}</button>`;
 }
 
-function renderGate() {
+function renderGate(notice = '') {
   document.title = '解锁 · 基金账本';
   app.innerHTML = `<main id="main" class="gate"><div class="gate-theme">${themeButton()}</div><div class="gate-content">
     <div class="brand"><span class="brand-mark">${icon('book')}</span>基金账本</div>
     <section class="gate-panel"><div class="gate-lock">${icon('lock')}</div><h1>打开你的基金账本</h1>
-      <p class="gate-description">输入访问密码，查看交易和收益。<br>金额默认隐藏，进入后可用小眼睛切换。</p>
-      <form id="unlock-form" class="gate-form"><label for="vault-password">访问密码<input id="vault-password" name="password" type="password" autocomplete="current-password" required placeholder="输入密码" aria-describedby="gate-error"></label>
-        <button type="submit" class="button primary">解锁账本${icon('arrow')}</button><p id="gate-error" class="gate-error" role="alert"></p>
+      <p class="gate-description">当日日期密码，解锁有效 3 分钟。<br>按北京时间当天日期输入 MMDD。金额默认隐藏。</p>
+      <form id="unlock-form" class="gate-form"><label for="vault-password">当日日期密码<input id="vault-password" name="password" type="password" inputmode="numeric" pattern="[0-9]{4}" minlength="4" maxlength="4" autocomplete="off" required placeholder="输入四位日期密码" aria-describedby="gate-error"></label>
+        <button type="submit" class="button primary">解锁账本${icon('arrow')}</button><p id="gate-error" class="gate-error" role="alert">${esc(notice)}</p>
       </form>
-    </section><p class="gate-footnote">${icon('shield')}<span>密码只用于本机解密，不会上传。刷新或加锁后，需要重新验证。</span></p>
+    </section><p class="gate-footnote">${icon('shield')}<span>密码只用于本机解密，不会上传。到期、跨日、刷新或加锁后，需要重新验证。</span></p>
   </div></main>`;
 }
 
 async function unlock(event) {
   event.preventDefault();
   if (state.gateBusy) return;
+  const generation = ++unlockGeneration;
+  const isCurrent = () => generation === unlockGeneration;
   state.gateBusy = true;
   const form = event.target;
   const input = form.elements.password;
@@ -94,9 +141,13 @@ async function unlock(event) {
   let password = input.value;
   input.value = '';
   try {
-    const { unlockVault } = await import('./vault.js');
+    const { unlockVault, getDailyCode } = await import('./vault.js?v=20261015-daily2');
+    if (!isCurrent()) { password = ''; return; }
+    const sessionDay = getDailyCode();
     const vault = await unlockVault(password);
     password = '';
+    if (!isCurrent()) return;
+    if (getDailyCode() !== sessionDay) throw new Error('day-changed');
     if (!vault || typeof vault.funds !== 'object') throw new Error('invalid');
     for (const fund of FUNDS) {
       const entry = vault.funds[fund.code] || {};
@@ -109,29 +160,49 @@ async function unlock(event) {
     state.createdAt = vault.createdAt;
     state.visible = false;
     state.unlocked = true;
+    startSession(sessionDay, getDailyCode);
     render();
     loadPublicNav();
   } catch {
     password = '';
+    if (!isCurrent()) return;
+    stopSessionTimers();
+    state.unlocked = false;
+    state.visible = false;
     state.funds = {};
-    error.textContent = '未能解锁，请检查密码后重试。';
-    input.focus();
+    state.createdAt = null;
+    state.deadline = 0;
+    state.dayDeadline = 0;
+    state.sessionDay = null;
+    dailyCodeReader = null;
+    renderGate('未能解锁，请检查日期密码后重试。');
+    document.querySelector('#vault-password').focus();
   } finally {
-    state.gateBusy = false;
-    if (!state.unlocked) { button.disabled = false; button.innerHTML = `解锁账本${icon('arrow')}`; }
+    password = '';
+    if (isCurrent()) {
+      state.gateBusy = false;
+      if (!state.unlocked) { button.disabled = false; button.innerHTML = `解锁账本${icon('arrow')}`; }
+    }
   }
 }
 
-function lock() {
+function lock(reason = 'manual') {
+  unlockGeneration += 1;
+  state.gateBusy = false;
   activeTransition?.skipTransition();
+  stopSessionTimers();
   state.unlocked = false;
   state.visible = false;
   state.funds = {};
   state.createdAt = null;
+  state.deadline = 0;
+  state.dayDeadline = 0;
+  state.sessionDay = null;
+  dailyCodeReader = null;
   state.filter = 'all';
   state.statusFilter = 'all';
   document.querySelector('#toast').classList.remove('visible');
-  renderGate();
+  renderGate(reason === 'timeout' ? '解锁已到期，请重新验证。' : reason === 'day-change' ? '日期已更新，请使用当日日期密码。' : '');
 }
 
 async function loadPublicNav() {
@@ -145,7 +216,7 @@ async function loadPublicNav() {
       state.nav[code] = result;
     } catch { state.nav[code] = { history: [], unavailable: true }; }
   }));
-  if (state.unlocked) render();
+  if (state.unlocked && checkSession()) render();
 }
 
 function valuation(code) { return state.nav[code]?.history.at(-1) || null; }
@@ -166,7 +237,7 @@ function ledger(code) {
 
 function header(code) {
   return `<header class="site-header"><div class="header-inner">
-    <a href="#/" class="brand" aria-label="基金账本首页"><span class="brand-mark">${icon('book')}</span>基金账本</a>
+    <a href="#/" class="brand" aria-label="基金账本首页"><span class="brand-mark">${icon('book')}</span><span class="brand-copy"><span>基金账本</span><span id="session-timer" class="session-timer" role="timer" aria-label="本次解锁剩余时间" aria-live="off">剩余 ${remainingTime()}</span></span></a>
     <nav class="desktop-nav" aria-label="主要导航"><a href="#/" class="${code ? '' : 'active'}" ${code ? '' : 'aria-current="page"'}>我的基金</a>${FUNDS.map(fund => `<a href="#/fund/${fund.code}" class="${code === fund.code ? 'active' : ''}" ${code === fund.code ? 'aria-current="page"' : ''}>${fund.short}账本</a>`).join('')}</nav>
     <div class="header-actions"><button type="button" class="icon-button" data-action="privacy" aria-label="${state.visible ? '隐藏' : '显示'}金额和份额" title="${state.visible ? '隐藏' : '显示'}金额和份额" aria-pressed="${state.visible}">${icon(state.visible ? 'eye' : 'eye-off')}</button>${themeButton()}<button type="button" class="icon-button" data-action="lock" aria-label="加锁账本" title="加锁账本">${icon('lock')}</button></div>
   </div></header>`;
@@ -178,6 +249,7 @@ function bottomNav(code) {
 
 function render() {
   if (!state.unlocked) { renderGate(); return; }
+  if (!checkSession()) return;
   const fund = selectedFund();
   document.title = fund ? `${fund.short}账本 · 基金账本` : '我的基金 · 基金账本';
   app.innerHTML = `${header(fund?.code)}${fund ? fundPage(fund) : homePage()}${bottomNav(fund?.code)}<footer class="footer"><span>基金账本 · 交易计算与净值日期分开核对</span><span>数据在本机解密 · 更新后重新发布</span></footer>`;
@@ -185,7 +257,7 @@ function render() {
 
 function homePage() {
   return `<main id="main" class="workspace home-page"><div class="page-heading"><div><p class="eyebrow">PERSONAL FUND LEDGER</p><h1>我的基金</h1><p class="subtitle">每笔交易有据可查，每一分收益清楚归属。</p></div><span class="status-chip dot">账本已解锁</span></div>
-    <div class="session-note">${icon('shield')}<span>${state.visible ? '当前显示金额和份额。点击右上角小眼睛可随时隐藏。' : '金额和份额已隐藏。点击右上角小眼睛可显示。'} 刷新或加锁后重新验证。</span></div>
+    <div class="session-note">${icon('shield')}<span>${state.visible ? '当前显示金额和份额。点击右上角小眼睛可随时隐藏。' : '金额和份额已隐藏。点击右上角小眼睛可显示。'} 每次解锁有效 3 分钟，到期或北京时间跨日后自动加锁。</span></div>
     <div class="section-heading"><h2>基金账本</h2><span class="helper">人民币 A 类 · ${FUNDS.length} 只基金</span></div>
     <div class="fund-list">${FUNDS.map(fund => {
       const { summary } = ledger(fund.code);
@@ -268,7 +340,7 @@ app.addEventListener('submit', event => {
   if (event.target.id === 'unlock-form') return unlock(event);
 });
 app.addEventListener('change', event => {
-  if (!state.unlocked) return;
+  if (!state.unlocked || !checkSession()) return;
   if (event.target.id === 'type-filter' || event.target.id === 'status-filter') {
     state[event.target.id === 'type-filter' ? 'filter' : 'statusFilter'] = event.target.value;
     state.limit = 25;
@@ -278,6 +350,7 @@ app.addEventListener('change', event => {
   }
 });
 function actionClick(event) {
+  if (state.unlocked && !checkSession()) { event.preventDefault(); return; }
   if (event.target.closest('.skip-link')) {
     event.preventDefault();
     const main = document.querySelector('main');
@@ -318,6 +391,8 @@ function actionClick(event) {
   if (action === 'reset-filter') { state.filter = 'all'; state.statusFilter = 'all'; render(); }
 }
 document.addEventListener('click', actionClick);
-window.addEventListener('hashchange', () => { if (!state.unlocked) return; state.limit = 25; state.filter = 'all'; state.statusFilter = 'all'; render(); scrollTo({ top: 0, behavior: 'instant' }); });
+window.addEventListener('hashchange', () => { if (!state.unlocked || !checkSession()) return; state.limit = 25; state.filter = 'all'; state.statusFilter = 'all'; render(); scrollTo({ top: 0, behavior: 'instant' }); });
 window.addEventListener('pageshow', event => { if (event.persisted) lock(); });
+document.addEventListener('visibilitychange', checkSession);
+window.addEventListener('focus', checkSession);
 renderGate();

@@ -79,6 +79,9 @@
   .icon-button { display: inline-flex; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); transition: transform .18s, background .2s; }
   .icon-button:hover { background: var(--blue-tint); }
   .brand { display: flex; align-items: center; gap: 11px; font-size: 17px; font-weight: 650; letter-spacing: -.04em; white-space: nowrap; }
+  .brand-copy { display: grid; gap: 2px; line-height: 1.3; }
+  .session-timer { color: var(--muted); font: 10px/1.3 var(--digits); font-weight: 400; letter-spacing: 0; }
+  .session-timer[data-urgent="true"] { color: var(--danger); }
   .brand-mark { width: 35px; height: 35px; display: grid; place-items: center; background: #245bdc; border-radius: 10px; color: white; }
   .brand-mark .icon { width: 23px; height: 23px; }
   .site-header { height: 78px; background: var(--paper); border-bottom: 1px solid var(--line); }
