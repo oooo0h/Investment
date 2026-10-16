@@ -1,0 +1,297 @@
+{
+  "code": "270023",
+  "share_class": "人民币A",
+  "checked_at": "2026-10-16T16:50:06.462+08:00",
+  "requests": [
+    {
+      "date": "2012-03-31",
+      "official_url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20120330&enddate=20120401&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "official_response": {
+        "errorno": "20000",
+        "errormsg": "Success!",
+        "data": [
+          {
+            "FUNDNAME": "广发全球精选股票（QDII）人民币A",
+            "PRENAVUNIT": "0.8830",
+            "NAVUNIT": "0.8870",
+            "UNITYIELD": "0.0000",
+            "FUNDID": "35",
+            "FUNDCODE": "270023",
+            "NAVACCUMULATED": "0.8870",
+            "PRENAVACCUMULATED": "0.8830",
+            "DAYINCREMENTRATE": "0.45",
+            "YEARLYROE7": "0.0000",
+            "NAVDATE": "20120330",
+            "PRENAVEDATE": "20120329"
+          }
+        ],
+        "pagelines": "20",
+        "curpage": "1",
+        "totalrows": "1",
+        "totalpages": "1",
+        "memtime": "2026-10-16 16:50:02",
+        "_cachetime": "2026-10-16T08:50:02.883Z",
+        "_filtertime": "2026-10-16T08:50:02.884Z",
+        "_lastfilter": "set-cache-time.js,override-nav-by-wcm.js"
+      }
+    },
+    {
+      "date": "2012-06-30",
+      "official_url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20120629&enddate=20120701&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "official_response": {
+        "errorno": "20000",
+        "errormsg": "Success!",
+        "data": [
+          {
+            "FUNDNAME": "广发全球精选股票（QDII）人民币A",
+            "PRENAVUNIT": "0.8500",
+            "NAVUNIT": "0.8610",
+            "UNITYIELD": "0.0000",
+            "FUNDID": "35",
+            "FUNDCODE": "270023",
+            "NAVACCUMULATED": "0.8610",
+            "PRENAVACCUMULATED": "0.8500",
+            "DAYINCREMENTRATE": "1.29",
+            "YEARLYROE7": "0.0000",
+            "NAVDATE": "20120629",
+            "PRENAVEDATE": "20120628"
+          }
+        ],
+        "pagelines": "20",
+        "curpage": "1",
+        "totalrows": "1",
+        "totalpages": "1",
+        "memtime": "2026-10-16 16:50:02",
+        "_cachetime": "2026-10-16T08:50:02.899Z",
+        "_filtertime": "2026-10-16T08:50:02.900Z",
+        "_lastfilter": "set-cache-time.js,override-nav-by-wcm.js"
+      }
+    },
+    {
+      "date": "2012-09-30",
+      "official_url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20120929&enddate=20121001&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "official_response": {
+        "errorno": "20000",
+        "errormsg": "Success!",
+        "data": "",
+        "pagelines": "20",
+        "curpage": "1",
+        "totalrows": "0",
+        "totalpages": "0",
+        "memtime": "2026-10-16 16:50:02",
+        "_cachetime": "2026-10-16T08:50:02.842Z",
+        "_filtertime": "2026-10-16T08:50:02.843Z",
+        "_lastfilter": "set-cache-time.js,override-nav-by-wcm.js"
+      }
+    },
+    {
+      "date": "2013-06-30",
+      "official_url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20130629&enddate=20130701&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "official_response": {
+        "errorno": "20000",
+        "errormsg": "Success!",
+        "data": [
+          {
+            "FUNDNAME": "广发全球精选股票（QDII）人民币A",
+            "PRENAVUNIT": "1.0870",
+            "NAVUNIT": "1.0880",
+            "UNITYIELD": "0.0000",
+            "FUNDID": "35",
+            "FUNDCODE": "270023",
+            "NAVACCUMULATED": "1.0880",
+            "PRENAVACCUMULATED": "1.0870",
+            "DAYINCREMENTRATE": "0.09",
+            "YEARLYROE7": "0.0000",
+            "NAVDATE": "20130701",
+            "PRENAVEDATE": "20130628"
+          }
+        ],
+        "pagelines": "20",
+        "curpage": "1",
+        "totalrows": "1",
+        "totalpages": "1",
+        "memtime": "2026-10-16 16:50:02",
+        "_cachetime": "2026-10-16T08:50:02.924Z",
+        "_filtertime": "2026-10-16T08:50:02.925Z",
+        "_lastfilter": "set-cache-time.js,override-nav-by-wcm.js"
+      }
+    },
+    {
+      "date": "2016-09-30",
+      "official_url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20160929&enddate=20161001&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "official_response": {
+        "errorno": "20000",
+        "errormsg": "Success!",
+        "data": "",
+        "pagelines": "20",
+        "curpage": "1",
+        "totalrows": "0",
+        "totalpages": "0",
+        "memtime": "2026-10-16 16:50:02",
+        "_cachetime": "2026-10-16T08:50:02.954Z",
+        "_filtertime": "2026-10-16T08:50:02.955Z",
+        "_lastfilter": "set-cache-time.js,override-nav-by-wcm.js"
+      }
+    },
+    {
+      "date": "2016-10-10",
+      "official_url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20161009&enddate=20161011&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "official_response": {
+        "errorno": "20000",
+        "errormsg": "Success!",
+        "data": [
+          {
+            "FUNDNAME": "广发全球精选股票（QDII）人民币A",
+            "PRENAVUNIT": "1.4620",
+            "NAVUNIT": "1.4840",
+            "UNITYIELD": "0.0000",
+            "FUNDID": "35",
+            "FUNDCODE": "270023",
+            "NAVACCUMULATED": "1.6840",
+            "PRENAVACCUMULATED": "1.6620",
+            "DAYINCREMENTRATE": "1.50",
+            "YEARLYROE7": "0.0000",
+            "NAVDATE": "20161011",
+            "PRENAVEDATE": "20161010"
+          }
+        ],
+        "pagelines": "20",
+        "curpage": "1",
+        "totalrows": "1",
+        "totalpages": "1",
+        "memtime": "2026-10-16 16:50:02",
+        "_cachetime": "2026-10-16T08:50:02.975Z",
+        "_filtertime": "2026-10-16T08:50:02.976Z",
+        "_lastfilter": "set-cache-time.js,override-nav-by-wcm.js"
+      }
+    },
+    {
+      "date": "2018-04-02",
+      "official_url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20180401&enddate=20180403&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "official_response": {
+        "errorno": "20000",
+        "errormsg": "Success!",
+        "data": [
+          {
+            "FUNDNAME": "广发全球精选股票（QDII）人民币A",
+            "PRENAVUNIT": "1.6470",
+            "NAVUNIT": "1.6340",
+            "UNITYIELD": "0.0000",
+            "FUNDID": "35",
+            "FUNDCODE": "270023",
+            "NAVACCUMULATED": "2.0210",
+            "PRENAVACCUMULATED": "2.0340",
+            "DAYINCREMENTRATE": "-0.79",
+            "YEARLYROE7": "0.0000",
+            "NAVDATE": "20180403",
+            "PRENAVEDATE": "20180402"
+          }
+        ],
+        "pagelines": "20",
+        "curpage": "1",
+        "totalrows": "1",
+        "totalpages": "1",
+        "memtime": "2026-10-16 16:50:02",
+        "_cachetime": "2026-10-16T08:50:02.994Z",
+        "_filtertime": "2026-10-16T08:50:02.995Z",
+        "_lastfilter": "set-cache-time.js,override-nav-by-wcm.js"
+      }
+    },
+    {
+      "date": "2018-06-30",
+      "official_url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20180629&enddate=20180701&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "official_response": {
+        "errorno": "20000",
+        "errormsg": "Success!",
+        "data": [
+          {
+            "FUNDNAME": "广发全球精选股票（QDII）人民币A",
+            "PRENAVUNIT": "1.6170",
+            "NAVUNIT": "1.6470",
+            "UNITYIELD": "0.0000",
+            "FUNDID": "35",
+            "FUNDCODE": "270023",
+            "NAVACCUMULATED": "2.0860",
+            "PRENAVACCUMULATED": "2.0560",
+            "DAYINCREMENTRATE": "1.86",
+            "YEARLYROE7": "0.0000",
+            "NAVDATE": "20180629",
+            "PRENAVEDATE": "20180628"
+          }
+        ],
+        "pagelines": "20",
+        "curpage": "1",
+        "totalrows": "1",
+        "totalpages": "1",
+        "memtime": "2026-10-16 16:50:03",
+        "_cachetime": "2026-10-16T08:50:03.024Z",
+        "_filtertime": "2026-10-16T08:50:03.025Z",
+        "_lastfilter": "set-cache-time.js,override-nav-by-wcm.js"
+      }
+    },
+    {
+      "date": "2018-07-02",
+      "official_url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20180701&enddate=20180703&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "official_response": {
+        "errorno": "20000",
+        "errormsg": "Success!",
+        "data": [
+          {
+            "FUNDNAME": "广发全球精选股票（QDII）人民币A",
+            "PRENAVUNIT": "1.6470",
+            "NAVUNIT": "1.6340",
+            "UNITYIELD": "0.0000",
+            "FUNDID": "35",
+            "FUNDCODE": "270023",
+            "NAVACCUMULATED": "2.0730",
+            "PRENAVACCUMULATED": "2.0860",
+            "DAYINCREMENTRATE": "-0.79",
+            "YEARLYROE7": "0.0000",
+            "NAVDATE": "20180703",
+            "PRENAVEDATE": "20180702"
+          }
+        ],
+        "pagelines": "20",
+        "curpage": "1",
+        "totalrows": "1",
+        "totalpages": "1",
+        "memtime": "2026-10-16 16:50:03",
+        "_cachetime": "2026-10-16T08:50:03.047Z",
+        "_filtertime": "2026-10-16T08:50:03.048Z",
+        "_lastfilter": "set-cache-time.js,override-nav-by-wcm.js"
+      }
+    },
+    {
+      "date": "2018-09-03",
+      "official_url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20180902&enddate=20180904&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "official_response": {
+        "errorno": "20000",
+        "errormsg": "Success!",
+        "data": [
+          {
+            "FUNDNAME": "广发全球精选股票（QDII）人民币A",
+            "PRENAVUNIT": "1.5560",
+            "NAVUNIT": "1.5580",
+            "UNITYIELD": "0.0000",
+            "FUNDID": "35",
+            "FUNDCODE": "270023",
+            "NAVACCUMULATED": "1.9970",
+            "PRENAVACCUMULATED": "1.9950",
+            "DAYINCREMENTRATE": "0.13",
+            "YEARLYROE7": "0.0000",
+            "NAVDATE": "20180904",
+            "PRENAVEDATE": "20180903"
+          }
+        ],
+        "pagelines": "20",
+        "curpage": "1",
+        "totalrows": "1",
+        "totalpages": "1",
+        "memtime": "2026-10-16 16:50:03",
+        "_cachetime": "2026-10-16T08:50:03.064Z",
+        "_filtertime": "2026-10-16T08:50:03.065Z",
+        "_lastfilter": "set-cache-time.js,override-nav-by-wcm.js"
+      }
+    }
+  ]
+}

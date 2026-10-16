@@ -1,0 +1,1020 @@
+{
+  "code": "270023",
+  "share_class": "人民币A",
+  "checked_at": "2026-10-16T16:34:00.215+08:00",
+  "sources": [
+    "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20260101&enddate=20261016&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+    "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20260101&enddate=20261016&orderby=NAVDATE_DESC&pagelines=20&curpage=2",
+    "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20260101&enddate=20261016&orderby=NAVDATE_DESC&pagelines=20&curpage=3",
+    "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20260101&enddate=20261016&orderby=NAVDATE_DESC&pagelines=20&curpage=4",
+    "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20260101&enddate=20261016&orderby=NAVDATE_DESC&pagelines=20&curpage=5",
+    "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20260101&enddate=20261016&orderby=NAVDATE_DESC&pagelines=20&curpage=6",
+    "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20260101&enddate=20261016&orderby=NAVDATE_DESC&pagelines=20&curpage=7",
+    "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20260101&enddate=20261016&orderby=NAVDATE_DESC&pagelines=20&curpage=8",
+    "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20260101&enddate=20261016&orderby=NAVDATE_DESC&pagelines=20&curpage=9",
+    "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20260101&enddate=20261016&orderby=NAVDATE_DESC&pagelines=20&curpage=10",
+    "https://www.gffunds.com.cn/apistore/JsonService?service=Equity&method=Dividend&op=queryDividendByFundcode&fundcode=270023",
+    "https://www.gffunds.com.cn/funds/?fundcode=270023"
+  ],
+  "comparison": {
+    "matched_dates": 185,
+    "mismatches": 0,
+    "compared_to": "270023_公开日净值_抓取2026-10-15.json",
+    "date_range": "2026-01-05至2026-10-13"
+  },
+  "dividend_check": {
+    "official_records_count": 6,
+    "records_in_2026": 0,
+    "latest_ex_date": "2018-05-23",
+    "accumulated_minus_unit_nav_constant": 0.439,
+    "split_check": "No split event is evident from the NAV series; the dividend endpoint reports dividend records only, so an independent official split registry was not obtained."
+  },
+  "public_dividend_records": [
+    {
+      "DIVIDENTYEAR": "2018",
+      "FUNDCODE": "270023",
+      "RECORDDATE": "20180524",
+      "EXDATE": "20180523",
+      "UNITAMOUNT": "0.0520",
+      "REINVESTDATE": "20180525",
+      "DISTRIBUTEDATE": "20180529"
+    },
+    {
+      "DIVIDENTYEAR": "2017",
+      "FUNDCODE": "270023",
+      "RECORDDATE": "20170630",
+      "EXDATE": "20170629",
+      "UNITAMOUNT": "0.1870",
+      "REINVESTDATE": "20170703",
+      "DISTRIBUTEDATE": "20170705"
+    },
+    {
+      "DIVIDENTYEAR": "2016",
+      "FUNDCODE": "270023",
+      "RECORDDATE": "20160927",
+      "EXDATE": "20160926",
+      "UNITAMOUNT": "0.1000",
+      "REINVESTDATE": "20160928",
+      "DISTRIBUTEDATE": "20160930"
+    },
+    {
+      "DIVIDENTYEAR": "2016",
+      "FUNDCODE": "270023",
+      "RECORDDATE": "20160223",
+      "EXDATE": "20160222",
+      "UNITAMOUNT": "0.0250",
+      "REINVESTDATE": "20160224",
+      "DISTRIBUTEDATE": "20160226"
+    },
+    {
+      "DIVIDENTYEAR": "2015",
+      "FUNDCODE": "270023",
+      "RECORDDATE": "20150211",
+      "EXDATE": "20150210",
+      "UNITAMOUNT": "0.0450",
+      "REINVESTDATE": "20150212",
+      "DISTRIBUTEDATE": "20150216"
+    },
+    {
+      "DIVIDENTYEAR": "2014",
+      "FUNDCODE": "270023",
+      "RECORDDATE": "20140116",
+      "EXDATE": "20140115",
+      "UNITAMOUNT": "0.0300",
+      "REINVESTDATE": "20140117",
+      "DISTRIBUTEDATE": "20140121"
+    }
+  ],
+  "rows": [
+    {
+      "date": "2026-01-05",
+      "nav": 4.7337,
+      "accumulated_nav": 5.1727
+    },
+    {
+      "date": "2026-01-06",
+      "nav": 4.8206,
+      "accumulated_nav": 5.2596
+    },
+    {
+      "date": "2026-01-07",
+      "nav": 4.8463,
+      "accumulated_nav": 5.2853
+    },
+    {
+      "date": "2026-01-08",
+      "nav": 4.8025,
+      "accumulated_nav": 5.2415
+    },
+    {
+      "date": "2026-01-09",
+      "nav": 4.876,
+      "accumulated_nav": 5.315
+    },
+    {
+      "date": "2026-01-12",
+      "nav": 4.93,
+      "accumulated_nav": 5.369
+    },
+    {
+      "date": "2026-01-13",
+      "nav": 4.9169,
+      "accumulated_nav": 5.3559
+    },
+    {
+      "date": "2026-01-14",
+      "nav": 4.893,
+      "accumulated_nav": 5.332
+    },
+    {
+      "date": "2026-01-15",
+      "nav": 4.9363,
+      "accumulated_nav": 5.3753
+    },
+    {
+      "date": "2026-01-16",
+      "nav": 4.9719,
+      "accumulated_nav": 5.4109
+    },
+    {
+      "date": "2026-01-19",
+      "nav": 4.9606,
+      "accumulated_nav": 5.3996
+    },
+    {
+      "date": "2026-01-20",
+      "nav": 4.8748,
+      "accumulated_nav": 5.3138
+    },
+    {
+      "date": "2026-01-21",
+      "nav": 4.9606,
+      "accumulated_nav": 5.3996
+    },
+    {
+      "date": "2026-01-22",
+      "nav": 4.9855,
+      "accumulated_nav": 5.4245
+    },
+    {
+      "date": "2026-01-23",
+      "nav": 4.9598,
+      "accumulated_nav": 5.3988
+    },
+    {
+      "date": "2026-01-26",
+      "nav": 4.9581,
+      "accumulated_nav": 5.3971
+    },
+    {
+      "date": "2026-01-27",
+      "nav": 5.0512,
+      "accumulated_nav": 5.4902
+    },
+    {
+      "date": "2026-01-28",
+      "nav": 5.1155,
+      "accumulated_nav": 5.5545
+    },
+    {
+      "date": "2026-01-29",
+      "nav": 5.0843,
+      "accumulated_nav": 5.5233
+    },
+    {
+      "date": "2026-01-30",
+      "nav": 5.0376,
+      "accumulated_nav": 5.4766
+    },
+    {
+      "date": "2026-02-02",
+      "nav": 5.0261,
+      "accumulated_nav": 5.4651
+    },
+    {
+      "date": "2026-02-03",
+      "nav": 5.0188,
+      "accumulated_nav": 5.4578
+    },
+    {
+      "date": "2026-02-04",
+      "nav": 4.8743,
+      "accumulated_nav": 5.3133
+    },
+    {
+      "date": "2026-02-05",
+      "nav": 4.8188,
+      "accumulated_nav": 5.2578
+    },
+    {
+      "date": "2026-02-06",
+      "nav": 4.9177,
+      "accumulated_nav": 5.3567
+    },
+    {
+      "date": "2026-02-09",
+      "nav": 5.0061,
+      "accumulated_nav": 5.4451
+    },
+    {
+      "date": "2026-02-10",
+      "nav": 5.0064,
+      "accumulated_nav": 5.4454
+    },
+    {
+      "date": "2026-02-11",
+      "nav": 5.0362,
+      "accumulated_nav": 5.4752
+    },
+    {
+      "date": "2026-02-12",
+      "nav": 5.0382,
+      "accumulated_nav": 5.4772
+    },
+    {
+      "date": "2026-02-13",
+      "nav": 5.0543,
+      "accumulated_nav": 5.4933
+    },
+    {
+      "date": "2026-02-24",
+      "nav": 5.2389,
+      "accumulated_nav": 5.6779
+    },
+    {
+      "date": "2026-02-25",
+      "nav": 5.2637,
+      "accumulated_nav": 5.7027
+    },
+    {
+      "date": "2026-02-26",
+      "nav": 5.1786,
+      "accumulated_nav": 5.6176
+    },
+    {
+      "date": "2026-02-27",
+      "nav": 5.1398,
+      "accumulated_nav": 5.5788
+    },
+    {
+      "date": "2026-03-02",
+      "nav": 5.1437,
+      "accumulated_nav": 5.5827
+    },
+    {
+      "date": "2026-03-03",
+      "nav": 4.9847,
+      "accumulated_nav": 5.4237
+    },
+    {
+      "date": "2026-03-04",
+      "nav": 5.0185,
+      "accumulated_nav": 5.4575
+    },
+    {
+      "date": "2026-03-05",
+      "nav": 5.0004,
+      "accumulated_nav": 5.4394
+    },
+    {
+      "date": "2026-03-06",
+      "nav": 4.8967,
+      "accumulated_nav": 5.3357
+    },
+    {
+      "date": "2026-03-09",
+      "nav": 4.9721,
+      "accumulated_nav": 5.4111
+    },
+    {
+      "date": "2026-03-10",
+      "nav": 5.0595,
+      "accumulated_nav": 5.4985
+    },
+    {
+      "date": "2026-03-11",
+      "nav": 5.0935,
+      "accumulated_nav": 5.5325
+    },
+    {
+      "date": "2026-03-12",
+      "nav": 4.9799,
+      "accumulated_nav": 5.4189
+    },
+    {
+      "date": "2026-03-13",
+      "nav": 4.9686,
+      "accumulated_nav": 5.4076
+    },
+    {
+      "date": "2026-03-16",
+      "nav": 5.0686,
+      "accumulated_nav": 5.5076
+    },
+    {
+      "date": "2026-03-17",
+      "nav": 5.0641,
+      "accumulated_nav": 5.5031
+    },
+    {
+      "date": "2026-03-18",
+      "nav": 5.11,
+      "accumulated_nav": 5.549
+    },
+    {
+      "date": "2026-03-19",
+      "nav": 5.0696,
+      "accumulated_nav": 5.5086
+    },
+    {
+      "date": "2026-03-20",
+      "nav": 4.9514,
+      "accumulated_nav": 5.3904
+    },
+    {
+      "date": "2026-03-23",
+      "nav": 4.9328,
+      "accumulated_nav": 5.3718
+    },
+    {
+      "date": "2026-03-24",
+      "nav": 4.9748,
+      "accumulated_nav": 5.4138
+    },
+    {
+      "date": "2026-03-25",
+      "nav": 5.0453,
+      "accumulated_nav": 5.4843
+    },
+    {
+      "date": "2026-03-26",
+      "nav": 4.8604,
+      "accumulated_nav": 5.2994
+    },
+    {
+      "date": "2026-03-27",
+      "nav": 4.8031,
+      "accumulated_nav": 5.2421
+    },
+    {
+      "date": "2026-03-30",
+      "nav": 4.742,
+      "accumulated_nav": 5.181
+    },
+    {
+      "date": "2026-03-31",
+      "nav": 4.826,
+      "accumulated_nav": 5.265
+    },
+    {
+      "date": "2026-04-01",
+      "nav": 5.0377,
+      "accumulated_nav": 5.4767
+    },
+    {
+      "date": "2026-04-02",
+      "nav": 4.9572,
+      "accumulated_nav": 5.3962
+    },
+    {
+      "date": "2026-04-03",
+      "nav": 4.9793,
+      "accumulated_nav": 5.4183
+    },
+    {
+      "date": "2026-04-07",
+      "nav": 5.0168,
+      "accumulated_nav": 5.4558
+    },
+    {
+      "date": "2026-04-08",
+      "nav": 5.2943,
+      "accumulated_nav": 5.7333
+    },
+    {
+      "date": "2026-04-09",
+      "nav": 5.3879,
+      "accumulated_nav": 5.8269
+    },
+    {
+      "date": "2026-04-10",
+      "nav": 5.4461,
+      "accumulated_nav": 5.8851
+    },
+    {
+      "date": "2026-04-13",
+      "nav": 5.5133,
+      "accumulated_nav": 5.9523
+    },
+    {
+      "date": "2026-04-14",
+      "nav": 5.6151,
+      "accumulated_nav": 6.0541
+    },
+    {
+      "date": "2026-04-15",
+      "nav": 5.5597,
+      "accumulated_nav": 5.9987
+    },
+    {
+      "date": "2026-04-16",
+      "nav": 5.613,
+      "accumulated_nav": 6.052
+    },
+    {
+      "date": "2026-04-17",
+      "nav": 5.6601,
+      "accumulated_nav": 6.0991
+    },
+    {
+      "date": "2026-04-20",
+      "nav": 5.6865,
+      "accumulated_nav": 6.1255
+    },
+    {
+      "date": "2026-04-21",
+      "nav": 5.6612,
+      "accumulated_nav": 6.1002
+    },
+    {
+      "date": "2026-04-22",
+      "nav": 5.7988,
+      "accumulated_nav": 6.2378
+    },
+    {
+      "date": "2026-04-23",
+      "nav": 5.7475,
+      "accumulated_nav": 6.1865
+    },
+    {
+      "date": "2026-04-24",
+      "nav": 5.7816,
+      "accumulated_nav": 6.2206
+    },
+    {
+      "date": "2026-04-27",
+      "nav": 5.7986,
+      "accumulated_nav": 6.2376
+    },
+    {
+      "date": "2026-04-28",
+      "nav": 5.6694,
+      "accumulated_nav": 6.1084
+    },
+    {
+      "date": "2026-04-29",
+      "nav": 5.6878,
+      "accumulated_nav": 6.1268
+    },
+    {
+      "date": "2026-04-30",
+      "nav": 5.7895,
+      "accumulated_nav": 6.2285
+    },
+    {
+      "date": "2026-05-06",
+      "nav": 6.1067,
+      "accumulated_nav": 6.5457
+    },
+    {
+      "date": "2026-05-07",
+      "nav": 6.1222,
+      "accumulated_nav": 6.5612
+    },
+    {
+      "date": "2026-05-08",
+      "nav": 6.2601,
+      "accumulated_nav": 6.6991
+    },
+    {
+      "date": "2026-05-11",
+      "nav": 6.3643,
+      "accumulated_nav": 6.8033
+    },
+    {
+      "date": "2026-05-12",
+      "nav": 6.287,
+      "accumulated_nav": 6.726
+    },
+    {
+      "date": "2026-05-13",
+      "nav": 6.5187,
+      "accumulated_nav": 6.9577
+    },
+    {
+      "date": "2026-05-14",
+      "nav": 6.4554,
+      "accumulated_nav": 6.8944
+    },
+    {
+      "date": "2026-05-15",
+      "nav": 6.2804,
+      "accumulated_nav": 6.7194
+    },
+    {
+      "date": "2026-05-18",
+      "nav": 6.2525,
+      "accumulated_nav": 6.6915
+    },
+    {
+      "date": "2026-05-19",
+      "nav": 6.1855,
+      "accumulated_nav": 6.6245
+    },
+    {
+      "date": "2026-05-20",
+      "nav": 6.3169,
+      "accumulated_nav": 6.7559
+    },
+    {
+      "date": "2026-05-21",
+      "nav": 6.3839,
+      "accumulated_nav": 6.8229
+    },
+    {
+      "date": "2026-05-22",
+      "nav": 6.5402,
+      "accumulated_nav": 6.9792
+    },
+    {
+      "date": "2026-05-25",
+      "nav": 6.6215,
+      "accumulated_nav": 7.0605
+    },
+    {
+      "date": "2026-05-26",
+      "nav": 6.758,
+      "accumulated_nav": 7.197
+    },
+    {
+      "date": "2026-05-27",
+      "nav": 6.7582,
+      "accumulated_nav": 7.1972
+    },
+    {
+      "date": "2026-05-28",
+      "nav": 6.828,
+      "accumulated_nav": 7.267
+    },
+    {
+      "date": "2026-05-29",
+      "nav": 6.8314,
+      "accumulated_nav": 7.2704
+    },
+    {
+      "date": "2026-06-01",
+      "nav": 6.8347,
+      "accumulated_nav": 7.2737
+    },
+    {
+      "date": "2026-06-02",
+      "nav": 6.9091,
+      "accumulated_nav": 7.3481
+    },
+    {
+      "date": "2026-06-03",
+      "nav": 6.9623,
+      "accumulated_nav": 7.4013
+    },
+    {
+      "date": "2026-06-04",
+      "nav": 6.8709,
+      "accumulated_nav": 7.3099
+    },
+    {
+      "date": "2026-06-05",
+      "nav": 6.5048,
+      "accumulated_nav": 6.9438
+    },
+    {
+      "date": "2026-06-08",
+      "nav": 6.544,
+      "accumulated_nav": 6.983
+    },
+    {
+      "date": "2026-06-09",
+      "nav": 6.5295,
+      "accumulated_nav": 6.9685
+    },
+    {
+      "date": "2026-06-10",
+      "nav": 6.342,
+      "accumulated_nav": 6.781
+    },
+    {
+      "date": "2026-06-11",
+      "nav": 6.6019,
+      "accumulated_nav": 7.0409
+    },
+    {
+      "date": "2026-06-12",
+      "nav": 6.6909,
+      "accumulated_nav": 7.1299
+    },
+    {
+      "date": "2026-06-15",
+      "nav": 7.0679,
+      "accumulated_nav": 7.5069
+    },
+    {
+      "date": "2026-06-16",
+      "nav": 6.9684,
+      "accumulated_nav": 7.4074
+    },
+    {
+      "date": "2026-06-17",
+      "nav": 7.0938,
+      "accumulated_nav": 7.5328
+    },
+    {
+      "date": "2026-06-18",
+      "nav": 7.4158,
+      "accumulated_nav": 7.8548
+    },
+    {
+      "date": "2026-06-22",
+      "nav": 7.6638,
+      "accumulated_nav": 8.1028
+    },
+    {
+      "date": "2026-06-23",
+      "nav": 7.2001,
+      "accumulated_nav": 7.6391
+    },
+    {
+      "date": "2026-06-24",
+      "nav": 7.2124,
+      "accumulated_nav": 7.6514
+    },
+    {
+      "date": "2026-06-25",
+      "nav": 7.541,
+      "accumulated_nav": 7.98
+    },
+    {
+      "date": "2026-06-26",
+      "nav": 7.2153,
+      "accumulated_nav": 7.6543
+    },
+    {
+      "date": "2026-06-29",
+      "nav": 7.343,
+      "accumulated_nav": 7.782
+    },
+    {
+      "date": "2026-06-30",
+      "nav": 7.5358,
+      "accumulated_nav": 7.9748
+    },
+    {
+      "date": "2026-07-01",
+      "nav": 7.3264,
+      "accumulated_nav": 7.7654
+    },
+    {
+      "date": "2026-07-02",
+      "nav": 6.8688,
+      "accumulated_nav": 7.3078
+    },
+    {
+      "date": "2026-07-03",
+      "nav": 6.9238,
+      "accumulated_nav": 7.3628
+    },
+    {
+      "date": "2026-07-06",
+      "nav": 6.8681,
+      "accumulated_nav": 7.3071
+    },
+    {
+      "date": "2026-07-07",
+      "nav": 6.6953,
+      "accumulated_nav": 7.1343
+    },
+    {
+      "date": "2026-07-08",
+      "nav": 6.7747,
+      "accumulated_nav": 7.2137
+    },
+    {
+      "date": "2026-07-09",
+      "nav": 7.0152,
+      "accumulated_nav": 7.4542
+    },
+    {
+      "date": "2026-07-10",
+      "nav": 6.8796,
+      "accumulated_nav": 7.3186
+    },
+    {
+      "date": "2026-07-13",
+      "nav": 6.6103,
+      "accumulated_nav": 7.0493
+    },
+    {
+      "date": "2026-07-14",
+      "nav": 6.7454,
+      "accumulated_nav": 7.1844
+    },
+    {
+      "date": "2026-07-15",
+      "nav": 6.7304,
+      "accumulated_nav": 7.1694
+    },
+    {
+      "date": "2026-07-16",
+      "nav": 6.4282,
+      "accumulated_nav": 6.8672
+    },
+    {
+      "date": "2026-07-17",
+      "nav": 6.1645,
+      "accumulated_nav": 6.6035
+    },
+    {
+      "date": "2026-07-20",
+      "nav": 6.1173,
+      "accumulated_nav": 6.5563
+    },
+    {
+      "date": "2026-07-21",
+      "nav": 6.4399,
+      "accumulated_nav": 6.8789
+    },
+    {
+      "date": "2026-07-22",
+      "nav": 6.4324,
+      "accumulated_nav": 6.8714
+    },
+    {
+      "date": "2026-07-23",
+      "nav": 6.3974,
+      "accumulated_nav": 6.8364
+    },
+    {
+      "date": "2026-07-24",
+      "nav": 6.224,
+      "accumulated_nav": 6.663
+    },
+    {
+      "date": "2026-07-27",
+      "nav": 6.1678,
+      "accumulated_nav": 6.6068
+    },
+    {
+      "date": "2026-07-28",
+      "nav": 5.864,
+      "accumulated_nav": 6.303
+    },
+    {
+      "date": "2026-07-29",
+      "nav": 5.6997,
+      "accumulated_nav": 6.1387
+    },
+    {
+      "date": "2026-07-30",
+      "nav": 5.878,
+      "accumulated_nav": 6.317
+    },
+    {
+      "date": "2026-07-31",
+      "nav": 6.053,
+      "accumulated_nav": 6.492
+    },
+    {
+      "date": "2026-08-03",
+      "nav": 6.1052,
+      "accumulated_nav": 6.5442
+    },
+    {
+      "date": "2026-08-04",
+      "nav": 6.3281,
+      "accumulated_nav": 6.7671
+    },
+    {
+      "date": "2026-08-05",
+      "nav": 6.347,
+      "accumulated_nav": 6.786
+    },
+    {
+      "date": "2026-08-06",
+      "nav": 6.283,
+      "accumulated_nav": 6.722
+    },
+    {
+      "date": "2026-08-07",
+      "nav": 6.3614,
+      "accumulated_nav": 6.8004
+    },
+    {
+      "date": "2026-08-10",
+      "nav": 6.328,
+      "accumulated_nav": 6.767
+    },
+    {
+      "date": "2026-08-11",
+      "nav": 6.3194,
+      "accumulated_nav": 6.7584
+    },
+    {
+      "date": "2026-08-12",
+      "nav": 6.4204,
+      "accumulated_nav": 6.8594
+    },
+    {
+      "date": "2026-08-13",
+      "nav": 6.488,
+      "accumulated_nav": 6.927
+    },
+    {
+      "date": "2026-08-14",
+      "nav": 6.5066,
+      "accumulated_nav": 6.9456
+    },
+    {
+      "date": "2026-08-17",
+      "nav": 6.6121,
+      "accumulated_nav": 7.0511
+    },
+    {
+      "date": "2026-08-18",
+      "nav": 6.4327,
+      "accumulated_nav": 6.8717
+    },
+    {
+      "date": "2026-08-19",
+      "nav": 6.2379,
+      "accumulated_nav": 6.6769
+    },
+    {
+      "date": "2026-08-20",
+      "nav": 6.2854,
+      "accumulated_nav": 6.7244
+    },
+    {
+      "date": "2026-08-21",
+      "nav": 6.3199,
+      "accumulated_nav": 6.7589
+    },
+    {
+      "date": "2026-08-24",
+      "nav": 6.1848,
+      "accumulated_nav": 6.6238
+    },
+    {
+      "date": "2026-08-25",
+      "nav": 6.2381,
+      "accumulated_nav": 6.6771
+    },
+    {
+      "date": "2026-08-26",
+      "nav": 6.2376,
+      "accumulated_nav": 6.6766
+    },
+    {
+      "date": "2026-08-27",
+      "nav": 6.3308,
+      "accumulated_nav": 6.7698
+    },
+    {
+      "date": "2026-08-28",
+      "nav": 6.2341,
+      "accumulated_nav": 6.6731
+    },
+    {
+      "date": "2026-08-31",
+      "nav": 6.2692,
+      "accumulated_nav": 6.7082
+    },
+    {
+      "date": "2026-09-01",
+      "nav": 6.1806,
+      "accumulated_nav": 6.6196
+    },
+    {
+      "date": "2026-09-02",
+      "nav": 6.1615,
+      "accumulated_nav": 6.6005
+    },
+    {
+      "date": "2026-09-03",
+      "nav": 6.1957,
+      "accumulated_nav": 6.6347
+    },
+    {
+      "date": "2026-09-04",
+      "nav": 6.3006,
+      "accumulated_nav": 6.7396
+    },
+    {
+      "date": "2026-09-07",
+      "nav": 6.3575,
+      "accumulated_nav": 6.7965
+    },
+    {
+      "date": "2026-09-08",
+      "nav": 6.3858,
+      "accumulated_nav": 6.8248
+    },
+    {
+      "date": "2026-09-09",
+      "nav": 6.3976,
+      "accumulated_nav": 6.8366
+    },
+    {
+      "date": "2026-09-10",
+      "nav": 6.3066,
+      "accumulated_nav": 6.7456
+    },
+    {
+      "date": "2026-09-11",
+      "nav": 6.3014,
+      "accumulated_nav": 6.7404
+    },
+    {
+      "date": "2026-09-14",
+      "nav": 6.1358,
+      "accumulated_nav": 6.5748
+    },
+    {
+      "date": "2026-09-15",
+      "nav": 6.1083,
+      "accumulated_nav": 6.5473
+    },
+    {
+      "date": "2026-09-16",
+      "nav": 6.146,
+      "accumulated_nav": 6.585
+    },
+    {
+      "date": "2026-09-17",
+      "nav": 6.2095,
+      "accumulated_nav": 6.6485
+    },
+    {
+      "date": "2026-09-18",
+      "nav": 6.3499,
+      "accumulated_nav": 6.7889
+    },
+    {
+      "date": "2026-09-21",
+      "nav": 6.5027,
+      "accumulated_nav": 6.9417
+    },
+    {
+      "date": "2026-09-22",
+      "nav": 6.5499,
+      "accumulated_nav": 6.9889
+    },
+    {
+      "date": "2026-09-23",
+      "nav": 6.4928,
+      "accumulated_nav": 6.9318
+    },
+    {
+      "date": "2026-09-24",
+      "nav": 6.4663,
+      "accumulated_nav": 6.9053
+    },
+    {
+      "date": "2026-09-28",
+      "nav": 6.3616,
+      "accumulated_nav": 6.8006
+    },
+    {
+      "date": "2026-09-29",
+      "nav": 6.4046,
+      "accumulated_nav": 6.8436
+    },
+    {
+      "date": "2026-09-30",
+      "nav": 6.4134,
+      "accumulated_nav": 6.8524
+    },
+    {
+      "date": "2026-10-08",
+      "nav": 6.3581,
+      "accumulated_nav": 6.7971
+    },
+    {
+      "date": "2026-10-09",
+      "nav": 6.3671,
+      "accumulated_nav": 6.8061
+    },
+    {
+      "date": "2026-10-12",
+      "nav": 6.2734,
+      "accumulated_nav": 6.7124
+    },
+    {
+      "date": "2026-10-13",
+      "nav": 6.2013,
+      "accumulated_nav": 6.6403
+    },
+    {
+      "date": "2026-10-14",
+      "nav": 6.0497,
+      "accumulated_nav": 6.4887
+    }
+  ]
+}

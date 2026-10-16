@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>网上交易费率优惠和支付限额表-网上交易费率限额表-广发基金</title>
+    <link rel="shortcut icon" href="/images/favicon.png" />
+    <link rel="stylesheet" href="/images/page_fundselector.css" />
+    <link rel="stylesheet" href="/images/page_common.css" />
+    <link rel="stylesheet" href="/images/page_ny.css" />
+    <!--[if (gt IE 9)|!(IE)]><!-->
+    <script type="text/javascript" src="/images/common.js"></script>
+    <!--<![endif]-->
+    <!--[if lte IE 9]>
+    <script type="text/javascript" src="/images/common-shim.js"></script>
+    <![endif]-->
+    <script type="text/javascript" src="../../../funds/cpmp/allFunds.js"></script>
+    <script type="text/javascript" src="/images/page_fundselector.js?v=20200903"></script>
+    <script type="text/javascript" src="/images/page_common.js"></script>
+    <script type="text/javascript">
+        //基金推荐
+        var fundrecomStr = "";
+
+        //公募基金
+        var fundcodeVipStr = "";
+
+        //专户基金
+        var fundcodeStr = "";
+
+        //基金超市url
+        var jjcsUrl = "../../../funds/";
+    </script>
+    <script type="text/javascript" src="/images/page_jjtj.js?v=20200706"></script>
+</head>
+<body>
+<!--头部开始-->
+<style>
+    #header .topbar .r-box ul li .tc-box p.xsjg{
+        background: url("http://www.gffunds.com.cn/images/2016gfjj_header_ico_xsjgcx.png") no-repeat 22px center;
+    }
+    #content .ny-con .col-2-1{
+        width: 100%;
+    }
+    #content .ny-con .col-2-2{
+        display: none;
+    }
+    #content .TRS_Editor *{
+        -ms-text-justify: distribute;
+    }
+    #header .topbar .phonCall{
+        height: 35px;
+        text-align: center;
+        margin-left: 20px;
+        font: 12px/35px "微软雅黑";
+        color: #858585;
+    }
+    #header .nav li .gygf_child_nav a {
+        line-height: 32px;
+    }
+</style>
+<div id="header">
+    <div style="display: none;"><img src="http://www.gffunds.com.cn/images/2016wx_logo_300.png" /></div>
+    <div class="topbar">
+        <span class="l-box js_loginInfo">
+        </span>
+        <div class="r-box js_nav">
+            <ul>
+                <li class="">
+                    <span class="span01"><a class="menu" href="#">随身理财</a></span>
+                    <div class="tc-box01 js_tcBox" style="display: none;">
+                        <div class="bg-top"></div>
+                        <div class="main">
+                            <div class="ewm">
+                                <span class="float-left">广发基金APP</br><img src="http://www.gffunds.com.cn/images/2016gfjj_ewm_app.jpg" alt="" /></span>
+                                <span class="float-right">官方微信</br><img src="http://www.gffunds.com.cn/images/2016gfjj_ewm_wx.jpg" alt="" /></span>
+                            </div>
+                            <p class="mt10">官方微博<a href="http://weibo.com/gffunds" target="_blank">+关注</a> </p>
+                        </div>
+                        <div class="bg-bottom"></div>
+                    </div>
+                </li>
+                <li class="">
+                    <span class="span02"><a class="menu" href="#">客户服务</a></span>
+                    <div class="tc-box js_tcBox" style="display: none;">
+                        <div class="bg-top"></div>
+                        <p class="p1"><a href="http://www.gffunds.com.cn/service/" target="_blank">服务大厅</a></p>
+                        <p class="p2"><a href="http://live800.gffunds.com.cn/live800/chatClient/chatbox.jsp?companyID=203&configID=78270&prplType=%E5%AE%98%E7%BD%91&platform=Ch_WEB" target="_blank">在线客服</a></p>
+                        <p class="p3">客服热线</br>95105828</p>
+                        <p class="xsjg"><a href="http://www.gffunds.com.cn/xswd/" target="_blank">销售机构</a></p>
+                        <div class="bg-bottom"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="r-box phonCall">
+            客服热线：95105828
+        </div>
+        <div class="r-box2 js_nav2">
+            <ul>
+                <li><a href="http://edu.gffunds.com.cn/" target="_blank">投教基地</a></li>|
+                <li><a href="http://www.gffunds.com.hk/en/" target="_blank">广发国际</a></li>|
+                <li><a href="http://www.gffunds.com.cn/ryzb/rycp/" target="_blank">瑞元资本</a></li>|
+                <li><a class="en" href="http://www.gffunds.com.cn/en/" target="_blank">English</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="logo-nav">
+        <h1><a href="http://www.gffunds.com.cn/" title="广发基金">广发基金</a></h1>
+        <ul class="nav">
+            <li id="sy_cur"><a href="http://www.gffunds.com.cn/">首页</a></li>
+            <li id="jjcs_cur">
+                <a href="http://www.gffunds.com.cn/funds/">个人理财</a>
+                <div class="child_nav frlc_child_nav">
+                    <a href="http://www.gffunds.com.cn/funds/">基金超市</a>
+                    <a href="https://trade.gffunds.com.cn/wallet/my-wallet" target="_blank">钱袋子</a>
+                    <a href="https://www.gffunds.com.cn/html/jjzt/gfjjtg/" target="_blank">基金投顾</a>
+                    <a href="http://www.gffunds.com.cn/html/ydt/" target="_blank">智能定投</a>
+                </div>
+            </li>
+            <li id="header_vip_cur"><a href="https://trade.gffunds.com.cn/html/app/pc-static/vip-introduction/index.html" target="_blank">高端理财</a></li>
+            <li>
+                <a href="https://www.gffunds.com.cn/html/jjzt/gf-kapok-financials/" target="_blank" class="js_navQdz">企业理财</a>
+                <div class="child_nav qylc_child_nav">
+                    <a href="https://www.gffunds.com.cn/html/jjzt/gf-kapok-financials/" target="_blank" style="background: url(http://www.gffunds.com.cn/images/2016gfjj_index_qylc_bg.png) no-repeat left top;line-height: 24px;">木棉司库<br>（在线理财）</a>
+                    <a href="http://www.gffunds.com.cn/xswd/bgxz/jglyw/" target="_blank" style="background: url(http://www.gffunds.com.cn/images/2016gfjj_index_qylc_bg.png) no-repeat left top;line-height: 26px;">柜台理财</a>
+                </div>
+            </li>
+            <li id="gywm_cur">
+                <a href="http://www.gffunds.com.cn/gywm/">关于广发</a>
+                <div class="child_nav gygf_child_nav" style="height: 270px; background: url(http://www.gffunds.com.cn/images/2019gfjj_index_gygf_bg.png) no-repeat left bottom" ignoreapd="1">
+                    <a href="http://www.gffunds.com.cn/gywm/gsjj/">公司简介</a>
+                    <a href="http://www.gffunds.com.cn/gywm/4/">聚焦广发</a>
+                    <a href="http://www.gffunds.com.cn/gongyi/">公益广发</a>
+                    <a href="http://www.gffunds.com.cn/gywm/esg/">可持续投资</a>
+                    <a href="http://www.gffunds.com.cn/gywm/czyry/">成长与荣誉 </a>
+                    <a href="http://www.gffunds.com.cn/jjgg/?v=2.0">信息披露</a>
+                    <a href="http://www.gffunds.com.cn/recruitment/" target="_blank">加入我们</a>
+                    <a href="http://www.gffunds.com.cn/gywm/lxwm/">联系我们</a>
+                </div>
+            </li>
+        </ul>
+        <div class="search">
+            <div class="sel">
+                <span class="js_searchTitle">产品</span>
+                <ul class="js_searchNav" style="display: none">
+                    <li>产品</li>
+                    <li>资讯</li>
+                </ul>
+            </div>
+            <div class="search-wrap js_searchWrap">
+                <input class="sr" id="fundPicker" type="text" value="基金/基金经理/重仓股" />
+                <a href="javascript:void(0);" id="subsearch" class="btn" style="display: none"><span></span></a>
+            </div>
+            <div class="search-wrap js_searchWrap" style="display: none;">
+                <input class="sr js_newsInput" type="text" placeholder="资讯关键词" />
+                <a href="http://www.gffunds.com.cn/zxss/" target="_blank" class="btn js_newsLink" style="display: none"><span></span></a>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div class="tooltip js_tooltip">
+    <h2><span class="close js_tooltipClose"></span></h2>
+    <p class="prompt-title">提示</p>
+    <p class="prompt-cont js_tooltipCont"></p>
+    <p class="confirm"><a href="javascript:;" class="js_tooltipSub">确定</a></p>
+</div>
+<div class="alert-modal-bg"></div>
+<!--头部结束-->
+<!--主体开始-->
+<div id="content">
+    <!--面包屑开始-->
+    <div class="curmb">
+        <a href="../../../" title="首页" class="CurrChnlCls">首页</a>&nbsp;&gt;&nbsp;<a href="../../" title="交易相关" class="CurrChnlCls">交易相关</a>&nbsp;&gt;&nbsp;<a href="../" title="网上交易费率限额表" class="CurrChnlCls">网上交易费率限额表</a>
+    </div>
+    <!--面包屑结束-->
+    <div class="ny-con" style="margin-top: 0;">
+        <!--左边开始-->
+        <div class="col-2-1">
+            <div class="xlcontent">
+                <h2>网上交易费率优惠和支付限额表</h2>
+                <h3><span>2020-11-11</span><span>来源：<a href="./t20180402_242866.shtml">广发基金</a></span></h3>
+                <span id="kw" style="display: none;"></span>
+                <p class="bq" id="gj"></p>
+                
+                <p class="zy-box"></p>
+                
+                <!--基金推荐开始-->
+                
+                <table class="table01 js_fundsTable" style="display: none;">
+                    <thead>
+                    <tr>
+                        <td style="width: 150px;">基金名称</td>
+                        <td style="width: 108px;">最近一月</br>收益率</td>
+                        <td style="width: 108px;">最近三月</br>收益率</td>
+                        <td style="width: 108px;">最近半年</br>收益率</td>
+                        <td style="width: 108px;">成立以来</br>收益率</td>
+                        <td style="width: 108px;">操作</td>
+                    </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                
+                <p class="prompt js_prompt"></p>
+                <!--基金推荐结束-->
+                <div class="main xl-nr" id="new_hzcon">
+                    <p>
+                        <div class=TRS_Editor><div class="TRS_PreAppend" style="overflow-x: hidden; word-break: break-all">
+<p align="left" class="MsoNormal" style="word-break: break-all; text-align: left; line-height: normal"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; background: white">一、钱袋子交易费率折扣：</span></p>
+<p align="left" class="MsoNormal" style="word-break: break-all; text-align: left; line-height: normal"><span lang="EN-US" style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; background: white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; background: white">通过钱袋子申购及定投广发基金旗下公募基金，享受前端<b>申购及定投费率<span lang="EN-US">0</span>折</b>的优惠。</span></p>
+<p align="left" class="MsoNormal" style="word-break: break-all; text-align: left; line-height: normal"><span lang="EN-US" style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; background: white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span lang="EN-US" style="font-size: 9pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; background: white; color: #999999"> </span><font style="font-size: 10.5pt"><span style="font-size: 10.5pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; background: white; color: #999999">注：为更好地满足广大投资者的理财需求，从<span lang="EN-US" style="font-size: 10.5pt">2020</span>年<span lang="EN-US" style="font-size: 10.5pt">03</span>月<span lang="EN-US" style="font-size: 10.5pt">31</span>日起，广发基金在网上直销（含广发基金官方网站、广发基金<span lang="EN-US" style="font-size: 10.5pt">APP</span>、广发基金官方微信）推出基金转换申购补差费率优惠活动。个人投资者通过本公司网上直销平台申购我司旗下基金（不含ETF基金）时用“广发钱袋子”账户支付，享受0申购费优惠</span><span style="font-size: 10.5pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; background: white; color: #999999">。了解更多，请点击《</span><span lang="EN-US" style="font-size: 10.5pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; background: white"><a style="font-size: 10.5pt" href="http://www.gffunds.com.cn/jjgg/zdsj/202003/t20200330_357135.shtml"><span lang="EN-US" style="font-size: 10.5pt; color: blue"><span lang="EN-US" style="font-size: 10.5pt">关于开展网上直销平台基金转化补差费率优惠活动的公告</span></span></a></span><span style="font-size: 10.5pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; background: white; color: #999999">》。</span></font></p>
+<p align="left" class="MsoNormal" style="word-break: break-all; text-align: left; line-height: normal">&nbsp;</p>
+<p align="left" class="MsoNormal" style="word-break: break-all; text-align: left; line-height: normal"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; background: white">二、银行卡支付限额：</span></p>
+<p align="left" class="MsoNormal" style="word-break: break-all; text-align: left; line-height: normal"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; background: white">
+<table width="100%" class="MsoNormalTable" style="width: 100%; border-collapse: collapse" border="0" cellspacing="0" cellpadding="0">
+    <tbody>
+        <tr>
+            <td width="15%" style="border-top: windowtext 1pt solid; border-right: windowtext 1pt solid; width: 15.62%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: windowtext 1pt solid; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><b><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">银行卡</span></b></p>
+            </td>
+            <td width="15%" style="border-top: windowtext 1pt solid; border-right: windowtext 1pt solid; width: 15.56%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><b><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">连接方式</span></b></p>
+            </td>
+            <td width="9%" style="border-top: windowtext 1pt solid; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><b><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">支付方式</span></b></p>
+            </td>
+            <td width="42%" style="border-top: windowtext 1pt solid; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><b><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">限额</span></b></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.62%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: windowtext 1pt solid; padding-right: 3pt" rowspan="2">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">工商银行</span></p>
+            </td>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.56%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt" rowspan="2">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">直连</span></p>
+            </td>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">快捷</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="left" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔<span lang="EN-US">1000</span>万元，单日<span lang="EN-US">1000</span>万元 ，单月<span lang="EN-US">5000</span>万元</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">网银</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔<span lang="EN-US">5000</span>万元</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.62%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: windowtext 1pt solid; padding-right: 3pt" rowspan="2">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">建设银行</span></p>
+            </td>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.56%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt" rowspan="2">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">直连</span></p>
+            </td>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">快捷</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔<span lang="EN-US">200</span>万元，单日<span lang="EN-US">200</span>万元，单月<span lang="EN-US">500</span>万元</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">网银</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span lang="EN-US" style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">1.</span><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">一代网银盾<span lang="EN-US">/</span>二代网银盾：单笔<span lang="EN-US">500</span>万<span lang="EN-US">;</span></span></p>
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span lang="EN-US" style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">2.</span><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">短信验证码、短信动态口令：单笔<span lang="EN-US">1000</span>元</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.62%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: windowtext 1pt solid; padding-right: 3pt" rowspan="2">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">农业银行</span></p>
+            </td>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.56%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt" rowspan="2">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">直连</span></p>
+            </td>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">快捷</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔<span lang="EN-US">500</span>万元，单日<span lang="EN-US">500</span>万元</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">网银</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔<span lang="EN-US">500</span>万元</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.62%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: windowtext 1pt solid; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">中国银行</span></p>
+            </td>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.56%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">直连</span></p>
+            </td>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">快捷</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔<span lang="EN-US">50</span>万，单日<span lang="EN-US">50</span>万</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.62%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: windowtext 1pt solid; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">招商银行</span></p>
+            </td>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.56%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">直连</span></p>
+            </td>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">快捷</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔<span lang="EN-US">200</span>万元，单日<span lang="EN-US">200</span>万元</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.62%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: windowtext 1pt solid; padding-right: 3pt" rowspan="2">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">交通银行</span></p>
+            </td>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.56%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt" rowspan="2">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">直连</span></p>
+            </td>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">快捷</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔<span lang="EN-US">500</span>万元，单日<span lang="EN-US">500</span>万元</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">网银</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔<span lang="EN-US">500</span>万元，单日<span lang="EN-US">500</span>万元</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.62%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: windowtext 1pt solid; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">广发银行</span></p>
+            </td>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.56%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">直连</span></p>
+            </td>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">快捷</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔<span lang="EN-US">50</span>万元，单日<span lang="EN-US">500</span>万元</span></p>
+            </td>
+        </tr>
+        <tr style="height: 18.15pt">
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; height: 18.15pt; border-right: windowtext 1pt solid; width: 15.62%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: windowtext 1pt solid; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">中信银行</span></p>
+            </td>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; height: 18.15pt; border-right: windowtext 1pt solid; width: 15.56%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">直连</span></p>
+            </td>
+            <td width="9%" style="border-top: medium none; height: 18.15pt; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">快捷</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; height: 18.15pt; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔<span lang="EN-US">100</span>万元，单日<span lang="EN-US">100</span>万元</span></p>
+            </td>
+        </tr>
+        <tr style="height: 18.15pt">
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; height: 18.15pt; border-right: windowtext 1pt solid; width: 15.62%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: windowtext 1pt solid; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">浦发银行</span></p>
+            </td>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; height: 18.15pt; border-right: windowtext 1pt solid; width: 15.56%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">直连</span></p>
+            </td>
+            <td width="9%" style="border-top: medium none; height: 18.15pt; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">快捷</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; height: 18.15pt; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔2<span lang="EN-US">00</span>万元，单日2<span lang="EN-US">00</span>万元</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.62%; border-bottom: windowtext 1pt solid; padding-bottom: 0cm; padding-top: 0cm; padding-left: 0cm; border-left: windowtext 1pt solid; padding-right: 0cm">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: normal;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">兴业银行</span></p>
+            </td>
+            <td width="15%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.56%; border-bottom: windowtext 1pt solid; padding-bottom: 0cm; padding-top: 0cm; padding-left: 0cm; border-left: medium none; padding-right: 0cm">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: normal;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">直连</span></p>
+            </td>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: normal;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">快捷</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: normal;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔2<span lang="EN-US">00</span>万元，单日2<span lang="EN-US">00</span>万元</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.62%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: windowtext 1pt solid; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">民生银行</span></p>
+            </td>
+            <td width="15%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.56%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">直连</span></p>
+            </td>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">快捷</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔<span lang="EN-US">100</span>万元，单日<span lang="EN-US">100</span>万元</span></p>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%" nowrap="nowrap" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.62%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: windowtext 1pt solid; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">光大银行</span></p>
+            </td>
+            <td width="15%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 15.56%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">直连</span></p>
+            </td>
+            <td width="9%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 9.22%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">快捷</span></p>
+            </td>
+            <td width="42%" style="border-top: medium none; border-right: windowtext 1pt solid; width: 42.54%; border-bottom: windowtext 1pt solid; padding-bottom: 3pt; padding-top: 3pt; padding-left: 3pt; border-left: medium none; padding-right: 3pt">
+            <p align="center" class="MsoNormal" style="text-align: center; line-height: 27pt;"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #4d4d4d">单笔<span lang="EN-US">200</span>万元，单日<span lang="EN-US">200</span>万元</span></p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</span></p>
+<p align="left" class="MsoNormal" style="word-break: break-all; text-align: left; line-height: normal"><span style="font-size: 12pt; font-family: &quot;微软雅黑&quot;,&quot;sans-serif&quot;; color: #333333">注：快捷支付需要在银行柜台预留手机号码。网银支付需要跳转至银行网页操作，操作过程中可能需要使用硬件<span lang="EN-US">KEY</span>。</span></p>
+<p class="MsoNormal"><span lang="EN-US">&nbsp;</span></p>
+</div></div>
+                        
+                    </p>
+                </div>
+                <script>
+                    //
+    //格式化字体
+    $(".xl-nr").add(".TRS_Editor").add(".xl-nr p").add(".xl-nr div").add(".xl-nr font").add(".xl-nr p *").add(".xl-nr font *").add(".xl-nr .TRS_Editor").add(".xl-nr .TRS_Editor p").add(".xl-nr .TRS_Editor div").add(".xl-nr .TRS_Editor font").add(".xl-nr .TRS_Editor p *").add(".xl-nr .TRS_Editor font *").each(
+        function(){
+            //fontweight=$(this).css("font-weight");
+            $(this).css({
+                //"font":"16px/36px '微软雅黑'",
+                "line-height": '36px',
+                'font-family': '微软雅黑',
+                "font-size":"16px",
+                //"font-weight":"fontweight", //对加粗有影响，干掉
+                "margin":"10px 0px"
+            });
+        }).find('a').css('text-decoration', 'underline');
+
+    $(".xlbox b").add(".xlbox strong").add(".xlbox b *").add(".xlbox strong *").each(
+        function(){
+            $(this).css("font-weight","bold")
+        }
+    );
+
+    $("td *").each(
+        function(){
+            $(this).css("text-indent","0pt")
+        }
+    );
+
+    $("table tr").add("table tr *").add("table p").add("table p *").add("table td").add("table td *").each(
+        function(){
+            $(this).css({
+                "padding":"0px",
+                "margin-bottom":"0px",
+                "text-align":"center"
+            })
+        }
+    );
+    $(".TRS_Editor table td").css({borderWidth: 1});
+
+    $(".xl-nr img").add(".xl-nr p img").add(".xl-nr p div img").add(".xl-nr div img").add(".xl-nr .TRS_Editor img").add(".xl-nr .TRS_Editor p img").add(".xl-nr .TRS_Editor div img").add(".xl-nr .TRS_Editor font img").each(
+        function(){
+            $(this).css({
+                "padding":"0px"
+            });
+        }
+    );
+
+
+    $(".zh").each(function(){
+        $(".zh").eq(1).css("font-weight","bold");
+        var $zh = $(this);
+        $zh.click(function(){
+            $(".zh").siblings().css("font-weight","normal");
+            $zh.css("font-weight","bold");
+        });
+    });
+
+    //表格格式自动处理
+    $('.TRS_Editor table').css({width: '100%'})
+        .find('*').css({width: 'auto', fontSize: 14, padding: 0, margin: 0})
+        .filter('td').css({padding: 0});
+
+function fontZoom(size){
+    var _div = document.getElementById("new_hzcon");
+    _div.style.fontSize=size+"px";
+    var tagArrary=["td","p","font","span","b","div","tr"];//需要调整的对象数组
+    for(o in tagArrary){
+        var _obj=_div.getElementsByTagName(tagArrary[o]);
+        setSize(_obj,size);
+    }
+}
+function setSize(obj,size){
+    if(obj){
+        for(var i=0;i<obj.length;i++){
+            obj[i].style.fontSize=size+"px";
+        }
+    }
+}
+
+function addFavorite() {
+    var url = window.location;
+    var title = document.title;
+
+    try{
+        if ( window.sidebar && 'object' == typeof( window.sidebar ) && 'function' == typeof( window.sidebar.addPanel ) ){
+            window.sidebar.addPanel(title, url , '');
+        }else if ( document.all && 'object' == typeof( window.external ) ){
+            window.external.addFavorite(url , title);
+        }else {alert('您使用的浏览器不支持此功能，请按“Ctrl + D”键手工加入收藏');
+        }
+    }catch(e){
+        alert('您使用的浏览器不支持此功能，请按“Ctrl + D”键手工加入收藏');
+    }
+}
+
+                </script>
+                <!--基金推荐开始-->
+                
+                <!--基金推荐结束-->
+                <!--相关阅读开始-->
+                <div class="xgyd-box">
+                    <p class="tit">相关阅读</p>
+                    <ul class="list">
+                        
+                    </ul>
+                </div>
+                <!--相关阅读结束-->
+
+            </div>
+        </div>
+        <!--左边结束-->
+        <!--右边开始-->
+        <div class="col-2-2">
+            <!--大家还关注开始-->
+            [an error occurred while processing this directive]
+            <!--大家还关注结束-->
+            <!--基金经理观点开始-->
+            <!--基金经理观点开始-->
+<div class="r-list mt10">
+    <h2>基金经理观点<a href="http://www.gffunds.com.cn/htlb/">更多</a> </h2>
+    <ul class="list01">
+        
+            
+                <li><a target="_blank" href="http://www.gffunds.com.cn/jjjl/gpl/201411/t20141113_40421.shtml?channelid=3696" title="震荡市投资的攻与守">震荡市投资的攻与守</a></li>
+            
+        
+    </ul>
+</div>
+<!--基金经理观点结束-->
+            <!--基金经理观点结束-->
+            <!--广告推荐开始-->
+            <!--广告推荐开始-->
+<p class="mt10">
+    
+</p>
+<!--广告推荐结束--> 
+            <!--广告推荐结束-->
+        </div>
+        <!--右边结束-->
+    </div>
+</div>
+<!--主体结束-->
+<!--底部开始-->
+<style>
+</style>
+<div id="footer">
+    <div class="t-box">
+        <a class="logo" href="http://www.gffunds.com.cn/"></a>
+        <div class="r-box">
+            <dl>
+                <dt class="ico01"><a href="http://www.gffunds.com.cn/service/faq.shtml#cate=15b7f89d8e9bed4df3a565342389ff4f" target="_blank">新手指南</a></dt>
+                <dd>
+                    <ul>
+                        <li><a href="http://www.gffunds.com.cn/service/faq.shtml#cate=15ad5192b8ff82dc93f6f0c4feb94716" target="_blank">了解基金</a></li>
+                        <li><a href="http://www.gffunds.com.cn/service/faq.shtml#cate=158530a2fffddd429a04e8b4b3b8e2ac" target="_blank">新手上路</a></li>
+                        <li><a href="http://www.gffunds.com.cn/service/faq.shtml#cate=158703cf91e45a5c6f5ac75499d9dd15" target="_blank">交易规则</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="ico02"><a href="http://www.gffunds.com.cn/service/faq.shtml" target="_blank">常见问题</a></dt>
+                <dd>
+                    <ul>
+                        <li><a href="http://www.gffunds.com.cn/service/faq.shtml#cate=158530a2fe41851420cac8e44b896357" target="_blank">开户交易</a></li>
+                        <li><a href="//www.gffunds.com.cn/jyxg/wsjyflxeb/201804/t20180402_242866.shtml" target="_blank">支付限额、折扣</a></li>
+                        <li><a href="http://www.gffunds.com.cn/service/faq.shtml#cate=158530a2fd21437d09294da468989a59" target="_blank">变更银行卡</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl>
+                <dt class="ico03"><a href="http://www.gffunds.com.cn/service/" target="_blank">客户服务</a></dt>
+                <dd>
+                    <ul>
+                        <li><a href="http://www.gffunds.com.cn/service/faq.shtml" target="_blank">帮助手册</a></li>
+                        <li><a href="http://www.gffunds.com.cn/xswd/bgxz/" target="_blank">表格下载</a></li>
+                        <li><a href="http://www.gffunds.com.cn/service/dhfw/" target="_blank">电话服务流程</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl style="width: 240px;">
+                <dt class="ico04"><a href="http://www.gffunds.com.cn/funds/pcf_and_agency.shtml" target="_blank">ETF申赎清单和券商</a></dt>
+                <dd style="width: 200px;">
+                    <ul style="width: 190px;">
+                        <li style="width: 190px;">
+                            <span style="font: 14px/35px 微软雅黑;color: #888;">广发沪深300ETF</span>
+                            <a href="http://www.gffunds.com.cn/funds/?fundcode=510360#tab-etf-agency" target="_blank" style="color: #c4c4c4; margin-left: 3px;float: right;">券商</a>
+                            <span style="font: 14px/35px 微软雅黑;color: #c4c4c4;margin-left: 3px;float: right;">|</span>
+                            <a href="http://www.gffunds.com.cn/funds/?fundcode=510360#tab-pcf" target="_blank" style="color: #c4c4c4;margin-left: 5px;float: right;">清单</a>
+                        </li>
+                        <li style="width: 190px;">
+                            <span style="font: 14px/35px 微软雅黑;color: #888;">广发中证500ETF</span>
+                            <a href="http://www.gffunds.com.cn/funds/?fundcode=510510#tab-etf-agency" target="_blank" style="color: #c4c4c4; margin-left: 3px;float: right;">券商</a>
+                            <span style="font: 14px/35px 微软雅黑;color: #c4c4c4;margin-left: 3px;float: right;">|</span>
+                            <a href="http://www.gffunds.com.cn/funds/?fundcode=510510#tab-pcf" target="_blank" style="color: #c4c4c4;margin-left: 5px;float: right;">清单</a>
+                        </li>
+                        <li style="width: 190px;">
+                            <span style="font: 14px/35px 微软雅黑;color: #888;">广发创业板ETF</span>
+                            <a href="http://www.gffunds.com.cn/funds/?fundcode=159952#tab-etf-agency" target="_blank" style="color: #c4c4c4; margin-left: 3px;float: right;">券商</a>
+                            <span style="font: 14px/35px 微软雅黑;color: #c4c4c4;margin-left: 3px;float: right;">|</span>
+                            <a href="http://www.gffunds.com.cn/funds/?fundcode=159952#tab-pcf" target="_blank" style="color: #c4c4c4;margin-left: 5px;float: right;">清单</a>
+                        </li>
+                    </ul>
+                </dd>
+            </dl>
+        </div>
+    </div>
+    <div class="b-box">
+        <p class="link">
+            <a href="http://www.gffunds.com.cn/jyxg/201606/t20160618_52969.shtml" target="_blank">风险提示函</a>|
+            <a href="https://edu.gffunds.com.cn/index/" target="_blank">投资者教育</a>|
+            <a href="https://www.gffunds.com.cn/jjkt/djwffz/166/" target="_blank">反洗钱</a>|
+            <a href="http://www.gffunds.com.cn/jyxg/jbywgz/" target="_blank">基金业务规则</a>|
+            <a href="http://www.gffunds.com.cn/jyxg/aqyys/" target="_blank">隐私与安全</a>|
+            <a href="http://www.gffunds.com.cn/jyxg/wsjygz/202408/t20240808_396574.shtml" target="_blank">应急处理提示</a>
+        </p>
+        <p>
+            广发基金管理有限公司    版权所有  All Rights Reserved.
+            <a href="https://beian.miit.gov.cn" target="_blank">[ICP 备案登记证编号:粤ICP备12020109号]</a>　
+            <img src="/images/wangan18px.png" />
+            <a href="https://beian.mps.gov.cn/#/query/webSearch?code=44010502002952" rel="noreferrer" target="_blank">粤公网安备44010502002952</a>
+            本网站支持IPv6
+        </p>
+        <p>传真：020-89899158    交易传真：020-89899069    地址：广州市海珠区琶洲大道168号星河湾中心28层    邮编：510308</p>
+        <p>客服热线：95105828或020-83936999        客服邮箱：<a href="mailto:services@gffunds.com.cn"> services@gffunds.com.cn</a> </p>
+    </div>
+</div>
+<!--底部结束-->
+<!--右边工具栏开始-->
+<style>
+.right-bar div.a2 {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: 1px 0;
+  position: relative;
+  display: block;
+  border-radius: 3px;
+  overflow: visible;
+  text-align: center;
+  background: url("http://www.gffunds.com.cn/images/2017gfjj_right_bar_h.png") no-repeat 0 -42px;
+}
+.right-bar div.a2:hover img {
+  display: block;
+}
+.right-bar div.a2:hover .toapp {
+  display: inline-block;
+}
+.right-bar div.a2 .toapp {
+  position: relative;
+  display: none;
+  top: -32px;
+  height: 148px;
+  width: 97px;
+  left: -114px;
+  z-index: 1000;
+}
+.right-bar div.a2 img {
+  display: none;
+  position: absolute;
+  left: -230px;
+  top: -41px;
+  z-index: 999;
+}
+</style>
+<!--右边工具栏开始-->
+<div class="right-bar">
+    <a class="a1 bgi" href="http://live800.gffunds.com.cn/live800/chatClient/chatbox.jsp?companyID=203&configID=78270&prplType=%E5%AE%98%E7%BD%91&platform=Ch_WEB" target="_blank"><span>在线客服</span></a>
+    <div class="a2 bgi"><a class="toapp" target="_blank" href="http://www.gffunds.com.cn/html/jjzt/appintro-pc/"></a><img src="http://www.gffunds.com.cn/images/2020gfjj_right_bar_appdl.png" alt="广发基金APP更专业，更懂你，扫一扫立即下载" /></div>
+    <!--<a class="a3 bgi" href="http://bbs.gffunds.com.cn/dx2/portal.php" target="_blank"><span>基智讨论区</span></a>-->
+    <a class="a4 bgi js_back" href="javascript:;" style="display: none;"><span>返回顶部</span></a>
+</div>
+<!--右边工具栏结束-->
+<!--右边工具栏结束-->
+<!--改变字体大小js-->
+</body>
+</html>

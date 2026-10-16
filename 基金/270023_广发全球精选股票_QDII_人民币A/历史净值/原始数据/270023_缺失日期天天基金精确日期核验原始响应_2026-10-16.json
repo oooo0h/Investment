@@ -1,0 +1,67 @@
+{
+  "code": "270023",
+  "share_class": "人民币A",
+  "checked_at": "2026-10-16T16:50:50.988+08:00",
+  "requests": [
+    {
+      "requested_date": "2012-03-31",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=270023&pageIndex=1&pageSize=20&startDate=2012-03-31&endDate=2012-03-31",
+      "http_status": 200,
+      "raw_text": "{\"Data\":{\"LSJZList\":[{\"FSRQ\":\"2012-03-31\",\"DWJZ\":\"0.8870\",\"LJJZ\":\"0.8870\",\"SDATE\":null,\"ACTUALSYI\":\"\",\"NAVTYPE\":\"0\",\"JZZZL\":\"0.00\",\"SGZT\":\"开放申购\",\"SHZT\":\"开放赎回\",\"FHFCZ\":\"\",\"FHFCZ10\":null,\"FHFCBZ\":\"\",\"DTYPE\":null,\"FHSP\":\"\"}],\"FundType\":\"007\",\"SYType\":null,\"isNewType\":false,\"Feature\":\"311\"},\"ErrCode\":0,\"ErrMsg\":null,\"TotalCount\":1,\"Expansion\":null,\"PageSize\":20,\"PageIndex\":1}"
+    },
+    {
+      "requested_date": "2012-06-30",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=270023&pageIndex=1&pageSize=20&startDate=2012-06-30&endDate=2012-06-30",
+      "http_status": 200,
+      "raw_text": "{\"Data\":{\"LSJZList\":[{\"FSRQ\":\"2012-06-30\",\"DWJZ\":\"0.8610\",\"LJJZ\":\"0.8610\",\"SDATE\":null,\"ACTUALSYI\":\"\",\"NAVTYPE\":\"0\",\"JZZZL\":\"0.00\",\"SGZT\":\"开放申购\",\"SHZT\":\"开放赎回\",\"FHFCZ\":\"\",\"FHFCZ10\":null,\"FHFCBZ\":\"\",\"DTYPE\":null,\"FHSP\":\"\"}],\"FundType\":\"007\",\"SYType\":null,\"isNewType\":false,\"Feature\":\"311\"},\"ErrCode\":0,\"ErrMsg\":null,\"TotalCount\":1,\"Expansion\":null,\"PageSize\":20,\"PageIndex\":1}"
+    },
+    {
+      "requested_date": "2012-09-30",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=270023&pageIndex=1&pageSize=20&startDate=2012-09-30&endDate=2012-09-30",
+      "http_status": 200,
+      "raw_text": "{\"Data\":{\"LSJZList\":[{\"FSRQ\":\"2012-09-30\",\"DWJZ\":\"0.9070\",\"LJJZ\":\"0.9070\",\"SDATE\":null,\"ACTUALSYI\":\"\",\"NAVTYPE\":\"0\",\"JZZZL\":\"0.00\",\"SGZT\":\"开放申购\",\"SHZT\":\"开放赎回\",\"FHFCZ\":\"\",\"FHFCZ10\":null,\"FHFCBZ\":\"\",\"DTYPE\":null,\"FHSP\":\"\"}],\"FundType\":\"007\",\"SYType\":null,\"isNewType\":false,\"Feature\":\"311\"},\"ErrCode\":0,\"ErrMsg\":null,\"TotalCount\":1,\"Expansion\":null,\"PageSize\":20,\"PageIndex\":1}"
+    },
+    {
+      "requested_date": "2013-06-30",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=270023&pageIndex=1&pageSize=20&startDate=2013-06-30&endDate=2013-06-30",
+      "http_status": 200,
+      "raw_text": "{\"Data\":{\"LSJZList\":[{\"FSRQ\":\"2013-06-30\",\"DWJZ\":\"1.0870\",\"LJJZ\":\"1.0870\",\"SDATE\":null,\"ACTUALSYI\":\"\",\"NAVTYPE\":\"0\",\"JZZZL\":\"0.00\",\"SGZT\":\"开放申购\",\"SHZT\":\"开放赎回\",\"FHFCZ\":\"\",\"FHFCZ10\":null,\"FHFCBZ\":\"\",\"DTYPE\":null,\"FHSP\":\"\"}],\"FundType\":\"007\",\"SYType\":null,\"isNewType\":false,\"Feature\":\"311\"},\"ErrCode\":0,\"ErrMsg\":null,\"TotalCount\":1,\"Expansion\":null,\"PageSize\":20,\"PageIndex\":1}"
+    },
+    {
+      "requested_date": "2016-09-30",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=270023&pageIndex=1&pageSize=20&startDate=2016-09-30&endDate=2016-09-30",
+      "http_status": 200,
+      "raw_text": "{\"Data\":{\"LSJZList\":[{\"FSRQ\":\"2016-09-30\",\"DWJZ\":\"1.4620\",\"LJJZ\":\"1.6620\",\"SDATE\":null,\"ACTUALSYI\":\"\",\"NAVTYPE\":\"1\",\"JZZZL\":\"\",\"SGZT\":\"暂停申购\",\"SHZT\":\"暂停赎回\",\"FHFCZ\":\"\",\"FHFCZ10\":null,\"FHFCBZ\":\"\",\"DTYPE\":null,\"FHSP\":\"\"}],\"FundType\":\"007\",\"SYType\":null,\"isNewType\":false,\"Feature\":\"311\"},\"ErrCode\":0,\"ErrMsg\":null,\"TotalCount\":1,\"Expansion\":null,\"PageSize\":20,\"PageIndex\":1}"
+    },
+    {
+      "requested_date": "2016-10-10",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=270023&pageIndex=1&pageSize=20&startDate=2016-10-10&endDate=2016-10-10",
+      "http_status": 200,
+      "raw_text": "{\"Data\":{\"LSJZList\":[{\"FSRQ\":\"2016-10-10\",\"DWJZ\":\"1.4840\",\"LJJZ\":\"\",\"SDATE\":null,\"ACTUALSYI\":\"\",\"NAVTYPE\":\"1\",\"JZZZL\":\"\",\"SGZT\":\"暂停申购\",\"SHZT\":\"暂停赎回\",\"FHFCZ\":\"\",\"FHFCZ10\":null,\"FHFCBZ\":\"\",\"DTYPE\":null,\"FHSP\":\"\"}],\"FundType\":\"007\",\"SYType\":null,\"isNewType\":false,\"Feature\":\"311\"},\"ErrCode\":0,\"ErrMsg\":null,\"TotalCount\":1,\"Expansion\":null,\"PageSize\":20,\"PageIndex\":1}"
+    },
+    {
+      "requested_date": "2018-04-02",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=270023&pageIndex=1&pageSize=20&startDate=2018-04-02&endDate=2018-04-02",
+      "http_status": 200,
+      "raw_text": "{\"Data\":{\"LSJZList\":[{\"FSRQ\":\"2018-04-02\",\"DWJZ\":\"1.6340\",\"LJJZ\":\"\",\"SDATE\":null,\"ACTUALSYI\":\"\",\"NAVTYPE\":\"1\",\"JZZZL\":\"\",\"SGZT\":\"暂停申购\",\"SHZT\":\"暂停赎回\",\"FHFCZ\":\"\",\"FHFCZ10\":null,\"FHFCBZ\":\"\",\"DTYPE\":null,\"FHSP\":\"\"}],\"FundType\":\"007\",\"SYType\":null,\"isNewType\":false,\"Feature\":\"311\"},\"ErrCode\":0,\"ErrMsg\":null,\"TotalCount\":1,\"Expansion\":null,\"PageSize\":20,\"PageIndex\":1}"
+    },
+    {
+      "requested_date": "2018-06-30",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=270023&pageIndex=1&pageSize=20&startDate=2018-06-30&endDate=2018-06-30",
+      "http_status": 200,
+      "raw_text": "{\"Data\":{\"LSJZList\":[{\"FSRQ\":\"2018-06-30\",\"DWJZ\":\"1.6470\",\"LJJZ\":\"2.0860\",\"SDATE\":null,\"ACTUALSYI\":\"\",\"NAVTYPE\":\"0\",\"JZZZL\":\"\",\"SGZT\":\"开放申购\",\"SHZT\":\"开放赎回\",\"FHFCZ\":\"\",\"FHFCZ10\":null,\"FHFCBZ\":\"\",\"DTYPE\":null,\"FHSP\":\"\"}],\"FundType\":\"007\",\"SYType\":null,\"isNewType\":false,\"Feature\":\"311\"},\"ErrCode\":0,\"ErrMsg\":null,\"TotalCount\":1,\"Expansion\":null,\"PageSize\":20,\"PageIndex\":1}"
+    },
+    {
+      "requested_date": "2018-07-02",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=270023&pageIndex=1&pageSize=20&startDate=2018-07-02&endDate=2018-07-02",
+      "http_status": 200,
+      "raw_text": "{\"Data\":{\"LSJZList\":[{\"FSRQ\":\"2018-07-02\",\"DWJZ\":\"1.6340\",\"LJJZ\":\"2.0730\",\"SDATE\":null,\"ACTUALSYI\":\"\",\"NAVTYPE\":\"1\",\"JZZZL\":\"\",\"SGZT\":\"暂停申购\",\"SHZT\":\"暂停赎回\",\"FHFCZ\":\"\",\"FHFCZ10\":null,\"FHFCBZ\":\"\",\"DTYPE\":null,\"FHSP\":\"\"}],\"FundType\":\"007\",\"SYType\":null,\"isNewType\":false,\"Feature\":\"311\"},\"ErrCode\":0,\"ErrMsg\":null,\"TotalCount\":1,\"Expansion\":null,\"PageSize\":20,\"PageIndex\":1}"
+    },
+    {
+      "requested_date": "2018-09-03",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=270023&pageIndex=1&pageSize=20&startDate=2018-09-03&endDate=2018-09-03",
+      "http_status": 200,
+      "raw_text": "{\"Data\":{\"LSJZList\":[{\"FSRQ\":\"2018-09-03\",\"DWJZ\":\"1.5580\",\"LJJZ\":\"\",\"SDATE\":null,\"ACTUALSYI\":\"\",\"NAVTYPE\":\"1\",\"JZZZL\":\"\",\"SGZT\":\"暂停申购\",\"SHZT\":\"暂停赎回\",\"FHFCZ\":\"\",\"FHFCZ10\":null,\"FHFCBZ\":\"\",\"DTYPE\":null,\"FHSP\":\"\"}],\"FundType\":\"007\",\"SYType\":null,\"isNewType\":false,\"Feature\":\"311\"},\"ErrCode\":0,\"ErrMsg\":null,\"TotalCount\":1,\"Expansion\":null,\"PageSize\":20,\"PageIndex\":1}"
+    }
+  ]
+}
