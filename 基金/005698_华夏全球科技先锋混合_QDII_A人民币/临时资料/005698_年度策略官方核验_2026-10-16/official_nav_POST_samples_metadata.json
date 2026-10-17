@@ -1,0 +1,56 @@
+[
+  {
+    "page": 2,
+    "url": "https://www.chinaamc.com/product/fundLishijingzhi.do",
+    "params": {
+      "fundcode": "005698",
+      "pageIndex": "2",
+      "beginDate": "2018-04-17",
+      "endDate": "2026-10-15"
+    },
+    "current_page": [
+      "2"
+    ],
+    "total_pages": [
+      "99"
+    ],
+    "count": 20,
+    "first": [
+      "2026-09-09",
+      "2.7195",
+      "2.7195"
+    ],
+    "last": [
+      "2026-08-13",
+      "2.7686",
+      "2.7686"
+    ]
+  },
+  {
+    "page": 99,
+    "url": "https://www.chinaamc.com/product/fundLishijingzhi.do",
+    "params": {
+      "fundcode": "005698",
+      "pageIndex": "99",
+      "beginDate": "2018-04-17",
+      "endDate": "2026-10-15"
+    },
+    "current_page": [
+      "99"
+    ],
+    "total_pages": [
+      "99"
+    ],
+    "count": 18,
+    "first": [
+      "2018-06-25",
+      "1.0208",
+      "1.0208"
+    ],
+    "last": [
+      "2018-04-20",
+      "0.9978",
+      "0.9978"
+    ]
+  }
+]

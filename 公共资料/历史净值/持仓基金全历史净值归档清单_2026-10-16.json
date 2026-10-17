@@ -1,0 +1,354 @@
+{
+  "checked_at": "2026-10-16T18:44:48+08:00",
+  "holdings_snapshot_date": "2026-09-20",
+  "holdings_last_partial_update": "2026-09-28",
+  "holdings_product_count": 14,
+  "scope_note": "依据同步后的既有14个基金产品记录，按用户要求排除2个纳指产品后覆盖12个产品，不代表2026-10-16账户已重新核对。国富与中韩半导体份额类别仍未确认，候选类别各自单独归档，不改变实际持仓身份。",
+  "series_count": 15,
+  "results": [
+    {
+      "code": "000216",
+      "name": "华安黄金ETF联接A",
+      "holding_identity_status": "已记录A类",
+      "count": 3193,
+      "first_date": "2013-08-22",
+      "last_date": "2026-10-15",
+      "action": "复用本地全历史，仅补新增日期",
+      "reused_dates": 3130,
+      "added_dates": 63,
+      "missing_accumulated_nav_count": 0,
+      "json_file": "基金/000216_华安黄金ETF联接A/历史净值/000216_全部历史净值_截至2026-10-15.json",
+      "sha256": "862f3c4fc867db3eac8a5844740d3b430648e0a2dfcf75a3ece68de074671ca3",
+      "official_sample_check": {
+        "date": "2026-10-15",
+        "nav": "3.0858",
+        "source": "https://www.huaan.com.cn/funds/000216/index.shtml",
+        "result": "日期及单位净值一致",
+        "scope": "官方网页可见样本，不代表官方完整历史逐条核验"
+      },
+      "csv_file": "基金/000216_华安黄金ETF联接A/历史净值/000216_全部历史净值_截至2026-10-15.csv",
+      "csv_sha256": "fb8ec16fda3a5b311892b4d80d00a0b6e9fe418e295a79192b7b2ba80d34eff1"
+    },
+    {
+      "code": "005698",
+      "name": "华夏全球科技先锋混合(QDII)A(人民币)",
+      "holding_identity_status": "已记录人民币A类",
+      "count": 1979,
+      "first_date": "2018-04-17",
+      "last_date": "2026-10-15",
+      "action": "复用本地全历史，仅补新增日期",
+      "reused_dates": 1969,
+      "added_dates": 10,
+      "missing_accumulated_nav_count": 0,
+      "json_file": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/005698_全部历史净值_截至2026-10-15.json",
+      "sha256": "1dde575b0d3275264d43290ad025cd69542d9de4f4ac316ba86b7eae5214aa8d",
+      "official_sample_check": {
+        "date": "2026-10-14",
+        "nav": "2.3689",
+        "source": "https://fund.chinaamc.com/fund/005698/index.shtml",
+        "result": "日期及单位净值一致",
+        "scope": "官方网页可见样本，不代表官方完整历史逐条核验"
+      },
+      "csv_file": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/005698_全部历史净值_截至2026-10-15.csv",
+      "csv_sha256": "c96400e4b1e1b556eb9529340e056ad60366fc43fdac86f7f0b795d314a28051"
+    },
+    {
+      "code": "006373",
+      "name": "国富全球科技互联混合(QDII)人民币A",
+      "holding_identity_status": "候选：国富实际份额类别待确认",
+      "count": 1904,
+      "first_date": "2018-11-20",
+      "last_date": "2026-10-14",
+      "action": "已有完整数据，跳过历史下载",
+      "reused_dates": 1904,
+      "added_dates": 0,
+      "missing_accumulated_nav_count": 2,
+      "json_file": "基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/006373_全部历史净值_截至2026-10-14.json",
+      "sha256": "68e0075d39d18b7c7e25b6e1d437e7b5d4c6a3b3e89904032877a2a0efce216a",
+      "csv_file": "基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/006373_全部历史净值_截至2026-10-14.csv",
+      "csv_sha256": "53cf879f608cd85db5c5f4c867cfa4330539aea87f8b25f65842ced76f9456d0"
+    },
+    {
+      "code": "006485",
+      "name": "广发中债1-3年国开债指数C",
+      "holding_identity_status": "已记录C类",
+      "count": 1922,
+      "first_date": "2018-11-14",
+      "last_date": "2026-10-15",
+      "action": "首次保存全历史",
+      "reused_dates": 0,
+      "added_dates": 1922,
+      "missing_accumulated_nav_count": 0,
+      "json_file": "基金/006485_广发中债1-3年国开行债券指数C/历史净值/006485_全部历史净值_截至2026-10-15.json",
+      "sha256": "8905ec3cc3a7ddb3e2aa7496a25f37b98d07746290e8adc6b06e59aa166b9b71",
+      "official_sample_check": {
+        "date": "2026-10-15",
+        "nav": "1.0587",
+        "source": "https://www.gffunds.com.cn/funds/?fundcode=159979",
+        "result": "日期及单位净值一致",
+        "scope": "官方网页可见样本，不代表官方完整历史逐条核验"
+      },
+      "csv_file": "基金/006485_广发中债1-3年国开行债券指数C/历史净值/006485_全部历史净值_截至2026-10-15.csv",
+      "csv_sha256": "be5e0c80a199b5400a144156520222b1d8d6edd599d30543199800928f66670d"
+    },
+    {
+      "code": "006663",
+      "name": "易方达安悦超短债C",
+      "holding_identity_status": "已记录C类",
+      "count": 1896,
+      "first_date": "2018-12-05",
+      "last_date": "2026-10-15",
+      "action": "首次保存全历史",
+      "reused_dates": 0,
+      "added_dates": 1896,
+      "missing_accumulated_nav_count": 0,
+      "json_file": "基金/006663_易方达安悦超短债C/历史净值/006663_全部历史净值_截至2026-10-15.json",
+      "sha256": "863973656c310ae05f76c34594f597cdd89432c03fca9557e6d7b1f0b3ce62a5",
+      "official_sample_check": {
+        "date": "2026-10-15",
+        "nav": "1.0128",
+        "source": "https://www.efunds.com.cn/fund/006663.shtml",
+        "result": "日期及单位净值一致",
+        "scope": "官方网页可见样本，不代表官方完整历史逐条核验"
+      },
+      "csv_file": "基金/006663_易方达安悦超短债C/历史净值/006663_全部历史净值_截至2026-10-15.csv",
+      "csv_sha256": "d1cdb5f16ccd775290c84d3f6940e68ec4e8d28bd56bee7fa28d4fed2e6a9103"
+    },
+    {
+      "code": "009608",
+      "name": "广发中证500指数增强A",
+      "holding_identity_status": "已记录A类",
+      "count": 1442,
+      "first_date": "2020-10-15",
+      "last_date": "2026-10-15",
+      "action": "复用本地全历史，仅补新增日期",
+      "reused_dates": 1379,
+      "added_dates": 63,
+      "missing_accumulated_nav_count": 0,
+      "json_file": "基金/009608_广发中证500指数增强A/历史净值/009608_全部历史净值_截至2026-10-15.json",
+      "sha256": "cd941ea5fd41be50eebe74752984b085247c383fa223b64ccb1e26abe1289267",
+      "official_sample_check": {
+        "date": "2026-10-15",
+        "nav": "1.4072",
+        "source": "https://www.gffunds.com.cn/funds/?fundcode=159979",
+        "result": "日期及单位净值一致",
+        "scope": "官方网页可见样本，不代表官方完整历史逐条核验"
+      },
+      "csv_file": "基金/009608_广发中证500指数增强A/历史净值/009608_全部历史净值_截至2026-10-15.csv",
+      "csv_sha256": "fe8352c850a6f1397f82596ce119858987a18ce9027632ca35589eb1e774c78d"
+    },
+    {
+      "code": "015789",
+      "name": "永赢高端装备智选混合发起A",
+      "holding_identity_status": "已记录A类",
+      "count": 1002,
+      "first_date": "2022-07-15",
+      "last_date": "2026-10-15",
+      "action": "复用本地全历史，仅补新增日期",
+      "reused_dates": 939,
+      "added_dates": 63,
+      "missing_accumulated_nav_count": 0,
+      "json_file": "基金/015789_永赢高端装备智选混合发起A/历史净值/015789_全部历史净值_截至2026-10-15.json",
+      "sha256": "270261f7360ebd07f96226335cccc4d36af9be81bc8b1c932a6642b401281a52",
+      "csv_file": "基金/015789_永赢高端装备智选混合发起A/历史净值/015789_全部历史净值_截至2026-10-15.csv",
+      "csv_sha256": "2ec0d7eee585315bd0651e3f53f31e6c97686215d3b7061b362205e4c67c29cc"
+    },
+    {
+      "code": "018124",
+      "name": "永赢先进制造智选混合发起A",
+      "holding_identity_status": "已记录A类",
+      "count": 830,
+      "first_date": "2023-05-04",
+      "last_date": "2026-10-15",
+      "action": "复用本地全历史，仅补新增日期",
+      "reused_dates": 767,
+      "added_dates": 63,
+      "missing_accumulated_nav_count": 0,
+      "json_file": "基金/018124_永赢先进制造智选混合发起A/历史净值/018124_全部历史净值_截至2026-10-15.json",
+      "sha256": "821c09fe820d2de8e63145c5b7508af53144ed15174f54bd05f55e3a565f4f75",
+      "csv_file": "基金/018124_永赢先进制造智选混合发起A/历史净值/018124_全部历史净值_截至2026-10-15.csv",
+      "csv_sha256": "924801d0c87de19cc061d7ebda002a201cebc3ab5e61769f3bacbe786172dccc"
+    },
+    {
+      "code": "019454",
+      "name": "华泰柏瑞中韩半导体ETF发起式联接(QDII)A",
+      "holding_identity_status": "候选：中韩半导体实际份额类别待确认",
+      "count": 733,
+      "first_date": "2023-09-22",
+      "last_date": "2026-10-15",
+      "action": "首次保存全历史",
+      "reused_dates": 0,
+      "added_dates": 733,
+      "missing_accumulated_nav_count": 0,
+      "json_file": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/019454_全部历史净值_截至2026-10-15.json",
+      "sha256": "936c7fe74372d98b1b95864339cd1ee0450109fdc0b76d92c4bd067e6afb2975",
+      "csv_file": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/019454_全部历史净值_截至2026-10-15.csv",
+      "csv_sha256": "265b365bf46c00615fe437493faac25546242a55b3a461b1d45e4cf7923a5b21"
+    },
+    {
+      "code": "019455",
+      "name": "华泰柏瑞中韩半导体ETF发起式联接(QDII)C",
+      "holding_identity_status": "候选：中韩半导体实际份额类别待确认",
+      "count": 733,
+      "first_date": "2023-09-22",
+      "last_date": "2026-10-15",
+      "action": "首次保存全历史",
+      "reused_dates": 0,
+      "added_dates": 733,
+      "missing_accumulated_nav_count": 0,
+      "json_file": "基金/019455_华泰柏瑞中韩半导体ETF发起式联接_QDII_C/历史净值/019455_全部历史净值_截至2026-10-15.json",
+      "sha256": "041dbba7e5e5487695b3e9937865d6ce4dce44034c2ad406403a0d01c196fe4d",
+      "csv_file": "基金/019455_华泰柏瑞中韩半导体ETF发起式联接_QDII_C/历史净值/019455_全部历史净值_截至2026-10-15.csv",
+      "csv_sha256": "1e229124ddbd6186de7b0e65467c20b39230717df60634263eda8cc4e54ebe58"
+    },
+    {
+      "code": "020712",
+      "name": "华安三菱日联日经225ETF发起式联接(QDII)A",
+      "holding_identity_status": "已记录A类；代码本次核验",
+      "count": 643,
+      "first_date": "2024-02-07",
+      "last_date": "2026-10-15",
+      "action": "首次保存全历史",
+      "reused_dates": 0,
+      "added_dates": 643,
+      "missing_accumulated_nav_count": 0,
+      "json_file": "基金/020712_华安三菱日联日经225ETF发起式联接_QDII_A/历史净值/020712_全部历史净值_截至2026-10-15.json",
+      "sha256": "7dfb49d304035eaa781f2958d87ad0be49dfe97068c755111a102ddc971482d7",
+      "csv_file": "基金/020712_华安三菱日联日经225ETF发起式联接_QDII_A/历史净值/020712_全部历史净值_截至2026-10-15.csv",
+      "csv_sha256": "64d77599c58a525b24b26f10013c5cf10abbb79566d0d86133c892276c15c2f4"
+    },
+    {
+      "code": "021842",
+      "name": "国富全球科技互联混合(QDII)人民币C",
+      "holding_identity_status": "候选：国富实际份额类别待确认",
+      "count": 536,
+      "first_date": "2024-07-25",
+      "last_date": "2026-10-14",
+      "action": "首次保存全历史",
+      "reused_dates": 0,
+      "added_dates": 536,
+      "missing_accumulated_nav_count": 0,
+      "json_file": "基金/021842_国富全球科技互联混合_QDII_人民币C/历史净值/021842_全部历史净值_截至2026-10-14.json",
+      "sha256": "cdb42a74fdf16179f4eaf77b912080af019143019d7c7c6e468040ec4cefe206",
+      "csv_file": "基金/021842_国富全球科技互联混合_QDII_人民币C/历史净值/021842_全部历史净值_截至2026-10-14.csv",
+      "csv_sha256": "e3f07d6afd3bb1a54f43e2496cbfb6b4865a00cf4869b83b68beb364f866c58f"
+    },
+    {
+      "code": "022459",
+      "name": "易方达中证A500ETF联接A",
+      "holding_identity_status": "已记录A类",
+      "count": 464,
+      "first_date": "2024-11-11",
+      "last_date": "2026-10-15",
+      "action": "首次保存全历史",
+      "reused_dates": 0,
+      "added_dates": 464,
+      "missing_accumulated_nav_count": 0,
+      "json_file": "基金/022459_易方达中证A500ETF联接A/历史净值/022459_全部历史净值_截至2026-10-15.json",
+      "sha256": "b8f157489af629c7f3d677e5d69b445760e537754137c6bf6c64f70d6339792d",
+      "official_sample_check": {
+        "date": "2026-10-15",
+        "nav": "1.1299",
+        "source": "https://www.efunds.com.cn/fund/022459.shtml",
+        "result": "日期及单位净值一致",
+        "scope": "官方网页可见样本，不代表官方完整历史逐条核验"
+      },
+      "csv_file": "基金/022459_易方达中证A500ETF联接A/历史净值/022459_全部历史净值_截至2026-10-15.csv",
+      "csv_sha256": "4c9f6c040b271f3619373e9811975d67016d8d9d3e66d408141aee0f40c8aa1e"
+    },
+    {
+      "code": "022681",
+      "name": "华泰柏瑞中韩半导体ETF发起式联接(QDII)I",
+      "holding_identity_status": "候选：中韩半导体实际份额类别待确认",
+      "count": 456,
+      "first_date": "2024-11-26",
+      "last_date": "2026-10-15",
+      "action": "首次保存全历史",
+      "reused_dates": 0,
+      "added_dates": 456,
+      "missing_accumulated_nav_count": 0,
+      "json_file": "基金/022681_华泰柏瑞中韩半导体ETF发起式联接_QDII_I/历史净值/022681_全部历史净值_截至2026-10-15.json",
+      "sha256": "fe5eb376b6c50aaaa3900de8d9125bf82255c19fc04adfd8c74f980000e3478a",
+      "csv_file": "基金/022681_华泰柏瑞中韩半导体ETF发起式联接_QDII_I/历史净值/022681_全部历史净值_截至2026-10-15.csv",
+      "csv_sha256": "8e2792aabe9f305ef07e2ae5565eb1ac80d022a5b1ee6adf3ac883fc690adf85"
+    },
+    {
+      "code": "270023",
+      "name": "广发全球精选股票（QDII）人民币A",
+      "holding_identity_status": "已记录人民币A类",
+      "count": 3892,
+      "first_date": "2010-08-18",
+      "last_date": "2026-10-14",
+      "action": "复用云端同步的管理人全历史主档；未重复下载",
+      "added_dates": 0,
+      "json_file": "基金/270023_广发全球精选股票_QDII_人民币A/历史净值/270023_全部历史净值_截至2026-10-14.json",
+      "supplement_note": "另有10条既有第三方记录单独留存；不混入官网主表",
+      "sha256": "c2548213e82cdd36781ed5bb88e63e40f4ff9f403526f9325b5eb7a64c765312",
+      "csv_file": "基金/270023_广发全球精选股票_QDII_人民币A/历史净值/270023_全部历史净值_截至2026-10-14.csv",
+      "csv_sha256": "d8a0ba0d55c911379c89befeb06e701b9d11ca7279eece06916bdbf66b887a93",
+      "xlsx_file": "基金/270023_广发全球精选股票_QDII_人民币A/历史净值/270023_全部历史净值_截至2026-10-14.xlsx"
+    }
+  ],
+  "failures": [],
+  "included_product_count": 12,
+  "excluded_products": [
+    {
+      "code": "019736",
+      "name": "宝盈纳斯达克100指数发起(QDII)A人民币"
+    },
+    {
+      "code": "019547",
+      "name": "招商纳斯达克100ETF发起式联接(QDII)A"
+    }
+  ],
+  "exclusion_reason": "用户2026-10-16明确：纳指的都不用",
+  "data_source_note": "除270023复用管理人主档外，其他新增数据来自天天基金第三方公开净值。走势与F10是同源接口；另有6个非纳指基金的官方网页日期/单位净值样本独立核对一致。",
+  "source_identity_evidence": [
+    {
+      "codes": [
+        "020712"
+      ],
+      "url": "https://www.huaan.com.cn/funds/020712/index.shtml"
+    },
+    {
+      "codes": [
+        "006373",
+        "021842"
+      ],
+      "url": "https://www.ftsfund.com/ftp/upload/file/202502/28/xWOAg4nWc7L3SnbB.pdf"
+    },
+    {
+      "codes": [
+        "019454"
+      ],
+      "url": "https://static.cninfo.com.cn/finalpage/2023-09-26/1217954079.PDF"
+    },
+    {
+      "codes": [
+        "019454",
+        "019455",
+        "022681"
+      ],
+      "url": "https://epaper.stcn.com/pic/202601/30/494c906daf748e9f536aed523bd35877.pdf"
+    }
+  ],
+  "cloud_sync": {
+    "repository": "https://github.com/oooo0h/Investment",
+    "branch": "main",
+    "commit": "37da46ed7d8bc808c06dcdc1eb69bc7324f520ec",
+    "added_files": 44,
+    "preexisting_identical_files": 263,
+    "verified_remote_files": 307,
+    "overwritten_files": 0,
+    "deleted_preexisting_files": 0
+  },
+  "final_validation": {
+    "series": 15,
+    "primary_unit_nav_records": 21625,
+    "csv_records_matched": true,
+    "unit_nav_missing_count": 0,
+    "official_samples_matched": 6,
+    "nasdaq_excluded": true,
+    "candidate_classes_not_actual_holdings": true
+  }
+}

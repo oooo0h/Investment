@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-10-16",
+  "fund_code": "005698",
+  "private_account_data_read": false,
+  "method": "Independent Decimal event ledger; did not import shared engine",
+  "scope": "Six main configurations and four lag sensitivity cases; not every grid trajectory",
+  "checks": [
+    "All 1979 dates: equity, TWR and all actual trade dates/types for key candidates",
+    "FIFO, static 0.15% subscription fee, official 005698 redemption tiers",
+    "Calendar budget and initial-only buy-hold controls",
+    "3025 canonical parameter coverage with no duplicates or omissions",
+    "2205 complete trajectories plus820 pruned; each documented violation exceeds50% of actual regular budget at that time",
+    "828 feasible configurations, exact preset score selection and secondary minimum drawdown selection",
+    "Development lock preserved; failed later capital constraint retained"
+  ],
+  "maximum_numeric_difference_approx": 2.14e-13,
+  "critical_limits": [
+    "Hindsight winner lag1 MDD54.3259%, peak external/regular59.7713% exceeds50% selection cap",
+    "Minimum-DD candidate lag3 CAGR9.2531% is below same-lag40/30 CAGR9.7892%",
+    "Frozen development choice later peak external/regular148.8554%; cannot label validated",
+    "Historical calculation agreement does not prove future superiority"
+  ]
+}

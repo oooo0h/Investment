@@ -1,0 +1,18 @@
+{
+  "locked_at": "2026-10-16T19:27:04+08:00",
+  "config": [
+    0.15,
+    0.15,
+    0,
+    0
+  ],
+  "selection_score": 0.2572465751715749,
+  "selected_using": [
+    "development",
+    "validation"
+  ],
+  "reserved_test_not_yet_evaluated": true,
+  "shortlisted_count": 37,
+  "eligible_count": 32,
+  "source_sha256": "c2548213e82cdd36781ed5bb88e63e40f4ff9f403526f9325b5eb7a64c765312"
+}

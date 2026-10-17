@@ -1,0 +1,304 @@
+{
+  "schema": "public-nav-download-audit-v1",
+  "code": "016701",
+  "as_of": "2026-10-16",
+  "source_json": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/016701_全部历史净值_截至2026-10-15.json",
+  "sha256": "21f96f18f11dfbc834aae7d48cf45c0e81e1e2a5963f2f4e63346f46b3636311",
+  "validation": {
+    "api_total_count": 779,
+    "pages": 39,
+    "unique_date_count": 779,
+    "duplicate_dates": [],
+    "all_pages_pinned_end_date": "2026-10-15",
+    "chart_same_vendor_only": true,
+    "chart_count": 779,
+    "chart_missing_dates": [],
+    "chart_only_dates": [],
+    "chart_nav_mismatches": [],
+    "chart_accumulated_nav_mismatches": [],
+    "nav_vs_accumulated_gap_dates": [],
+    "nonempty_event_count": 0,
+    "weekend_accounting_nav_dates": [
+      "2023-12-31",
+      "2024-06-30"
+    ],
+    "official_independent_full_validation": "待核验；不冒称已完成双源全量比对"
+  },
+  "raw_pages": [
+    {
+      "page": 1,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-15&_=1792156314827679300",
+      "file": "016701_lsjz_page001.json",
+      "count": 20,
+      "sha256": "0ed80a4e931daa65b8431c11c01b5c5f23db1cf4d2c09ed87d7d348abe088c0b"
+    },
+    {
+      "page": 2,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=2&pageSize=20&startDate=&endDate=2026-10-15&_=1792156314913586400",
+      "file": "016701_lsjz_page002.json",
+      "count": 20,
+      "sha256": "e0b79004bad566f8063d0e076b0ebb717d9cd62eb8170717d74b9a5b8287cd82"
+    },
+    {
+      "page": 3,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=3&pageSize=20&startDate=&endDate=2026-10-15&_=1792156314913586400",
+      "file": "016701_lsjz_page003.json",
+      "count": 20,
+      "sha256": "1da2e3017b2ea475511b6800cdda71f8e2acce7f3baa8804a4c6db9fd7987adf"
+    },
+    {
+      "page": 4,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=4&pageSize=20&startDate=&endDate=2026-10-15&_=1792156314914587500",
+      "file": "016701_lsjz_page004.json",
+      "count": 20,
+      "sha256": "40c854428338fdc037ef2a91d96cf8f520623451315ecb33727f0bdc64fa3d59"
+    },
+    {
+      "page": 5,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=5&pageSize=20&startDate=&endDate=2026-10-15&_=1792156314914587500",
+      "file": "016701_lsjz_page005.json",
+      "count": 20,
+      "sha256": "7f8a58df1ccd02e0f1948a3fe76085fad9f819052b6a9d5c3e2de12ed5facad2"
+    },
+    {
+      "page": 6,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=6&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315007321000",
+      "file": "016701_lsjz_page006.json",
+      "count": 20,
+      "sha256": "dd45ccdc3843d9ed9ec1408c5e48f01fad0894914777d8bb17d7c7d18b894fc1"
+    },
+    {
+      "page": 7,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=7&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315009320400",
+      "file": "016701_lsjz_page007.json",
+      "count": 20,
+      "sha256": "f0d8afc1b119ebb4c781a9f380f08e0344de4cf3a2b8850eb2c19c0c062e5ebc"
+    },
+    {
+      "page": 8,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=8&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315011320200",
+      "file": "016701_lsjz_page008.json",
+      "count": 20,
+      "sha256": "c5eeb090ac8c8c429fbfbd3cba4b6b3e0bcfe1f2e430dc35f86e653bd13778aa"
+    },
+    {
+      "page": 9,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=9&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315012321100",
+      "file": "016701_lsjz_page009.json",
+      "count": 20,
+      "sha256": "96d607b259bc337b7b84a6013c04c11e571d6369b1a23b15634d4dd1a347501b"
+    },
+    {
+      "page": 10,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=10&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315095668300",
+      "file": "016701_lsjz_page010.json",
+      "count": 20,
+      "sha256": "fe06d747051025c5417905f8ab38d90b34aa393110b7fe7204dc3fbd6199fa52"
+    },
+    {
+      "page": 11,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=11&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315096669300",
+      "file": "016701_lsjz_page011.json",
+      "count": 20,
+      "sha256": "b81e538231f250ed0cf58c6bb20e6defb2bbeb20fa9a423c553189e71fd95156"
+    },
+    {
+      "page": 12,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=12&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315110723100",
+      "file": "016701_lsjz_page012.json",
+      "count": 20,
+      "sha256": "9eb9954230d0fbbee39841499213f7607dda38c373dc7e28d31676f2596188c2"
+    },
+    {
+      "page": 13,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=13&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315111722000",
+      "file": "016701_lsjz_page013.json",
+      "count": 20,
+      "sha256": "168185ecc558bdfc9caa1402f74456ae534dac9fca5904dee488014251640bd4"
+    },
+    {
+      "page": 14,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=14&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315178722100",
+      "file": "016701_lsjz_page014.json",
+      "count": 20,
+      "sha256": "f4852fea2bec29dd871921163be00f04b005ede3ba733e1cfa2777ef74d8ee9e"
+    },
+    {
+      "page": 15,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=15&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315182722100",
+      "file": "016701_lsjz_page015.json",
+      "count": 20,
+      "sha256": "5eb1177b22284dd8dfb7ee05c44567896a72f17da47d112e9e85759777b4a76c"
+    },
+    {
+      "page": 16,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=16&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315209380000",
+      "file": "016701_lsjz_page016.json",
+      "count": 20,
+      "sha256": "0890081bfa5df7379006761a701beb457f713410fc56a1a2f0de05cb23308d52"
+    },
+    {
+      "page": 17,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=17&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315209380000",
+      "file": "016701_lsjz_page017.json",
+      "count": 20,
+      "sha256": "acd10bf98446a317e4cdfd4e0ce704f4993246928600daa39fae82bf8e01e1e9"
+    },
+    {
+      "page": 18,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=18&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315269586900",
+      "file": "016701_lsjz_page018.json",
+      "count": 20,
+      "sha256": "dab57a1c5cbe74e51fdefe45028ffe40395905f474600ba8315f9efae345bcd6"
+    },
+    {
+      "page": 19,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=19&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315291696000",
+      "file": "016701_lsjz_page019.json",
+      "count": 20,
+      "sha256": "908ce435ce7fda6ec830929d76d871ff197a77855132c2fb196c3466a089d355"
+    },
+    {
+      "page": 20,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=20&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315295797000",
+      "file": "016701_lsjz_page020.json",
+      "count": 20,
+      "sha256": "5c569e6ac677b16e0b2971e97988b5874f24fa49ae81d672f3a896024c9afa4f"
+    },
+    {
+      "page": 21,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=21&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315297797800",
+      "file": "016701_lsjz_page021.json",
+      "count": 20,
+      "sha256": "69d058cce24c2f11bfaaa986ccf759acb146d0a84f00ad609dd5c1571ff9670e"
+    },
+    {
+      "page": 22,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=22&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315340264200",
+      "file": "016701_lsjz_page022.json",
+      "count": 20,
+      "sha256": "9f69e55f844d5db69bd1487677a6c966483a5772c788a9fd3ffd2f29d4c71038"
+    },
+    {
+      "page": 23,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=23&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315370048600",
+      "file": "016701_lsjz_page023.json",
+      "count": 20,
+      "sha256": "d8194c1b6e1646c5bc29feee378f72fb0a12bfcec912cfb370922544e92c194c"
+    },
+    {
+      "page": 24,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=24&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315373048600",
+      "file": "016701_lsjz_page024.json",
+      "count": 20,
+      "sha256": "eed322a6e66b1173dca95e727a18b24ca1e2844a2de87c7ea77fbae79b6833b6"
+    },
+    {
+      "page": 25,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=25&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315386715500",
+      "file": "016701_lsjz_page025.json",
+      "count": 20,
+      "sha256": "e22cfbc8952ad12600acbee64de0afb842dd3289af9f8b6b317931352d180965"
+    },
+    {
+      "page": 26,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=26&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315406542600",
+      "file": "016701_lsjz_page026.json",
+      "count": 20,
+      "sha256": "6414db742032edeb55c35564d3b852d4ec0aa39facb0fabb91904d32b2e8b692"
+    },
+    {
+      "page": 27,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=27&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315463215600",
+      "file": "016701_lsjz_page027.json",
+      "count": 20,
+      "sha256": "dd5d864523c9da7bdb8661a3a49d2275c95a5950280ab2d0688bf6c34e058e6f"
+    },
+    {
+      "page": 28,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=28&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315468233000",
+      "file": "016701_lsjz_page028.json",
+      "count": 20,
+      "sha256": "ed24294fb486d72d8832892c7808a37848af0d6e296d0c309c185f1ad69162a2"
+    },
+    {
+      "page": 29,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=29&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315471233100",
+      "file": "016701_lsjz_page029.json",
+      "count": 20,
+      "sha256": "0d1a75225069a5137e9bc2e5ccd85e4823a6f4e5fa1cad8b43c21db9c7a6be52"
+    },
+    {
+      "page": 30,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=30&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315482742900",
+      "file": "016701_lsjz_page030.json",
+      "count": 20,
+      "sha256": "03d037d999e339f240f44a2827db6644d6371382f46264de40af0e702fde83e5"
+    },
+    {
+      "page": 31,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=31&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315563703100",
+      "file": "016701_lsjz_page031.json",
+      "count": 20,
+      "sha256": "13e87052d06ef860807381af4083d4b193bab49fc966a19ef0ff094491cad8d7"
+    },
+    {
+      "page": 32,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=32&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315573719200",
+      "file": "016701_lsjz_page032.json",
+      "count": 20,
+      "sha256": "8c7e43f56fd03c5147b8ccbdab4ef6a3b3ce882a5d83cb5c1fdf5a50c2be2f6f"
+    },
+    {
+      "page": 33,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=33&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315575957400",
+      "file": "016701_lsjz_page033.json",
+      "count": 20,
+      "sha256": "d0849afae79976df303c4e0ecb1c3e7c3e2abd8c92266840d75740587e8d0325"
+    },
+    {
+      "page": 34,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=34&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315598483200",
+      "file": "016701_lsjz_page034.json",
+      "count": 20,
+      "sha256": "e0be196fef07fc2c35cc7c1188a7e11cc19a60fcd77e387e5a57e3e59d6eaaf3"
+    },
+    {
+      "page": 35,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=35&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315642820400",
+      "file": "016701_lsjz_page035.json",
+      "count": 20,
+      "sha256": "d335b74701b4c2aed81e700e5a64b3db35d2e5ced48b77f7fa1b65f593e1f5b6"
+    },
+    {
+      "page": 36,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=36&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315671141800",
+      "file": "016701_lsjz_page036.json",
+      "count": 20,
+      "sha256": "986db475f6a040496315ebb2c412b7a645bd8cda6a848aa4b53b4c1b059da5d4"
+    },
+    {
+      "page": 37,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=37&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315671141800",
+      "file": "016701_lsjz_page037.json",
+      "count": 20,
+      "sha256": "33f5a4b48a68d3b9a93421efdc141f874df6ed37b28215b4505a069100af8498"
+    },
+    {
+      "page": 38,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=38&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315688164000",
+      "file": "016701_lsjz_page038.json",
+      "count": 20,
+      "sha256": "bd6164f57c2266e3a51451d1208ca6bb7274bc1a5b9f5ddcfc0ef80e41bb1754"
+    },
+    {
+      "page": 39,
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=39&pageSize=20&startDate=&endDate=2026-10-15&_=1792156315729325400",
+      "file": "016701_lsjz_page039.json",
+      "count": 19,
+      "sha256": "c6df96e13d1350bbd9e34122e7eca18823740850185d3f3dba45cbe43f9163cc"
+    }
+  ],
+  "chart_url": "https://fund.eastmoney.com/pingzhongdata/016701.js?v=1792156315840953000",
+  "events": []
+}

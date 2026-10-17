@@ -1,0 +1,90 @@
+{
+  "scope": [
+    "2023-03-15",
+    "2024-12-31"
+  ],
+  "reference": {
+    "rule": [
+      0.4,
+      0.3,
+      0.2,
+      0.3
+    ],
+    "schedule": "annual",
+    "initial_only": false,
+    "twr_annualized_pct": 21.934484680441656,
+    "max_drawdown_pct": 16.67484060814125,
+    "calmar": 1.3154239489241333,
+    "regular_contributed_norm": 1.8333333333333335,
+    "extra_contributed_norm": 0.0,
+    "extra_over_regular_pct": 0.0,
+    "peak_extra_over_regular_pct": 0.0,
+    "end_total_norm": 2.468486177486182,
+    "end_fund_weight_pct": 100.0,
+    "average_fund_weight_pct": 100.0,
+    "scheduled_buy_count": 2,
+    "tactical_buy_count": 0,
+    "tactical_sell_count": 0,
+    "cancelled_pending": 0,
+    "path_signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transaction_fees_norm": 0.002745881178232823,
+    "dividends_norm": 0.0,
+    "lag": 2,
+    "pending_order": null
+  },
+  "return_floor_pct": 21.934484680441656,
+  "selected": {
+    "rule": [
+      0.05,
+      0.05,
+      0.2,
+      0.5
+    ],
+    "schedule": "annual",
+    "initial_only": false,
+    "twr_annualized_pct": 24.959899380838003,
+    "max_drawdown_pct": 9.723168687125149,
+    "calmar": 2.567054031870129,
+    "regular_contributed_norm": 1.8333333333333335,
+    "extra_contributed_norm": 0.7893837567661508,
+    "extra_over_regular_pct": 43.05729582360822,
+    "peak_extra_over_regular_pct": 43.05729582360822,
+    "end_total_norm": 3.476799217835887,
+    "end_fund_weight_pct": 64.63083285727345,
+    "average_fund_weight_pct": 76.75991717344615,
+    "scheduled_buy_count": 2,
+    "tactical_buy_count": 6,
+    "tactical_sell_count": 12,
+    "cancelled_pending": 0,
+    "path_signature": "347c45b0f864f2a5e03dcf6b42178ef4e6285031264838a737fdf76066654f25",
+    "transaction_fees_norm": 0.024232485561372634,
+    "dividends_norm": 0.0,
+    "lag": 2,
+    "pending_order": null
+  },
+  "eligible_count": 1526,
+  "score_ties": {
+    "primary_count": 1,
+    "primary_rules": [
+      [
+        0.05,
+        0.05,
+        0.2,
+        0.5
+      ]
+    ],
+    "primary_path_count": 1,
+    "minimum_drawdown_count": 1,
+    "minimum_drawdown_rules": [
+      [
+        0.05,
+        0.05,
+        0.2,
+        0.5
+      ]
+    ],
+    "minimum_drawdown_path_count": 1
+  },
+  "different_trading_path_count": 328,
+  "full_grid_not_evaluated_before_lock": true
+}

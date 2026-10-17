@@ -1,0 +1,124 @@
+{
+  "created_at": "2026-10-16T21:18:32+08:00",
+  "fund_code": "016702",
+  "fund_name": "银华海外数字经济量化选股混合发起_QDII_C",
+  "study_mode": "fixed_A_parameter_sensitivity",
+  "source_sha256": "7470d723a3fad2b2240338090172d626b095303bbab3e2d7655f0b3b0bbd4dfc",
+  "source_scope": "天天基金 f10/lsjz 全页公开历史净值；pingzhongdata 同供应商交叉检查",
+  "source_rows": 779,
+  "analysis_rows": 779,
+  "weekend_accounting_dates": [
+    "2023-12-31",
+    "2024-06-30"
+  ],
+  "weekdays_only_main": false,
+  "normalization": "Hypothetical full annual budget=1; no investor account data read",
+  "funding": "Annual budget at first NAV date of year. Startup year prorated by remaining calendar months; later full years, including current unfinished year, budget=1",
+  "annual_reset": "Buy the new annual budget first; reset price and full fund-value anchors; cancel pending signal; no other signal that day",
+  "signal": "Raw NAV relative to preceding actual trade; sale fraction of execution fund value; buy gross budget fraction of previous anchor value",
+  "lag": 2,
+  "cash": "Zero interest; cash dividends; fund service/management fees already embedded in NAV",
+  "fees": {
+    "subscription": 0.0,
+    "redemption_tiers": [
+      [
+        7,
+        0.015
+      ],
+      [
+        30,
+        0.005
+      ]
+    ],
+    "meaning": "Static sensitivity using FIFO; execution date proxies confirmation",
+    "verification": "root/dataagent以基金原招募说明书核验：C类<7日1.5%，7-29日0.5%，>=30日0；申购费0；0.4%/年销售服务费已在NAV内含，不重复扣除"
+  },
+  "grid": {
+    "up": [
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ],
+    "down": [
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.4,
+      0.5,
+      0.6
+    ],
+    "sell": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.3,
+      0.5
+    ],
+    "buy": [
+      0.0,
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.3,
+      0.5
+    ],
+    "canonical_count": 3025
+  },
+  "funding_cap": "At EVERY observation cumulative extra contribution / cumulative regular annual budget <= 0.5",
+  "primary_objective": "Maximize annualized TWR / maximum TWR drawdown; positive CAGR and CAGR>=max(0,in-period annual40/30 CAGR), funding cap",
+  "secondary_objective": "Minimum drawdown under the identical return and funding constraints",
+  "tie_break": "Score rounded to12 decimals, fewer tactical trades, lower extra, L1distance to40/30, lexicographic; disclose all tied scores and paths",
+  "chronological": "FIRST development grid and lock -> fixed validation/recent diagnostics -> LAST full-history descriptive grid; never revise chronological choice",
+  "periods": {
+    "development": [
+      "2023-03-15",
+      "2024-12-31"
+    ],
+    "validation": [
+      "2025-01-01",
+      "2025-12-31"
+    ],
+    "recent": [
+      "2026-01-01",
+      "2026-10-15"
+    ]
+  },
+  "validation_scope": "Retrospective chronological diagnostics; very short NAV history, not independent market cycles; A/C classes are same portfolio, not independent samples",
+  "robustness": "Lag1/2/3; zero fees; complete2024-2025; ordinary subscription opening; neighboring parameters; weekend accounting date sensitivity",
+  "subscription_open_date": "2023-06-14",
+  "execution_limit": "NAV observation dates proxy transaction dates; public holidays, fund-opening/limits, publication/settlement delays not fully reconstructed; inception-date primary run may predate ordinary subscriptions",
+  "source_validation": {
+    "api_total_count": 779,
+    "pages": 39,
+    "unique_date_count": 779,
+    "duplicate_dates": [],
+    "all_pages_pinned_end_date": "2026-10-15",
+    "chart_same_vendor_only": true,
+    "chart_count": 779,
+    "chart_missing_dates": [],
+    "chart_only_dates": [],
+    "chart_nav_mismatches": [],
+    "chart_accumulated_nav_mismatches": [],
+    "nav_vs_accumulated_gap_dates": [],
+    "nonempty_event_count": 0,
+    "weekend_accounting_nav_dates": [
+      "2023-12-31",
+      "2024-06-30"
+    ],
+    "official_independent_full_validation": "待核验；不冒称已完成双源全量比对"
+  },
+  "primary_parameter_source_sha256": "3253d244c8a43259254430b8d14754bada3cb8ae0a1be9e8a616b492d8015c57",
+  "C_class_not_separately_optimized": true
+}

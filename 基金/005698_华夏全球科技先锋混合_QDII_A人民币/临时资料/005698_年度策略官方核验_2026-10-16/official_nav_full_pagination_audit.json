@@ -1,0 +1,713 @@
+{
+  "checked_at": "2026-10-16T20:48:59+08:00",
+  "method": "official manager website POST pagination, 99 pages, date/nav/accumulated_nav exact decimal comparison",
+  "pages": 99,
+  "errors": [],
+  "official_rows": 1978,
+  "official_unique_dates": 1978,
+  "official_first_date": "2018-04-20",
+  "official_last_date": "2026-10-15",
+  "local_rows": 1979,
+  "local_only_dates": [
+    "2018-04-17"
+  ],
+  "official_only_dates": [],
+  "mismatches": [],
+  "matched_rows": 1978,
+  "source_json_sha256": "1dde575b0d3275264d43290ad025cd69542d9de4f4ac316ba86b7eae5214aa8d",
+  "page_metadata": [
+    {
+      "page": 1,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_page1.html",
+      "sha256": "65b78ab83f92bd2d1920cbfea7610cafa05457d2b07d004f21ffea700e048323"
+    },
+    {
+      "page": 2,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page002.html",
+      "sha256": "50d2e01ab3a181f447f3a4ec057875e70767d4121453e95c1736d09e7cb5b3a0"
+    },
+    {
+      "page": 3,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page003.html",
+      "sha256": "9a1ae4fa9166b6d2d1b1c91cb38286ed62a5d964978f285b3f36b257ae2a9462"
+    },
+    {
+      "page": 4,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page004.html",
+      "sha256": "9609269eeb62b932467d521cc7fa87d64d426f97a2529f839e8c8d49148b4371"
+    },
+    {
+      "page": 5,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page005.html",
+      "sha256": "80ead1cc366117562d225ef3dd68def0d8ded937388b9b0ecc99902cf8e12997"
+    },
+    {
+      "page": 6,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page006.html",
+      "sha256": "bf39328ca99f10de08124a1238bfdbfb82070f0478d27b0c36cb243d081861d1"
+    },
+    {
+      "page": 7,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page007.html",
+      "sha256": "b270c1bea45bae66d91d76fabb0c8dc38dc32fff1d67c2be9edd595ad03557cf"
+    },
+    {
+      "page": 8,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page008.html",
+      "sha256": "e02c2b4506c1b71ad9ef3d9aaf31b29e0a70eb9436928583fd251ccbaeab14ae"
+    },
+    {
+      "page": 9,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page009.html",
+      "sha256": "8ba2e4389c64040683ed6b00d29cbdb0e93632cbfe678dc52f77dd8ed0e4b0ec"
+    },
+    {
+      "page": 10,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page010.html",
+      "sha256": "2ca5beb9d200dc2ff39386e66360d18e6efbf45ba9eb7bd92fbdcaab1aeb54af"
+    },
+    {
+      "page": 11,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page011.html",
+      "sha256": "d3ce59d1ffbe2c6b4979f5745113745866a1414f56e1e8fd25c855560eb71d79"
+    },
+    {
+      "page": 12,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page012.html",
+      "sha256": "2fa889625baeef9ecb9489e1a02af04bc55810dab89d2c30b0eaf0d8793d54b2"
+    },
+    {
+      "page": 13,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page013.html",
+      "sha256": "e3b46dfcc621a29cdcbe69ce9c01e48659bf03932f10999570ab274e9f90579f"
+    },
+    {
+      "page": 14,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page014.html",
+      "sha256": "cbd3a1dbc8d61dc4ca5f4ba4c1d60fa236e1dbfda0249fc4c0ef2ca4982f8287"
+    },
+    {
+      "page": 15,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page015.html",
+      "sha256": "1c0ead22d18533afaf3523cde28797d8e7c1ba9fa01432e24679c9b9412de773"
+    },
+    {
+      "page": 16,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page016.html",
+      "sha256": "287dd260bd5026b4fa81ee570810d802562801bcac7f00292580abdf0f2b3938"
+    },
+    {
+      "page": 17,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page017.html",
+      "sha256": "c94e0486794445934fa5088f4b4279cff9e205acfe8275b42169eddd55d68ad1"
+    },
+    {
+      "page": 18,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page018.html",
+      "sha256": "9d8e7e2a4277fa371ee9feee71441f160585e7c5cc92c59193c678ac34a72486"
+    },
+    {
+      "page": 19,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page019.html",
+      "sha256": "eb4b06c096311f7d6d59c15ae45723523f0c3116f86c6f3278750fa805e854d1"
+    },
+    {
+      "page": 20,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page020.html",
+      "sha256": "ce6e77bfb08bf2ec9f0c63c12c9ad3f7280e328b992334ac390227dfeb174fb5"
+    },
+    {
+      "page": 21,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page021.html",
+      "sha256": "516696e72f0f7e7699702a1101310fdc8cf8d124ac576a77bdc53d98c8a545af"
+    },
+    {
+      "page": 22,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page022.html",
+      "sha256": "51efd109dd386f8086086cac08b4938751835132929b3dd3abb687f1fdc1ed4e"
+    },
+    {
+      "page": 23,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page023.html",
+      "sha256": "7f54d36c10952097e89827171ec1228752ea18bc04a4d08b05cc2bfc815657f3"
+    },
+    {
+      "page": 24,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page024.html",
+      "sha256": "f1e65fa5bd07b557bbc6738d8aae8b9f602a09083a43c3b4784eaed8368a5e52"
+    },
+    {
+      "page": 25,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page025.html",
+      "sha256": "38a05932a31971225926e39b56d8911cfebd44def86b71f28825401229cd1bb2"
+    },
+    {
+      "page": 26,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page026.html",
+      "sha256": "dfb48eb4370c81885a905f6b88199edd83b73072c99b2babd06b89156eaedde6"
+    },
+    {
+      "page": 27,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page027.html",
+      "sha256": "91ff8ebcd9baee8fad67f2845f5d6961fd6029023d41bedd4538eba84106e568"
+    },
+    {
+      "page": 28,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page028.html",
+      "sha256": "687510a10e881c61feee2f58ada56894d5a15d269a2aec8931e22588bb9cbbdd"
+    },
+    {
+      "page": 29,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page029.html",
+      "sha256": "d97154940acbf80d53a1210cf82b58236990f7d53cec6da2747aa587a93d08b7"
+    },
+    {
+      "page": 30,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page030.html",
+      "sha256": "94b250c13e19bb1d4ed8f050334846531b94e3ade18ea074f08c4c8ccdda551c"
+    },
+    {
+      "page": 31,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page031.html",
+      "sha256": "6aa43a050e602470778c7eec52fe877bcd1a55f14e852eca8e7b10080a94420e"
+    },
+    {
+      "page": 32,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page032.html",
+      "sha256": "84c182ffc4b32d79a5468a29e093f64b4039efc32fb2fd437e89e64b74d92cd5"
+    },
+    {
+      "page": 33,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page033.html",
+      "sha256": "baaf3237c5b60acf7e3275841fe10f3e9b1ba084fce8d78e0fefa0c48cb9bdd0"
+    },
+    {
+      "page": 34,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page034.html",
+      "sha256": "e25075ae190da971b622b13eb0176254479b1165b870b7881a556505ae59a013"
+    },
+    {
+      "page": 35,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page035.html",
+      "sha256": "5947af7dfdfc2ffe8756ace78cc8f4a609f9b1b7c7865849e2beffb0057392e2"
+    },
+    {
+      "page": 36,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page036.html",
+      "sha256": "a9683773fe51fc0b5ad614b784995a33ed72bcc2261d748e2ac8ba2a45204c86"
+    },
+    {
+      "page": 37,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page037.html",
+      "sha256": "926bf54eeb2045beceac7fffbb00ec95fc4f0e544cffcbebd66b0126b64257cf"
+    },
+    {
+      "page": 38,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page038.html",
+      "sha256": "32269abdcaa5c75414b21efc6f05e15bcbbe717493b4ce8832c164c088f6a96a"
+    },
+    {
+      "page": 39,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page039.html",
+      "sha256": "428aa169921ef625458d916335cb3c0363adc1cd26b4a522c829d81aa4c76337"
+    },
+    {
+      "page": 40,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page040.html",
+      "sha256": "06de74af462b55c9ab2fd2a8e6e40b1dd4af8a9a818d0632b629856d39297097"
+    },
+    {
+      "page": 41,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page041.html",
+      "sha256": "3c9db89b313b1b914f3d3c4d883c4ae084bba9c4c1872934365665066f739bad"
+    },
+    {
+      "page": 42,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page042.html",
+      "sha256": "8f4a349591955887c4b2d69cc59417887168b69a07eeb01caae07a321f7a4c8f"
+    },
+    {
+      "page": 43,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page043.html",
+      "sha256": "08508f7e47f44bb5c34535adf0088d7d6c75e50e7b08baa7f6a67ea200212a9e"
+    },
+    {
+      "page": 44,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page044.html",
+      "sha256": "cd2450266edf1ba3591b0aaeb9140dedf44e14704433ef775f53c4e089e148c4"
+    },
+    {
+      "page": 45,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page045.html",
+      "sha256": "3032f52d99f5471ec8bebaaedd976e1c2bad9e7dbd146c37ffe23c68a44139b8"
+    },
+    {
+      "page": 46,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page046.html",
+      "sha256": "b5c2bd3a277f5e9662c0b1b4daeac8f7cc84f58d9de4aed1841594b91e044c86"
+    },
+    {
+      "page": 47,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page047.html",
+      "sha256": "85beecedc0fa2e7b1203847de8c511b9f850f12a272dcde563c851e23ea19bd6"
+    },
+    {
+      "page": 48,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page048.html",
+      "sha256": "73af1cf8d80c63350f37d25b918df05f3803623ca7e9e74005adbf5a671747d6"
+    },
+    {
+      "page": 49,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page049.html",
+      "sha256": "2d0eda449c6136978072a45b595e2486202a928a417d315cf3f674a1c8a1fefd"
+    },
+    {
+      "page": 50,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page050.html",
+      "sha256": "64b1a3a18b1095f14fb1439507c72f5a8fe74fe02893523c56910d72dac536ba"
+    },
+    {
+      "page": 51,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page051.html",
+      "sha256": "0ca309389ac9896a00440478b97fe618ca095e75a7417347ee96e2fdb68d01d8"
+    },
+    {
+      "page": 52,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page052.html",
+      "sha256": "deb3c48d6f82c8f06b403da2318a0b67828be41efbb786caa6d7ced737a513d7"
+    },
+    {
+      "page": 53,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page053.html",
+      "sha256": "4a064b114ce3ddac21d3799caa2353268b70f25baa164a299372057f60ce5530"
+    },
+    {
+      "page": 54,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page054.html",
+      "sha256": "81788f65889016170974e5cfbda64d8317d6bacf01492b25638f4cce3c72a069"
+    },
+    {
+      "page": 55,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page055.html",
+      "sha256": "41a835657db42fef54d5d36c84839c239907fbcdc7ae883dbc084fc1c96f376f"
+    },
+    {
+      "page": 56,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page056.html",
+      "sha256": "048602b966354bf08ad63f1145516b8753b6082b4445b3310d56c8d6a87e76da"
+    },
+    {
+      "page": 57,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page057.html",
+      "sha256": "96ba48eac2bcf8fd3fd3fd9fc3e90f12b9cb49ef85df81572346fa69f3e22dcf"
+    },
+    {
+      "page": 58,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page058.html",
+      "sha256": "ad17c93690fcd410194483ff2360cf3150ebad55763e6f36f67b76ee05a6245a"
+    },
+    {
+      "page": 59,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page059.html",
+      "sha256": "a2159aa51983281558025750a6747a31b5fe0f323d9ada5d9b26e12b2ba5d4d9"
+    },
+    {
+      "page": 60,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page060.html",
+      "sha256": "a3777703888613e1f5bcd02122c225a0719c3629da54a4ef06a99b2207aa8238"
+    },
+    {
+      "page": 61,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page061.html",
+      "sha256": "3a79b371b2e6a980e6dd39cef25b2fe4cb84db7a24405e3a9da13c9ef8d0b218"
+    },
+    {
+      "page": 62,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page062.html",
+      "sha256": "53f3c5075f9d7efe78a8b6ede1f9b69868a9d9b5b62b8b54df041f8cf5403611"
+    },
+    {
+      "page": 63,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page063.html",
+      "sha256": "9c593105c055df5ca19e2803700aae570a20898f99e673bc1b14903b2b4a3a7b"
+    },
+    {
+      "page": 64,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page064.html",
+      "sha256": "10ea9d05eda8c614f71fb2d928f856835603e51e727f8097ff09e698e657e56c"
+    },
+    {
+      "page": 65,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page065.html",
+      "sha256": "90a4ab986699df839207d9c46fd668441cd3abdcf88743eec427c4bd3208ca74"
+    },
+    {
+      "page": 66,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page066.html",
+      "sha256": "35d2d6b0aae0fa122c70bb27bfe0426e6ebb164a884330e0e95d3a5ab6d75358"
+    },
+    {
+      "page": 67,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page067.html",
+      "sha256": "db6101d1801a602d104bd2aed4117d4d78e317158bf2e2566a19076639bc9c6e"
+    },
+    {
+      "page": 68,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page068.html",
+      "sha256": "6066f632a974fd57cd0e791145a58a3d048dc65838a190c76ec9185ff6113a91"
+    },
+    {
+      "page": 69,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page069.html",
+      "sha256": "01481d96b68778db832133ef25b74e12efe8ab6f6806ffc79b75a292c74112e6"
+    },
+    {
+      "page": 70,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page070.html",
+      "sha256": "9d6c55759ce297f68126ff3d96ead101c5e0342b2534a0ca7de828134901c78c"
+    },
+    {
+      "page": 71,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page071.html",
+      "sha256": "085232a40e6deeb76eb803ddba1799a66522bf03030cfaef2d3615e9ecbfd4b5"
+    },
+    {
+      "page": 72,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page072.html",
+      "sha256": "4e1318e4f5951f57e8383b246a917d8b41a3a60f12cb768cac9ac157d6874f83"
+    },
+    {
+      "page": 73,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page073.html",
+      "sha256": "adb5404ca2b07fd14bdac6be9e68a4aa4f46bd37a4a4e4f99f60134865b9f05c"
+    },
+    {
+      "page": 74,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page074.html",
+      "sha256": "4d23c31cf939da5a3915979ea560b5a80e454353db452b32ead2ddf075ee91e9"
+    },
+    {
+      "page": 75,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page075.html",
+      "sha256": "b1d64492acd974daf0d1a8c035f746c07a42e88aafadd5aeba6d3e927765b4e2"
+    },
+    {
+      "page": 76,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page076.html",
+      "sha256": "bc792cdd5fc9a516e0f8859385baee3c9a753aa708ec8e872090272449c09c15"
+    },
+    {
+      "page": 77,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page077.html",
+      "sha256": "96383de22d9653cb441d71b31b6e24a72f558bd4d7c0e1c3253a68963f4f5964"
+    },
+    {
+      "page": 78,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page078.html",
+      "sha256": "53a7dbb9ff7f2e74c80229daea108e5cc0d7ed3667fe7efbef031a2db64c24d0"
+    },
+    {
+      "page": 79,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page079.html",
+      "sha256": "27e82eac9e79f47b462dfe7297688d4cd78168a25096996a108708584aff4a02"
+    },
+    {
+      "page": 80,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page080.html",
+      "sha256": "bc70bdff8c2c12a325c8dca5fa40259a2e73c67aa1f069a39516bdbeb3084256"
+    },
+    {
+      "page": 81,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page081.html",
+      "sha256": "c188b54864fb77aa2ed5647324641bb709076653a152147b97b3e3b623b4c2db"
+    },
+    {
+      "page": 82,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page082.html",
+      "sha256": "34bf2a606a9b935b74f2e561b132e592c63f3f3ef454bae0bdb94018ef2dfb23"
+    },
+    {
+      "page": 83,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page083.html",
+      "sha256": "8aff337accc19a770f4c2d38acf5f2b4fa7eaaa19932d7a8419616b81220ef8b"
+    },
+    {
+      "page": 84,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page084.html",
+      "sha256": "bf895f7da23bd821a626361ae585255b3ae90d298d05217c32428d29438663c1"
+    },
+    {
+      "page": 85,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page085.html",
+      "sha256": "cc674f1cf46ffe23bba7a150cfcec86101cde0c369b02194472fc86b8ca91a58"
+    },
+    {
+      "page": 86,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page086.html",
+      "sha256": "adcb3ab0a54581faa1c769a37fc738fe09d59b4021e01379b29c4dbd88eeb510"
+    },
+    {
+      "page": 87,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page087.html",
+      "sha256": "18461f668fe32836e85e0c3e59c5b8f65082fae24bcda53082f0b9a8e1d21359"
+    },
+    {
+      "page": 88,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page088.html",
+      "sha256": "eb9e641fa65dce736aed30f5dd4db0fc72f67a6c6f91af89712cdf917bf534a5"
+    },
+    {
+      "page": 89,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page089.html",
+      "sha256": "8f8e81dc1cd278e87abca9956ae93663ff612b64cffc2b4f68d7b23ad49c0a66"
+    },
+    {
+      "page": 90,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page090.html",
+      "sha256": "eba9f40f09e527a424ff274713cbb18f2cad29aef393f205dd4a0d37cbd12f92"
+    },
+    {
+      "page": 91,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page091.html",
+      "sha256": "8b711c928ab80e91cc2d0253dc6b0733293929c0e95edd94cd4f0eea67ffe5cd"
+    },
+    {
+      "page": 92,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page092.html",
+      "sha256": "c7f8b9c10eedb3516a57073abf7b595a6163a8d26579c8e101e39cea2e1b986e"
+    },
+    {
+      "page": 93,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page093.html",
+      "sha256": "9ff3894f1ab4cbb5e3dad2e47802634a71ccd409fda797e64bd6661ccb0a569a"
+    },
+    {
+      "page": 94,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page094.html",
+      "sha256": "099fba893c413356096f009ac6c594e13c94c8f61192e09d602da36ec0a10f90"
+    },
+    {
+      "page": 95,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page095.html",
+      "sha256": "1896f6e374affc45a6bafe7f7431b81d69528a1994a76bfe7668da3dd21a4743"
+    },
+    {
+      "page": 96,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page096.html",
+      "sha256": "306de4934097d7d143f31b94c4664e58f2a6a84865199c88a4b0c2f9d98f3711"
+    },
+    {
+      "page": 97,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page097.html",
+      "sha256": "398a3470b0631357820ac081c5424659daa6e682cce8f2085e248d69b06ced47"
+    },
+    {
+      "page": 98,
+      "total_pages": 99,
+      "count": 20,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page098.html",
+      "sha256": "7b21601600f4ec769209a32c9406590b75abcffd9110ae2dcd9d8619de630d8a"
+    },
+    {
+      "page": 99,
+      "total_pages": 99,
+      "count": 18,
+      "raw_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\临时资料\\005698_年度策略官方核验_2026-10-16\\official_nav_POST_page099.html",
+      "sha256": "5431620df8308d55d5bdc6eb041c9143f9bbb64780871782579c0c92f7f016ec"
+    }
+  ]
+}

@@ -11,14 +11,16 @@
   "primary_sources": [
     {
       "id": "platform_buy",
-      "path": "D:/wd/数据分析/基金/270023_广发全球精选股票_QDII_人民币A/临时资料/费率核验_2026-10-16/270023_用户平台买入规则_同步2026-10-16.jpg",
+      "path": null,
+      "availability_note": "本地规则材料未上传",
       "source_type": "user_supplied_public_rule_screenshot",
       "capture_time_displayed": "16:56",
       "capture_date_independently_confirmed": false
     },
     {
       "id": "platform_sell",
-      "path": "D:/wd/数据分析/基金/270023_广发全球精选股票_QDII_人民币A/临时资料/费率核验_2026-10-16/270023_用户平台卖出规则_同步2026-10-16.jpg",
+      "path": null,
+      "availability_note": "本地规则材料未上传",
       "source_type": "user_supplied_public_rule_screenshot",
       "capture_time_displayed": "16:56",
       "capture_date_independently_confirmed": false
@@ -180,7 +182,7 @@
     "buy_open": true,
     "web_open": true,
     "personal_daily_subscription_limit_exists": true,
-    "public_limit_raw_response_path": "D:/wd/数据分析/基金/270023_广发全球精选股票_QDII_人民币A/临时资料/费率核验_2026-10-16/原始官方材料/270023_官方个人申购限额接口_2026-10-16.json",
+    "public_limit_raw_response_path": "基金/270023_广发全球精选股票_QDII_人民币A/临时资料/费率核验_2026-10-16/原始官方材料/270023_官方个人申购限额接口_2026-10-16.json",
     "latest_limit_notice_website_list_date": "2026-08-31",
     "latest_limit_notice_document_and_effective_date": "2026-09-01",
     "channel_status_boundary": "Actual channel availability and limits at submission govern."
@@ -201,7 +203,7 @@
     "later_subscription_or_redemption_fee_change_found": false,
     "not_a_claim_of_exhaustive_all_channel_discount_review": true
   },
-  "official_source_manifest_path": "D:/wd/数据分析/基金/270023_广发全球精选股票_QDII_人民币A/临时资料/费率核验_2026-10-16/原始官方材料/source-manifest.json",
+  "official_source_manifest_path": "基金/270023_广发全球精选股票_QDII_人民币A/临时资料/费率核验_2026-10-16/原始官方材料/source-manifest.json",
   "official_sources": [
     {
       "file": "2026-06-05_广发全球精选_更新招募说明书.pdf",

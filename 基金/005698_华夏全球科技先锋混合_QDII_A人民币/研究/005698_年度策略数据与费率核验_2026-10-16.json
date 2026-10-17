@@ -1,0 +1,165 @@
+{
+  "fund_code": "005698",
+  "share_class": "A人民币",
+  "checked_at": "2026-10-16T20:51:23+08:00",
+  "data_as_of": "2026-10-15",
+  "private_account_data_read": false,
+  "source_file": "基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\历史净值\\005698_全部历史净值_截至2026-10-15.json",
+  "source_sha256": "1dde575b0d3275264d43290ad025cd69542d9de4f4ac316ba86b7eae5214aa8d",
+  "nav_schema": {
+    "schema": "public-fund-nav-v1",
+    "rows_path": "rows",
+    "fields": [
+      "date",
+      "nav",
+      "accumulated_nav",
+      "daily_growth_pct",
+      "event",
+      "source"
+    ],
+    "numeric_storage": "decimal strings; convert explicitly without mixing share classes"
+  },
+  "local_nav_validation": {
+    "rows": 1979,
+    "first_date": "2018-04-17",
+    "last_date": "2026-10-15",
+    "unique_dates": 1979,
+    "duplicates": 0,
+    "nonpositive_or_missing_nav": 0,
+    "all_accumulated_nav_equal_unit_nav": true,
+    "all_event_fields_empty": true,
+    "weekend_nav_dates": [
+      "2018-06-30",
+      "2019-06-30",
+      "2022-12-31",
+      "2023-12-31",
+      "2024-06-30"
+    ]
+  },
+  "official_nav_crosscheck": {
+    "distribution_source": "fund manager website; website labels NAV source as ChinaAMC and DZH and custodian reviewed",
+    "method": "99 official HTML pages; POST pageIndex without isQuery=true; exact Decimal comparison of all dates, unit NAV and accumulated NAV",
+    "official_rows": 1978,
+    "official_pages": 99,
+    "official_unique_dates": 1978,
+    "matched_rows": 1978,
+    "mismatches": 0,
+    "official_only_dates": [],
+    "local_only_dates": [
+      "2018-04-17"
+    ],
+    "official_first_date": "2018-04-20",
+    "official_last_date": "2026-10-15",
+    "local_inception_row_note": "2018-04-17 NAV1.0000 is in third-party historical series and consistent with contract inception face value1; this date is not listed in current manager NAV pagination and is not an ordinary-subscription opening-day observation",
+    "primary_post_url": "https://www.chinaamc.com/product/fundLishijingzhi.do",
+    "post_fields": {
+      "fundcode": "005698",
+      "pageIndex": "1..99",
+      "beginDate": "2018-04-17",
+      "endDate": "2026-10-15"
+    },
+    "raw_archive": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/临时资料/005698_年度策略官方核验_2026-10-16",
+    "audit_summary": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/临时资料/005698_年度策略官方核验_2026-10-16/official_nav_full_pagination_audit.json",
+    "independent_price_valuation_claimed": false
+  },
+  "identity": {
+    "contract_inception_date": "2018-04-17",
+    "ordinary_subscription_redemption_sip_open_date": "2018-06-11",
+    "pre_open_observation_count": 9,
+    "first_open_nav_date": "2018-06-11",
+    "first_open_nav": "1.0704",
+    "original_registered_name": "华夏全球科技先锋混合型证券投资基金（QDII）",
+    "renaming_or_strategy_conversion_found": false,
+    "renaming_note": "2026 prospectus describes the same original registered fund; no transformation was found, which is not a guarantee of unchanged holdings/strategy",
+    "later_share_class_events": [
+      "USD sales opened2023-09-19",
+      "C class added2025-05-13; not the005698 share class"
+    ]
+  },
+  "dividend_events": [],
+  "dividend_validation": {
+    "official_dividend_table_rows": 0,
+    "official_dividend_url": "https://www.chinaamc.com/product/fundLishifenhong.do?fundcode=005698",
+    "all_1979_nav_differences_zero": true,
+    "annual_report_2025": "Past three years no profit distributions, section3.3; current year no distribution, section4.8",
+    "conclusion": "No cash dividend events found through2026-10-15; use empty event list",
+    "split_note": "No split-like accumulated/unit NAV discrepancy or split event found; no separate all-history split register obtained"
+  },
+  "fee_model": {
+    "subscription_rate": 0.0015,
+    "subscription_rate_source": "项目整理规则.md section7; static project assumption, not verified historical actual discounts",
+    "ordinary_standard_frontend_rate": 0.015,
+    "official_formula": "net subscription budget = gross budget/(1+rate); units=net/NAV",
+    "redemption_method": "FIFO per project rule",
+    "redemption_fee_tiers": [
+      {
+        "holding_days_min_inclusive": 0,
+        "holding_days_max_exclusive": 7,
+        "rate": 0.015
+      },
+      {
+        "holding_days_min_inclusive": 7,
+        "holding_days_max_exclusive": 30,
+        "rate": 0.0075
+      },
+      {
+        "holding_days_min_inclusive": 30,
+        "holding_days_max_exclusive": 365,
+        "rate": 0.005
+      },
+      {
+        "holding_days_min_inclusive": 365,
+        "holding_days_max_exclusive": null,
+        "rate": 0.0
+      }
+    ],
+    "tiers_for_python": [
+      [
+        7,
+        0.015
+      ],
+      [
+        30,
+        0.0075
+      ],
+      [
+        365,
+        0.005
+      ]
+    ],
+    "confirmation_day_assumption": "Natural-day holding periods; execution dates proxy confirmation dates only in simplified model",
+    "historical_actual_fees_reconstructed": false,
+    "prospectus_url": "https://www.chinaamc.com/upload/resources/file/2026/05/29/928e507e97ae4998986f27e068688a4f.pdf",
+    "prospectus_pages_printed": [
+      74,
+      76,
+      77,
+      78
+    ]
+  },
+  "execution_limits": [
+    "NAV observations include5 weekend accounting valuations and9 observations before ordinary subscription opened; do not treat every row as historically tradable",
+    "Fund opening days require jointly open domestic and main overseas markets; historical limits and suspensions not reconstructed",
+    "Current official product page displays subscriptions open; do not infer unlimited subscriptions",
+    "NAV ordinarily calculatedT+1 and disclosedT+2; fixed1/2/3 observation lags are sensitivity assumptions, not reconstructed historical disclosures and fills",
+    "NAV includes fund operating expenses; no additional management/custody expense deducted in strategy model"
+  ],
+  "sources": [
+    {
+      "title": "Official product page",
+      "url": "https://www.chinaamc.com/fund/005698/index.shtml"
+    },
+    {
+      "title": "Official dividend table",
+      "url": "https://www.chinaamc.com/product/fundLishifenhong.do?fundcode=005698"
+    },
+    {
+      "title": "Official2026-05-29 updated prospectus",
+      "url": "https://www.chinaamc.com/upload/resources/file/2026/05/29/928e507e97ae4998986f27e068688a4f.pdf"
+    },
+    {
+      "title": "Official2025 annual report",
+      "url": "https://www.chinaamc.com/upload/resources/file/2026/03/31/912d5837f27547eebe0628e1a5d8b8c2.pdf"
+    }
+  ]
+}

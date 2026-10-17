@@ -9,3 +9,10 @@
 *.gif binary
 *.webp binary
 *.zip binary
+
+# Frozen inputs/results carry content hashes; do not rewrite their line endings.
+*.json -text
+*.csv -text
+*.html -text
+*.js -text
+*.txt -text

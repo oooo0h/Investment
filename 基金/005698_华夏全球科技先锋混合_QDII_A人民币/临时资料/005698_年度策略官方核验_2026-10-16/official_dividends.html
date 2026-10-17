@@ -1,0 +1,152 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="author" content="www.fractal-technology.com" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="renderer" content="webkit">
+	<title>分红情况</title>
+	<link href="/product/static/new2/css/global.css?v=20250804" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="/product/static/new2/css/laydate.css?v=20250804" type="text/css">
+	<link href="/product/static/new2/css/animate.css?v=20250804" rel="stylesheet" type="text/css" />
+	<link href="/product/static/new2/css/page.css?v=20250804 " rel="stylesheet" type="text/css" />
+	<link href="/product/static/new2/css/iframe.css?v=20250804 " rel="stylesheet" type="text/css" />
+	<script src="/product/static/new2/js/laydate.js?v=20250804"></script>
+	<script src="/product/static/new2/js/jquery-1.11.3.min.js?v=20250804"></script>
+	<script src="/product/static/new2/js/global.js?v=20250804"></script>
+	<script src="/product/static/new2/js/sortList.js?v=20250804"></script>
+	<script src="/product/static/new2/js/px.js?v=20250804"></script>
+	<script src="/product/static/new2/js/indexfundvalue.js?v=20250804"></script>
+</head>
+<body>
+<div class="fund_overview2 historical_worth2">
+	<div class="block">
+		<div class="con clearfix">
+			<div class="l j-l">
+				<div class="list2">
+					<div class="tit">分红情况</div>
+					<div class="liner3 border">
+						<form id="queryForm" name="queryForm" action="fundLishifenhong.do" method="post">
+							<input name="fundcode" type="hidden" value="005698">
+						</form>
+								<div class="t_head middle-box">
+									<table class="table-head middle-cont" id="hoverBox1">
+										<thead>
+										<tr>
+											<th><span class="s1">年份</span></th>
+											<th><span class="s1">权益登记日</span></th>
+											<th><span class="s1">每份分红（元）</span></th>
+											<th><span class="s1">分红发放日</span></th>
+										</tr>
+										</thead>
+									</table>
+								</div>
+								<div class="t_cont">
+									<table class="table-cont" id="hoverBox1_1">
+										<tbody>
+										
+											
+												<tr>
+													<td> </td>
+													<td></td>
+													<td>合计:</td>
+													<td></td>
+												</tr>
+											
+										
+										</tbody>
+									</table>
+								</div>
+					</div>
+					<!-- 分页 -->
+					<div class="page-mod">
+						<ul class="page-box p-show clearfix">
+							<li class="page-item prev page-arrow">
+								<a id="prev" href="javascript:void(0);" onclick="upPage();"></a>
+							</li>
+							<li  class="page-item"><a href="javascript:void(0)"  class="cur"  onclick="thisPage(1)" >1</a> </li>
+							<li class="page-item next page-arrow">
+								<a id="next" href="javascript:void(0)" onclick="nextPage();"></a>
+							</li>
+							<li class="page-item jump">
+								<a class="clearfix">
+									<div class="page-input"><input type="text" id="goNum"></div>
+									<button type="submit" class="page-btn" onclick="goPage()">GO</button>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	window.onload = function() {
+		let totalPage = '1';
+		let currentPage = '1';
+		let next = document.querySelector("#next");
+		if (totalPage == currentPage) {
+			next.style.cursor = "no-drop";
+			next.style.opacity = 0.5;
+		} else {
+			next.style.cursor = "pointer";
+			next.style.opacity = 1;
+		}
+		let prev = document.querySelector("#prev");
+		if (currentPage == 1) {
+			prev.style.cursor = "no-drop";
+			prev.style.opacity = 0.5;
+		} else {
+			prev.style.cursor = "pointer";
+			prev.style.opacity = 1;
+		}
+	}
+</script>
+<script type="text/javascript">
+	//下一页
+	function nextPage(){
+		let totalPage = '1';
+		let currentPage = '1';
+		if (totalPage != currentPage) {
+			var hidden = "<input type='hidden' name='pageIndex' value='2' />";
+			$("#queryForm").append(hidden).submit();
+		}
+	}
+
+	//上一页
+	function upPage(){
+		let currentPage = '1';
+		if (currentPage != 1) {
+			var hidden = "<input type='hidden' name='pageIndex' value='0' />";
+			$("#queryForm").append(hidden).submit();
+		}
+	}
+
+	//点击当前页
+	function thisPage(num){
+		var hidden = "<input type='hidden' name='pageIndex' value='"+num+"' />";
+		$("#queryForm").append(hidden).submit();
+	}
+
+	//点击当前页
+	function goPage(){
+		var goNum=$("#goNum").val();
+		let totalPage = '1';
+		if (goNum > totalPage) {
+			return;
+		}
+		var hidden = "<input type='hidden' name='pageIndex' value='"+goNum+"' />";
+		$("#queryForm").append(hidden).submit();
+	}
+
+</script>
+</body>
+
+</html>

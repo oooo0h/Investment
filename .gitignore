@@ -16,3 +16,20 @@ node_modules/
 .DS_Store
 Thumbs.db
 ~$*
+
+# Local account material is not part of research uploads.
+**/交易分析/data/
+**/交易分析/outputs/
+**/*交易记录截图*
+**/*用户平台*规则*.jpg
+**/*用户平台*规则*.png
+*.private.json
+*.localpaths.json
+.env
+.env.*
+
+# Regenerable local caches and extracted document text.
+**/.pytest_cache/
+**/.cache/
+**/临时资料/**/*.pdf.txt
+**/临时资料/yh_home.html

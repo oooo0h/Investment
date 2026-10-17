@@ -1,0 +1,606 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta name="author" content="www.fractal-technology.com" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="renderer" content="webkit">
+	<title>历史净值</title>
+	<link href="/product/static/new2/css/global.css?v=20250804" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="/product/static/new2/css/laydate.css?v=20250804" type="text/css">
+	<link href="/product/static/new2/css/page.css?v=20250804 " rel="stylesheet" type="text/css" />
+	<link href="/product/static/new2/css/iframe.css?v=20250804 " rel="stylesheet" type="text/css" />
+
+	<script src="/product/static/new2/js/laydate.js?v=20250804"></script>
+	<script src="/product/static/new2/js/jquery-1.11.3.min.js?v=20250804"></script>
+
+</head>
+<body>
+<div class="fund_overview2 historical_worth2">
+	<div class="block">
+		<div class="con clearfix">
+			<div class="l j-l">
+				<div class="list2">
+					
+					<form id="queryForm" name="queryForm" action="fundLishijingzhi.do" method="post">
+
+						<div class="product_announcement2">
+							<div class="block">
+								<div class="con clearfix">
+									<div class="l j-l">
+										<div class="cont">
+											<div >
+												<div class="form clearfix" style="padding:30px 10px;">
+													<div style="height:10px;" class="form-item clearfix">
+														<div class="lb">净值时间:</div>
+														<div class="dt" style="display: flex;">
+															<div id="date1"class="date date1 placeholder" lay-key="1">&nbsp;</div>
+															<!-- <div class="to">至</div> -->
+															<div id="date2" class="date date2 placeholder" lay-key="2">&nbsp;</div>
+															<a href="#" class="submit"  onclick="queryFormSubmitForFirstPage()">查询</a>
+
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<input type="hidden"  id="beginDate"   name="beginDate"  value="2018-04-17">
+						<input type="hidden"  id="endDate"   name="endDate"  value="2026-10-15">
+						<input type="hidden"  id="fundcode"  name="fundcode"  value="005698">
+						<input type="hidden"  id="isQuery"   name="isQuery" >
+					</form>
+					<div class="liner3 border">
+							
+						
+						
+							
+										<div class="t_head middle-box">
+											<table class="table-head middle-cont" id="hoverBox1">
+												<thead>
+												<tr>
+													<th><span class="s1">净值日期</span></th>
+													<th><span class="s1"> 单位净值</span></th>
+													<th><span class="s1">累计净值</span></th>
+													<th><span class="s1">资产净值</span></th>
+												</tr>
+												</thead>
+											</table>
+										</div>
+										<div class="t_cont">
+											<table class="table-cont" id="hoverBox1_1">
+												<tbody>
+												
+													
+														<tr>
+															<td>2019-12-10</td>
+															
+															
+																
+																
+																	<td><span>1.1573</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1573</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-12-09</td>
+															
+															
+																
+																
+																	<td><span>1.1431</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1431</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-12-06</td>
+															
+															
+																
+																
+																	<td><span>1.1498</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1498</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-12-05</td>
+															
+															
+																
+																
+																	<td><span>1.1366</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1366</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-12-04</td>
+															
+															
+																
+																
+																	<td><span>1.1300</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1300</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-12-03</td>
+															
+															
+																
+																
+																	<td><span>1.1362</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1362</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-12-02</td>
+															
+															
+																
+																
+																	<td><span>1.1238</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1238</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-11-29</td>
+															
+															
+																
+																
+																	<td><span>1.1256</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1256</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-11-27</td>
+															
+															
+																
+																
+																	<td><span>1.1443</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1443</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-11-26</td>
+															
+															
+																
+																
+																	<td><span>1.1384</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1384</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-11-25</td>
+															
+															
+																
+																
+																	<td><span>1.1319</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1319</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-11-22</td>
+															
+															
+																
+																
+																	<td><span>1.1281</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1281</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-11-21</td>
+															
+															
+																
+																
+																	<td><span>1.1363</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1363</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-11-20</td>
+															
+															
+																
+																
+																	<td><span>1.1493</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1493</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-11-19</td>
+															
+															
+																
+																
+																	<td><span>1.1652</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1652</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-11-18</td>
+															
+															
+																
+																
+																	<td><span>1.1680</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1680</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-11-15</td>
+															
+															
+																
+																
+																	<td><span>1.1721</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1721</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-11-14</td>
+															
+															
+																
+																
+																	<td><span>1.1635</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1635</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-11-13</td>
+															
+															
+																
+																
+																	<td><span>1.1618</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1618</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+														<tr>
+															<td>2019-11-12</td>
+															
+															
+																
+																
+																	<td><span>1.1388</span></td>
+																
+															
+															
+																
+																
+																	<td><span>1.1388</span></td>
+																
+															
+															<td></td>
+														</tr>
+													
+												
+												</tbody>
+											</table>
+										</div>
+							
+						
+					</div>
+					<!-- 分页 -->
+					<div class="page-mod">
+						<ul class="page-box p-show clearfix">
+							<li class="page-item prev page-arrow">
+								<a id="prev" href="javascript:void(0);" onclick="upPage();"></a>
+							</li>
+							<li  class="page-item"><a href="javascript:void(0)"  onclick="thisPage(82)" >82</a> </li><li  class="page-item"><a href="javascript:void(0)"  class="cur"  onclick="thisPage(83)" >83</a> </li><li  class="page-item"><a href="javascript:void(0)"  onclick="thisPage(84)" >84</a> </li><li  class="page-item"><a href="javascript:void(0)"  onclick="thisPage(85)" >85</a> </li><li class="page-item"><a href="javascript:void(0)">...</a></li> <li class="page-item"><a href="javascript:void(0)"  onclick="thisPage(99)"  >99</a></li>
+							<li class="page-item next page-arrow">
+								<a id="next" href="javascript:void(0)" onclick="nextPage();"></a>
+							</li>
+							<li class="page-item jump">
+								<a class="clearfix">
+									<div class="page-input"><input type="text" id="goNum"></div>
+									<button type="submit" class="page-btn" onclick="goPage()">GO</button>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	window.onload = function() {
+		let totalPage = '99';
+		let currentPage = '83';
+		let next = document.querySelector("#next");
+		if (totalPage == currentPage) {
+			next.style.cursor = "no-drop";
+			next.style.opacity = 0.5;
+		} else {
+			next.style.cursor = "pointer";
+			next.style.opacity = 1;
+		}
+		let prev = document.querySelector("#prev");
+		if (currentPage == 1) {
+			prev.style.cursor = "no-drop";
+			prev.style.opacity = 0.5;
+		} else {
+			prev.style.cursor = "pointer";
+			prev.style.opacity = 1;
+		}
+	}
+</script>
+<script type="text/javascript">
+	function queryFormSubmitForFirstPage(){
+		$('#isQuery').val("true");
+		$('#queryForm').submit();
+	}
+
+	//下一页
+	function nextPage(){
+		let totalPage = '99';
+		let currentPage = '83';
+		if (totalPage != currentPage) {
+			var hidden = "<input type='hidden' name='pageIndex' value='84' />";
+			$("#queryForm").append(hidden).submit();
+		}
+	}
+
+	//上一页
+	function upPage(){
+		let currentPage = '83';
+		if (currentPage != 1) {
+			var hidden = "<input type='hidden' name='pageIndex' value='82' />";
+			$("#queryForm").append(hidden).submit();
+		}
+	}
+
+
+	//点击当前页
+	function goPage(){
+		var goNum=$("#goNum").val();
+		let totalPage = '99';
+		if (Number(goNum) > Number(totalPage)) {
+			return;
+		}
+		var hidden = "<input type='hidden' name='pageIndex' value='"+goNum+"' />";
+		$("#queryForm").append(hidden).submit();
+	}
+
+	//点击当前页
+	function thisPage(num){
+		var hidden = "<input type='hidden' name='pageIndex' value='"+num+"' />";
+		$("#queryForm").append(hidden).submit();
+	}
+
+	function queryFormSubmitForFirstPage(){
+		$('#isQuery').val("true");
+		$('#queryForm').submit();
+	}
+
+	$(function() {
+		var date1 = laydate.render({
+			elem: '#date1',
+			done: function(value, date) {
+				$("#beginDate").val(value);
+				$('#date1').removeClass('placeholder');
+				date2.config.min = {
+					year: date.year,
+					month: date.month - 1,
+					date: date.date,
+					hours: date.hours,
+					minutes: date.minutes,
+					seconds: date.seconds
+				};
+			}
+		});
+
+		var date2 = laydate.render({
+			elem: '#date2',
+			done: function(value, date) {
+				$("#endDate").val(value);
+				$('#date2').removeClass('placeholder');
+				date1.config.max = {
+					year: date.year,
+					month: date.month - 1,
+					date: date.date,
+					hours: date.hours,
+					minutes: date.minutes,
+					seconds: date.seconds
+				};
+			}
+		});
+		var endDate="2026-10-15";
+		var beginDate="2018-04-17";
+		if(beginDate!=null && beginDate!=""){
+			$("#date1").text(beginDate);
+		}
+
+		if(endDate!=null && endDate!=""){
+			$("#date2").text(endDate);
+		}
+
+
+	});
+
+
+/*
+	$(function() {
+		$('.fund_overview1 .table1 .scroll-tab').mCustomScrollbar({});
+		$('.fund_overview1 .table2 .scroll-tab').mCustomScrollbar({});
+		$(".fund_overview2 .r").scrollFix({
+			endPos: ".fund_overview3"
+		});
+	});
+*/
+
+
+
+
+</script>
+</body>
+
+</html>
