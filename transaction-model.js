@@ -20,14 +20,21 @@ const round = (value, digits = 2) => {
   return shift(Math.round(shift(value, digits)), -digits) || 0;
 };
 
-function unchangedEconomics(original, { type, amount, nav, feeRate }) {
+const FIELDS = ['amount', 'nav', 'shares'];
+const present = value => value !== undefined && value !== null && String(value).trim() !== '';
+const purchaseTypes = new Set(['buy', 'sip', 'transfer-in']);
+const originalAmount = original => original.type === 'reinvest' ? original.nav * original.shares
+  : original.amount ?? original.cost ?? (original.nav * original.shares + (original.type === 'sell' ? -1 : 1) * original.fee);
+
+function unchangedEconomics(original, { type, values, basis, feeMode, feeRate, feeAmount }) {
   if (!original || ![undefined, 'confirmed', 'estimated', '已确认', '历史估算', '已录入'].includes(original.status)) return false;
   const sameKind = original.type === type || (['buy', 'sip'].includes(original.type) && ['buy', 'sip'].includes(type));
-  if (!sameKind || original.nav !== nav || !Number.isFinite(original.shares) || original.shares < 0 ||
+  if (!sameKind || !Number.isFinite(original.nav) || original.nav <= 0 || !Number.isFinite(original.shares) || original.shares < 0 ||
       (type !== 'dividend' && original.shares <= 0) || !Number.isFinite(original.fee) || original.fee < 0) return false;
   const gross = original.nav * original.shares;
-  const priorAmount = type === 'reinvest' ? gross : original.amount ?? original.cost ?? (gross + (type === 'sell' ? -1 : 1) * original.fee);
-  if (!Number.isFinite(priorAmount) || round(priorAmount) !== amount) return false;
+  const priorAmount = originalAmount(original);
+  if (!Number.isFinite(priorAmount) || !basis.every(field => values[field] === (field === 'amount' ? round(priorAmount) : original[field]))) return false;
+  if (feeMode === 'amount') return original.fee === feeAmount;
   const priorRate = ['dividend', 'reinvest'].includes(type) ? 0 : Number.isFinite(original.feeRate)
     ? original.feeRate : gross > 0 ? original.fee / gross * 100 : null;
   return Number.isFinite(priorRate) && Math.abs(priorRate - feeRate) <= Math.max(1, Math.abs(priorRate), Math.abs(feeRate)) * 1e-10;
@@ -38,8 +45,9 @@ export function transactionToday(now = new Date()) {
   return Number.isFinite(date.getTime()) ? date.toISOString().slice(0, 10) : '';
 }
 
-// Input amounts mean total purchase cost / net sale proceeds. Rates are entered
-// as percentages, e.g. 0.15 means 0.15%. This module never reads storage or logs.
+// Only the two manual basis fields are authoritative; the third may contain an
+// old automatic value. A nonempty actual fee takes priority over any percentage.
+// Amounts mean total purchase cost / net sale proceeds (distribution for reinvest).
 export function deriveTransactionDraft(draft = {}, {
   original = null, defaultFeeRate = null, today = transactionToday(), id = original?.id,
 } = {}) {
@@ -48,52 +56,81 @@ export function deriveTransactionDraft(draft = {}, {
   const date = draft.date || today;
   if (!TYPES.has(type)) return fail('请选择有效交易类型。');
   if (!validDate(date) || (validDate(today) && date > today)) return fail('请选择有效日期，不能晚于今天。');
-  const enteredAmount = decimal(draft.amount);
-  if (enteredAmount === null || enteredAmount <= 0 || enteredAmount > 1e12) return fail('请输入有效金额，金额须大于零。');
-  const amount = round(enteredAmount);
-  if (amount <= 0) return fail('金额精度最多为小数点后两位。');
-  const hasNav = draft.nav !== null && draft.nav !== undefined && String(draft.nav).trim() !== '';
-  const nav = hasNav ? decimal(draft.nav) : null;
-  if (hasNav && (nav === null || nav <= 0 || nav > 1e9)) return fail('净值须为有效正数。');
-  const status = hasNav ? 'confirmed' : 'pending';
-  const rawRate = draft.feeRate === undefined || draft.feeRate === null || String(draft.feeRate).trim() === '' ? defaultFeeRate : draft.feeRate;
-  let feeRate = rateTypes.has(type) ? decimal(rawRate) : 0;
-  if (rawRate !== null && rawRate !== undefined && String(rawRate).trim() !== '' && rateTypes.has(type) && feeRate === null) return fail('请输入有效手续费比例。');
+  const basis = type === 'dividend' ? ['amount', 'nav'] : draft.basis === undefined ? ['amount', 'nav'] : draft.basis;
+  if (!Array.isArray(basis) || basis.length !== 2 || new Set(basis).size !== 2 || basis.some(field => !FIELDS.includes(field))) return fail('请选择用于推算的两项数据。');
+  const derivedField = type === 'dividend' ? null : FIELDS.find(field => !basis.includes(field));
+  const values = { amount: null, nav: null, shares: null };
+  const errors = { amount: '请输入有效金额，金额须大于零。', nav: '净值须为有效正数。', shares: '份额须为有效正数。' };
+  for (const field of basis) {
+    if (!present(draft[field])) continue;
+    const value = decimal(draft[field]);
+    if (value === null || value <= 0 || value > (field === 'nav' ? 1e9 : 1e12)) return fail(errors[field]);
+    values[field] = field === 'amount' ? round(value) : field === 'shares' ? round(value, 6) : value;
+    if (values[field] <= 0) return fail(field === 'amount' ? '金额精度最多为小数点后两位。' : '份额精度最多为小数点后六位。');
+  }
+  const complete = basis.every(field => values[field] !== null);
+  if (!complete && values.amount === null) return fail('请填写至少两项有效数据，或填写金额登记进行中交易。');
+  const status = complete ? 'confirmed' : 'pending';
+  const noFee = !rateTypes.has(type);
+  const feeMode = present(draft.feeAmount) ? 'amount' : 'rate';
+  const rawRate = present(draft.feeRate) ? draft.feeRate : defaultFeeRate;
+  let feeAmount = noFee ? 0 : feeMode === 'amount' ? decimal(draft.feeAmount) : null;
+  let feeRate = noFee ? 0 : feeMode === 'rate' && present(rawRate) ? decimal(rawRate) : null;
+  if (!noFee && feeMode === 'amount') {
+    if (feeAmount === null || feeAmount < 0 || feeAmount > 1e12) return fail('请输入有效非负手续费金额。');
+    const roundedFee = round(feeAmount);
+    if (feeAmount > 0 && roundedFee === 0) return fail('手续费金额精度最多为小数点后两位。');
+    feeAmount = roundedFee;
+  }
+  if (!noFee && feeMode === 'rate' && present(rawRate) && feeRate === null) return fail('请输入有效手续费比例。');
   if (feeRate !== null && (feeRate < 0 || feeRate >= 100)) return fail('手续费比例须在 0% 至 100% 之间。');
-  if (status === 'confirmed' && feeRate === null) return fail('请填写手续费比例，无手续费请填 0。');
+  if (purchaseTypes.has(type) && feeAmount !== null && values.amount !== null && feeAmount >= values.amount) return fail('手续费不能达到或超过总支出。');
+  if (complete && !noFee && feeMode === 'rate' && feeRate === null) return fail('请填写手续费比例或金额，无手续费请填 0。');
+  const preview = (amount, nav, shares, fee) => ({ amount, nav, shares, fee, feeRate, feeAmount: feeMode === 'amount' ? feeAmount : null, status, derivedField, feeMode });
   const base = original && typeof original === 'object' ? { ...original } : {};
-  const transaction = { ...base, ...(id ? { id } : {}), date, type, status, sourceStatus: status === 'pending' ? 'processing' : 'confirmed', estimated: false };
+  const transaction = { ...base, ...(id ? { id } : {}), date, type, status, sourceStatus: status === 'pending' ? 'processing' : 'confirmed', estimated: false, feeMode, feeRate, feeAmount: feeMode === 'amount' ? feeAmount : null };
   // Editing a historical estimate creates the user's explicit record; stale
   // application metadata must not make it eligible for automatic estimation.
   delete transaction.estimateReason;
   delete transaction.originalStatus;
   delete transaction.cost;
-  if (feeRate === null) delete transaction.feeRate;
-  else transaction.feeRate = feeRate;
   if (status === 'pending') {
-    Object.assign(transaction, { amount, nav: null, shares: null, fee: null });
-    return { transaction, preview: { amount, nav: null, shares: null, fee: null, feeRate, status }, error: '' };
+    Object.assign(transaction, { amount: values.amount, nav: null, shares: null, fee: null });
+    return { transaction, preview: preview(values.amount, null, null, null), error: '' };
   }
   // A historical confirmation may have rounded shares independently of cash.
   // Editing its date or buy/SIP label must not silently replace those shares.
-  if (unchangedEconomics(original, { type, amount, nav, feeRate })) {
+  if (unchangedEconomics(original, { type, values, basis, feeMode, feeRate, feeAmount })) {
+    const amount = round(originalAmount(original));
     Object.assign(transaction, { amount: original.amount ?? (type === 'reinvest' ? 0 : amount), nav: original.nav, shares: original.shares, fee: original.fee });
-    if (type === 'transfer-in') transaction.cost = Number.isFinite(original.cost) ? original.cost : amount;
-    return { transaction, preview: { amount, nav, shares: original.shares, fee: original.fee, feeRate, status }, error: '' };
+    if (Number.isFinite(original.cost)) transaction.cost = original.cost;
+    else if (type === 'transfer-in') transaction.cost = amount;
+    return { transaction, preview: preview(amount, original.nav, original.shares, original.fee), error: '' };
   }
-  const rate = feeRate / 100;
-  let fee = 0, shares = 0;
-  if (['buy', 'sip', 'transfer-in'].includes(type)) {
-    fee = round(amount - amount / (1 + rate));
-    shares = round((amount - fee) / nav, 6);
-  } else if (type === 'sell') {
-    fee = round(amount / (1 - rate) - amount);
-    shares = round((amount + fee) / nav, 6);
-  } else if (type === 'reinvest') shares = round(amount / nav, 6);
-  if (!Number.isFinite(fee) || !Number.isFinite(shares) || fee > 1e12 || shares > 1e12 || (type !== 'dividend' && shares <= 0)) return fail('金额与净值无法推算有效份额，请检查输入。');
+  let { amount, nav, shares } = values;
+  const purchase = purchaseTypes.has(type), sale = type === 'sell';
+  let fee = noFee ? 0 : feeAmount;
+  if (feeMode === 'rate' && !noFee) fee = derivedField === 'amount' ? round(nav * shares * feeRate / 100)
+    : purchase ? round(amount - amount / (1 + feeRate / 100)) : round(amount / (1 - feeRate / 100) - amount);
+  if (type === 'dividend') shares = 0;
+  else if (derivedField === 'amount') {
+    const gross = nav * shares;
+    if (sale && fee >= gross) return fail('手续费不能达到或超过赎回总额。');
+    amount = round(gross + (purchase ? fee : sale ? -fee : 0));
+  } else {
+    if (purchase && fee >= amount) return fail('手续费不能达到或超过总支出。');
+    const gross = amount + (purchase ? -fee : sale ? fee : 0);
+    if (derivedField === 'nav') nav = gross / shares;
+    else shares = round(gross / nav, 6);
+  }
+  if (![amount, nav, shares, fee].every(Number.isFinite) || amount <= 0 || amount > 1e12 || nav <= 0 || nav > 1e9 || shares > 1e12 || fee < 0 || fee > 1e12 ||
+      (type !== 'dividend' && shares <= 0)) return fail('金额、净值与份额无法形成有效交易，请检查输入。');
+  if (purchase && fee >= amount) return fail('手续费不能达到或超过总支出。');
+  if (sale && fee >= nav * shares) return fail('手续费不能达到或超过赎回总额。');
+  if (!noFee && Math.abs(amount + (sale ? fee : -fee) - nav * shares) > .1 + 1e-8) return fail('净值或份额精度不足，请检查输入。');
   Object.assign(transaction, { amount: type === 'reinvest' ? 0 : amount, nav, shares, fee });
   if (type === 'transfer-in') transaction.cost = amount;
-  return { transaction, preview: { amount, nav, shares, fee, feeRate, status }, error: '' };
+  return { transaction, preview: preview(amount, nav, shares, fee), error: '' };
 }
 
 export function sortTransactions(transactions) {
