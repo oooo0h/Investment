@@ -2,13 +2,13 @@ import { calculateLedger } from './engine.js';
 import { estimateApplications, GUOFU_TRADING_DATES } from './application-estimates.js';
 import { createRefreshController } from './refresh-controller.js';
 import { NAV_PERIODS, resolveNavRange, moveNavBoundary, resolveNavSliderDomain } from './nav-range.js';
-import { renderNavChart } from './nav-chart.js?v=20261019-add-direction';
+import { renderNavChart } from './nav-chart.js?v=20261019-collapsible-panels';
 import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline } from './nav-annualized.js';
-import { setupNavChartInteractions } from './nav-interaction.js?v=20261019-add-direction';
+import { setupNavChartInteractions } from './nav-interaction.js?v=20261019-collapsible-panels';
 import { setupNavSliderInteractions } from './nav-slider.js';
 import { calculateTransactionPerformance } from './transaction-performance.js';
-import { FUNDS, FUND_CODES } from './funds.js?v=20261019-add-direction';
-import { DISCIPLINE_ENTRIES } from './discipline.js?v=20261019-add-direction';
+import { FUNDS, FUND_CODES } from './funds.js?v=20261019-collapsible-panels';
+import { DISCIPLINE_ENTRIES } from './discipline.js?v=20261019-collapsible-panels';
 import { createDisciplineSync } from './discipline-sync.js';
 import { REGION_DATA } from './region-data.js';
 import { evaluateUsExposure } from './us-exposure.js';
@@ -19,7 +19,7 @@ import { evaluateBondReserve } from './bond-reserve.js';
 import { renderBondsPage } from './bonds-view.js';
 import { getEstimateDates, parseEstimatePercent, buildEstimatedNav } from './nav-estimates.js';
 import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js';
-import { renderEstimatePanel } from './estimate-panel.js?v=20261019-add-direction';
+import { renderEstimatePanel } from './estimate-panel.js?v=20261019-collapsible-panels';
 import { getDisciplineActions, adjustDisciplineRule } from './discipline-actions.js';
 import { getNavChartDisplay } from './nav-display.js';
 const TYPE_NAMES = { buy: '买入', sip: '定投', sell: '卖出', reinvest: '红利再投', dividend: '现金分红', 'transfer-in': '转换转入' };
@@ -672,6 +672,7 @@ function render() {
   app.querySelectorAll(`details[data-panel][data-fund="${fund?.code}"]`).forEach(panel => {
     state.expandedPanels[panel.dataset.panel] = panel.open;
   });
+  if (locate && fund && section === 'us-exposure') state.expandedPanels['fund-basics'] = true;
   const bonds = selectedBonds();
   const reserve = bondReserveCheck();
   document.title = fund ? `${fund.short}账本 · 基金账本` : bonds ? '债基 · 基金账本' : '交易纪律 · 基金账本';
@@ -808,7 +809,7 @@ function fundRegions(fund) {
   const overview = `<div class="fund-basic-overview"><p class="nav-annualized" title="按全部已载入历史净值计算复合年化；未计现金分红再投资"><span>平均年化</span><strong class="num ${signClass(annualized)}" data-nav-annualized>${percent(annualized)}</strong></p>${history.at(-1)?.date ? `<p class="helper">净值截至 <time datetime="${esc(history.at(-1).date)}">${esc(history.at(-1).date)}</time></p>` : ''}</div>`;
   const check = fundExposure(fund.code), below = check.status === 'below';
   const source = safeSource(data.source?.url);
-  return `<section class="panel fund-regions${below ? ' exposure-below' : ''}" aria-label="基金基本信息"><div class="section-heading"><h2>基金基本信息</h2><time class="helper" datetime="${esc(data.asOf)}" title="报告公告日期 ${esc(data.publishedAt || '待核实')}">地区截至 ${esc(data.asOf)}</time></div>${overview}<p class="region-basis">直接股票持仓 · 占基金净资产</p>${below ? `<div class="fund-exposure-note">${icon('info')}<p><strong>美股含量未达标</strong>：${number(check.usPercent)}%，低于规则门槛 ${esc(check.thresholdPercent)}%，相差 ${number(check.gapPercent)} 个百分点。<a href="#/?section=us-exposure">查看首页规则与原因</a></p></div>` : ''}<ul class="region-shares">${data.regions.map(region => `<li${region.name === '美国' ? ` id="fund-${fund.code}-us-exposure" tabindex="-1" class="region-us${below ? ' region-us-below' : ''}${routeSection() === 'us-exposure' ? ' exposure-location' : ''}"` : ''}><span>${esc(region.name)}${region.name === '美国' && below ? '<small class="region-state">未达标</small>' : ''}</span><strong class="num">${number(region.percent, 2)}%</strong></li>`).join('')}</ul>${data.note ? `<p class="helper region-note">${esc(data.note)}</p>` : ''}${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(data.source.title)}">原报告</a>` : ''}</section>`;
+  return `<details class="panel fund-regions panel-disclosure${below ? ' exposure-below' : ''}" aria-label="基金基本信息" data-panel="fund-basics" data-fund="${fund.code}"${state.expandedPanels['fund-basics'] !== false ? ' open' : ''}><summary class="panel-toggle"><h2>基金基本信息</h2><time class="helper" datetime="${esc(data.asOf)}" title="报告公告日期 ${esc(data.publishedAt || '待核实')}">地区截至 ${esc(data.asOf)}</time></summary><div class="panel-content">${overview}<p class="region-basis">直接股票持仓 · 占基金净资产</p>${below ? `<div class="fund-exposure-note">${icon('info')}<p><strong>美股含量未达标</strong>：${number(check.usPercent)}%，低于规则门槛 ${esc(check.thresholdPercent)}%，相差 ${number(check.gapPercent)} 个百分点。<a href="#/?section=us-exposure">查看首页规则与原因</a></p></div>` : ''}<ul class="region-shares">${data.regions.map(region => `<li${region.name === '美国' ? ` id="fund-${fund.code}-us-exposure" tabindex="-1" class="region-us${below ? ' region-us-below' : ''}${routeSection() === 'us-exposure' ? ' exposure-location' : ''}"` : ''}><span>${esc(region.name)}${region.name === '美国' && below ? '<small class="region-state">未达标</small>' : ''}</span><strong class="num">${number(region.percent, 2)}%</strong></li>`).join('')}</ul>${data.note ? `<p class="helper region-note">${esc(data.note)}</p>` : ''}${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(data.source.title)}">原报告</a>` : ''}</div></details>`;
 }
 
 function fundPage(fund) {
@@ -1008,7 +1009,7 @@ function navPanel(fund) {
   const display = getNavChartDisplay(range, estimatedNav(fund.code));
   const { summary } = display;
 
-  return `<section class="panel nav-panel" data-fund="${fund.code}"><div class="section-heading"><h2>公开净值</h2><span class="helper" data-nav-count>${display.points.length + display.estimatedPoints.length} 期</span></div><div class="nav-value"><strong class="num" data-nav-value>${number(summary.endNav, 4)}</strong><span class="num ${signClass(summary.change)}" data-nav-change title="所选区间涨跌幅">${percent(summary.change)}</span></div><p class="nav-date" data-nav-date>${navRangeDate(summary, nav, range)}</p><div id="nav-chart-${fund.code}" data-nav-chart>${history.length ? sparkline(range.points, fund.code, range) : ''}</div>${navRangeControls(fund.code, history, range)}<p class="helper nav-meta">${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer">来源</a> · ` : ''}非实时</p></section>`;
+  return `<details class="panel nav-panel panel-disclosure" data-panel="nav-quotes" data-fund="${fund.code}"${state.expandedPanels['nav-quotes'] !== false ? ' open' : ''}><summary class="panel-toggle"><h2>公开净值</h2><span class="helper" data-nav-count>${display.points.length + display.estimatedPoints.length} 期</span></summary><div class="panel-content"><div class="nav-value"><strong class="num" data-nav-value>${number(summary.endNav, 4)}</strong><span class="num ${signClass(summary.change)}" data-nav-change title="所选区间涨跌幅">${percent(summary.change)}</span></div><p class="nav-date" data-nav-date>${navRangeDate(summary, nav, range)}</p><div id="nav-chart-${fund.code}" data-nav-chart>${history.length ? sparkline(range.points, fund.code, range) : ''}</div>${navRangeControls(fund.code, history, range)}<p class="helper nav-meta">${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer">来源</a> · ` : ''}非实时</p></div></details>`;
 }
 
 function ledgerPanel(result, book, code) {
