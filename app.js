@@ -1,14 +1,14 @@
 import { calculateLedger } from './engine.js';
 import { estimateApplications, GUOFU_TRADING_DATES } from './application-estimates.js';
 import { createRefreshController } from './refresh-controller.js';
-import { NAV_PERIODS, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain } from './nav-range.js';
-import { renderNavChart } from './nav-chart.js';
+import { NAV_PERIODS, resolveNavRange, moveNavBoundary, resolveNavSliderDomain } from './nav-range.js';
+import { renderNavChart } from './nav-chart.js?v=20261019-add-direction';
 import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline } from './nav-annualized.js';
-import { setupNavChartInteractions } from './nav-interaction.js';
+import { setupNavChartInteractions } from './nav-interaction.js?v=20261019-add-direction';
 import { setupNavSliderInteractions } from './nav-slider.js';
 import { calculateTransactionPerformance } from './transaction-performance.js';
-import { FUNDS, FUND_CODES } from './funds.js';
-import { DISCIPLINE_ENTRIES } from './discipline.js';
+import { FUNDS, FUND_CODES } from './funds.js?v=20261019-add-direction';
+import { DISCIPLINE_ENTRIES } from './discipline.js?v=20261019-add-direction';
 import { createDisciplineSync } from './discipline-sync.js';
 import { REGION_DATA } from './region-data.js';
 import { evaluateUsExposure } from './us-exposure.js';
@@ -19,12 +19,14 @@ import { evaluateBondReserve } from './bond-reserve.js';
 import { renderBondsPage } from './bonds-view.js';
 import { getEstimateDates, parseEstimatePercent, buildEstimatedNav } from './nav-estimates.js';
 import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js';
-import { renderEstimatePanel } from './estimate-panel.js';
+import { renderEstimatePanel } from './estimate-panel.js?v=20261019-add-direction';
+import { getDisciplineActions, adjustDisciplineRule } from './discipline-actions.js';
+import { getNavChartDisplay } from './nav-display.js';
 const TYPE_NAMES = { buy: '买入', sip: '定投', sell: '卖出', reinvest: '红利再投', dividend: '现金分红', 'transfer-in': '转换转入' };
 const STATUS_NAMES = { confirmed: '已确认', estimated: '历史估算', pending: '待确认', cancelled: '撤单', failed: '交易失败', closed: '交易关闭' };
 const state = { unlocked: false, visible: false, funds: {}, nav: {}, disciplines: DISCIPLINE_ENTRIES, bonds: [], bondEditing: null, bondDraft: null, bondBusy: false, bondError: '', bondUnavailable: true, bondUpdatedAt: null, navPreset: null, navCycles: { months: '1m', years: '1y' }, navRanges: {}, navDomains: {}, navVisuals: {}, expandedPanels: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null, deadline: 0, dayDeadline: 0, sessionDay: null };
 const app = document.querySelector('#app');
-Object.assign(state, { navEstimateEntries: [], estimateDrafts: {}, estimateErrors: {}, estimateStorageAvailable: true, estimateDate: null, estimateLoaded: false });
+Object.assign(state, { navEstimateEntries: [], estimateDrafts: {}, estimateDirections: {}, estimateErrors: {}, estimateStorageAvailable: true, estimateDate: null, estimateLoaded: false });
 const icons = {
   book: '<path d="M6 3h13v18H6zM3 6h5M3 12h5M3 18h5M11 8h5M11 12h5M11 16h3"/>',
   eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
@@ -68,6 +70,7 @@ let bondStore = null;
 let dataVersionBaseline = null;
 let navSliders = null;
 let locatedRoute = null;
+const estimateSaveTimers = new Map();
 const holdingFractions = new Map();
 const dataRefresh = createRefreshController({
   readVersion: async () => {
@@ -266,6 +269,7 @@ async function unlock(event) {
 }
 
 function lock(reason = 'manual') {
+  cancelEstimateSaves();
   locatedRoute = null;
   navSliders?.cancel();
   unlockGeneration += 1;
@@ -291,6 +295,7 @@ function lock(reason = 'manual') {
   state.expandedPanels = {};
   state.navEstimateEntries = [];
   state.estimateDrafts = {};
+  state.estimateDirections = {};
   state.estimateErrors = {};
   state.estimateDate = null;
   state.estimateLoaded = false;
@@ -426,7 +431,7 @@ async function loadPublicNav() {
   if (generation === unlockGeneration && state.unlocked && checkSession()) { state.nav = quotes; render(); }
 }
 
-function valuation(code) { return state.nav[code]?.history.at(-1) || null; }
+function valuation(code) { return estimatedNav(code).points.at(-1) || null; }
 
 function estimatedNav(code) {
   return buildEstimatedNav(state.nav[code]?.history || [], state.navEstimateEntries.filter(entry => entry.code === code), { now: new Date() });
@@ -453,14 +458,19 @@ function syncNavEstimates() {
     }
   }
   if (state.estimateDate !== yesterday) {
+    cancelEstimateSaves();
     state.estimateDate = yesterday;
     state.estimateDrafts = {};
+    state.estimateDirections = {};
     state.estimateErrors = {};
   }
   // Official observations win immediately, including while a form is being edited.
   for (const fund of FUNDS) {
     if (estimatedNav(fund.code).latestOfficialDate >= yesterday) {
+      clearTimeout(estimateSaveTimers.get(fund.code));
+      estimateSaveTimers.delete(fund.code);
       delete state.estimateDrafts[fund.code];
+      delete state.estimateDirections[fund.code];
       delete state.estimateErrors[fund.code];
     }
   }
@@ -474,42 +484,94 @@ function estimateHomePanel() {
     return { code: fund.code, name: fund.name, short: fund.navLabel, baseDate: previous?.date || null, official: Boolean(data.latestOfficialDate && data.latestOfficialDate >= date) };
   });
   const saved = Object.fromEntries(state.navEstimateEntries.filter(entry => entry.date === date).map(entry => [entry.code, Number((entry.change * 100).toPrecision(12))]));
-  return renderEstimatePanel({ date, funds, saved, drafts: state.estimateDrafts, errors: state.estimateErrors, open: Boolean(state.expandedPanels['nav-estimates']), unavailable: !state.estimateStorageAvailable || !date });
+  return renderEstimatePanel({ date, funds, saved, drafts: state.estimateDrafts, directions: state.estimateDirections, errors: state.estimateErrors, open: Boolean(state.expandedPanels['nav-estimates']), unavailable: !state.estimateStorageAvailable || !date });
 }
 
-function saveNavEstimateEdits(event) {
+function cancelEstimateSaves() {
+  for (const timer of estimateSaveTimers.values()) clearTimeout(timer);
+  estimateSaveTimers.clear();
+}
+
+function updateEstimateError(code) {
+  const row = app.querySelector?.(`[data-estimate-fund="${code}"]`);
+  if (!row) return;
+  const message = state.estimateErrors[code] || '';
+  row.classList.toggle('estimate-row-invalid', Boolean(message));
+  const input = row.querySelector(`[name="estimate-${code}"]`);
+  if (message) input?.setAttribute('aria-invalid', 'true');
+  else input?.removeAttribute('aria-invalid');
+  const error = row.querySelector('.estimate-error');
+  if (error) { error.textContent = message; error.hidden = !message; }
+}
+
+function queueEstimateSave(code, delay = 600) {
+  if (!FUND_CODES.includes(code) || !state.unlocked || !checkSession()) return;
+  clearTimeout(estimateSaveTimers.get(code));
+  const generation = unlockGeneration;
+  const date = state.estimateDate;
+  estimateSaveTimers.set(code, setTimeout(() => {
+    estimateSaveTimers.delete(code);
+    if (generation !== unlockGeneration || !state.unlocked || !checkSession() || state.estimateDate !== date) return;
+    const saved = state.navEstimateEntries.find(entry => entry.code === code && entry.date === date);
+    const value = Object.hasOwn(state.estimateDrafts, code) ? state.estimateDrafts[code] : saved ? String(Number((Math.abs(saved.change) * 100).toPrecision(12))) : '';
+    const direction = state.estimateDirections[code] || (saved?.change < 0 ? 'down' : 'up');
+    state.estimateDirections[code] = direction;
+    saveNavEstimateEdits({ preventDefault() {}, target: { elements: { [`estimate-${code}`]: { value }, [`direction-${code}`]: { value: direction } } } }, { automatic: true, onlyCode: code });
+  }, delay));
+}
+
+function refreshEstimateViews() {
+  if (selectedFund() || selectedBonds()) { render(); return; }
+  const reserve = bondReserveCheck();
+  const sheet = app.querySelector?.('.discipline-sheet');
+  if (sheet) sheet.outerHTML = homeRules(reserve);
+  const siteHeader = app.querySelector?.('.site-header');
+  if (siteHeader) siteHeader.outerHTML = header(null, reserve);
+  const navigation = app.querySelector?.('.bottom-nav');
+  if (navigation) navigation.outerHTML = bottomNav(null, reserve);
+}
+
+function saveNavEstimateEdits(event, { automatic = false, onlyCode = null } = {}) {
   event.preventDefault();
   if (!state.unlocked || !checkSession()) return;
   const date = getEstimateDates(new Date()).yesterday;
   if (!date || date !== state.estimateDate) { syncNavEstimates(); render(); return; }
-  const drafts = {}, errors = {};
-  const next = state.navEstimateEntries.filter(entry => entry.date !== date);
-  for (const fund of FUNDS) {
+  const drafts = automatic ? { ...state.estimateDrafts } : {}, errors = automatic ? { ...state.estimateErrors } : {};
+  const next = state.navEstimateEntries.filter(entry => entry.date !== date || (onlyCode && entry.code !== onlyCode));
+  let invalid = false;
+  for (const fund of FUNDS.filter(fund => !onlyCode || fund.code === onlyCode)) {
+    delete errors[fund.code];
     if (estimatedNav(fund.code).latestOfficialDate >= date) continue;
     const text = String(event.target.elements[`estimate-${fund.code}`]?.value ?? '').trim();
     drafts[fund.code] = text;
     if (!text) continue;
-    const change = parseEstimatePercent(text);
-    if (change === null) { errors[fund.code] = '请输入大于 -100% 的有效涨跌幅。'; continue; }
+    const parsedChange = parseEstimatePercent(text);
+    const direction = event.target.elements[`direction-${fund.code}`]?.value || state.estimateDirections[fund.code];
+    const change = parsedChange === null ? null : direction === 'down' ? -Math.abs(parsedChange) : direction === 'up' ? Math.abs(parsedChange) : parsedChange;
+    if (change === null || !Number.isFinite(change) || change <= -1) { errors[fund.code] = '请输入大于 -100% 的有效涨跌幅。'; invalid = true; continue; }
     const entry = { code: fund.code, date, change };
     const candidate = buildEstimatedNav(state.nav[fund.code]?.history || [], [...next.filter(item => item.code === fund.code), entry], { now: new Date() });
-    if (candidate.latestOfficialDate && !candidate.points.some(point => point.date === date && point.estimated)) errors[fund.code] = '估值超出可显示范围。';
+    if (candidate.latestOfficialDate && !candidate.points.some(point => point.date === date && point.estimated)) { errors[fund.code] = '估值超出可显示范围。'; invalid = true; }
     else next.push(entry);
   }
   state.estimateDrafts = drafts;
   state.estimateErrors = errors;
-  state.expandedPanels['nav-estimates'] = true;
-  if (Object.keys(errors).length) { render(); return; }
+  if (!automatic) state.expandedPanels['nav-estimates'] = true;
+  if (invalid || (!automatic && Object.keys(errors).length)) { if (automatic) updateEstimateError(onlyCode); else render(); return; }
   try {
     const saved = saveNavEstimates(next, { storage: navEstimateStorage(), now: new Date() });
     state.navEstimateEntries = saved;
-    state.estimateDrafts = {};
+    if (automatic) delete state.estimateDrafts[onlyCode];
+    else { state.estimateDrafts = {}; state.estimateDirections = {}; }
     state.estimateStorageAvailable = true;
-    render();
-    toast('估值已保存');
+    if (automatic) { updateEstimateError(onlyCode); refreshEstimateViews(); }
+    else { render(); toast('估值已保存'); }
   } catch {
-    state.estimateErrors = Object.fromEntries(FUNDS.filter(fund => !estimatedNav(fund.code).latestOfficialDate || estimatedNav(fund.code).latestOfficialDate < date).map(fund => [fund.code, '本机保存失败，请重试。']));
-    render();
+    if (automatic) { state.estimateErrors[onlyCode] = '本机保存失败，请重试。'; updateEstimateError(onlyCode); }
+    else {
+      state.estimateErrors = Object.fromEntries(FUNDS.filter(fund => !estimatedNav(fund.code).latestOfficialDate || estimatedNav(fund.code).latestOfficialDate < date).map(fund => [fund.code, '本机保存失败，请重试。']));
+      render();
+    }
   }
 }
 
@@ -605,7 +667,7 @@ function render() {
   syncNavEstimates();
   const fund = selectedFund();
   const section = routeSection();
-  const locate = locatedRoute !== location.hash && ['us-exposure', 'bond-reserve'].includes(section);
+  const locate = locatedRoute !== location.hash && ['us-exposure', 'bond-reserve', 'add-discipline'].includes(section);
   if (locate && !fund && !selectedBonds()) state.expandedPanels[`discipline-${section}`] = true;
   app.querySelectorAll(`details[data-panel][data-fund="${fund?.code}"]`).forEach(panel => {
     state.expandedPanels[panel.dataset.panel] = panel.open;
@@ -618,7 +680,9 @@ function render() {
   app.querySelectorAll('.desktop-nav .active, .bottom-nav .active').forEach(link => link.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' }));
   locatedRoute = location.hash;
   if (locate) {
-    const target = section === 'bond-reserve'
+    const target = section === 'add-discipline'
+      ? document.querySelector(fund ? `#fund-${fund.code}-add-discipline` : '[data-discipline="add-discipline"]')
+      : section === 'bond-reserve'
       ? document.querySelector(bonds ? '#bonds-reserve-summary' : '[data-discipline="bond-reserve"] > summary') || document.querySelector('[data-discipline="bond-reserve"]')
       : document.querySelector(fund ? `#fund-${fund.code}-us-exposure` : '[data-discipline="us-exposure"] > summary');
     if (typeof target?.focus === 'function') target.focus({ preventScroll: true });
@@ -629,32 +693,45 @@ function render() {
 function disciplineCopy(value, linkFunds = false) {
   let copy = esc(value).replace(/【([^】]+)】|(?:大幅|适当)止盈|进行一次加仓|\d+(?:\.\d+)?%|\d+(?:\.\d+)?倍|1\/[36]/g, (match, emphasis) => {
     const text = emphasis || match;
-    return `<strong class="discipline-emphasis${/^(\d+(?:\.\d+)?%|\d+(?:\.\d+)?倍|1\/[36](?:～1\/[36])?|5万元)$/.test(text) ? ' discipline-number' : ''}">${text}</strong>`;
+    return `<strong class="discipline-emphasis${/^(\d+(?:\.\d+)?%|\d+(?:\.\d+)?倍|1\/[36](?:～1\/[36])?|[15]万元)$/.test(text) ? ' discipline-number' : ''}">${text}</strong>`;
   });
   copy = copy.replace(/(<strong class="discipline-emphasis">立刻<\/strong>[^。]+。)/, '<span class="discipline-urgent">$1</span>');
   if (linkFunds) for (const fund of FUNDS) copy = copy.replace(fund.navLabel, `<a href="#/fund/${fund.code}" aria-label="进入${fund.navLabel}账本">${fund.navLabel}</a>`);
   return copy;
 }
 
+function fundAddSignal(code) {
+  const rule = state.disciplines.find(entry => entry.id === 'add-discipline-decline');
+  const row = ledger(code).rows.filter(item => item.status === 'included' && ['buy', 'sip', 'sell', 'transfer-in', 'reinvest'].includes(item.type)).at(-1);
+  const original = row && getBook(code).transactions.find(item => item.id === row.id);
+  const tradePoint = row ? { date: row.date, nav: row.nav, estimated: row.estimated === true || ['estimated', '历史估算'].includes(original?.status) } : null;
+  return { rule, signal: evaluateAddDiscipline(estimatedNav(code).points, { rule, tradePoint, now: new Date() }) };
+}
+
+function addDisciplineMatches() {
+  const matches = FUNDS.map(fund => ({ fund, ...fundAddSignal(fund.code) })).filter(({ signal }) => signal.triggered);
+  if (!matches.length) return '';
+  return `<div class="add-discipline-matches" aria-label="满足加仓条件的基金">${matches.map(({ fund, signal }) => {
+    const actions = getDisciplineActions(fundExposure(fund.code));
+    return `<div class="add-discipline-match" data-add-fund="${fund.code}" data-add-budget="${actions.addBudget}"><a href="#/fund/${fund.code}?section=add-discipline" aria-label="查看${esc(fund.name)}加仓提醒"><div class="add-match-main"><strong>${esc(fund.name)}</strong><span class="add-match-state">满足加仓条件</span></div><p class="add-match-reason">节点后跌幅 <strong class="num">${number(signal.decline * 100)}%</strong>，超过 ${number(signal.multiple, 0)} 倍平均年化（<span class="num">${number(signal.annualized * signal.multiple * 100)}%</span>）。</p><p class="add-match-budget">单次加仓 <strong class="num">${actions.addBudget === 10000 ? '1万' : number(actions.addBudget, 0)}</strong> 元${actions.adjusted ? '<span> · 美股未达标，已减半</span>' : ''}</p><small class="add-match-date">截至 ${esc(signal.asOf)}${signal.estimated ? ' · 交易节点含估算' : ''}${icon('arrow')}</small></a></div>`;
+  }).join('')}</div>`;
+}
+
 function annualDisciplineAlert(code) {
   const matches = state.disciplines.filter(entry => entry.id === 'annual-profit' || entry.id.startsWith('annual-profit-'))
-    .map(rule => ({ rule, kind: 'annual', signal: evaluateAnnualDiscipline(state.nav[code]?.history, { rule, now: new Date() }) }))
+    .map(rule => ({ rule, kind: 'annual', signal: evaluateAnnualDiscipline(estimatedNav(code).points, { rule, now: new Date() }) }))
     .filter(({ signal }) => signal.triggered);
-  const addRule = state.disciplines.find(entry => entry.id === 'add-discipline-decline');
-  if (addRule) {
-    const row = ledger(code).rows.filter(item => item.status === 'included' && ['buy', 'sip', 'sell', 'transfer-in', 'reinvest'].includes(item.type)).at(-1);
-    const original = row && getBook(code).transactions.find(item => item.id === row.id);
-    const tradePoint = row ? { date: row.date, nav: row.nav, estimated: row.estimated === true || ['estimated', '历史估算'].includes(original?.status) } : null;
-    const signal = evaluateAddDiscipline(state.nav[code]?.history, { rule: addRule, tradePoint, now: new Date() });
-    if (signal.triggered) matches.push({ rule: addRule, kind: 'add', signal });
-  }
+  const addition = fundAddSignal(code);
+  if (addition.signal.triggered) matches.push({ ...addition, kind: 'add' });
   if (!matches.length) return '';
   const { signal } = matches[0];
   const annual = matches.find(item => item.kind === 'annual')?.signal;
   const add = matches.find(item => item.kind === 'add')?.signal;
-  return `<aside class="annual-discipline-alert${routeSection() === 'us-exposure' ? ' exposure-route-alert' : ''}" role="alert" aria-label="交易纪律提醒" data-fund="${esc(code)}"><div class="alert-heading"><strong>交易纪律提醒</strong></div>${annual ? `<p class="annual-alert-return">年内涨幅<strong class="num">${percent(annual.yearReturn)}</strong></p>` : ''}${add ? `<p class="annual-alert-return">节点后跌幅<strong class="num">${number(add.decline * 100)}%</strong></p>` : ''}<p class="annual-alert-date">截至 ${esc(signal.asOf)}${annual ? ` · 年初基准 ${esc(annual.baselineDate)}` : ''}${add ? ` · 交易基准 ${esc(add.baselineDate)}${add.estimated ? '（估算）' : ''}` : ''}</p><div class="annual-alert-rules">${matches.map(({ rule }) => {
-    const content = esc(`${rule.title}${rule.detail ? ` ${rule.detail}` : ''}`).replace(/【([^】]+)】|(?:大幅|适当)止盈|进行一次加仓|\d+(?:\.\d+)?%|\d+(?:\.\d+)?倍/g, (match, emphasis) => `<strong>${emphasis || match}</strong>`);
-    return `<p class="annual-alert-rule" data-rule="${esc(rule.id)}"><small>${rule.id === 'annual-profit-100' ? '6.1' : rule.id === 'annual-profit-multiple' ? '6.2' : rule.id === 'add-discipline-decline' ? '7.1' : '6'}</small><span>${content}</span></p>`;
+  const exposure = fundExposure(code), actions = getDisciplineActions(exposure);
+  return `<aside class="annual-discipline-alert${['us-exposure', 'add-discipline'].includes(routeSection()) ? ' exposure-route-alert' : ''}" role="alert" aria-label="交易纪律提醒" data-fund="${esc(code)}"><div class="alert-heading"><strong>交易纪律提醒</strong></div>${annual ? `<p class="annual-alert-return">年内涨幅<strong class="num">${percent(annual.yearReturn)}</strong></p>` : ''}${add ? `<p class="annual-alert-return">节点后跌幅<strong class="num">${number(add.decline * 100)}%</strong></p><p class="annual-action-note">单次加仓 ${number(actions.addBudget, 0)} 元${actions.adjusted ? '（美股未达标，已减半）' : ''}</p>` : ''}<p class="annual-alert-date">截至 ${esc(signal.asOf)}${annual ? ` · 年初基准 ${esc(annual.baselineDate)}` : ''}${add ? ` · 交易基准 ${esc(add.baselineDate)}${add.estimated ? '（估算）' : ''}` : ''}</p>${annual && actions.adjusted ? '<p class="annual-action-note">美股含量未达标，卖出金额/比例翻倍，上限为当前持仓。</p>' : ''}<div class="annual-alert-rules">${matches.map(({ rule }) => {
+    const displayRule = adjustDisciplineRule(rule, exposure);
+    const content = esc(`${displayRule.title}${displayRule.detail ? ` ${displayRule.detail}` : ''}`).replace(/【([^】]+)】|(?:大幅|适当)止盈|进行一次加仓|全部卖出|\d+(?:\.\d+)?%|\d+(?:\.\d+)?倍/g, (match, emphasis) => `<strong>${emphasis || match}</strong>`);
+    return `<p class="annual-alert-rule" data-rule="${esc(rule.id)}"${rule.id === 'add-discipline-decline' ? ` id="fund-${esc(code)}-add-discipline" tabindex="-1"` : ''}><small>${rule.id === 'annual-profit-100' ? '6.1' : rule.id === 'annual-profit-multiple' ? '6.2' : rule.id === 'add-discipline-decline' ? '7.1' : '6'}</small><span>${content}${rule.id === 'add-discipline-decline' ? '<a class="add-rule-return" href="#/?section=add-discipline">查看首页加仓提醒</a>' : ''}</span></p>`;
   }).join('')}</div></aside>`;
 }
 
@@ -688,14 +765,16 @@ function holdingDurationDetails() {
 }
 
 function homePage(reserve) {
+  return `<main id="main" class="workspace home-page discipline-home"><header class="discipline-heading"><h1>交易纪律</h1></header>${estimateHomePanel()}${homeRules(reserve)}</main>`;
+}
+
+function homeRules(reserve) {
   const labels = { 'us-exposure': '美股含量', 'long-term': '长期持有', 'bond-reserve': '债基配置', 'equity-scope': '基金精简', 'annual-profit': '年度止盈', 'add-discipline': '加仓纪律' };
   const headingNumbers = { 'us-exposure': '1', 'long-term': '2', 'bond-reserve': '3', 'equity-scope': '4', 'annual-profit': '6', 'add-discipline': '7' };
   const groups = ['annual-profit', 'add-discipline'].filter(id => state.disciplines.some(entry => entry.id === id));
   const entries = state.disciplines.filter(entry => !groups.some(id => entry.id.startsWith(`${id}-`)));
   const clauseLabels = { 'annual-profit-100': '6.1', 'annual-profit-multiple': '6.2', 'add-discipline-decline': '7.1' };
-  return `<main id="main" class="workspace home-page discipline-home"><header class="discipline-heading"><h1>交易纪律</h1></header>
-    ${estimateHomePanel()}
-    <section class="discipline-sheet" aria-label="持有与交易纪律">${entries.map(entry => {
+  return `<section class="discipline-sheet" aria-label="持有与交易纪律">${entries.map(entry => {
       const children = groups.includes(entry.id) ? state.disciplines.filter(child => child.id.startsWith(`${entry.id}-`)) : [];
       const punctuation = entry.detail.match(/^[。！？]+/)?.[0] || '';
       const detail = entry.detail.slice(punctuation.length).trim();
@@ -713,9 +792,8 @@ function homePage(reserve) {
         return `<details class="discipline-entry discipline-entry-checkable${below ? ' discipline-entry-warning' : ''}" data-discipline="bond-reserve" data-panel="discipline-bond-reserve" data-bond-reserve-status="${reserve.status}" ${state.expandedPanels['discipline-bond-reserve'] ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="exposure-badge ${below ? 'exposure-warning' : 'bond-reserve-pending'}">${icon('info')}${label}</span><span class="discipline-expand-hint"><span class="when-closed">查看原因</span><span class="when-open">收起原因</span>${icon('down')}</span></div></div></summary><div class="discipline-compliance-details"><a class="exposure-check-target bond-reserve-target" href="#/bonds?section=bond-reserve" aria-label="查看债基配置"><p>${esc(reserve.message)}</p><span class="bond-reserve-link">查看债基${icon('arrow')}</span></a></div></details>`;
       }
       if (entry.id === 'bond-reserve') return `<article class="discipline-entry" data-discipline="bond-reserve" data-bond-reserve-status="met" tabindex="-1"><p class="discipline-entry-label">${esc(labels[entry.id])}</p><div class="discipline-entry-content">${content}</div></article>`;
-      return `<article class="discipline-entry${entry.id === 'add-discipline' ? ' discipline-entry-focus' : ''}" data-discipline="${esc(entry.id)}"><p class="discipline-entry-label">${esc(labels[entry.id] || '交易纪律')}</p><div class="discipline-entry-content">${content}</div></article>`;
-    }).join('')}</section>
-  </main>`;
+      return `<article class="discipline-entry${entry.id === 'add-discipline' ? ' discipline-entry-focus' : ''}" data-discipline="${esc(entry.id)}"${entry.id === 'add-discipline' ? ' tabindex="-1"' : ''}><p class="discipline-entry-label">${esc(labels[entry.id] || '交易纪律')}</p><div class="discipline-entry-content">${content}${entry.id === 'add-discipline' ? addDisciplineMatches() : ''}</div></article>`;
+    }).join('')}</section>`;
 }
 
 function metric(label, value, digits = 2, extra = '') {
@@ -725,9 +803,12 @@ function metric(label, value, digits = 2, extra = '') {
 function fundRegions(fund) {
   const data = REGION_DATA[fund.code];
   if (!data) return '';
+  const history = estimatedNav(fund.code).points;
+  const annualized = calculateNavAnnualized(history);
+  const overview = `<div class="fund-basic-overview"><p class="nav-annualized" title="按全部已载入历史净值计算复合年化；未计现金分红再投资"><span>平均年化</span><strong class="num ${signClass(annualized)}" data-nav-annualized>${percent(annualized)}</strong></p>${history.at(-1)?.date ? `<p class="helper">净值截至 <time datetime="${esc(history.at(-1).date)}">${esc(history.at(-1).date)}</time></p>` : ''}</div>`;
   const check = fundExposure(fund.code), below = check.status === 'below';
   const source = safeSource(data.source?.url);
-  return `<section class="panel fund-regions${below ? ' exposure-below' : ''}" aria-label="股票地区分布"><div class="section-heading"><h2>股票地区分布</h2><time class="helper" datetime="${esc(data.asOf)}" title="报告公告日期 ${esc(data.publishedAt || '待核实')}">截至 ${esc(data.asOf)}</time></div><p class="region-basis">直接股票持仓 · 占基金净资产</p>${below ? `<div class="fund-exposure-note">${icon('info')}<p><strong>美股含量未达标</strong>：${number(check.usPercent)}%，低于规则门槛 ${esc(check.thresholdPercent)}%，相差 ${number(check.gapPercent)} 个百分点。<a href="#/?section=us-exposure">查看首页规则与原因</a></p></div>` : ''}<ul class="region-shares">${data.regions.map(region => `<li${region.name === '美国' ? ` id="fund-${fund.code}-us-exposure" tabindex="-1" class="region-us${below ? ' region-us-below' : ''}${routeSection() === 'us-exposure' ? ' exposure-location' : ''}"` : ''}><span>${esc(region.name)}${region.name === '美国' && below ? '<small class="region-state">未达标</small>' : ''}</span><strong class="num">${number(region.percent, 2)}%</strong></li>`).join('')}</ul>${data.note ? `<p class="helper region-note">${esc(data.note)}</p>` : ''}${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(data.source.title)}">原报告</a>` : ''}</section>`;
+  return `<section class="panel fund-regions${below ? ' exposure-below' : ''}" aria-label="基金基本信息"><div class="section-heading"><h2>基金基本信息</h2><time class="helper" datetime="${esc(data.asOf)}" title="报告公告日期 ${esc(data.publishedAt || '待核实')}">地区截至 ${esc(data.asOf)}</time></div>${overview}<p class="region-basis">直接股票持仓 · 占基金净资产</p>${below ? `<div class="fund-exposure-note">${icon('info')}<p><strong>美股含量未达标</strong>：${number(check.usPercent)}%，低于规则门槛 ${esc(check.thresholdPercent)}%，相差 ${number(check.gapPercent)} 个百分点。<a href="#/?section=us-exposure">查看首页规则与原因</a></p></div>` : ''}<ul class="region-shares">${data.regions.map(region => `<li${region.name === '美国' ? ` id="fund-${fund.code}-us-exposure" tabindex="-1" class="region-us${below ? ' region-us-below' : ''}${routeSection() === 'us-exposure' ? ' exposure-location' : ''}"` : ''}><span>${esc(region.name)}${region.name === '美国' && below ? '<small class="region-state">未达标</small>' : ''}</span><strong class="num">${number(region.percent, 2)}%</strong></li>`).join('')}</ul>${data.note ? `<p class="helper region-note">${esc(data.note)}</p>` : ''}${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(data.source.title)}">原报告</a>` : ''}</section>`;
 }
 
 function fundPage(fund) {
@@ -762,10 +843,9 @@ function chartOverlays(code) {
 }
 
 function sparkline(history, code, range = null) {
-  const official = state.nav[code]?.history || [], latest = official.at(-1)?.date;
-  const live = history.length && history.at(-1)?.date === latest && range?.preset !== 'last-month';
-  const data = estimatedNav(code);
-  return renderNavChart(history, { ...chartOverlays(code), referenceHistory: official, ...(live ? { domainEnd: data.today, estimatedPoints: data.points.filter(point => point.estimated) } : {}) });
+  const official = state.nav[code]?.history || [];
+  const display = getNavChartDisplay({ ...range, points: history }, estimatedNav(code));
+  return renderNavChart(display.points, { ...chartOverlays(code), referenceHistory: official, domainEnd: display.domainEnd, estimatedPoints: display.estimatedPoints });
 }
 
 function navPeriodDisabled(period, range) {
@@ -878,14 +958,15 @@ function updateNavRange(code, selection, interaction = {}) {
     state.navVisuals = {};
   } else state.navRanges[code] = selection;
   const domain = navSliderDomain(code, history, range, interaction);
-  const summary = summarizeNavRange(range.points);
+  const display = getNavChartDisplay(range, estimatedNav(code));
+  const { summary } = display;
   panel.querySelector('[data-nav-value]').textContent = number(summary.endNav, 4);
   const change = panel.querySelector('[data-nav-change]');
   change.textContent = percent(summary.change);
   change.className = `num ${signClass(summary.change)}`;
   panel.querySelector('[data-nav-date]').textContent = navRangeDate(summary, state.nav[code], range);
   if (!sameDates || !interaction.visualDomain) panel.querySelector('[data-nav-chart]').innerHTML = sparkline(range.points, code, range);
-  panel.querySelector('[data-nav-count]').textContent = `${range.points.length} 期`;
+  panel.querySelector('[data-nav-count]').textContent = `${display.points.length + display.estimatedPoints.length} 期`;
   panel.querySelector('[data-nav-start]').textContent = range.from;
   panel.querySelector('[data-nav-end]').textContent = range.to;
   const slider = panel.querySelector('.nav-range-slider');
@@ -924,9 +1005,10 @@ function navPanel(fund) {
   const source = safeSource(nav?.source);
   const history = nav?.history || [];
   const range = selectedNavRange(fund.code, history);
-  const summary = summarizeNavRange(range.points);
-  const annualized = calculateNavAnnualized(history);
-  return `<section class="panel nav-panel" data-fund="${fund.code}"><div class="section-heading"><h2>公开净值</h2><span class="helper" data-nav-count>${range.points.length} 期</span></div><div class="nav-value"><strong class="num" data-nav-value>${number(summary.endNav, 4)}</strong><span class="num ${signClass(summary.change)}" data-nav-change title="所选区间涨跌幅">${percent(summary.change)}</span></div><p class="nav-annualized" title="按全部已载入历史净值计算复合年化；未计现金分红再投资"><span>平均年化</span><strong class="num ${signClass(annualized)}" data-nav-annualized>${percent(annualized)}</strong></p><p class="nav-date" data-nav-date>${navRangeDate(summary, nav, range)}</p><div id="nav-chart-${fund.code}" data-nav-chart>${history.length ? sparkline(range.points, fund.code, range) : ''}</div>${navRangeControls(fund.code, history, range)}<p class="helper nav-meta">${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer">来源</a> · ` : ''}非实时</p></section>`;
+  const display = getNavChartDisplay(range, estimatedNav(fund.code));
+  const { summary } = display;
+
+  return `<section class="panel nav-panel" data-fund="${fund.code}"><div class="section-heading"><h2>公开净值</h2><span class="helper" data-nav-count>${display.points.length + display.estimatedPoints.length} 期</span></div><div class="nav-value"><strong class="num" data-nav-value>${number(summary.endNav, 4)}</strong><span class="num ${signClass(summary.change)}" data-nav-change title="所选区间涨跌幅">${percent(summary.change)}</span></div><p class="nav-date" data-nav-date>${navRangeDate(summary, nav, range)}</p><div id="nav-chart-${fund.code}" data-nav-chart>${history.length ? sparkline(range.points, fund.code, range) : ''}</div>${navRangeControls(fund.code, history, range)}<p class="helper nav-meta">${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer">来源</a> · ` : ''}非实时</p></section>`;
 }
 
 function ledgerPanel(result, book, code) {
@@ -983,11 +1065,16 @@ app.addEventListener('toggle', event => {
 }, true);
 app.addEventListener('submit', event => {
   if (event.target.id === 'unlock-form') return unlock(event);
-  if (event.target.id === 'nav-estimate-form') return saveNavEstimateEdits(event);
+  if (event.target.id === 'nav-estimate-form') {
+    event.preventDefault();
+    for (const code of new Set([...Object.keys(state.estimateDrafts), ...Object.keys(state.estimateDirections)])) queueEstimateSave(code, 0);
+    return;
+  }
   if (event.target.id === 'bond-edit-form') return saveBondEdits(event);
 });
 app.addEventListener('change', event => {
   if (!state.unlocked || !checkSession()) return;
+  if (event.target.closest?.('#nav-estimate-form') && /^estimate-\d{6}$/.test(event.target.name)) { queueEstimateSave(event.target.name.slice(9), 0); return; }
   if (event.target.matches?.('[data-nav-boundary]')) {
     const input = event.target;
     const code = input.dataset.fund;
@@ -1002,12 +1089,34 @@ app.addEventListener('change', event => {
     scrollTo({ top: position, behavior: 'instant' });
   }
 });
+function setEstimateDirection(code, direction, source = null) {
+  state.estimateDirections[code] = direction;
+  const row = source?.closest?.('.estimate-row') || app.querySelector(`[data-estimate-fund="${code}"]`);
+  const button = row?.querySelector?.('.estimate-direction');
+  if (button) {
+    button.dataset.direction = direction;
+    button.setAttribute('aria-checked', String(direction === 'up'));
+    const fund = FUNDS.find(item => item.code === code);
+    button.setAttribute('aria-label', `${fund?.name || ''}估值方向：${direction === 'up' ? '涨' : '跌'}，点击切换`);
+  }
+  const hidden = row?.querySelector?.(`[name="direction-${code}"]`);
+  if (hidden) hidden.value = direction;
+}
+
 app.addEventListener('input', event => {
   const input = event.target;
   if (input.closest?.('#nav-estimate-form')) {
     if (state.unlocked && checkSession() && /^estimate-\d{6}$/.test(input.name)) {
       const code = input.name.slice(9);
-      if (FUND_CODES.includes(code)) state.estimateDrafts[code] = input.value;
+      if (FUND_CODES.includes(code)) {
+        const raw = String(input.value).trim();
+        if (/^[+-](?:\d+(?:\.\d+)?|\.\d+)\s*%?$/.test(raw)) {
+          setEstimateDirection(code, raw.startsWith('-') ? 'down' : 'up', input);
+          input.value = raw.slice(1);
+        }
+        state.estimateDrafts[code] = input.value;
+        queueEstimateSave(code);
+      }
     }
     return;
   }
@@ -1041,6 +1150,11 @@ function actionClick(event) {
     return;
   }
   if (!state.unlocked) return;
+  if (action === 'estimate-direction' && FUND_CODES.includes(target.dataset.code)) {
+    setEstimateDirection(target.dataset.code, target.dataset.direction === 'down' ? 'up' : 'down', target);
+    queueEstimateSave(target.dataset.code);
+    return;
+  }
   if (action === 'bond-edit' && selectedBonds() && !state.bondBusy && bondStore) {
     const entry = state.bonds.find(item => item.code === target.dataset.code);
     if (entry) {
@@ -1090,7 +1204,7 @@ navSliders = setupNavSliderInteractions(app, { onUpdate(update) {
   updateNavRange(update.code, { from: history[start].date, to: history[end].date }, { visualDomain: update.domain, visualValues: update.values });
 } });
 document.addEventListener('click', actionClick);
-window.addEventListener('hashchange', () => { if (!state.unlocked || !checkSession()) return; state.limit = 25; state.filter = 'all'; state.statusFilter = 'all'; state.expandedPanels = {}; render(); if (!['us-exposure', 'bond-reserve'].includes(routeSection())) scrollTo({ top: 0, behavior: 'instant' }); });
+window.addEventListener('hashchange', () => { if (!state.unlocked || !checkSession()) return; state.limit = 25; state.filter = 'all'; state.statusFilter = 'all'; state.expandedPanels = {}; render(); if (!['us-exposure', 'bond-reserve', 'add-discipline'].includes(routeSection())) scrollTo({ top: 0, behavior: 'instant' }); });
 window.addEventListener('pageshow', event => { if (event.persisted) lock(); });
 document.addEventListener('visibilitychange', () => { if (checkSession()) dataRefresh.check(); });
 window.addEventListener('focus', () => { if (checkSession()) dataRefresh.check(); });

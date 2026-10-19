@@ -58,7 +58,7 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
   host.append(fallback, canvas);
 
   const palettes = {
-    dark: { primary: 0x82f3d4, secondary: 0x4bb9dc, stars: 0xbce9eb, globe: 0x299888, multiplier: 1 },
+    dark: { primary: 0x9bc9ff, secondary: 0x667ff4, stars: 0xd7e8ff, globe: 0x316cb4, multiplier: 1 },
     light: { primary: 0x267c75, secondary: 0x609ca4, stars: 0x3d8488, globe: 0x6dafa1, multiplier: 0.66 },
   };
 
@@ -67,12 +67,12 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
     const light = theme === 'light';
     fallback.style.background = light
       ? 'radial-gradient(ellipse at 78% 8%,#58b6a70a,transparent 50%)'
-      : 'radial-gradient(ellipse at 78% 8%,#68dabe0a,transparent 50%)';
+      : 'radial-gradient(ellipse at 78% 8%,#7caeff0a,transparent 50%)';
     fallbackRings.forEach((ring, index) => {
       ring.style.left = gate ? (mobile ? '50%' : '25%') : '88%';
       ring.style.top = gate ? (mobile ? '27%' : '50%') : '12%';
       ring.style.width = gate ? (mobile ? '68vw' : 'min(41vw,550px)') : 'min(30vw,390px)';
-      ring.style.borderColor = light ? '#2f8d7522' : '#7be6c329';
+      ring.style.borderColor = light ? '#2f8d7522' : '#9fc5ff29';
       ring.style.opacity = gate ? '1' : '.55';
       ring.style.transform = `translate(-50%,-50%) rotate(${index * 52 - 35}deg) scaleY(${0.38 + index * 0.13}) scale(${1 + index * 0.14})`;
     });

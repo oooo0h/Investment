@@ -139,7 +139,8 @@ export function setupNavChartInteractions(root) {
     indices.set(chart, { index: points.findIndex(candidate => candidate.date === point.date), date: point.date });
     date.textContent = point.date;
     if (status) {
-      status.textContent = point.pending ? '待更新' : point.estimated ? '估算' : point.nav === null ? '无公布净值' : '已公布';
+      status.textContent = point.pending ? '待更新' : point.estimated ? '' : point.nav === null ? '无公布净值' : '已公布';
+      status.hidden = point.estimated === true && !point.pending;
       status.className = `nav-hover-status${point.pending ? ' is-pending' : point.estimated ? ' is-estimated' : ''}`;
     }
     value.textContent = point.nav === null ? '—' : point.nav.toFixed(4);

@@ -1,4 +1,4 @@
-// Chart-only public NAV/rate calculations. No account, ledger, storage or network access.
+// Public NAV/rate calculations. No account, ledger, storage or network access.
 const DAY_MS = 86400000;
 const BEIJING_OFFSET = 8 * 60 * 60 * 1000;
 const MAX_NAV = Number.MAX_SAFE_INTEGER / 10000;
@@ -38,10 +38,11 @@ export function parseEstimatePercent(raw) {
 }
 
 /**
- * Build one fund's chart points. Entries are { date, change }, with change as a
+ * Build one fund's effective NAV points. Entries are { date, change }, with change as a
  * return ratio, not a percent number. `pending` is the sanitized date/rate list
  * to retain in the caller's estimate store; it deliberately contains no NAV.
- * Never pass these chart points to accounting or official-return calculations.
+ * Consumers may use the merged points for the user's current valuation and rules.
+ * Historical confirmed transactions and the official NAV source remain unchanged.
  */
 export function buildEstimatedNav(history, entries, options = {}) {
   const { now = new Date() } = options && typeof options === 'object' ? options : {};

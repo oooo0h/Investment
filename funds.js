@@ -14,7 +14,7 @@ export const FUND_CATALOG = [
 ];
 
 // The archive is retained; the page shows only the user's current selection.
-const VISIBLE_CODES = ['005698', '270023', '016701', '006373'];
+const VISIBLE_CODES = ['016701', '006373', '270023', '005698'];
 export const FUNDS = VISIBLE_CODES.map(code => {
   const fund = FUND_CATALOG.find(entry => entry.code === code);
   return { ...fund, navLabel: fund.short };

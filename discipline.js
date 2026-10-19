@@ -19,7 +19,7 @@ export const DISCIPLINE_ENTRIES = Object.freeze([
   {
     id: 'equity-scope',
     title: '基金的数量一定要精简，绝对不能开超市',
-    detail: '。目前暂定：华夏、广发、银华、国富。',
+    detail: '。目前暂定：银华、国富、广发、华夏。',
   },
   {
     id: 'annual-profit',
@@ -28,18 +28,18 @@ export const DISCIPLINE_ENTRIES = Object.freeze([
   },
   {
     id: 'annual-profit-100',
-    title: '如果本年的年内涨幅收益率达到了100%，【一定】要大幅止盈（清除本金/卖出一半持仓等等）',
+    title: '如果本年的年内涨幅收益率达到了100%，【一定】要大幅止盈（清除本金/卖出一半持仓，选金额大的）',
     detail: '',
   },
   {
     id: 'annual-profit-multiple',
-    title: '如果本年的年内涨幅收益率超过了 平均年化收益率 的 3倍，【一定】要适当止盈（清除本金/卖出一半持仓等等）',
+    title: '如果本年的年内涨幅收益率超过了 平均年化收益率 的 3倍，【一定】要适当止盈（减仓20%）',
     detail: '',
   },
   {
     id: 'add-discipline',
-    title: '加仓纪律， 加仓一定要是【少频次，高金额】的',
-    detail: '',
+    title: '加仓纪律， 加仓一定要是【少频次，高金额】的，单次加仓金额【1万元】。',
+    detail: '美股含量不达标的基金，加仓金额/比例【减半】，卖出金额/比例【翻倍】。',
   },
   {
     id: 'add-discipline-decline',
