@@ -130,19 +130,36 @@ export function renderNavChart(points, { costNav = null, markers = [], reference
       ...(point.estimated ? { estimated: true } : {}),
     };
   });
-  // Every edge touching an estimate is dashed; no solid shortcut crosses it.
+  const pointColor = nav => !hasCost ? 'fund' : nav >= costNav ? 'positive' : 'negative';
+  const colorStyle = nav => hasCost ? `;--nav-point-color:var(--${pointColor(nav)})` : '';
+  // Every edge touching an estimate is dashed. Cost crossings add rendering
+  // coordinates only: the observation payload remains the original public NAVs.
   const segments = [];
+  const appendSegment = (estimated, color, left, right) => {
+    const prior = segments.at(-1);
+    if (prior?.estimated === estimated && prior.color === color) prior.points.push(right);
+    else segments.push({ estimated, color, points: [left, right] });
+  };
   for (let index = 1; index < combined.length; index += 1) {
     const left = combined[index - 1], right = combined[index];
     const estimated = Boolean(left.estimated || right.estimated);
-    const prior = segments.at(-1);
-    if (prior?.estimated === estimated) prior.points.push(right);
-    else segments.push({ estimated, points: [left, right] });
+    const start = { x: x(left.date), y: y(left.nav) };
+    const end = { x: x(right.date), y: y(right.nav) };
+    if (hasCost && ((left.nav < costNav && right.nav > costNav) || (left.nav > costNav && right.nav < costNav))) {
+      const fraction = (costNav - left.nav) / (right.nav - left.nav);
+      const crossing = { x: start.x + (end.x - start.x) * fraction, y: y(costNav) };
+      appendSegment(estimated, pointColor(left.nav), start, crossing);
+      appendSegment(estimated, pointColor(right.nav), crossing, end);
+    } else {
+      // An endpoint exactly on cost follows the other endpoint. A flat edge on
+      // cost is red, so every priced edge uses one of the requested two colors.
+      appendSegment(estimated, pointColor(hasCost && left.nav === costNav ? right.nav : left.nav), start, end);
+    }
   }
-  const curve = segments.map(segment => `<polyline class="${segment.estimated ? 'nav-chart-estimated-curve' : 'nav-chart-curve'}" points="${segment.points.map(point => `${coordinate(x(point.date))},${coordinate(y(point.nav))}`).join(' ')}" fill="none" stroke="var(--fund)" stroke-width="1.8"${segment.estimated ? ' stroke-dasharray="4 4"' : ''} stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`).join('')
-    + (safePoints.length === 1 ? `<circle class="nav-chart-point" cx="${coordinate(x(firstDate))}" cy="${coordinate(y(safePoints[0].nav))}" r="2.5" fill="var(--fund)" vector-effect="non-scaling-stroke"/>` : '');
+  const curve = segments.map(segment => `<polyline class="${segment.estimated ? 'nav-chart-estimated-curve' : 'nav-chart-curve'}" points="${segment.points.map(point => `${coordinate(point.x)},${coordinate(point.y)}`).join(' ')}" fill="none" stroke="var(--${segment.color})" stroke-width="1.8"${hasCost ? ` style="stroke:var(--${segment.color})"` : ''}${segment.estimated ? ' stroke-dasharray="4 4"' : ''} stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>`).join('')
+    + (safePoints.length === 1 ? `<circle class="nav-chart-point" cx="${coordinate(x(firstDate))}" cy="${coordinate(y(safePoints[0].nav))}" r="2.5" fill="var(--${pointColor(safePoints[0].nav)})" vector-effect="non-scaling-stroke"/>` : '');
   // HTML dots keep their circular shape when the SVG stretches with the chart.
-  const estimatedDots = [...estimates.values()].map(point => `<span class="nav-chart-estimated-point" style="left:${coordinate(x(point.date) / WIDTH * 100)}%;top:${coordinate(y(point.nav) / HEIGHT * 100)}%" aria-hidden="true"></span>`).join('');
+  const estimatedDots = [...estimates.values()].map(point => `<span class="nav-chart-estimated-point" style="left:${coordinate(x(point.date) / WIDTH * 100)}%;top:${coordinate(y(point.nav) / HEIGHT * 100)}%${colorStyle(point.nav)}" aria-hidden="true"></span>`).join('');
   const pending = extended ? `<rect class="nav-chart-pending-region" x="${coordinate(x(lastDate))}" y="0" width="${coordinate(RIGHT - x(lastDate))}" height="${HEIGHT}" fill="var(--nav-pending-fill, color-mix(in srgb, var(--muted) 7%, transparent))" aria-hidden="true"/>` : '';
   const pendingLabel = extended ? `<span class="nav-chart-pending-label" style="left:${coordinate(x(lastDate) / WIDTH * 100)}%" aria-hidden="true">待更新</span>` : '';
   const domain = extended ? ` data-nav-domain="${attribute(JSON.stringify({ start: firstDate, end: endDate, lastPublished: lastDate, left: LEFT / WIDTH * 100, right: RIGHT / WIDTH * 100 }))}"` : '';
@@ -158,6 +175,10 @@ export function renderNavChart(points, { costNav = null, markers = [], reference
     return `<span class="nav-trade-marker nav-trade-${marker.type}${marker.estimated ? ' is-estimated' : ''}${marker.count > 1 ? ' is-cluster' : ''}" style="left:${coordinate(marker.x)}%;top:${coordinate(marker.y)}%" role="img" aria-label="${description}" title="${description}"><span class="nav-trade-dot${marker.estimated ? ' is-estimated' : ''}" aria-hidden="true"></span></span>`;
   }).join('');
   const legend = safeMarkers.length ? `<div class="nav-chart-legend">${safeMarkers.some(marker => marker.type === 'buy') ? '<span class="nav-chart-legend-buy"><span class="nav-trade-dot" aria-hidden="true"></span>买入</span>' : ''}${safeMarkers.some(marker => marker.type === 'sell') ? '<span class="nav-chart-legend-sell"><span class="nav-trade-dot" aria-hidden="true"></span>卖出</span>' : ''}${safeMarkers.some(marker => marker.estimated) ? '<span class="nav-chart-legend-estimated"><span class="nav-trade-dot is-estimated" aria-hidden="true"></span>估算</span>' : ''}</div>` : '';
-  const hover = '<span class="nav-hover-line" hidden aria-hidden="true"></span><span class="nav-hover-point" hidden aria-hidden="true"></span><div class="nav-hover-tooltip" hidden role="status" aria-live="polite"><span class="nav-hover-date"></span><span class="nav-hover-status"></span><strong class="nav-hover-value num" title="单位净值"></strong><span class="nav-hover-change num" title="当日涨跌"></span><span class="nav-hover-trades" hidden></span></div>';
-  return `<div class="nav-chart" tabindex="0" aria-label="净值图，使用左右方向键查看日期" data-nav-points="${attribute(JSON.stringify(publicPoints))}" data-nav-trades="${attribute(JSON.stringify(tradeSummary))}"${domain}><svg class="sparkline nav-plot" viewBox="0 0 ${WIDTH} ${HEIGHT}" preserveAspectRatio="none" role="img" aria-label="${firstDate}至${endDate}，${estimates.size ? `${combined.length}个净值` : `${safePoints.length}个已公布净值`}${extended ? '，右侧待更新' : ''}${hasCost ? '，含成本线' : ''}${safeMarkers.length ? '，含买卖记录' : ''}">${pending}${costLine}${curve}</svg>${estimatedDots}${pendingLabel}${costLabel}${trades}${hover}</div>${domainLabels}${legend}`;
+  // Short visible windows keep each actual/estimated observation connected to the
+  // date baseline. Pending dates never manufacture an observation or a guide.
+  const resting = duration <= 7 * 86400000 ? publicPoints.map(point => `<span class="nav-chart-rest-line" data-date="${point.date}" style="left:${coordinate(point.x)}%;top:${coordinate(point.y)}%;bottom:0" aria-hidden="true"></span><span class="nav-chart-rest-point${point.estimated ? ' is-estimated' : ''}" data-date="${point.date}" style="left:${coordinate(point.x)}%;top:${coordinate(point.y)}%${colorStyle(point.nav)}" aria-hidden="true"></span>`).join('') : '';
+  const hover = '<span class="nav-hover-line" hidden aria-hidden="true"></span><span class="nav-hover-point" hidden aria-hidden="true"></span><div class="nav-hover-tooltip" hidden role="status" aria-live="polite"><strong class="nav-hover-value num" title="单位净值"></strong><span class="nav-hover-change num" title="当日涨跌"></span><span class="nav-hover-meta" hidden aria-hidden="true"><span class="nav-hover-date" hidden></span><span class="nav-hover-status" hidden></span><span class="nav-hover-trades" hidden></span></span></div>';
+  const costCoordinate = hasCost ? ` style="--nav-cost-y:${coordinate(y(costNav) / HEIGHT * 100)}%"` : '';
+  return `<div class="nav-chart" tabindex="0" aria-label="净值图，使用左右方向键查看日期" data-nav-points="${attribute(JSON.stringify(publicPoints))}" data-nav-trades="${attribute(JSON.stringify(tradeSummary))}"${domain}${costCoordinate}><svg class="sparkline nav-plot" viewBox="0 0 ${WIDTH} ${HEIGHT}" preserveAspectRatio="none" role="img" aria-label="${firstDate}至${endDate}，${estimates.size ? `${combined.length}个净值` : `${safePoints.length}个已公布净值`}${extended ? '，右侧待更新' : ''}${hasCost ? '，含成本线' : ''}${safeMarkers.length ? '，含买卖记录' : ''}">${pending}${costLine}${curve}</svg>${estimatedDots}${pendingLabel}${costLabel}${trades}${resting}${hover}</div>${domainLabels}${legend}`;
 }

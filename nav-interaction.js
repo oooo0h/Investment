@@ -9,6 +9,43 @@ const validDate = value => {
 const DAY = 86400000;
 const dateStamp = date => Date.parse(`${date}T00:00:00Z`);
 
+function segmentTouchesBox(left, right, box) {
+  if (Math.max(left.x, right.x) < box.left || Math.min(left.x, right.x) > box.right
+    || Math.max(left.y, right.y) < box.top || Math.min(left.y, right.y) > box.bottom) return false;
+  let start = 0, end = 1;
+  const dx = right.x - left.x, dy = right.y - left.y;
+  for (const [p, q] of [[-dx, left.x - box.left], [dx, box.right - left.x], [-dy, left.y - box.top], [dy, box.bottom - left.y]]) {
+    if (p === 0) { if (q < 0) return false; continue; }
+    const cut = q / p;
+    if (p < 0) start = Math.max(start, cut);
+    else end = Math.min(end, cut);
+    if (start > end) return false;
+  }
+  return true;
+}
+
+function labelPosition(points, point, rect, width, height) {
+  const x = point.x / 100 * rect.width, y = point.y / 100 * rect.height;
+  const margin = 4, gap = 9;
+  const curve = points.filter(item => Number.isFinite(item.nav)).map(item => ({ x: item.x / 100 * rect.width, y: item.y / 100 * rect.height }));
+  const candidates = [
+    [x + gap, y - height - gap], [x - width - gap, y - height - gap],
+    [x + gap, y + gap], [x - width - gap, y + gap],
+    [x - width / 2, y - height - gap], [x - width / 2, y + gap],
+    [x + gap, y - height / 2], [x - width - gap, y - height / 2],
+  ].map(([left, top]) => ({
+    left: clamp(left, margin, Math.max(margin, rect.width - width - margin)),
+    top: clamp(top, margin, Math.max(margin, rect.height - height - margin)),
+  })).sort((a, b) => Math.hypot(a.left + width / 2 - x, a.top + height / 2 - y) - Math.hypot(b.left + width / 2 - x, b.top + height / 2 - y));
+  for (const candidate of candidates) {
+    const box = { left: candidate.left - margin, right: candidate.left + width + margin, top: candidate.top - margin, bottom: candidate.top + height + margin };
+    const coversPoint = curve.some(item => item.x >= box.left && item.x <= box.right && item.y >= box.top && item.y <= box.bottom);
+    if (!coversPoint && !curve.some((item, index) => index > 0 && segmentTouchesBox(curve[index - 1], item, box))) return { ...candidate, docked: false, below: candidate.top > y };
+  }
+  // A reserved strip above the plot is always free of its price curve.
+  return { left: clamp(x - width / 2, margin, Math.max(margin, rect.width - width - margin)), top: -height - 8, docked: true, below: false };
+}
+
 function chartDomain(raw, points) {
   if (typeof raw !== 'string' || raw.length > 1000) return null;
   try {
@@ -138,9 +175,10 @@ export function setupNavChartInteractions(root) {
     active = chart;
     indices.set(chart, { index: points.findIndex(candidate => candidate.date === point.date), date: point.date });
     date.textContent = point.date;
+    date.hidden = true;
     if (status) {
       status.textContent = point.pending ? '待更新' : point.estimated ? '' : point.nav === null ? '无公布净值' : '已公布';
-      status.hidden = point.estimated === true && !point.pending;
+      status.hidden = true;
       status.className = `nav-hover-status${point.pending ? ' is-pending' : point.estimated ? ' is-estimated' : ''}`;
     }
     value.textContent = point.nav === null ? '—' : point.nav.toFixed(4);
@@ -151,29 +189,32 @@ export function setupNavChartInteractions(root) {
       if (point.trades?.buy) counts.push(`买入${point.trades.buy}笔`);
       if (point.trades?.sell) counts.push(`卖出${point.trades.sell}笔`);
       trades.textContent = counts.length ? `${counts.join(' / ')}${point.trades.estimated ? ' · 含估算' : ''}` : '';
-      trades.hidden = !counts.length;
+      trades.hidden = true;
     }
     line.style.left = `${point.x}%`;
+    line.style.top = `${point.y}%`;
+    line.style.bottom = '0';
     dot.style.left = `${point.x}%`;
     dot.style.top = `${point.y}%`;
-    line.hidden = tooltip.hidden = false;
-    dot.hidden = Boolean(point.pending);
+    line.hidden = tooltip.hidden = dot.hidden = !Number.isFinite(point.nav);
+    if (!Number.isFinite(point.nav)) return;
     dot.classList.toggle('is-estimated', Boolean(point.estimated));
+    const costY = Number.parseFloat(chart.style.getPropertyValue?.('--nav-cost-y') || '');
+    const pointColor = Number.isFinite(costY) ? point.y <= costY ? 'var(--positive)' : 'var(--negative)' : 'var(--fund)';
+    dot.style.setProperty?.('--nav-point-color', pointColor);
     tooltip.classList.toggle('is-estimated', Boolean(point.estimated));
     tooltip.classList.toggle('is-pending', Boolean(point.pending));
     tooltip.style.maxWidth = `${Math.max(0, rect.width - 8)}px`;
+    tooltip.style.left = tooltip.style.top = '0px';
     const measured = tooltip.getBoundingClientRect();
-    const width = Math.min(measured.width || 152, Math.max(0, rect.width - 8));
-    const height = Math.min(measured.height || 44, Math.max(0, rect.height - 8));
-    const pixelX = point.x / 100 * rect.width;
-    const pixelY = point.y / 100 * rect.height;
-    let below = pixelY - height - 8 < 4;
-    let top = below ? pixelY + 8 : pixelY - height - 8;
-    if (below && top + height > rect.height - 4 && pixelY >= rect.height / 2) { below = false; top = pixelY - height - 8; }
-    tooltip.style.left = `${clamp(pixelX - width / 2, 4, Math.max(4, rect.width - width - 4))}px`;
-    tooltip.style.top = `${clamp(top, 4, Math.max(4, rect.height - height - 4))}px`;
+    const width = Math.min(measured.width || 120, Math.max(0, rect.width - 8));
+    const height = measured.height || 18;
+    const position = labelPosition(points, point, rect, width, height);
+    tooltip.style.left = `${position.left}px`;
+    tooltip.style.top = `${position.top}px`;
     tooltip.style.transform = 'none';
-    tooltip.classList.toggle('is-below', below);
+    tooltip.classList.toggle('is-below', position.below);
+    tooltip.classList.toggle('is-docked', position.docked);
   }
   function inspect(event) {
     if (event.isPrimary === false) return;
