@@ -53,6 +53,15 @@ async function collect(directory) {
 await collect(dist);
 if (![...allowed].every(file => collected.has(file))) throw new Error('Publish input is incomplete');
 trace(`Validated ${collected.size} files; upload=${tree.length}; accountData=${includeAccountData ? 'explicitly included' : 'preserved remotely'}.`);
+let inlineBytes = tree.reduce((sum, item) => sum + Buffer.byteLength(item.content, 'utf8'), 0);
+for (const item of [...tree].sort((left, right) => Buffer.byteLength(right.content, 'utf8') - Buffer.byteLength(left.content, 'utf8'))) {
+  if (inlineBytes < 500000) break;
+  const bytes = Buffer.from(item.content, 'utf8');
+  const blob = api(`repos/${repository}/git/blobs`, 'POST', { encoding: 'base64', content: bytes.toString('base64') });
+  item.sha = blob.sha;
+  delete item.content;
+  inlineBytes -= bytes.length;
+}
 const previous = api(`repos/${repository}/git/ref/heads/gh-pages`, 'GET', undefined, true);
 if (!previous && !includeAccountData) throw new Error('An initial account deployment needs explicit authorization');
 const previousCommit = previous ? api(`repos/${repository}/git/commits/${previous.object.sha}`) : null;

@@ -55,7 +55,7 @@ for (const entry of changed) {
     if (blob.sha !== entry.git_blob) throw new Error('Binary upload checksum mismatch.');
     tree.push({ path: entry.path, mode: '100644', type: 'blob', sha: blob.sha });
     console.log(`Source sync: verified blob ${++binary}/${blobFiles.size}.`);
-  } else tree.push({ path: entry.path, mode: '100644', type: 'blob', content: new TextDecoder('utf-8', { fatal: true }).decode(bytes) });
+  } else tree.push({ path: entry.path, mode: '100644', type: 'blob', content: new TextDecoder('utf-8', { fatal: true, ignoreBOM: true }).decode(bytes) });
 }
 let commit = ref.object.sha;
 if (tree.length) {
@@ -66,7 +66,11 @@ if (tree.length) {
 const installed = api(`repos/${repo}/git/trees/${commit}?recursive=1`);
 if (installed.truncated) throw new Error('Published source inventory is incomplete.');
 const published = new Map(installed.tree.filter(item => item.type === 'blob').map(item => [item.path, item.sha]));
-if (manifest.entries.some(entry => published.get(entry.path) !== entry.git_blob)) throw new Error('Published source checksum mismatch.');
+const mismatched = manifest.entries.filter(entry => published.get(entry.path) !== entry.git_blob);
+if (mismatched.length) {
+  console.log(JSON.stringify({ checksumMismatches: mismatched.length, categories: [...new Set(mismatched.map(entry => entry.category))] }));
+  throw new Error('Published source checksum mismatch.');
+}
 const workbooks = manifest.entries.filter(entry => /^基金\/[^/]+\/[^/]+\.(?:xlsx|xls|xlsm)$/i.test(entry.path));
 for (const entry of workbooks) {
   const blob = api(`repos/${repo}/git/blobs/${entry.git_blob}`);
