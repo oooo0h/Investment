@@ -23,9 +23,9 @@ import { renderEstimatePanel } from './estimate-panel.js?v=20261019-collapsible-
 import { getDisciplineActions, adjustDisciplineRule } from './discipline-actions.js';
 import { getNavChartDisplay } from './nav-display.js';
 import { createFundViewportKeeper } from './viewport-anchor.js?v=20261019-semantic-scroll';
-import { createTransactionStore } from './transaction-store.js';
-import { deriveTransactionDraft, validateTransactionMutation } from './transaction-model.js';
-import { renderTransactionEditor, renderTransactionDelete, renderTransactionPreview, renderTransactionDateWheels, normalizeTransactionDate, transactionAmountLabel } from './transaction-view.js';
+import { createTransactionStore } from './transaction-store.js?v=20261019-transactions-2';
+import { deriveTransactionDraft, validateTransactionMutation } from './transaction-model.js?v=20261019-transactions-2';
+import { renderTransactionEditor, renderTransactionDelete, renderTransactionPreview, renderTransactionDateWheels, normalizeTransactionDate, transactionAmountLabel } from './transaction-view.js?v=20261019-transactions-2';
 const TYPE_NAMES = { buy: '买入', sip: '定投', sell: '卖出', reinvest: '红利再投', dividend: '现金分红', 'transfer-in': '转换转入' };
 const STATUS_NAMES = { confirmed: '已确认', estimated: '历史估算', pending: '待确认', cancelled: '撤单', failed: '交易失败', closed: '交易关闭' };
 const state = { unlocked: false, visible: false, funds: {}, nav: {}, disciplines: DISCIPLINE_ENTRIES, bonds: [], freeCashFlow: null, cashEditing: false, cashDraft: null, cashBusy: false, cashError: '', bondEditing: null, bondDraft: null, bondBusy: false, bondError: '', bondUnavailable: true, bondUpdatedAt: null, navPreset: null, navCycles: { months: '1m', years: '1y' }, navRanges: {}, navDomains: {}, navVisuals: {}, expandedPanels: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null, deadline: 0, dayDeadline: 0, sessionDay: null };
@@ -455,6 +455,28 @@ function cancelTransactionDialog() {
   opener?.focus?.({ preventScroll: true });
 }
 
+function setTransactionType(type) {
+  const editor = state.transactionEditor;
+  if (!editor || state.transactionBusy || !Object.hasOwn(TYPE_NAMES, type)) return;
+  editor.draft.type = type;
+  editor.draft.feeRate = transactionFeeDraft(editor.code, type, editor.original);
+  const select = app.querySelector?.('#transaction-form [name="type"]');
+  if (select) select.value = type;
+  const control = app.querySelector?.('.transaction-sip-control');
+  if (control) control.hidden = !['buy', 'sip'].includes(type);
+  const toggle = app.querySelector?.('[data-action="transaction-sip-toggle"]');
+  toggle?.setAttribute?.('aria-checked', String(type === 'sip'));
+  const fee = app.querySelector?.('#transaction-form [name="feeRate"]');
+  const noFee = ['reinvest', 'dividend'].includes(type);
+  if (fee) { fee.value = editor.draft.feeRate; fee.disabled = noFee; }
+  const feeDetails = app.querySelector?.('[data-transaction-fees]');
+  if (feeDetails) { feeDetails.hidden = noFee; if (!noFee && !editor.draft.feeRate) feeDetails.open = true; }
+  const free = app.querySelector?.('.transaction-fee-free');
+  if (free) free.hidden = !noFee;
+  state.transactionError = '';
+  updateTransactionPreview();
+}
+
 function updateTransactionPreview() {
   const editor = state.transactionEditor;
   if (!editor) return;
@@ -479,9 +501,17 @@ function readTransactionForm(form) {
   for (const key of ['date', 'type', 'amount', 'nav', 'feeRate']) if (form.elements[key]) state.transactionEditor.draft[key] = String(form.elements[key].value ?? '');
 }
 
-function transactionValidationBase(code) {
+function transactionValidationOptions(code) {
   const book = getBook(code);
-  return book.incomplete && code === '006373' ? estimateApplications(book.transactions, officialNav(code), { rate: 0.0015, tradingDates: GUOFU_TRADING_DATES }) : book.transactions;
+  const history = officialNav(code);
+  return {
+    mode: book.mode,
+    // Prepare the complete before/after series: estimation also orders same-day
+    // records by submittedAt, which must match ledger() after a saved mutation.
+    prepareTransactions: book.incomplete && code === '006373'
+      ? rows => estimateApplications(rows, history, { rate: 0.0015, tradingDates: GUOFU_TRADING_DATES })
+      : rows => rows,
+  };
 }
 
 function applyTransactionFunds(funds) {
@@ -503,7 +533,7 @@ async function saveTransactionEdits(event) {
   state.transactionError = result?.error || '';
   if (!result?.transaction || state.transactionError) { updateTransactionPreview(); return; }
   const mutation = { type: editor.id ? 'update' : 'add', transaction: result.transaction, id: result.transaction.id, mode: getBook(editor.code).mode };
-  const check = validateTransactionMutation(transactionValidationBase(editor.code), mutation);
+  const check = validateTransactionMutation(getBook(editor.code).transactions, { ...mutation, ...transactionValidationOptions(editor.code) });
   if (!check.valid) { state.transactionError = check.error; updateTransactionPreview(); return; }
   const store = transactionStore, generation = unlockGeneration;
   state.transactionBusy = true;
@@ -532,7 +562,7 @@ async function saveTransactionEdits(event) {
 async function confirmTransactionDelete() {
   const removal = state.transactionDelete;
   if (!state.unlocked || !checkSession() || state.transactionBusy || !transactionStore || !removal) return;
-  const check = validateTransactionMutation(transactionValidationBase(removal.code), { type: 'remove', id: removal.id, mode: getBook(removal.code).mode });
+  const check = validateTransactionMutation(getBook(removal.code).transactions, { type: 'remove', id: removal.id, ...transactionValidationOptions(removal.code) });
   if (!check.valid) { state.transactionError = check.error; render(); return; }
   const store = transactionStore, generation = unlockGeneration;
   state.transactionBusy = true;
@@ -1432,6 +1462,7 @@ function ledgerPanel(result, book, code) {
 function transactionCard(row, book, performance = {}) {
   const tx = book.transactions.find(item => item.id === row.id) || row;
   const included = row.status === 'included';
+  const pending = row.status === 'pending';
   const estimated = included && (row.estimated === true || ['estimated', '历史估算'].includes(tx.status));
   const values = included ? row : {};
   const out = row.type === 'sell' || row.type === 'dividend';
@@ -1447,16 +1478,19 @@ function transactionCard(row, book, performance = {}) {
   const detailMetrics = [
     `<div><dt>成交净值</dt><dd class="num">${number(values.nav, 4)}</dd></div>`,
     metric('确认份额', values.shares, 6), metric('实际手续费', values.fee),
+    ...(performance.kind === 'lot' ? [metric('本笔剩余市值', performance.marketValue)] : []),
     ...(performance.kind === 'lot' || performance.kind === 'sell' ? [metric(performance.kind === 'sell' ? '卖出成本（FIFO）' : row.type === 'reinvest' ? '新增投入' : '本笔原始成本', performance.cost)] : []),
     ...(performance.kind === 'lot' ? [metric('本笔剩余份额', performance.remainingShares, 6), metric('本笔剩余成本', performance.remainingCost), metric('本笔卖出回款', performance.proceeds), metric('本笔分红', performance.cashDividends), metric('本笔已实现盈亏', performance.realizedProfit, 2, signClass(performance.realizedProfit)), metric('本笔未实现盈亏', performance.unrealizedProfit, 2, signClass(performance.unrealizedProfit))] : []),
   ];
   const profitLabel = performance.kind === 'sell' ? performance.estimated ? '本笔已实现盈亏（估算）' : '本笔已实现盈亏' : performance.kind === 'dividend' ? '本笔分红收益' : performance.estimated ? '本笔累计盈亏（估算）' : '本笔累计盈亏';
-  const performanceMetrics = `${performance.kind === 'lot' ? metric('本笔剩余市值', performance.marketValue) : performance.kind === 'sell' ? metric('本笔卖出成本', performance.cost) : ''}${metric(profitLabel, performance.profit, 2, signClass(performance.profit))}${performance.kind === 'dividend' ? '' : `<div><dt>本笔收益率</dt><dd class="num ${signClass(performance.returnRate)}">${percent(performance.returnRate)}</dd></div>`}`;
+  const pendingHint = Number.isFinite(tx.nav) && tx.nav > 0 ? '待补全资料' : '待补净值 · 补全后自动确认';
+  const profitSummary = pending
+    ? `<span class="transaction-pending-hint">${pendingHint}</span>`
+    : `<span class="transaction-profit-summary"><span class="transaction-profit-label">${profitLabel}</span><span class="transaction-profit-values"><strong class="transaction-profit-value num ${signClass(performance.profit)}">${sensitive(performance.profit)}</strong>${performance.kind === 'dividend' ? '' : `<span class="transaction-profit-rate num ${signClass(performance.returnRate)}">${percent(performance.returnRate)}</span>`}</span></span>`;
   const estimateExtras = performance.kind === 'lot' ? `<p class="helper detail-date-note">估值净值日期 ${esc(performance.valuationDate || '待更新')}${performance.estimated ? ' · 含估算交易' : ''}</p>` : '';
-  return `<article class="transaction"><div class="transaction-top"><div class="transaction-label"><span class="transaction-type-icon ${out ? 'out' : ''}">${icon(out ? 'up' : row.type === 'reinvest' ? 'coins' : 'down')}</span><div><p class="transaction-title">${esc(TYPE_NAMES[row.type] || '未知类型')}<span class="row-status">${esc(label)}</span></p><p class="transaction-date">${displayDate} · 第 ${row.index} 笔</p></div></div><p class="transaction-amount num">${row.type === 'reinvest' ? sensitive(values.shares, 6) : sensitive(row.amount ?? tx.amount ?? tx.cost)}<small>${!included ? '记录金额 · 元' : row.type === 'reinvest' ? '增加份额 · 份' : estimated ? '估算支出 · 元' : out ? '实际到账 · 元' : '确认支出 · 元'}</small></p></div>
-    <div class="transaction-actions"><button class="transaction-edit" type="button" data-action="transaction-edit" data-id="${esc(row.id)}" aria-label="编辑${esc(TYPE_NAMES[row.type] || '交易')}" ${state.transactionStoreUnavailable || state.transactionBusy ? 'disabled' : ''}>编辑</button><button class="transaction-delete" type="button" data-action="transaction-delete" data-id="${esc(row.id)}" aria-label="删除${esc(TYPE_NAMES[row.type] || '交易')}" ${state.transactionStoreUnavailable || state.transactionBusy ? 'disabled' : ''}>×</button></div>
-    <dl class="transaction-stats">${performanceMetrics}</dl>${row.error ? `<p class="row-error">${esc(row.error)}</p>` : ''}
-    <details class="transaction-detail" data-id="${esc(row.id)}"><summary>本笔明细</summary><div class="detail-inner"><dl class="transaction-stats">${detailMetrics.join('')}</dl><p class="helper detail-date-note">${dateNote}</p>${row.estimateReason ? `<p class="helper detail-date-note">${esc(row.estimateReason)}</p>` : ''}${estimateExtras}${hasNote && state.visible ? `<p class="transaction-note">备注：${esc(tx.note)}</p>` : ''}</div></details></article>`;
+  return `<article class="transaction${pending ? ' transaction-pending' : ''}"><div class="transaction-top"><div class="transaction-label"><span class="transaction-type-icon ${out ? 'out' : ''}">${icon(out ? 'up' : row.type === 'reinvest' ? 'coins' : 'down')}</span><div><p class="transaction-title">${esc(TYPE_NAMES[row.type] || '未知类型')}<span class="row-status${pending ? ' row-status-pending' : ''}">${esc(label)}</span></p><p class="transaction-date">${displayDate} · 第 ${row.index} 笔</p></div></div><div class="transaction-top-right"><p class="transaction-amount num">${included && row.type === 'reinvest' ? sensitive(values.shares, 6) : sensitive(row.amount ?? tx.amount ?? tx.cost)}<small>${!included ? '记录金额 · 元' : row.type === 'reinvest' ? '增加份额 · 份' : estimated ? '估算支出 · 元' : out ? '实际到账 · 元' : '确认支出 · 元'}</small></p><div class="transaction-actions"><button class="transaction-edit" type="button" data-action="transaction-edit" data-id="${esc(row.id)}" aria-label="${pending ? '补全' : '编辑'}${esc(TYPE_NAMES[row.type] || '交易')}" ${state.transactionStoreUnavailable || state.transactionBusy ? 'disabled' : ''}>${pending ? '补全' : '编辑'}</button><button class="transaction-delete" type="button" data-action="transaction-delete" data-id="${esc(row.id)}" aria-label="删除${esc(TYPE_NAMES[row.type] || '交易')}" ${state.transactionStoreUnavailable || state.transactionBusy ? 'disabled' : ''}>×</button></div></div></div>
+    ${row.error ? `<p class="row-error">${esc(row.error)}</p>` : ''}
+    <details class="transaction-detail" data-id="${esc(row.id)}"><summary class="transaction-profit-row">${profitSummary}<span class="transaction-detail-toggle">详细信息<span class="transaction-detail-chevron" aria-hidden="true">⌄</span></span></summary><div class="detail-inner"><dl class="transaction-stats transaction-detail-metrics">${detailMetrics.join('')}</dl><p class="helper detail-date-note">${dateNote}</p>${row.estimateReason ? `<p class="helper detail-date-note">${esc(row.estimateReason)}</p>` : ''}${estimateExtras}${hasNote && state.visible ? `<p class="transaction-note">备注：${esc(tx.note)}</p>` : ''}</div></details></article>`;
 }
 app.addEventListener('toggle', event => {
   const panel = event.target;
@@ -1487,16 +1521,7 @@ app.addEventListener('change', event => {
     const key = event.target.name;
     if (['date', 'type', 'amount', 'nav', 'feeRate'].includes(key)) {
       state.transactionEditor.draft[key] = event.target.value;
-      if (key === 'type') {
-        state.transactionEditor.draft.feeRate = transactionFeeDraft(state.transactionEditor.code, event.target.value, state.transactionEditor.original);
-        const fee = app.querySelector?.('#transaction-form [name="feeRate"]');
-        const noFee = ['reinvest', 'dividend'].includes(event.target.value);
-        if (fee) { fee.value = state.transactionEditor.draft.feeRate; fee.disabled = noFee; }
-        const feeDetails = app.querySelector?.('[data-transaction-fees]');
-        if (feeDetails) { feeDetails.hidden = noFee; if (!noFee && !state.transactionEditor.draft.feeRate) feeDetails.open = true; }
-        const free = app.querySelector?.('.transaction-fee-free');
-        if (free) free.hidden = !noFee;
-      }
+      if (key === 'type') setTransactionType(event.target.value);
       if (key === 'date') {
         const toggle = app.querySelector?.('.transaction-date-toggle');
         if (toggle) toggle.innerHTML = `${esc(event.target.value)}<span aria-hidden="true">⌄</span>`;
@@ -1645,6 +1670,7 @@ function actionClick(event) {
     if (action === 'transaction-date-toggle') toggleTransactionDatePicker();
     if (action === 'transaction-date-done') toggleTransactionDatePicker(false);
     if (action === 'transaction-date-option') updateTransactionDate(target.dataset.wheel, Number(target.dataset.value));
+    if (action === 'transaction-sip-toggle' && ['buy', 'sip'].includes(state.transactionEditor?.draft.type)) setTransactionType(state.transactionEditor.draft.type === 'sip' ? 'buy' : 'sip');
     if (action === 'transaction-amount-visibility' && state.transactionEditor) {
       state.transactionAmountVisible = !state.transactionAmountVisible;
       const input = app.querySelector?.('#transaction-form [name="amount"]');

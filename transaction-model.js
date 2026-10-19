@@ -20,6 +20,19 @@ const round = (value, digits = 2) => {
   return shift(Math.round(shift(value, digits)), -digits) || 0;
 };
 
+function unchangedEconomics(original, { type, amount, nav, feeRate }) {
+  if (!original || ![undefined, 'confirmed', 'estimated', '已确认', '历史估算', '已录入'].includes(original.status)) return false;
+  const sameKind = original.type === type || (['buy', 'sip'].includes(original.type) && ['buy', 'sip'].includes(type));
+  if (!sameKind || original.nav !== nav || !Number.isFinite(original.shares) || original.shares < 0 ||
+      (type !== 'dividend' && original.shares <= 0) || !Number.isFinite(original.fee) || original.fee < 0) return false;
+  const gross = original.nav * original.shares;
+  const priorAmount = type === 'reinvest' ? gross : original.amount ?? original.cost ?? (gross + (type === 'sell' ? -1 : 1) * original.fee);
+  if (!Number.isFinite(priorAmount) || round(priorAmount) !== amount) return false;
+  const priorRate = ['dividend', 'reinvest'].includes(type) ? 0 : Number.isFinite(original.feeRate)
+    ? original.feeRate : gross > 0 ? original.fee / gross * 100 : null;
+  return Number.isFinite(priorRate) && Math.abs(priorRate - feeRate) <= Math.max(1, Math.abs(priorRate), Math.abs(feeRate)) * 1e-10;
+}
+
 export function transactionToday(now = new Date()) {
   const date = new Date(new Date(now).getTime() + 8 * 60 * 60 * 1000);
   return Number.isFinite(date.getTime()) ? date.toISOString().slice(0, 10) : '';
@@ -60,6 +73,13 @@ export function deriveTransactionDraft(draft = {}, {
   if (status === 'pending') {
     Object.assign(transaction, { amount, nav: null, shares: null, fee: null });
     return { transaction, preview: { amount, nav: null, shares: null, fee: null, feeRate, status }, error: '' };
+  }
+  // A historical confirmation may have rounded shares independently of cash.
+  // Editing its date or buy/SIP label must not silently replace those shares.
+  if (unchangedEconomics(original, { type, amount, nav, feeRate })) {
+    Object.assign(transaction, { amount: original.amount ?? (type === 'reinvest' ? 0 : amount), nav: original.nav, shares: original.shares, fee: original.fee });
+    if (type === 'transfer-in') transaction.cost = Number.isFinite(original.cost) ? original.cost : amount;
+    return { transaction, preview: { amount, nav, shares: original.shares, fee: original.fee, feeRate, status }, error: '' };
   }
   const rate = feeRate / 100;
   let fee = 0, shares = 0;
