@@ -16,7 +16,10 @@ const gitBlob = bytes => crypto.createHash('sha1').update(Buffer.concat([Buffer.
 const api = (endpoint, method = 'GET', body) => {
   const result = spawnSync(process.env.GH_EXECUTABLE || 'gh', ['api', endpoint, '-X', method, ...(body === undefined ? [] : ['--input', '-'])],
     { input: body === undefined ? undefined : JSON.stringify(body), encoding: 'utf8', maxBuffer: 64000000, windowsHide: true });
-  if (result.status !== 0) throw new Error(`GitHub source request failed (HTTP ${/HTTP\s+(\d{3})/.exec(result.stderr || '')?.[1] || 'unavailable'}).`);
+  if (result.status !== 0) {
+    const transport = /EOF|reset|timeout|timed out|connect|proxy/i.test(result.stderr || '') ? 'network' : result.error?.code || 'unknown';
+    throw new Error(`GitHub source request failed (HTTP ${/HTTP\s+(\d{3})/.exec(result.stderr || '')?.[1] || 'unavailable'}, transport ${transport}).`);
+  }
   return result.stdout.trim() ? JSON.parse(result.stdout) : null;
 };
 const files = new Map();
@@ -36,14 +39,22 @@ const inventory = api(`repos/${repo}/git/trees/${previous.tree.sha}?recursive=1`
 if (inventory.truncated) throw new Error('Remote source inventory is incomplete.');
 const remote = new Map(inventory.tree.filter(item => item.type === 'blob').map(item => [item.path, item.sha]));
 const changed = manifest.entries.filter(entry => remote.get(entry.path) !== entry.git_blob), tree = [];
+// Keep the final tree request small. Large UTF-8 files use blob objects too,
+// avoiding proxy limits without changing the committed file bytes.
+const blobFiles = new Set(changed.filter(entry => /\.(?:xlsx|xls|xlsm|pdf)$/i.test(entry.path)).map(entry => entry.path));
+let treeBytes = changed.filter(entry => !blobFiles.has(entry.path)).reduce((sum, entry) => sum + entry.bytes, 0);
+for (const entry of [...changed].filter(entry => !blobFiles.has(entry.path)).sort((a, b) => b.bytes - a.bytes)) {
+  if (treeBytes < 500000) break;
+  blobFiles.add(entry.path); treeBytes -= entry.bytes;
+}
 let binary = 0;
 for (const entry of changed) {
   const bytes = files.get(entry.path);
-  if (/\.(?:xlsx|xls|xlsm|pdf)$/i.test(entry.path)) {
+  if (blobFiles.has(entry.path)) {
     const blob = api(`repos/${repo}/git/blobs`, 'POST', { encoding: 'base64', content: bytes.toString('base64') });
     if (blob.sha !== entry.git_blob) throw new Error('Binary upload checksum mismatch.');
     tree.push({ path: entry.path, mode: '100644', type: 'blob', sha: blob.sha });
-    console.log(`Source sync: verified binary ${++binary}.`);
+    console.log(`Source sync: verified blob ${++binary}/${blobFiles.size}.`);
   } else tree.push({ path: entry.path, mode: '100644', type: 'blob', content: new TextDecoder('utf-8', { fatal: true }).decode(bytes) });
 }
 let commit = ref.object.sha;
