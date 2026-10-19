@@ -43,7 +43,7 @@ export const DISCIPLINE_ENTRIES = Object.freeze([
   },
   {
     id: 'add-discipline-decline',
-    title: '自上次操作节点后，跌幅超过了 平均年化收益率 的2倍，进行一次加仓',
+    title: '自上次交易节点后，跌幅超过了 平均年化收益率 的2倍，进行一次加仓',
     detail: '',
   },
 ].map(entry => Object.freeze(entry)));

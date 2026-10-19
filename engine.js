@@ -38,6 +38,7 @@ export function calculateLedger(transactions, {
   let includedCount = 0;
   let pendingCount = 0;
   let estimatedCount = 0;
+  let latestEstimatedDate = null;
   const optionsValid = ['profit-first', 'principal-first'].includes(mode)
     && numeric(openingPrincipal) && openingPrincipal >= 0
     && numeric(openingShares) && openingShares >= 0
@@ -160,7 +161,10 @@ export function calculateLedger(transactions, {
     state = { shares: sharesAfter, principal: principalAfter, totalInvested,
       totalRecovered, totalProfitWithdrawn, totalClosedLoss, lastDate: tx.date, lastNav: tx.nav };
     includedCount += 1;
-    if (inputStatus === 'estimated' || inputStatus === '历史估算') estimatedCount += 1;
+    if (inputStatus === 'estimated' || inputStatus === '历史估算') {
+      estimatedCount += 1;
+      if (!latestEstimatedDate || tx.date > latestEstimatedDate) latestEstimatedDate = tx.date;
+    }
     rows.push(row);
   }
 
@@ -178,7 +182,7 @@ export function calculateLedger(transactions, {
     totalProfitWithdrawn: state.totalProfitWithdrawn, totalClosedLoss: state.totalClosedLoss,
     totalProfit, totalReturn: totalProfit !== null && state.totalInvested > 0 ? totalProfit / state.totalInvested : null,
     principalStatus: state.shares === 0 ? 'empty' : state.principal === 0 ? 'recovered' : 'invested',
-    includedCount, pendingCount, estimatedCount, valuationNav: selectedNav, valuationDate: selectedDate,
+    includedCount, pendingCount, estimatedCount, latestEstimatedDate, valuationNav: selectedNav, valuationDate: selectedDate,
     lastNav: state.lastNav, lastDate: state.lastDate,
     identityCheck: totalProfit === null ? null : Math.abs(totalProfit - (holdingProfit + state.totalProfitWithdrawn - state.totalClosedLoss)) < 0.02,
   };

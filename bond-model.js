@@ -57,6 +57,14 @@ export function normalizeBondEntries(entries) {
   } catch { invalid(); }
 }
 
+/** Null clears the optional free-cash-flow record; finite amounts round to cents. */
+export function normalizeFreeCashFlow(value) {
+  if (value === null || value === undefined || value === '') return null;
+  if (typeof value !== 'number' || !Number.isFinite(value)) invalid();
+  const amount = cents(value);
+  return money(amount);
+}
+
 /** returnRate is a ratio: 0.01 means 1%, using cost = marketValue - profit. */
 export function calculateBondSummary(entries) {
   try {

@@ -1,5 +1,5 @@
 import { unlockVault } from './vault.js';
-import { normalizeBondEntries } from './bond-model.js';
+import { normalizeBondEntries, normalizeFreeCashFlow } from './bond-model.js?v=20261019-free-cash-flow';
 
 export const BOND_STORAGE_KEY = 'fund-ledger:bonds:local:v1';
 
@@ -11,10 +11,13 @@ function failure(code, message) {
 
 function snapshot(value) {
   if (!value || typeof value !== 'object' || Array.isArray(value) ||
-      Object.keys(value).some(key => !['funds', 'bonds', 'updatedAt'].includes(key)) ||
+      Object.keys(value).some(key => !['funds', 'bonds', 'freeCashFlow', 'updatedAt'].includes(key)) ||
       (value.funds !== undefined && (!value.funds || typeof value.funds !== 'object' || Array.isArray(value.funds) || Object.keys(value.funds).length)) ||
       typeof value.updatedAt !== 'string' || !value.updatedAt || !Number.isFinite(Date.parse(value.updatedAt))) throw new Error('Invalid bond record.');
-  return { bonds: normalizeBondEntries(value.bonds), updatedAt: value.updatedAt };
+  let freeCashFlow;
+  try { freeCashFlow = normalizeFreeCashFlow(value.freeCashFlow); }
+  catch { throw new Error('Invalid bond record.'); }
+  return { bonds: normalizeBondEntries(value.bonds), freeCashFlow, updatedAt: value.updatedAt };
 }
 
 function encryptedRecord(value) {
@@ -34,7 +37,7 @@ export async function createBondStore(session, initial, options = {}) {
   }
   function getSnapshot() {
     requireOpen();
-    return { bonds: current.bonds.map(entry => ({ ...entry })), updatedAt: current.updatedAt };
+    return { bonds: current.bonds.map(entry => ({ ...entry })), freeCashFlow: current.freeCashFlow, updatedAt: current.updatedAt };
   }
   function close() {
     closed = true;
@@ -77,7 +80,7 @@ export async function createBondStore(session, initial, options = {}) {
       requireOpen();
       let next, record;
       try {
-        next = { bonds, updatedAt: new Date(now()).toISOString() };
+        next = { bonds, freeCashFlow: current.freeCashFlow, updatedAt: new Date(now()).toISOString() };
         record = encryptedRecord(await session.encryptLocal(next));
       } catch (error) {
         if (closed || session.closed === true || error?.code === 'SESSION_CLOSED') throw failure('bond-closed', '债基记录已锁定，请重新解锁。');
@@ -93,7 +96,32 @@ export async function createBondStore(session, initial, options = {}) {
     queue = pending.catch(() => {});
     return pending;
   }
-  return { getSnapshot, save, close };
+
+  function saveFreeCashFlow(value) {
+    let freeCashFlow;
+    try { requireOpen(); freeCashFlow = normalizeFreeCashFlow(value); }
+    catch (error) { return Promise.reject(error?.code === 'bond-closed' ? error : failure('bond-invalid', '请输入有效的自由现金流金额。')); }
+    const pending = queue.then(async () => {
+      requireOpen();
+      let next, record;
+      try {
+        next = { bonds: current.bonds, freeCashFlow, updatedAt: new Date(now()).toISOString() };
+        record = encryptedRecord(await session.encryptLocal(next));
+      } catch (error) {
+        if (closed || session.closed === true || error?.code === 'SESSION_CLOSED') throw failure('bond-closed', '债基记录已锁定，请重新解锁。');
+        throw failure('bond-save-failed', '自由现金流未保存，请重试。');
+      }
+      requireOpen();
+      try { storage.setItem(BOND_STORAGE_KEY, JSON.stringify(record)); }
+      catch { throw failure('bond-storage-unavailable', '本机存储不可用，自由现金流未更改。'); }
+      requireOpen();
+      current = next;
+      return getSnapshot();
+    });
+    queue = pending.catch(() => {});
+    return pending;
+  }
+  return { getSnapshot, save, saveFreeCashFlow, close };
 }
 
 export async function openBondStore(password, options = {}) {

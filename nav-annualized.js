@@ -35,7 +35,7 @@ export function calculateNavAnnualized(history) {
   return annualizedFromPoints(navPoints(history));
 }
 
-export function evaluateAnnualDiscipline(history, { rule = null, now = new Date() } = {}) {
+export function evaluateAnnualDiscipline(history, { rule = null, now = new Date(), annualizedHistory = null } = {}) {
   const text = ['annual-profit', 'annual-profit-100', 'annual-profit-multiple'].includes(rule?.id)
     ? `${typeof rule.title === 'string' ? rule.title : ''}${typeof rule.detail === 'string' ? rule.detail : ''}`.replace(/\s+/g, '').replaceAll('％', '%') : '';
   const parsedMultiple = Number(/平均年化收益率的(\d+(?:\.\d+)?)倍/.exec(text)?.[1]);
@@ -46,11 +46,14 @@ export function evaluateAnnualDiscipline(history, { rule = null, now = new Date(
   const shifted = new Date(timestamp + 8 * 60 * 60 * 1000);
   const year = Number.isFinite(shifted.getTime()) ? shifted.getUTCFullYear() : null;
   const points = navPoints(history);
-  const result = { triggered: false, year, asOf: null, baselineDate: null, yearReturn: null, annualized: annualizedFromPoints(points), multiple, absoluteThreshold };
+  const result = { triggered: false, year, asOf: null, baselineDate: null, yearReturn: null, annualized: null, multiple, absoluteThreshold };
   if (year === null) return result;
   const today = utcDate(shifted.toISOString().slice(0, 10));
   const published = points.filter(([stamp]) => stamp <= today);
-  result.annualized = annualizedFromPoints(published);
+  const annualizedPoints = annualizedHistory === null
+    ? published
+    : navPoints(annualizedHistory).filter(([stamp]) => stamp <= today);
+  result.annualized = annualizedFromPoints(annualizedPoints);
   const yearStart = utcDate(`${year}-01-01`);
   const previousYearStart = utcDate(`${year - 1}-01-01`);
   if (yearStart === null || previousYearStart === null) return result;
@@ -75,7 +78,7 @@ export function evaluateAnnualDiscipline(history, { rule = null, now = new Date(
   return result;
 }
 
-export function evaluateAddDiscipline(history, { rule = null, tradePoint = null, now = new Date() } = {}) {
+export function evaluateAddDiscipline(history, { rule = null, tradePoint = null, now = new Date(), annualizedHistory = null } = {}) {
   const text = rule?.id === 'add-discipline-decline'
     ? `${typeof rule.title === 'string' ? rule.title : ''}${typeof rule.detail === 'string' ? rule.detail : ''}`.replace(/\s+/g, '') : '';
   const parsedMultiple = Number(/平均年化收益率的?(\d+(?:\.\d+)?)倍/.exec(text)?.[1]);
@@ -85,7 +88,10 @@ export function evaluateAddDiscipline(history, { rule = null, tradePoint = null,
   if (!Number.isFinite(shifted.getTime())) return result;
   const today = utcDate(shifted.toISOString().slice(0, 10));
   const published = navPoints(history).filter(([stamp]) => stamp <= today);
-  result.annualized = annualizedFromPoints(published);
+  const annualizedPoints = annualizedHistory === null
+    ? published
+    : navPoints(annualizedHistory).filter(([stamp]) => stamp <= today);
+  result.annualized = annualizedFromPoints(annualizedPoints);
   if (!published.length) return result;
   const [latestDate, latestNav] = published.at(-1);
   result.asOf = new Date(latestDate).toISOString().slice(0, 10);

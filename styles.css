@@ -325,7 +325,6 @@
   .region-state { display: block; font-size: 10px; font-weight: 600; line-height: 1.5; }
   .fund-regions, .region-us, [data-discipline="us-exposure"] { scroll-margin-top: 24px; }
   .exposure-location { outline: 2px solid var(--blue); outline-offset: 5px; border-radius: 4px; }
-  .annual-discipline-alert.exposure-route-alert { position: static; width: calc(100% - 72px); max-width: 1128px; max-height: none; margin: 20px auto 0; overflow: visible; }
   .bonds-page { animation: none; }
   .bonds-heading { margin-bottom: 22px; }
   .bonds-local-note { margin-top: 7px; color: var(--muted); font-size: 12px; line-height: 1.7; }
@@ -578,7 +577,6 @@
     .discipline-home .discipline-compliance-details { padding: 0 var(--discipline-gutter) 23px; }
     .discipline-home .exposure-check-name { display: inline-flex; flex-wrap: wrap; align-items: baseline; min-height: 40px; }
     .fund-heading-flags { justify-content: flex-start; margin-top: 12px; }
-    .annual-discipline-alert.exposure-route-alert { width: calc(100% - 40px); margin-top: 16px; }
   }
   @media (max-width: 370px) {
     .discipline-home { --discipline-gutter: 17px; }
