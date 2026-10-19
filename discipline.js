@@ -4,7 +4,7 @@ export const DISCIPLINE_ENTRIES = Object.freeze([
   {
     id: 'us-exposure',
     title: '基金持有量按美股含量确定。',
-    detail: '如果美股含量低于40%，则【立刻】降低该基金持仓至总持仓的【10%】；已低于10%时不因本条加仓。',
+    detail: '如果美股含量低于40%，则【立刻】降低该基金持仓。',
   },
   {
     id: 'us-exposure-adjustment',
@@ -29,7 +29,7 @@ export const DISCIPLINE_ENTRIES = Object.freeze([
   {
     id: 'annual-profit',
     title: '止盈纪律',
-    detail: '止盈纪律是为了收获【偶然的超额收益】，不是收获自然增长的收益。',
+    detail: '',
   },
   {
     id: 'annual-profit-100',

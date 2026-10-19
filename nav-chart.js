@@ -18,28 +18,6 @@ const validNav = (value, allowZero = false) => typeof value === 'number' && Numb
   && (allowZero ? value >= 0 : value > 0) && value <= Number.MAX_SAFE_INTEGER / 10000;
 const attribute = value => String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
 
-export function createNavScale(values) {
-  const prices = values.filter(value => validNav(value));
-  if (!prices.length) return null;
-  let minimum = prices[0], maximum = prices[0];
-  for (const price of prices) { minimum = Math.min(minimum, price); maximum = Math.max(maximum, price); }
-  const spread = Math.max(maximum - minimum, maximum * Number.EPSILON * 32, Number.MIN_VALUE * 1024);
-  const padding = maximum === minimum ? maximum * .005 : spread * .025;
-  const rawStep = (spread + padding * 2) / 4;
-  const unit = 10 ** Math.floor(Math.log10(rawStep));
-  const step = Math.ceil(rawStep / unit * 10) / 10 * unit;
-  const lower = Math.max(0, Math.floor((minimum - padding) / step) * step);
-  const upper = Math.ceil((maximum + padding) / step) * step;
-  const count = Math.round((upper - lower) / step);
-  const digits = Math.min(12, Math.max(4, Math.ceil(-Math.log10(step)) + 1));
-  const format = value => value !== 0 && (Math.abs(value) < 1e-8 || Math.abs(value) >= 1e6)
-    ? value.toExponential(3) : value.toFixed(digits);
-  return { lower, upper, ticks: Array.from({ length: count + 1 }, (_, index) => {
-    const value = lower + step * index;
-    return { value, label: format(value) };
-  }) };
-}
-
 function compactMarkers(markers, x, y) {
   const clusters = [];
   const distance = (left, right) => ((left.x - right.x) / 3.5) ** 2 + ((left.y - right.y) / 9) ** 2;
@@ -66,7 +44,7 @@ function compactMarkers(markers, x, y) {
   // Anchor each cluster to an actual trade point rather than inventing a price.
   return clusters.map(cluster => {
     const representative = cluster.members.reduce((best, point) => distance(cluster, point) < distance(cluster, best) ? point : best);
-    return { ...cluster, x: representative.x, y: representative.y, offscale: representative.offscale };
+    return { ...cluster, x: representative.x, y: representative.y };
   });
 }
 
@@ -108,14 +86,21 @@ export function renderNavChart(points, { costNav = null, markers = [], reference
   }
   const safeMarkers = [...markerGroups.values()].sort((left, right) => left.date.localeCompare(right.date));
   const hasCost = validNav(costNav, true);
-  const scale = createNavScale(combined.map(point => point.nav));
-  const { lower, upper } = scale;
-  const span = upper - lower;
+  let minimum = safePoints[0].nav;
+  let maximum = minimum;
+  for (const point of [...combined, ...safeMarkers]) {
+    minimum = Math.min(minimum, point.nav);
+    maximum = Math.max(maximum, point.nav);
+  }
+  if (hasCost) { minimum = Math.min(minimum, costNav); maximum = Math.max(maximum, costNav); }
+  const difference = maximum - minimum;
+  const padding = Math.max(difference > 0 ? difference * 0.12 : maximum * 0.02,
+    Number.EPSILON * Math.max(Math.abs(minimum), Math.abs(maximum)) * 4, Number.MIN_VALUE * 128);
+  const lower = minimum - padding;
+  const span = maximum + padding - lower;
   const x = date => duration === 0 ? WIDTH / 2 : LEFT + (timestamp(date) - firstTime) / duration * (RIGHT - LEFT);
   const y = nav => TOP + (1 - (nav - lower) / span) * (BOTTOM - TOP);
-  const compact = compactMarkers(safeMarkers.map(point => ({ ...point,
-    offscale: point.nav > upper ? 'above' : point.nav < lower ? 'below' : null })), x,
-    nav => Math.max(TOP, Math.min(BOTTOM, y(nav))));
+  const compact = compactMarkers(safeMarkers, x, y);
   const dailyTrades = new Map();
   for (const marker of safeMarkers) {
     const key = `${marker.date}|${marker.type}`;
@@ -180,16 +165,15 @@ export function renderNavChart(points, { costNav = null, markers = [], reference
   const pendingLabel = extended ? `<span class="nav-chart-pending-label" style="left:${coordinate(x(lastDate) / WIDTH * 100)}%" aria-hidden="true">待更新</span>` : '';
   const domain = extended ? ` data-nav-domain="${attribute(JSON.stringify({ start: firstDate, end: endDate, lastPublished: lastDate, left: LEFT / WIDTH * 100, right: RIGHT / WIDTH * 100 }))}"` : '';
   const beijingDay = new Date(Date.now() + 8 * 60 * 60 * 1000).toISOString().slice(0, 10);
-  const domainLabels = `<div class="nav-chart-dates" aria-hidden="true"><time datetime="${firstDate}">${firstDate}</time><time${extended ? ' class="nav-chart-domain-end"' : ''} datetime="${endDate}">${extended ? `${endDate === beijingDay ? '今天' : '截至'} ${endDate.slice(5)}` : endDate}</time></div>`;
-  const costInRange = hasCost && costNav >= lower && costNav <= upper;
-  const costLine = costInRange ? `<line class="nav-cost-line" x1="${LEFT}" y1="${coordinate(y(costNav))}" x2="${RIGHT}" y2="${coordinate(y(costNav))}" stroke="var(--muted)" stroke-width="1" stroke-dasharray="5 4" vector-effect="non-scaling-stroke"/>` : '';
-  const costLabel = hasCost ? `<span class="nav-cost-label" style="top:${coordinate(Math.max(TOP, Math.min(BOTTOM, y(costNav))) / HEIGHT * 100)}%">成本${costInRange ? '' : costNav > upper ? ' ↑' : ' ↓'}</span>` : '';
+  const domainLabels = extended ? `<div class="nav-chart-dates" aria-hidden="true"><time datetime="${firstDate}">${firstDate}</time><time class="nav-chart-domain-end" datetime="${endDate}">${endDate === beijingDay ? '今天' : '截至'} ${endDate.slice(5)}</time></div>` : '';
+  const costLine = hasCost ? `<line class="nav-cost-line" x1="${LEFT}" y1="${coordinate(y(costNav))}" x2="${RIGHT}" y2="${coordinate(y(costNav))}" stroke="var(--muted)" stroke-width="1" stroke-dasharray="5 4" vector-effect="non-scaling-stroke"/>` : '';
+  const costLabel = hasCost ? `<span class="nav-cost-label" style="top:${coordinate(y(costNav) / HEIGHT * 100)}%">成本</span>` : '';
   const trades = compact.map(marker => {
     const buying = marker.type === 'buy';
     const name = buying ? '买入' : '卖出';
     const dates = marker.from === marker.to ? marker.from : `${marker.from}至${marker.to}`;
-    const description = `${name} · ${dates}${marker.count > 1 ? ` · 共${marker.count}笔` : ''}${marker.estimated ? ' · 含估算' : ''}${marker.offscale ? ' · 超出当前刻度' : ''}`;
-    return `<span class="nav-trade-marker nav-trade-${marker.type}${marker.estimated ? ' is-estimated' : ''}${marker.count > 1 ? ' is-cluster' : ''}${marker.offscale ? ` nav-trade-offscale-${marker.offscale}` : ''}" style="left:${coordinate(marker.x)}%;top:${coordinate(marker.y)}%" role="img" aria-label="${description}" title="${description}"><span class="nav-trade-dot" aria-hidden="true"></span></span>`;
+    const description = `${name} · ${dates}${marker.count > 1 ? ` · 共${marker.count}笔` : ''}${marker.estimated ? ' · 含估算' : ''}`;
+    return `<span class="nav-trade-marker nav-trade-${marker.type}${marker.estimated ? ' is-estimated' : ''}${marker.count > 1 ? ' is-cluster' : ''}" style="left:${coordinate(marker.x)}%;top:${coordinate(marker.y)}%" role="img" aria-label="${description}" title="${description}"><span class="nav-trade-dot" aria-hidden="true"></span></span>`;
   }).join('');
   const legend = safeMarkers.length ? `<div class="nav-chart-legend">${safeMarkers.some(marker => marker.type === 'buy') ? '<span class="nav-chart-legend-buy"><span class="nav-trade-dot" aria-hidden="true"></span>买入</span>' : ''}${safeMarkers.some(marker => marker.type === 'sell') ? '<span class="nav-chart-legend-sell"><span class="nav-trade-dot" aria-hidden="true"></span>卖出</span>' : ''}${safeMarkers.some(marker => marker.estimated) ? '<span class="nav-chart-legend-estimated">含估算成交</span>' : ''}</div>` : '';
   // Short visible windows keep each actual/estimated observation connected to the
@@ -197,9 +181,5 @@ export function renderNavChart(points, { costNav = null, markers = [], reference
   const resting = duration <= 7 * 86400000 ? publicPoints.map(point => `<span class="nav-chart-rest-line" data-date="${point.date}" style="left:${coordinate(point.x)}%;top:${coordinate(point.y)}%;bottom:0" aria-hidden="true"></span><span class="nav-chart-rest-point${point.estimated ? ' is-estimated' : ''}" data-date="${point.date}" style="left:${coordinate(point.x)}%;top:${coordinate(point.y)}%${colorStyle(point.nav)}" aria-hidden="true"></span>`).join('') : '';
   const hover = '<span class="nav-hover-line" hidden aria-hidden="true"></span><span class="nav-hover-point" hidden aria-hidden="true"></span><div class="nav-hover-tooltip" hidden role="status" aria-live="polite"><strong class="nav-hover-value num" title="单位净值"></strong><span class="nav-hover-change num" title="当日涨跌"></span><span class="nav-hover-meta" hidden aria-hidden="true"><span class="nav-hover-date" hidden></span><span class="nav-hover-status" hidden></span><span class="nav-hover-trades" hidden></span></span></div>';
   const costCoordinate = hasCost ? ` style="--nav-cost-y:${coordinate(y(costNav) / HEIGHT * 100)}%"` : '';
-  const grid = scale.ticks.map(tick => `<line class="nav-grid-line" x1="${LEFT}" y1="${coordinate(y(tick.value))}" x2="${RIGHT}" y2="${coordinate(y(tick.value))}" vector-effect="non-scaling-stroke"/>`).join('');
-  const axis = `<div class="nav-y-axis" aria-hidden="true">${scale.ticks.map(tick => `<span style="top:${coordinate(y(tick.value) / HEIGHT * 100)}%">${tick.label}</span>`).join('')}</div>`;
-  const measurement = '<span class="nav-measure-band" hidden aria-hidden="true"></span><span class="nav-measure-start-line" hidden aria-hidden="true"></span><span class="nav-measure-end-line" hidden aria-hidden="true"></span><span class="nav-measure-start" hidden aria-hidden="true">A</span><span class="nav-measure-end" hidden aria-hidden="true">B</span><span class="nav-hover-axis-date" hidden></span><span class="nav-hover-left-days" hidden></span><span class="nav-hover-right-days" hidden></span>';
-  const measurementPanel = '<div class="nav-measure-panel" hidden><div class="nav-measure-result" hidden role="status" aria-live="polite"><div class="nav-measure-period"><strong class="nav-measure-days num"></strong><span class="nav-measure-dates"></span></div><div class="nav-measure-return"><span>区间涨跌幅</span><strong class="nav-measure-value num"></strong></div></div></div>';
-  return `<div class="nav-chart-frame"><div class="nav-chart" tabindex="0" aria-label="净值图，使用左右方向键查看日期，回车选择起点或清空，Escape清除选点" data-nav-points="${attribute(JSON.stringify(publicPoints))}" data-nav-trades="${attribute(JSON.stringify(tradeSummary))}"${domain}${costCoordinate}><svg class="sparkline nav-plot" viewBox="0 0 ${WIDTH} ${HEIGHT}" preserveAspectRatio="none" role="img" aria-label="${firstDate}至${endDate}，${estimates.size ? `${combined.length}个净值` : `${safePoints.length}个已公布净值`}${extended ? '，右侧待更新' : ''}${costInRange ? '，含成本线' : ''}${safeMarkers.length ? '，含买卖记录' : ''}">${grid}${pending}${costLine}${curve}</svg>${axis}${estimatedDots}${pendingLabel}${costLabel}${trades}${resting}${measurement}${hover}</div>${domainLabels}${legend}${measurementPanel}</div>`;
+  return `<div class="nav-chart" tabindex="0" aria-label="净值图，使用左右方向键查看日期" data-nav-points="${attribute(JSON.stringify(publicPoints))}" data-nav-trades="${attribute(JSON.stringify(tradeSummary))}"${domain}${costCoordinate}><svg class="sparkline nav-plot" viewBox="0 0 ${WIDTH} ${HEIGHT}" preserveAspectRatio="none" role="img" aria-label="${firstDate}至${endDate}，${estimates.size ? `${combined.length}个净值` : `${safePoints.length}个已公布净值`}${extended ? '，右侧待更新' : ''}${hasCost ? '，含成本线' : ''}${safeMarkers.length ? '，含买卖记录' : ''}">${pending}${costLine}${curve}</svg>${estimatedDots}${pendingLabel}${costLabel}${trades}${resting}${hover}</div>${domainLabels}${legend}`;
 }

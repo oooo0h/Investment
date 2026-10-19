@@ -9,13 +9,6 @@ const validDate = value => {
 const DAY = 86400000;
 const dateStamp = date => Date.parse(`${date}T00:00:00Z`);
 
-export function measureNavChange(start, end) {
-  if (!start || !end || !validDate(start.date) || !validDate(end.date)
-    || !Number.isFinite(start.nav) || start.nav <= 0 || !Number.isFinite(end.nav) || end.nav <= 0) return null;
-  const change = end.nav / start.nav - 1;
-  return Number.isFinite(change * 100) ? change : null;
-}
-
 function segmentTouchesBox(left, right, box) {
   if (Math.max(left.x, right.x) < box.left || Math.min(left.x, right.x) > box.right
     || Math.max(left.y, right.y) < box.top || Math.min(left.y, right.y) > box.bottom) return false;
@@ -118,7 +111,6 @@ export function setupNavChartInteractions(root) {
   installations.get(root)?.();
   const cache = new WeakMap();
   const indices = new WeakMap();
-  const measurements = new WeakMap();
   let active = null;
   const findChart = target => {
     const chart = target?.closest?.('.nav-chart');
@@ -130,7 +122,6 @@ export function setupNavChartInteractions(root) {
     const domainRaw = chart.getAttribute('data-nav-domain');
     const prior = cache.get(chart);
     if (prior && prior.raw === raw && prior.tradesRaw === tradesRaw && prior.domainRaw === domainRaw) return prior.points;
-    if (prior) { measurements.delete(chart); renderMeasurement(chart); }
     let points = null;
     let domain = null;
     try {
@@ -158,58 +149,12 @@ export function setupNavChartInteractions(root) {
     cache.set(chart, { raw, tradesRaw, domainRaw, points, domain });
     return points;
   }
-  function renderMeasurement(chart) {
-    const scope = chart.closest?.('.nav-chart-frame') || chart;
-    const item = measurements.get(chart);
-    const panel = scope.querySelector('.nav-measure-panel');
-    const result = scope.querySelector('.nav-measure-result');
-    const dates = scope.querySelector('.nav-measure-dates');
-    const value = scope.querySelector('.nav-measure-value');
-    const days = scope.querySelector('.nav-measure-days');
-    const band = chart.querySelector('.nav-measure-band');
-    const change = item ? measureNavChange(item.start, item.end) : null;
-    if (panel) panel.hidden = change === null;
-    if (result) result.hidden = change === null;
-    if (change !== null) {
-      if (days) days.textContent = `${Math.abs(dateStamp(item.end.date) - dateStamp(item.start.date)) / DAY} 天`;
-      if (dates) dates.textContent = `${item.start.date} → ${item.end.date}${item.start.estimated || item.end.estimated ? ' · 含估值' : ''}`;
-      if (value) {
-        value.textContent = `${change > 0 ? '+' : ''}${(change * 100).toFixed(2)}%`;
-        value.className = `nav-measure-value num${change > 0 ? ' positive' : change < 0 ? ' negative' : ''}`;
-      }
-    }
-    for (const boundary of ['start', 'end']) {
-      const point = item?.[boundary];
-      const dot = chart.querySelector(`.nav-measure-${boundary}`);
-      const line = chart.querySelector(`.nav-measure-${boundary}-line`);
-      for (const element of [dot, line]) {
-        if (!element) continue;
-        element.hidden = !point;
-        if (point) element.style.left = `${point.x}%`;
-      }
-      if (dot && point) dot.style.top = `${point.y}%`;
-    }
-    if (band) {
-      band.hidden = change === null;
-      if (change !== null) {
-        band.style.left = `${Math.min(item.start.x, item.end.x)}%`;
-        band.style.width = `${Math.abs(item.start.x - item.end.x)}%`;
-      }
-    }
-  }
-  function selectPoint(chart, point) {
-    if (measurements.has(chart)) { measurements.delete(chart); renderMeasurement(chart); return; }
-    if (!Number.isFinite(point?.nav) || point.nav <= 0) return;
-    measurements.set(chart, { start: point, end: null });
-    renderMeasurement(chart);
-  }
   function hide(chart) {
     if (!chart) return;
-    for (const selector of ['.nav-hover-line', '.nav-hover-point', '.nav-hover-tooltip', '.nav-hover-axis-date', '.nav-hover-left-days', '.nav-hover-right-days']) {
+    for (const selector of ['.nav-hover-line', '.nav-hover-point', '.nav-hover-tooltip']) {
       const element = chart.querySelector(selector);
       if (element) element.hidden = true;
     }
-    for (const boundary of (chart.closest?.('.nav-chart-frame') || chart).querySelectorAll('.nav-chart-dates > time')) boundary.style.visibility = '';
     if (active === chart) active = null;
   }
   function show(chart, selection) {
@@ -229,35 +174,6 @@ export function setupNavChartInteractions(root) {
     if (active && active !== chart) hide(active);
     active = chart;
     indices.set(chart, { index: points.findIndex(candidate => candidate.date === point.date), date: point.date });
-    const domain = cache.get(chart)?.domain;
-    const leftDate = domain?.start || points[0].date, rightDate = domain?.end || points.at(-1).date;
-    const leftX = domain?.left ?? points[0].x, rightX = domain?.right ?? points.at(-1).x;
-    for (const [selector, text, position] of [
-      ['.nav-hover-axis-date', point.date, point.x],
-      ['.nav-hover-left-days', `${Math.abs(dateStamp(point.date) - dateStamp(leftDate)) / DAY} 天`, (leftX + point.x) / 2],
-      ['.nav-hover-right-days', `${Math.abs(dateStamp(rightDate) - dateStamp(point.date)) / DAY} 天`, (rightX + point.x) / 2],
-    ]) {
-      const element = chart.querySelector(selector);
-      if (element) {
-        element.textContent = text;
-        const isDate = selector.includes('axis-date');
-        const edge = isDate ? 48 : 25;
-        element.style.left = `${clamp(position / 100 * rect.width, edge, Math.max(edge, rect.width - edge))}px`;
-        // Preserve a single readable baseline; omit day counts only when the
-        // date labels leave too little room near a boundary.
-        const distance = Math.abs(point.x - (selector.includes('left-days') ? leftX : rightX)) / 100 * rect.width;
-        element.hidden = !isDate && distance < 150;
-      }
-    }
-    const boundaryLabels = (chart.closest?.('.nav-chart-frame') || chart).querySelectorAll('.nav-chart-dates > time');
-    if (boundaryLabels[0]) boundaryLabels[0].style.visibility = (point.x - leftX) / 100 * rect.width < 140 ? 'hidden' : '';
-    if (boundaryLabels[1]) boundaryLabels[1].style.visibility = (rightX - point.x) / 100 * rect.width < 140 ? 'hidden' : '';
-    const measurement = measurements.get(chart);
-    if (measurement && measurement.end?.date !== point.date) {
-      measurement.end = Number.isFinite(point.nav) ? point : null;
-      measurement.pending = !Number.isFinite(point.nav);
-      renderMeasurement(chart);
-    }
     date.textContent = point.date;
     date.hidden = true;
     if (status) {
@@ -281,7 +197,7 @@ export function setupNavChartInteractions(root) {
     dot.style.left = `${point.x}%`;
     dot.style.top = `${point.y}%`;
     line.hidden = tooltip.hidden = dot.hidden = !Number.isFinite(point.nav);
-    if (!Number.isFinite(point.nav)) return point;
+    if (!Number.isFinite(point.nav)) return;
     dot.classList.toggle('is-estimated', Boolean(point.estimated));
     const costY = Number.parseFloat(chart.style.getPropertyValue?.('--nav-cost-y') || '');
     const pointColor = Number.isFinite(costY) ? point.y <= costY ? 'var(--positive)' : 'var(--negative)' : 'var(--fund)';
@@ -299,7 +215,6 @@ export function setupNavChartInteractions(root) {
     tooltip.style.transform = 'none';
     tooltip.classList.toggle('is-below', position.below);
     tooltip.classList.toggle('is-docked', position.docked);
-    return point;
   }
   function inspect(event) {
     if (event.isPrimary === false) return;
@@ -315,22 +230,16 @@ export function setupNavChartInteractions(root) {
         * (dateStamp(domain.end) - dateStamp(domain.start))) / DAY);
       const date = new Date(day * DAY).toISOString().slice(0, 10);
       if (date > domain.lastPublished) {
-        return show(chart, points.find(point => point.date === date) || pendingPoint(domain, date));
+        show(chart, points.find(point => point.date === date) || pendingPoint(domain, date));
+        return;
       }
     }
     let index = 0;
     for (let candidate = 1; candidate < points.length; candidate += 1) {
       if (Math.abs(points[candidate].x - x) < Math.abs(points[index].x - x)) index = candidate;
     }
-    return show(chart, index);
+    show(chart, index);
   }
-  const click = event => {
-    if (event.button !== undefined && event.button !== 0) return;
-    const chart = findChart(event.target);
-    // Accessibility-generated clicks can report isPrimary=false; button=0
-    // already identifies the allowed activation independently of pointer moves.
-    if (chart) selectPoint(chart, inspect({ target: event.target, clientX: event.clientX }));
-  };
   const pointerDown = event => { if (event.pointerType === 'touch' || event.pointerType === 'pen') inspect(event); };
   const leave = event => {
     const chart = findChart(event.target);
@@ -339,15 +248,8 @@ export function setupNavChartInteractions(root) {
   const keyboard = event => {
     const chart = findChart(event.target);
     if (!chart) return;
-    if (event.key === 'Escape') { measurements.delete(chart); renderMeasurement(chart); hide(chart); return; }
+    if (event.key === 'Escape') { hide(chart); return; }
     const points = pointsFor(chart);
-    if (points && ['Enter', ' '].includes(event.key)) {
-      event.preventDefault();
-      const selected = indices.get(chart);
-      const point = points.find(point => point.date === selected?.date) || points[0];
-      selectPoint(chart, point);
-      return;
-    }
     if (!points || !['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return;
     event.preventDefault();
     const current = indices.get(chart);
@@ -364,7 +266,7 @@ export function setupNavChartInteractions(root) {
         : current.index + (event.key === 'ArrowRight' ? 1 : -1);
     show(chart, next);
   };
-  const handlers = { pointermove: inspect, pointerdown: pointerDown, pointerout: leave, focusout: leave, keydown: keyboard, click };
+  const handlers = { pointermove: inspect, pointerdown: pointerDown, pointerout: leave, focusout: leave, keydown: keyboard };
   for (const [name, handler] of Object.entries(handlers)) root.addEventListener(name, handler, name === 'keydown' ? false : { passive: true });
   const cleanup = () => {
     for (const [name, handler] of Object.entries(handlers)) root.removeEventListener(name, handler);

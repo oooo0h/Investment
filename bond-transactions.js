@@ -27,8 +27,7 @@ export function normalizeBondTransactions(value) {
     return [code, rows.flatMap(row => {
       if (!object(row)) invalid();
       if (CANCELLED.has(row.status) || CANCELLED.has(row.sourceStatus)) return [];
-      if (Object.keys(row).some(key => !FIELDS.has(key)) || typeof row.id !== 'string' || !row.id.trim() || row.id.length > 256 || ids.has(row.id)
-        || (!TYPES.has(row.type) && !(row.type === 'unknown' && row.status === 'pending'))) invalid();
+      if (Object.keys(row).some(key => !FIELDS.has(key)) || typeof row.id !== 'string' || !row.id.trim() || row.id.length > 256 || ids.has(row.id) || !TYPES.has(row.type)) invalid();
       ids.add(row.id);
       const submittedAt = row.submittedAt || null;
       if (submittedAt !== null && (typeof submittedAt !== 'string' || submittedAt.length > 64 || /[\u0000-\u001f]/.test(submittedAt))) invalid();

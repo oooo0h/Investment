@@ -1,4 +1,4 @@
-import { calculateBondSummary, BOND_FUNDS } from './bond-model.js?v=20261019-free-cash-flow';
+import { calculateBondSummary } from './bond-model.js?v=20261019-free-cash-flow';
 import { BOND_FEE_RULES } from './bond-holding-duration.js?v=20261019-bond-calculated-lots';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
@@ -11,64 +11,21 @@ const privateValue = (value, visible, digits = 2) => !Number.isFinite(value) ? '
   ? escapeHtml((digits === 2 ? numberFormat : new Intl.NumberFormat('zh-CN', { minimumFractionDigits: digits, maximumFractionDigits: digits })).format(value))
   : '<span class="masked" aria-label="已隐藏">••••••</span>';
 
-const decimalParts = value => {
-  const [coefficient, exponent = '0'] = value.toString().split('e');
-  const [whole, fraction = ''] = coefficient.split('.');
-  return { digits: BigInt(whole + fraction), places: fraction.length - Number(exponent) };
-};
-
-// Apportion the smallest display units by the actual ratios, with an exact total.
-// Decimal integer weights avoid floating-point cent drift and percentage rounding.
-function apportionUnits(ratios, total) {
-  const decimals = ratios.map(decimalParts);
-  const places = Math.max(0, ...decimals.map(part => part.places));
-  const weights = decimals.map(part => part.digits * 10n ** BigInt(places - part.places));
-  const weightTotal = weights.reduce((sum, weight) => sum + weight, 0n);
-  const values = weights.map(weight => total * weight / weightTotal);
-  const order = weights.map((weight, index) => ({ index, remainder: total * weight % weightTotal }))
-    .sort((left, right) => left.remainder === right.remainder ? left.index - right.index : left.remainder > right.remainder ? -1 : 1);
-  const remainder = Number(total - values.reduce((sum, value) => sum + value, 0n));
-  for (let index = 0; index < remainder; index++) values[order[index].index]++;
-  return values;
-}
-
-function marketValueCents(value) {
-  const { digits, places } = decimalParts(value);
-  return places <= 2 ? digits * 10n ** BigInt(2 - places) : (digits * 2n + 10n ** BigInt(places - 2)) / (2n * 10n ** BigInt(places - 2));
-}
-
-function allocatedValue(value, visible) {
-  if (!visible) return privateValue(0, false);
-  return `${(value / 100n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}.${(value % 100n).toString().padStart(2, '0')}`;
-}
-
 function holdingDuration(entry, duration, visible) {
   const code = entry.code;
   const calculated = duration?.status === 'calculated';
   const known = ['known', 'calculated'].includes(duration?.status) && Number.isFinite(duration.recentRatio) && Number.isFinite(duration.matureRatio)
     && duration.recentRatio >= 0 && duration.recentRatio <= 1 && duration.matureRatio >= 0 && duration.matureRatio <= 1
     && Math.abs(duration.recentRatio + duration.matureRatio - 1) < 0.00001;
-  const validTiers = known && Number.isFinite(duration.under7Ratio) && Number.isFinite(duration.sevenTo29Ratio)
-    && duration.under7Ratio >= 0 && duration.sevenTo29Ratio >= 0
-    && Math.abs(duration.under7Ratio + duration.sevenTo29Ratio - duration.recentRatio) < 0.00001;
-  // Keep legacy two-band inputs usable without inventing an unreported 7-day split.
-  const threeTiers = code === '006485' && (!known || validTiers);
-  const segments = threeTiers ? [
-    { kind: 'recent', title: '未满7天', ratio: duration?.under7Ratio },
-    { kind: 'middle', title: '7～29天', ratio: duration?.sevenTo29Ratio },
-    { kind: 'mature', title: '已满30天', ratio: duration?.matureRatio },
-  ] : [
-    { kind: 'recent', title: '未满30天', ratio: duration?.recentRatio },
-    { kind: 'mature', title: '已满30天', ratio: duration?.matureRatio },
-  ];
-  const ratios = segments.map(segment => segment.ratio);
-  const percents = known ? apportionUnits(ratios, 100n).map(Number) : [];
-  const amounts = known ? apportionUnits(ratios, marketValueCents(entry.marketValue)) : [];
-  const label = known ? `${calculated ? '按所提供流水推算，' : ''}${segments.map((segment, index) => `${segment.title}约${percents[index]}%`).join('，')}` : duration?.status === 'empty' ? '暂无持仓' : '持有期限待核验';
-  const segmentLabel = (segment, index) => `<div class="bond-duration-${segment.kind}-label"><span>${segment.title}</span>${known ? `<div class="bond-duration-values"><strong class="num">${calculated ? '约' : ''}${percents[index]}%</strong><span class="bond-duration-amount num">${allocatedValue(amounts[index], visible)}<small>元</small></span></div>` : ''}</div>`;
+  const recent = known ? Math.round(duration.recentRatio * 100) : null;
+  const mature = known ? 100 - recent : null;
+  const recentValue = known ? Math.round(entry.marketValue * duration.recentRatio * 100) / 100 : null;
+  const matureValue = known ? Math.round((entry.marketValue - recentValue) * 100) / 100 : null;
+  const label = known ? `${calculated ? '按所提供流水推算，' : ''}未满30天约${recent}%，已满30天约${mature}%` : duration?.status === 'empty' ? '暂无持仓' : '持有期限待核验';
+  const segment = (kind, title, ratio, value) => `<div class="bond-duration-${kind}-label"><span>${title}</span>${known ? `<div class="bond-duration-values"><strong class="num">${calculated ? '约' : ''}${ratio}%</strong><span class="bond-duration-amount num">${privateValue(value, visible)}<small>元</small></span></div>` : ''}</div>`;
   const fee = BOND_FEE_RULES[code];
   const feeRanges = fee?.redemption.map(range => `${range.minDays === 0 ? `&lt;${range.maxDaysExclusive}天` : range.maxDaysExclusive === null ? `≥${range.minDays}天` : `${range.minDays}～${range.maxDaysExclusive - 1}天`} ${Number((range.rate * 100).toPrecision(10))}%`).join(' / ');
-  return `<section class="bond-holding-duration${threeTiers ? ' bond-duration-three-tiers' : ''}" data-bond-duration-status="${known ? calculated ? 'calculated' : 'known' : duration?.status === 'empty' ? 'empty' : 'unknown'}" aria-label="持有期分布"><div class="bond-duration-heading"><span>持有期分布</span>${known ? calculated ? '<span class="bond-duration-status">按所提供流水推算</span>' : '' : `<span class="bond-duration-status">${duration?.status === 'empty' ? '暂无持仓' : '待核验'}</span>`}</div><div class="bond-duration-track" role="img" aria-label="${label}">${known ? segments.map((segment, index) => `<span class="bond-duration-${segment.kind}" style="width:${percents[index]}%"></span>`).join('') : ''}</div><div class="bond-duration-labels">${segments.map(segmentLabel).join('')}</div>${calculated ? `<p class="bond-duration-note">${duration.dateBasis === 'order' ? '持有天数按交易日推算；实际确认日待补全。' : '按所提供流水推算，未核验期初持仓'}</p>` : ''}${fee ? `<p class="bond-fee-rule">买入 ${fee.purchaseRate * 100}% · 卖出 ${feeRanges}</p>` : ''}</section>`;
+  return `<section class="bond-holding-duration" data-bond-duration-status="${known ? calculated ? 'calculated' : 'known' : duration?.status === 'empty' ? 'empty' : 'unknown'}" aria-label="持有期分布"><div class="bond-duration-heading"><span>持有期分布</span>${known ? calculated ? '<span class="bond-duration-status">按所提供流水推算</span>' : '' : `<span class="bond-duration-status">${duration?.status === 'empty' ? '暂无持仓' : '待核验'}</span>`}</div><div class="bond-duration-track" role="img" aria-label="${label}">${known ? `<span class="bond-duration-recent" style="width:${recent}%"></span><span class="bond-duration-mature" style="width:${mature}%"></span>` : ''}</div><div class="bond-duration-labels">${segment('recent', '未满30天', recent, recentValue)}${segment('mature', '已满30天', mature, matureValue)}</div>${fee ? `<p class="bond-fee-rule">买入 ${fee.purchaseRate * 100}% · 卖出 ${feeRanges}</p>` : ''}</section>`;
 }
 
 const BOND_TYPES = { buy: '买入', sell: '卖出', 'transfer-in': '转换转入', 'transfer-out': '转换转出' };
@@ -80,12 +37,12 @@ function bondTransaction(row, visible) {
   const amount = Number.isFinite(row.confirmedAmount) ? row.confirmedAmount : row.amount;
   const shares = Number.isFinite(row.shares) ? row.shares : row.requestedShares;
   const sharesOnly = !Number.isFinite(amount) && Number.isFinite(shares);
-  const displayValue = sharesOnly ? privateValue(shares, visible, 2) : privateValue(amount, visible);
+  const displayValue = sharesOnly ? privateValue(shares, visible, 6) : privateValue(amount, visible);
   const valueLabel = sharesOnly ? Number.isFinite(row.shares) ? calculated ? '推算份额 · 份' : '确认份额 · 份' : '申请份额 · 份' : Number.isFinite(row.confirmedAmount) ? calculated ? '推算金额 · 元' : '确认金额 · 元' : '申请金额 · 元';
-  const status = pending ? row.sourceStatus === 'processing' ? '进行中' : '待补全' : calculated ? '按流水推算' : '已确认';
+  const status = pending ? row.sourceStatus === 'processing' ? '进行中' : '待核验' : calculated ? '按流水推算' : '已确认';
   const infoLabel = pending ? calculated ? '待补确认信息 · 按流水推算' : '待补确认信息' : calculated ? '推算资料' : '确认资料';
   const numeric = value => Number.isFinite(value) ? escapeHtml(value.toFixed(4)) : '—';
-  const metrics = [[calculated ? '推算净值' : '确认净值', numeric(row.nav)], [calculated ? '推算份额' : '确认份额', privateValue(row.shares, visible, 2)], ['申请金额', privateValue(row.amount, visible)], ['申请份额', privateValue(row.requestedShares, visible, 2)], [calculated ? '推算金额' : '确认金额', privateValue(row.confirmedAmount, visible)], ['手续费', privateValue(row.fee, visible)], [calculated ? '推算净值日' : '净值日期', escapeHtml(row.navDate || '待补全')], [calculated ? '推算确认日' : '确认日期', escapeHtml(row.confirmedDate || '待补全')]];
+  const metrics = [[calculated ? '推算净值' : '确认净值', numeric(row.nav)], [calculated ? '推算份额' : '确认份额', privateValue(row.shares, visible, 6)], ['申请金额', privateValue(row.amount, visible)], ['申请份额', privateValue(row.requestedShares, visible, 6)], [calculated ? '推算金额' : '确认金额', privateValue(row.confirmedAmount, visible)], ['手续费', privateValue(row.fee, visible)], [calculated ? '推算净值日' : '净值日期', escapeHtml(row.navDate || '待补全')], [calculated ? '推算确认日' : '确认日期', escapeHtml(row.confirmedDate || '待补全')]];
   return `<article class="transaction bond-transaction${pending ? ' transaction-pending' : ''}"><div class="transaction-top"><div class="transaction-label"><div><p class="transaction-title">${name}<span class="row-status${pending ? ' row-status-pending' : ''}">${status}</span></p><p class="transaction-date">申请日期 ${escapeHtml(row.date || String(row.submittedAt || '').slice(0, 10) || '待补全')}</p></div></div><div class="transaction-top-right"><p class="transaction-amount num">${displayValue}<small>${valueLabel}</small></p></div></div><details class="transaction-detail" data-id="bond-${escapeHtml(row.id)}"><summary class="transaction-profit-row"><span class="${pending ? 'transaction-pending-hint' : 'helper'}">${infoLabel}</span><span class="transaction-detail-toggle">详细信息<span class="transaction-detail-chevron" aria-hidden="true">⌄</span></span></summary><div class="detail-inner"><dl class="transaction-stats transaction-detail-metrics">${metrics.map(([title, value]) => `<div><dt>${title}</dt><dd class="num">${value}</dd></div>`).join('')}</dl><p class="helper detail-date-note">申请时间 ${escapeHtml(row.submittedAt || row.date || '待补全')}</p>${visible && row.note ? `<p class="transaction-note">${escapeHtml(row.note)}</p>` : ''}</div></details></article>`;
 }
 function bondCard(entry, options) {
@@ -126,10 +83,8 @@ function cashFlowPanel({ freeCashFlow = null, visible = false, editing = false, 
 }
 
 /** Render data supplied by the local bond store; this module never reads storage. */
-export function renderBondsPage({ entries = [], valuationDate = null, visible = false, transactions = {}, expandedByCode = {}, holdingByCode = {}, loading = false, unavailable = false, reserve = null, locateReserve = false, freeCashFlow = null, cashEditing = false, cashDraft = null, cashError = '', cashBusy = false, cashUnavailable = false } = {}) {
-  const calculated = Object.values(holdingByCode).some(item => item?.status === 'calculated');
-  const hasPending = Object.values(transactions).some(rows => rows.some(row => row.status === 'pending'));
-  const heading = `<header class="page-heading bonds-heading"><div><h1>债基</h1><p class="bonds-local-note">${calculated ? '按完整记录推算' : '数据来自基金表格'}${valuationDate ? ` · 净值截至 ${escapeHtml(valuationDate)}` : ''}${calculated && hasPending ? ' · 待补全记录未计入' : ''}</p></div></header>`;
+export function renderBondsPage({ entries = [], visible = false, transactions = {}, expandedByCode = {}, holdingByCode = {}, loading = false, unavailable = false, reserve = null, locateReserve = false, freeCashFlow = null, cashEditing = false, cashDraft = null, cashError = '', cashBusy = false, cashUnavailable = false } = {}) {
+  const heading = '<header class="page-heading bonds-heading"><div><h1>债基</h1><p class="bonds-local-note">数据来自基金表格</p></div></header>';
   const reserveAttributes = `id="bonds-reserve-summary" tabindex="-1"${reserve ? ` data-bond-reserve-status="${escapeHtml(reserve.status)}"` : ''}`;
   const locationClass = locateReserve ? ' bond-reserve-location' : '';
   if (loading) return `<main id="main" class="workspace bonds-page">${heading}<section class="panel bonds-state" aria-busy="true"><p>正在读取债基记录…</p></section></main>`;
@@ -137,21 +92,14 @@ export function renderBondsPage({ entries = [], valuationDate = null, visible = 
   if (!unavailable && Array.isArray(entries) && entries.length) {
     try { summary = calculateBondSummary(entries); } catch { /* Invalid or unavailable records have no financial display. */ }
   }
-  const overview = `<section ${reserveAttributes} class="panel bonds-summary bonds-summary-overview${locationClass}" aria-label="债基合计">${summary ? reserveNote(reserve) : ''}<dl>
-    <div><dt>合计持仓金额（元）</dt><dd class="num${summary ? '' : ' bonds-summary-pending'}">${summary ? privateValue(summary.marketValue, Boolean(visible)) : '待核验'}</dd></div>
-    <div><dt>占所有基金持仓比例</dt><dd class="num${summary && Number.isFinite(reserve?.ratio) ? '' : ' bonds-summary-pending'}" data-bond-reserve-share>${summary && Number.isFinite(reserve?.ratio) ? `${Math.round(reserve.ratio * 100)}%` : '待核验'}</dd></div>
-  </dl></section>`;
-  if (!summary) {
-    const hasRecords = !unavailable && BOND_FUNDS.some(fund => transactions?.[fund.code]?.length);
-    if (hasRecords) {
-      const options = { visible: Boolean(visible), transactions, expandedByCode, holdingByCode: {} };
-      return `<main id="main" class="workspace bonds-page">${heading}${overview}<div class="bonds-grid">${BOND_FUNDS.map(fund => bondCard(fund, options)).join('')}</div></main>`;
-    }
-    return `<main id="main" class="workspace bonds-page">${heading}<section ${reserveAttributes} class="panel bonds-state${locationClass}" role="status">${reserveNote(reserve) || '<p>债基数据暂不可用</p>'}</section></main>`;
-  }
+  if (!summary) return `<main id="main" class="workspace bonds-page">${heading}<section ${reserveAttributes} class="panel bonds-state${locationClass}" role="status">${reserveNote(reserve) || '<p>债基数据暂不可用</p>'}</section></main>`;
   const options = { visible: Boolean(visible), transactions, expandedByCode, holdingByCode };
   return `<main id="main" class="workspace bonds-page">${heading}
-    ${overview}
+    <section ${reserveAttributes} class="panel bonds-summary${locationClass}" aria-label="债基合计">${reserveNote(reserve)}<dl>
+      <div><dt>合计持仓（元）</dt><dd class="num">${privateValue(summary.marketValue, options.visible)}</dd></div>
+      <div><dt>合计持有收益（元）</dt><dd class="num ${options.visible ? signClass(summary.holdingProfit) : ''}">${privateValue(summary.holdingProfit, options.visible)}</dd></div>
+      <div class="bonds-summary-return"><dt>合计持有收益率</dt><dd class="num ${signClass(summary.returnRate)}">${percentage(summary.returnRate)}</dd></div>
+    </dl><p class="bond-reserve-share"><span>占总持仓</span><strong class="num" data-bond-reserve-share>${Number.isFinite(reserve?.ratio) ? `${Math.round(reserve.ratio * 100)}%` : '待核验'}</strong></p></section>
     ${cashFlowPanel({ freeCashFlow, visible: options.visible, editing: cashEditing, draft: cashDraft, error: cashError, busy: cashBusy, unavailable: cashUnavailable })}
     <div class="bonds-grid">${summary.holdings.map(entry => bondCard(entry, options)).join('')}</div>
     <p class="helper bonds-rate-note">收益率＝持有收益 ÷（当前持仓金额－持有收益）</p>
