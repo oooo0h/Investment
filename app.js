@@ -1,16 +1,30 @@
 import { calculateLedger } from './engine.js';
 import { estimateApplications, GUOFU_TRADING_DATES } from './application-estimates.js';
-
-const FUNDS = [
-  { code: '005698', short: '华夏', initial: '华', name: '华夏全球科技先锋', fullName: '华夏全球科技先锋混合（QDII）A', brand: 'huaxia', category: '混合 · QDII · 人民币 A', rate: '0.15' },
-  { code: '270023', short: '广发', initial: '广', name: '广发全球精选', fullName: '广发全球精选股票（QDII）A', brand: 'guangfa', category: '股票 · QDII · 人民币 A', rate: '0.16' },
-  { code: '006373', short: '国富', initial: '国', name: '国富全球科技互联', fullName: '国富全球科技互联混合（QDII）人民币 A', brand: 'guofu', category: '混合 · QDII · 人民币 A', rate: '0.15' },
-  { code: '016701', short: '银华', initial: '银', name: '银华海外数字经济', fullName: '银华海外数字经济量化选股混合发起式（QDII）A', brand: 'yinhua', category: '混合 · QDII · 人民币 A', rate: null },
-];
+import { createRefreshController } from './refresh-controller.js';
+import { NAV_PERIODS, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain } from './nav-range.js';
+import { renderNavChart } from './nav-chart.js';
+import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline } from './nav-annualized.js';
+import { setupNavChartInteractions } from './nav-interaction.js';
+import { setupNavSliderInteractions } from './nav-slider.js';
+import { calculateTransactionPerformance } from './transaction-performance.js';
+import { FUNDS, FUND_CODES } from './funds.js';
+import { DISCIPLINE_ENTRIES } from './discipline.js';
+import { createDisciplineSync } from './discipline-sync.js';
+import { REGION_DATA } from './region-data.js';
+import { evaluateUsExposure } from './us-exposure.js';
+import { calculateHoldingDuration, createHoldingDurationScale } from './holding-duration.js';
+import { openBondStore } from './bond-store.js';
+import { calculateBondSummary } from './bond-model.js';
+import { evaluateBondReserve } from './bond-reserve.js';
+import { renderBondsPage } from './bonds-view.js';
+import { getEstimateDates, parseEstimatePercent, buildEstimatedNav } from './nav-estimates.js';
+import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js';
+import { renderEstimatePanel } from './estimate-panel.js';
 const TYPE_NAMES = { buy: '买入', sip: '定投', sell: '卖出', reinvest: '红利再投', dividend: '现金分红', 'transfer-in': '转换转入' };
 const STATUS_NAMES = { confirmed: '已确认', estimated: '历史估算', pending: '待确认', cancelled: '撤单', failed: '交易失败', closed: '交易关闭' };
-const state = { unlocked: false, visible: false, funds: {}, nav: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null, deadline: 0, dayDeadline: 0, sessionDay: null };
+const state = { unlocked: false, visible: false, funds: {}, nav: {}, disciplines: DISCIPLINE_ENTRIES, bonds: [], bondEditing: null, bondDraft: null, bondBusy: false, bondError: '', bondUnavailable: true, bondUpdatedAt: null, navPreset: null, navCycles: { months: '1m', years: '1y' }, navRanges: {}, navDomains: {}, navVisuals: {}, expandedPanels: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null, deadline: 0, dayDeadline: 0, sessionDay: null };
 const app = document.querySelector('#app');
+Object.assign(state, { navEstimateEntries: [], estimateDrafts: {}, estimateErrors: {}, estimateStorageAvailable: true, estimateDate: null, estimateLoaded: false });
 const icons = {
   book: '<path d="M6 3h13v18H6zM3 6h5M3 12h5M3 18h5M11 8h5M11 12h5M11 16h3"/>',
   eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
@@ -33,8 +47,13 @@ const number = (value, digits = 2) => Number.isFinite(value) ? new Intl.NumberFo
 const sensitive = (value, digits = 2) => !Number.isFinite(value) ? '—' : state.visible ? esc(number(value, digits)) : '<span class="masked" aria-label="已隐藏">••••••</span>';
 const percent = value => Number.isFinite(value) ? `${value > 0 ? '+' : ''}${number(value * 100)}%` : '—';
 const signClass = value => Number.isFinite(value) ? value > 0 ? 'positive' : value < 0 ? 'negative' : '' : '';
-const selectedCode = () => /^#\/fund\/(005698|270023|006373|016701)$/.exec(location.hash)?.[1] ?? null;
+const selectedCode = () => {
+  const code = /^#\/fund\/(\d{6})(?:\?[^#]*)?$/.exec(location.hash)?.[1];
+  return FUND_CODES.includes(code) ? code : null;
+};
+const routeSection = () => new URLSearchParams(location.hash.split('?')[1] || '').get('section');
 const selectedFund = () => FUNDS.find(fund => fund.code === selectedCode());
+const selectedBonds = () => /^#\/bonds(?:\?[^#]*)?$/.test(location.hash);
 const getBook = code => state.funds[code] ||= { transactions: [], mode: 'profit-first', rate: FUNDS.find(fund => fund.code === code).rate, incomplete: false, sourceNote: '' };
 const currentTheme = () => document.documentElement.dataset.theme;
 let toastTimer;
@@ -44,7 +63,32 @@ let sessionInterval = null;
 let sessionTimeout = null;
 let dailyCodeReader = null;
 let unlockGeneration = 0;
-const SESSION_DURATION = 180000;
+let vaultSession = null;
+let bondStore = null;
+let dataVersionBaseline = null;
+let navSliders = null;
+let locatedRoute = null;
+const holdingFractions = new Map();
+const dataRefresh = createRefreshController({
+  readVersion: async () => {
+    if (dataVersionBaseline) { const version = dataVersionBaseline; dataVersionBaseline = null; return version; }
+    return fetchDataVersion();
+  },
+  onChange: refreshCurrentData,
+  isActive: () => state.unlocked && Boolean(vaultSession) && checkSession(),
+  intervalMs: 5000, setIntervalFn: setInterval, clearIntervalFn: clearInterval,
+});
+const disciplineSync = createDisciplineSync({
+  fetchFn: (...args) => fetch(...args),
+  isActive: () => state.unlocked && checkSession(),
+  onChange: entries => {
+    state.disciplines = entries;
+    const position = scrollY;
+    render();
+    scrollTo({ top: position, behavior: 'instant' });
+  },
+  intervalMs: 5000, setIntervalFn: setInterval, clearIntervalFn: clearInterval,
+});
 
 function stopSessionTimers() {
   clearInterval(sessionInterval);
@@ -55,7 +99,7 @@ function stopSessionTimers() {
 
 function remainingTime() {
   const seconds = Math.max(0, Math.ceil((Math.min(state.deadline, state.dayDeadline || state.deadline) - Date.now()) / 1000));
-  return `${String(Math.floor(seconds / 60)).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+  return `${String(Math.floor(seconds / 3600)).padStart(2, '0')}:${String(Math.floor(seconds / 60) % 60).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
 }
 
 function updateSessionTimer() {
@@ -67,7 +111,7 @@ function updateSessionTimer() {
 
 function checkSession() {
   if (!state.unlocked) return false;
-  if (Date.now() >= state.deadline) { lock('timeout'); return false; }
+  if (Date.now() >= Math.min(state.deadline, state.dayDeadline || state.deadline)) { lock('timeout'); return false; }
   if (!dailyCodeReader || dailyCodeReader() !== state.sessionDay) { lock('day-change'); return false; }
   updateSessionTimer();
   return true;
@@ -78,12 +122,12 @@ function startSession(day, getDailyCode) {
   const now = Date.now();
   const dayLength = 24 * 60 * 60 * 1000;
   const beijingOffset = 8 * 60 * 60 * 1000;
-  state.deadline = now + SESSION_DURATION;
   state.dayDeadline = (Math.floor((now + beijingOffset) / dayLength) + 1) * dayLength - beijingOffset;
+  state.deadline = state.dayDeadline;
   state.sessionDay = day;
   dailyCodeReader = getDailyCode;
   sessionInterval = setInterval(checkSession, 1000);
-  sessionTimeout = setTimeout(checkSession, Math.min(SESSION_DURATION, state.dayDeadline - now));
+  sessionTimeout = setTimeout(checkSession, state.dayDeadline - now);
 }
 function animateChange(update) {
   if (!document.startViewTransition || transitioning) { update(); return; }
@@ -117,12 +161,11 @@ function renderGate(notice = '') {
   document.title = '解锁 · 基金账本';
   app.innerHTML = `<main id="main" class="gate"><div class="gate-theme">${themeButton()}</div><div class="gate-content">
     <div class="brand"><span class="brand-mark">${icon('book')}</span>基金账本</div>
-    <section class="gate-panel"><div class="gate-lock">${icon('lock')}</div><h1>打开你的基金账本</h1>
-      <p class="gate-description">当日日期密码，解锁有效 3 分钟。<br>按北京时间当天日期输入 MMDD。金额默认隐藏。</p>
-      <form id="unlock-form" class="gate-form"><label for="vault-password">当日日期密码<input id="vault-password" name="password" type="password" inputmode="numeric" pattern="[0-9]{4}" minlength="4" maxlength="4" autocomplete="off" required aria-describedby="gate-error"></label>
-        <button type="submit" class="button primary">解锁账本${icon('arrow')}</button><p id="gate-error" class="gate-error" role="alert">${esc(notice)}</p>
+    <section class="gate-panel"><div class="gate-lock">${icon('lock')}</div><h1>解锁账本</h1>
+      <form id="unlock-form" class="gate-form"><label for="vault-password">访问密码<input id="vault-password" name="password" type="password" inputmode="numeric" pattern="[0-9]{4}" minlength="4" maxlength="4" autocomplete="off" required aria-describedby="gate-error"></label>
+        <button type="submit" class="button primary">解锁${icon('arrow')}</button><p id="gate-error" class="gate-error" role="alert">${esc(notice)}</p>
       </form>
-    </section><p class="gate-footnote">${icon('shield')}<span>密码只用于本机解密，不会上传。到期、跨日、刷新或加锁后，需要重新验证。</span></p>
+    </section>
   </div></main>`;
 }
 
@@ -140,14 +183,27 @@ async function unlock(event) {
   button.disabled = true;
   button.textContent = '正在解锁…';
   let password = input.value;
+  let openedSession = null;
+  let openedBonds = null;
+  let bondSnapshot = null;
   input.value = '';
   try {
-    const { unlockVault, getDailyCode } = await import('./vault.js?v=20261015-daily2');
+    const { unlockVault, getDailyCode } = await import('./vault.js?v=20261018-refresh');
     if (!isCurrent()) { password = ''; return; }
     const sessionDay = getDailyCode();
-    const vault = await unlockVault(password);
+    const baseline = await fetchDataVersion();
+    if (!isCurrent()) { password = ''; return; }
+    let vault = await unlockVault(password, { onSession: session => { openedSession = session; } });
+    if (!isCurrent()) { password = ''; openedSession?.close(); return; }
+    try {
+      openedBonds = await openBondStore(password, { fetchFn: (...args) => fetch(...args) });
+      bondSnapshot = openedBonds.getSnapshot();
+    } catch { openedBonds?.close(); openedBonds = null; }
     password = '';
-    if (!isCurrent()) return;
+    if (!isCurrent()) { openedSession?.close(); openedBonds?.close(); return; }
+    const initial = await readInitialSnapshot(vault, openedSession, baseline);
+    if (!isCurrent()) { openedSession?.close(); openedBonds?.close(); return; }
+    vault = initial.vault;
     if (getDailyCode() !== sessionDay) throw new Error('day-changed');
     if (!vault || typeof vault.funds !== 'object') throw new Error('invalid');
     for (const fund of FUNDS) {
@@ -159,14 +215,36 @@ async function unlock(event) {
       book.sourceNote = typeof entry.sourceNote === 'string' ? entry.sourceNote : '';
     }
     state.createdAt = vault.createdAt;
+    vaultSession?.close();
+    vaultSession = openedSession;
+    bondStore?.close();
+    bondStore = openedBonds;
+    state.bonds = bondSnapshot?.bonds || [];
+    state.bondUpdatedAt = bondSnapshot?.updatedAt || null;
+    state.bondUnavailable = !bondStore;
+    state.bondEditing = null;
+    state.bondDraft = null;
+    state.bondBusy = false;
+    state.bondError = '';
+    dataVersionBaseline = initial.version || { revision: '__initial_unverified__' };
+    state.nav = initial.nav;
     state.visible = false;
     state.unlocked = true;
     startSession(sessionDay, getDailyCode);
     render();
-    loadPublicNav();
+    disciplineSync.start();
+    if (vaultSession) dataRefresh.start();
   } catch {
     password = '';
+    openedSession?.close();
+    openedBonds?.close();
     if (!isCurrent()) return;
+    dataRefresh.stop();
+    disciplineSync.stop();
+    vaultSession?.close();
+    vaultSession = null;
+    clearBondSession();
+    dataVersionBaseline = null;
     stopSessionTimers();
     state.unlocked = false;
     state.visible = false;
@@ -176,20 +254,28 @@ async function unlock(event) {
     state.dayDeadline = 0;
     state.sessionDay = null;
     dailyCodeReader = null;
-    renderGate('未能解锁，请检查日期密码后重试。');
+    renderGate('未能解锁，请检查密码后重试。');
     document.querySelector('#vault-password').focus();
   } finally {
     password = '';
     if (isCurrent()) {
       state.gateBusy = false;
-      if (!state.unlocked) { button.disabled = false; button.innerHTML = `解锁账本${icon('arrow')}`; }
+      if (!state.unlocked) { button.disabled = false; button.innerHTML = `解锁${icon('arrow')}`; }
     }
   }
 }
 
 function lock(reason = 'manual') {
+  locatedRoute = null;
+  navSliders?.cancel();
   unlockGeneration += 1;
   state.gateBusy = false;
+  dataRefresh.stop();
+  disciplineSync.stop();
+  vaultSession?.close();
+  vaultSession = null;
+  clearBondSession();
+  dataVersionBaseline = null;
   activeTransition?.skipTransition();
   stopSessionTimers();
   state.unlocked = false;
@@ -202,25 +288,230 @@ function lock(reason = 'manual') {
   dailyCodeReader = null;
   state.filter = 'all';
   state.statusFilter = 'all';
+  state.expandedPanels = {};
+  state.navEstimateEntries = [];
+  state.estimateDrafts = {};
+  state.estimateErrors = {};
+  state.estimateDate = null;
+  state.estimateLoaded = false;
   document.querySelector('#toast').classList.remove('visible');
-  renderGate(reason === 'timeout' ? '解锁已到期，请重新验证。' : reason === 'day-change' ? '日期已更新，请使用当日日期密码。' : '');
+  renderGate(reason === 'data-change' ? '请重新解锁。' : reason === 'timeout' || reason === 'day-change' ? '解锁已到期，请重新验证。' : '');
+}
+
+function clearBondSession() {
+  bondStore?.close();
+  bondStore = null;
+  state.bonds = [];
+  state.bondEditing = null;
+  state.bondDraft = null;
+  state.bondBusy = false;
+  state.bondError = '';
+  state.bondUnavailable = true;
+  state.bondUpdatedAt = null;
+}
+
+async function saveBondEdits(event) {
+  event.preventDefault();
+  if (!state.unlocked || !checkSession() || state.bondBusy || !bondStore) return;
+  const form = event.target;
+  const code = form.elements.code.value;
+  if (code !== state.bondEditing || !state.bonds.some(entry => entry.code === code)) return;
+  const draft = { code, marketValue: form.elements.marketValue.value.trim(), holdingProfit: form.elements.holdingProfit.value.trim() };
+  state.bondDraft = draft;
+  if (!/^\d+(?:\.\d{1,2})?$/.test(draft.marketValue) || !/^-?\d+(?:\.\d{1,2})?$/.test(draft.holdingProfit)) {
+    state.bondError = '请填写有效金额，最多两位小数。';
+    render();
+    return;
+  }
+  const store = bondStore, generation = unlockGeneration;
+  state.bondBusy = true;
+  state.bondError = '';
+  render();
+  try {
+    const entries = state.bonds.map(entry => entry.code === code ? { code, marketValue: Number(draft.marketValue), holdingProfit: Number(draft.holdingProfit) } : entry);
+    const saved = await store.save(entries);
+    if (generation !== unlockGeneration || store !== bondStore || !checkSession()) return;
+    state.bonds = saved.bonds;
+    state.bondUpdatedAt = saved.updatedAt;
+    state.bondEditing = null;
+    state.bondDraft = null;
+    toast('债基记录已保存');
+  } catch {
+    if (generation === unlockGeneration && store === bondStore && checkSession()) state.bondError = '保存未成功，请检查输入后重试。';
+  } finally {
+    if (generation === unlockGeneration && store === bondStore && state.unlocked && checkSession()) {
+      state.bondBusy = false;
+      render();
+    }
+  }
+}
+
+async function fetchDataVersion() {
+  try {
+    const response = await fetch('./data/version.json', { cache: 'no-store' });
+    if (!response.ok) return null;
+    const version = await response.json();
+    return typeof version?.revision === 'string' && version.revision ? version : null;
+  } catch { return null; }
+}
+
+async function readPublicNav(code) {
+  const response = await fetch(`./data/nav/${code}.json`, { cache: 'no-store' });
+  if (!response.ok) throw new Error('unavailable');
+  const result = await response.json();
+  if (result.code !== code || !Array.isArray(result.history)) throw new Error('invalid');
+  result.history = result.history.filter(point => /^\d{4}-\d{2}-\d{2}$/.test(point.date) && Number.isFinite(point.nav) && point.nav > 0).sort((a, b) => a.date.localeCompare(b.date));
+  return result;
+}
+
+async function readInitialSnapshot(vault, session, initialVersion) {
+  let before = initialVersion;
+  let currentVault = vault;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const quotes = await Promise.all(FUNDS.map(async ({ code }) => {
+      try { return [code, await readPublicNav(code)]; }
+      catch { return [code, { history: [], unavailable: true }]; }
+    }));
+    const after = await fetchDataVersion();
+    if ((!before && !after) || (before && after && before.revision === after.revision)) {
+      return { vault: currentVault, nav: Object.fromEntries(quotes), version: after };
+    }
+    if (!after || !session) throw new Error('snapshot-unavailable');
+    before = after;
+    currentVault = await session.refresh();
+  }
+  throw new Error('snapshot-changing');
+}
+
+async function refreshCurrentData(version) {
+  const generation = unlockGeneration;
+  const session = vaultSession;
+  if (!session || !state.unlocked || !checkSession()) return;
+  let vault;
+  let quotes;
+  try {
+    [vault, quotes] = await Promise.all([session.refresh(), Promise.all(FUNDS.map(fund => readPublicNav(fund.code)))]);
+  } catch (error) {
+    if (generation === unlockGeneration && error?.name === 'OperationError') lock('data-change');
+    throw error;
+  }
+  const latest = await fetchDataVersion();
+  if (!latest || latest.revision !== version.revision) throw new Error('snapshot-changed');
+  if (generation !== unlockGeneration || session !== vaultSession || !checkSession()) return;
+  if (!vault?.funds || typeof vault.funds !== 'object') throw new Error('invalid');
+  const updatedBooks = FUNDS.map(fund => {
+    const entry = vault.funds[fund.code];
+    if (!entry || !Array.isArray(entry.transactions)) throw new Error('invalid');
+    return { code: fund.code, transactions: entry.transactions.map((tx, index) => ({ ...tx, id: tx.id || `${fund.code}-${index}` })), incomplete: entry.incomplete === true, sourceNote: typeof entry.sourceNote === 'string' ? entry.sourceNote : '' };
+  });
+  for (const { code, ...book } of updatedBooks) Object.assign(getBook(code), book);
+  state.nav = Object.fromEntries(quotes.map(quote => [quote.code, quote]));
+  state.createdAt = vault.createdAt;
+  const position = scrollY;
+  const expanded = [...app.querySelectorAll('.transaction-detail[open]')].map(detail => detail.dataset.id);
+  render();
+  app.querySelectorAll('.transaction-detail').forEach(detail => { if (expanded.includes(detail.dataset.id)) detail.open = true; });
+  scrollTo({ top: position, behavior: 'instant' });
+  toast('数据已更新');
 }
 
 async function loadPublicNav() {
+  const generation = unlockGeneration;
+  const quotes = {};
   await Promise.allSettled(FUNDS.map(async ({ code }) => {
     try {
-      const response = await fetch(`./data/nav/${code}.json`);
-      if (!response.ok) throw new Error('unavailable');
-      const result = await response.json();
-      if (result.code !== code || !Array.isArray(result.history)) throw new Error('invalid');
-      result.history = result.history.filter(point => /^\d{4}-\d{2}-\d{2}$/.test(point.date) && Number.isFinite(point.nav) && point.nav > 0).sort((a, b) => a.date.localeCompare(b.date));
-      state.nav[code] = result;
-    } catch { state.nav[code] = { history: [], unavailable: true }; }
+      quotes[code] = await readPublicNav(code);
+    } catch { quotes[code] = { history: [], unavailable: true }; }
   }));
-  if (state.unlocked && checkSession()) render();
+  if (generation === unlockGeneration && state.unlocked && checkSession()) { state.nav = quotes; render(); }
 }
 
 function valuation(code) { return state.nav[code]?.history.at(-1) || null; }
+
+function estimatedNav(code) {
+  return buildEstimatedNav(state.nav[code]?.history || [], state.navEstimateEntries.filter(entry => entry.code === code), { now: new Date() });
+}
+
+function navEstimateStorage() {
+  try { return localStorage; } catch { return null; }
+}
+
+function syncNavEstimates() {
+  const now = new Date(), { yesterday } = getEstimateDates(now);
+  if (!state.estimateLoaded) {
+    const loaded = loadNavEstimates({ storage: navEstimateStorage(), now });
+    state.navEstimateEntries = loaded.entries;
+    state.estimateStorageAvailable = loaded.available;
+    state.estimateLoaded = true;
+  }
+  const retained = FUNDS.flatMap(fund => estimatedNav(fund.code).pending.map(entry => ({ code: fund.code, ...entry })));
+  if (JSON.stringify(retained) !== JSON.stringify(state.navEstimateEntries)) {
+    state.navEstimateEntries = retained;
+    if (state.estimateStorageAvailable) {
+      try { saveNavEstimates(retained, { storage: navEstimateStorage(), now }); }
+      catch { state.estimateStorageAvailable = false; }
+    }
+  }
+  if (state.estimateDate !== yesterday) {
+    state.estimateDate = yesterday;
+    state.estimateDrafts = {};
+    state.estimateErrors = {};
+  }
+  // Official observations win immediately, including while a form is being edited.
+  for (const fund of FUNDS) {
+    if (estimatedNav(fund.code).latestOfficialDate >= yesterday) {
+      delete state.estimateDrafts[fund.code];
+      delete state.estimateErrors[fund.code];
+    }
+  }
+}
+
+function estimateHomePanel() {
+  const date = state.estimateDate;
+  const funds = FUNDS.map(fund => {
+    const data = estimatedNav(fund.code);
+    const previous = data.points.filter(point => point.date < date).at(-1);
+    return { code: fund.code, name: fund.name, short: fund.navLabel, baseDate: previous?.date || null, official: Boolean(data.latestOfficialDate && data.latestOfficialDate >= date) };
+  });
+  const saved = Object.fromEntries(state.navEstimateEntries.filter(entry => entry.date === date).map(entry => [entry.code, Number((entry.change * 100).toPrecision(12))]));
+  return renderEstimatePanel({ date, funds, saved, drafts: state.estimateDrafts, errors: state.estimateErrors, open: Boolean(state.expandedPanels['nav-estimates']), unavailable: !state.estimateStorageAvailable || !date });
+}
+
+function saveNavEstimateEdits(event) {
+  event.preventDefault();
+  if (!state.unlocked || !checkSession()) return;
+  const date = getEstimateDates(new Date()).yesterday;
+  if (!date || date !== state.estimateDate) { syncNavEstimates(); render(); return; }
+  const drafts = {}, errors = {};
+  const next = state.navEstimateEntries.filter(entry => entry.date !== date);
+  for (const fund of FUNDS) {
+    if (estimatedNav(fund.code).latestOfficialDate >= date) continue;
+    const text = String(event.target.elements[`estimate-${fund.code}`]?.value ?? '').trim();
+    drafts[fund.code] = text;
+    if (!text) continue;
+    const change = parseEstimatePercent(text);
+    if (change === null) { errors[fund.code] = '请输入大于 -100% 的有效涨跌幅。'; continue; }
+    const entry = { code: fund.code, date, change };
+    const candidate = buildEstimatedNav(state.nav[fund.code]?.history || [], [...next.filter(item => item.code === fund.code), entry], { now: new Date() });
+    if (candidate.latestOfficialDate && !candidate.points.some(point => point.date === date && point.estimated)) errors[fund.code] = '估值超出可显示范围。';
+    else next.push(entry);
+  }
+  state.estimateDrafts = drafts;
+  state.estimateErrors = errors;
+  state.expandedPanels['nav-estimates'] = true;
+  if (Object.keys(errors).length) { render(); return; }
+  try {
+    const saved = saveNavEstimates(next, { storage: navEstimateStorage(), now: new Date() });
+    state.navEstimateEntries = saved;
+    state.estimateDrafts = {};
+    state.estimateStorageAvailable = true;
+    render();
+    toast('估值已保存');
+  } catch {
+    state.estimateErrors = Object.fromEntries(FUNDS.filter(fund => !estimatedNav(fund.code).latestOfficialDate || estimatedNav(fund.code).latestOfficialDate < date).map(fund => [fund.code, '本机保存失败，请重试。']));
+    render();
+  }
+}
 
 function ledger(code) {
   const book = getBook(code);
@@ -235,16 +526,64 @@ function ledger(code) {
   return result;
 }
 
-function header(code) {
+function fundExposure(code) {
+  return evaluateUsExposure(state.disciplines.find(entry => entry.id === 'us-exposure'), REGION_DATA[code]);
+}
+
+function exposureNavTitle(fund, check) {
+  return `${fund.fullName} ${fund.code}${check.status === 'below' ? ` · 美股含量未达标：${number(check.usPercent)}%，规则门槛${check.thresholdPercent}%` : ''}`;
+}
+
+function bondReserveCheck() {
+  let bondValue = null, equityValue = 0;
+  const missing = [];
+  if (!state.bondUnavailable) {
+    try { bondValue = calculateBondSummary(state.bonds).marketValue; } catch { /* Unavailable is never zero. */ }
+  }
+  for (const fund of FUNDS) {
+    const book = getBook(fund.code);
+    try {
+      const result = ledger(fund.code), value = result.summary.marketValue;
+      if (!book.transactions.length || book.incomplete || result.errors.length || result.summary.valid !== true || !Number.isFinite(value) || value < 0) missing.push(fund.navLabel);
+      else equityValue += value;
+    } catch { missing.push(fund.navLabel); }
+  }
+  const check = evaluateBondReserve({ equityValue, bondValue, complete: missing.length === 0 });
+  const message = check.status === 'below'
+    ? `债基占比约 ${number(check.ratio * 100, 0)}%，${check.reason === 'share-high' ? '高于 1/3' : '低于 1/6'}，且持仓未超过 5 万元。`
+    : check.status === 'unknown'
+      ? bondValue === null ? '债基数据暂不可用，无法核验配置。'
+        : missing.length ? `${missing.join('、')}持仓资料不完整，暂无法核验债基占比。`
+          : '总持仓暂无有效估值，无法核验债基占比。'
+      : '';
+  return { ...check, message };
+}
+
+function bondNavMarkup(active, check, mobile = false) {
+  const below = check?.status === 'below', unknown = check?.status === 'unknown';
+  const label = below ? '债基，配置未达标' : unknown ? '债基，配置待核验' : '债基';
+  const dot = below || unknown ? '<span class="exposure-nav-dot" aria-hidden="true"></span>' : '';
+  return `<a href="#/bonds" class="${active ? 'active' : ''}${below ? ' exposure-nav-warning' : unknown ? ' bond-nav-pending' : ''}" ${active ? 'aria-current="page"' : ''} aria-label="${label}">${mobile ? `<span class="nav-letter">债${dot}</span><span>债基</span>` : `债基${dot}`}</a>`;
+}
+
+function header(code, reserve) {
+  const bonds = selectedBonds(), home = !code && !bonds;
   return `<header class="site-header"><div class="header-inner">
     <a href="#/" class="brand" aria-label="基金账本首页"><span class="brand-mark">${icon('book')}</span><span class="brand-copy"><span>基金账本</span><span id="session-timer" class="session-timer" role="timer" aria-label="本次解锁剩余时间" aria-live="off">剩余 ${remainingTime()}</span></span></a>
-    <nav class="desktop-nav" aria-label="主要导航"><a href="#/" class="${code ? '' : 'active'}" ${code ? '' : 'aria-current="page"'}>我的基金</a>${FUNDS.map(fund => `<a href="#/fund/${fund.code}" class="${code === fund.code ? 'active' : ''}" ${code === fund.code ? 'aria-current="page"' : ''}>${fund.short}账本</a>`).join('')}</nav>
+    <nav class="desktop-nav" aria-label="主要导航"><a href="#/" class="${home ? 'active' : ''}" ${home ? 'aria-current="page"' : ''}>交易纪律</a>${FUNDS.map(fund => {
+      const check = fundExposure(fund.code), below = check.status === 'below';
+      return `<a href="#/fund/${fund.code}" class="${code === fund.code ? 'active' : ''}${below ? ' exposure-nav-warning' : ''}" ${code === fund.code ? 'aria-current="page"' : ''} title="${esc(exposureNavTitle(fund, check))}"${below ? ` aria-label="${esc(fund.navLabel)}，美股含量未达标"` : ''}>${fund.navLabel}${below ? '<span class="exposure-nav-dot" aria-hidden="true"></span>' : ''}</a>`;
+    }).join('')}${bondNavMarkup(bonds, reserve)}</nav>
     <div class="header-actions"><button type="button" class="icon-button" data-action="privacy" aria-label="${state.visible ? '隐藏' : '显示'}金额和份额" title="${state.visible ? '隐藏' : '显示'}金额和份额" aria-pressed="${state.visible}">${icon(state.visible ? 'eye' : 'eye-off')}</button>${themeButton()}<button type="button" class="icon-button" data-action="lock" aria-label="加锁账本" title="加锁账本">${icon('lock')}</button></div>
   </div></header>`;
 }
 
-function bottomNav(code) {
-  return `<nav class="bottom-nav" aria-label="手机导航"><a href="#/" class="${code ? '' : 'active'}" ${code ? '' : 'aria-current="page"'}>${icon('home')}<span>首页</span></a>${FUNDS.map(fund => `<a href="#/fund/${fund.code}" class="${code === fund.code ? 'active' : ''}" ${code === fund.code ? 'aria-current="page"' : ''}><span class="nav-letter">${fund.initial}</span><span>${fund.short}</span></a>`).join('')}</nav>`;
+function bottomNav(code, reserve) {
+  const bonds = selectedBonds(), home = !code && !bonds;
+  return `<nav class="bottom-nav" aria-label="手机导航"><a href="#/" class="${home ? 'active' : ''}" ${home ? 'aria-current="page"' : ''}>${icon('home')}<span>首页</span></a>${FUNDS.map(fund => {
+    const check = fundExposure(fund.code), below = check.status === 'below';
+    return `<a href="#/fund/${fund.code}" class="${code === fund.code ? 'active' : ''}${below ? ' exposure-nav-warning' : ''}" ${code === fund.code ? 'aria-current="page"' : ''} aria-label="${esc(exposureNavTitle(fund, check))}"><span class="nav-letter">${fund.initial}${below ? '<span class="exposure-nav-dot" aria-hidden="true"></span>' : ''}</span><span>${fund.navLabel}</span></a>`;
+  }).join('')}${bondNavMarkup(bonds, reserve, true)}</nav>`;
 }
 
 function applicationInfo(book) {
@@ -260,28 +599,135 @@ function applicationInfo(book) {
 }
 
 function render() {
+  navSliders?.cancel();
   if (!state.unlocked) { renderGate(); return; }
   if (!checkSession()) return;
+  syncNavEstimates();
   const fund = selectedFund();
-  document.title = fund ? `${fund.short}账本 · 基金账本` : '我的基金 · 基金账本';
-  app.innerHTML = `${header(fund?.code)}${fund ? fundPage(fund) : homePage()}${bottomNav(fund?.code)}<footer class="footer"><span>基金账本 · 交易计算与净值日期分开核对</span><span>数据在本机解密 · 更新后重新发布</span></footer>`;
+  const section = routeSection();
+  const locate = locatedRoute !== location.hash && ['us-exposure', 'bond-reserve'].includes(section);
+  if (locate && !fund && !selectedBonds()) state.expandedPanels[`discipline-${section}`] = true;
+  app.querySelectorAll(`details[data-panel][data-fund="${fund?.code}"]`).forEach(panel => {
+    state.expandedPanels[panel.dataset.panel] = panel.open;
+  });
+  const bonds = selectedBonds();
+  const reserve = bondReserveCheck();
+  document.title = fund ? `${fund.short}账本 · 基金账本` : bonds ? '债基 · 基金账本' : '交易纪律 · 基金账本';
+  app.innerHTML = `${header(fund?.code, reserve)}${fund ? annualDisciplineAlert(fund.code) : ''}${fund ? fundPage(fund) : bonds ? renderBondsPage({ entries: state.bonds, visible: state.visible, editing: state.bondEditing, draft: state.bondDraft, error: state.bondError, busy: state.bondBusy, unavailable: state.bondUnavailable, reserve, locateReserve: section === 'bond-reserve' }) : homePage(reserve)}${bottomNav(fund?.code, reserve)}`;
+  app.querySelectorAll('.nav-periods').forEach(periods => { periods.scrollLeft = 0; });
+  app.querySelectorAll('.desktop-nav .active, .bottom-nav .active').forEach(link => link.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' }));
+  locatedRoute = location.hash;
+  if (locate) {
+    const target = section === 'bond-reserve'
+      ? document.querySelector(bonds ? '#bonds-reserve-summary' : '[data-discipline="bond-reserve"] > summary') || document.querySelector('[data-discipline="bond-reserve"]')
+      : document.querySelector(fund ? `#fund-${fund.code}-us-exposure` : '[data-discipline="us-exposure"] > summary');
+    if (typeof target?.focus === 'function') target.focus({ preventScroll: true });
+    if (typeof target?.scrollIntoView === 'function') target.scrollIntoView({ block: 'center', behavior: 'instant' });
+  }
 }
 
-function homePage() {
-  return `<main id="main" class="workspace home-page"><div class="page-heading"><div><p class="eyebrow">PERSONAL FUND LEDGER</p><h1>我的基金</h1><p class="subtitle">每笔交易有据可查，每一分收益清楚归属。</p></div><span class="status-chip dot">账本已解锁</span></div>
-    <div class="session-note">${icon('shield')}<span>${state.visible ? '当前显示金额和份额。点击右上角小眼睛可随时隐藏。' : '金额和份额已隐藏。点击右上角小眼睛可显示。'} 每次解锁有效 3 分钟，到期或北京时间跨日后自动加锁。</span></div>
-    <div class="section-heading"><h2>基金账本</h2><span class="helper">人民币 A 类 · ${FUNDS.length} 只基金</span></div>
-    <div class="fund-list">${FUNDS.map(fund => {
-      const { summary } = ledger(fund.code);
-      const book = getBook(fund.code);
-      return `<a class="fund-card brand-${fund.brand}" href="#/fund/${fund.code}" aria-label="进入${fund.fullName}账本"><div class="fund-id"><span class="fund-initial">${fund.initial}</span><div><h3 class="fund-name">${fund.name}${summary.estimatedCount ? ' <span class="row-status">含估算</span>' : ''}</h3><p class="fund-description"><span class="fund-code">${fund.code}</span>${fund.category}</p></div></div><div><p class="card-label">当前市值</p><p class="card-value num">${sensitive(summary.marketValue)}</p><p class="helper">${book.transactions.length ? `${book.transactions.length} 笔交易` : '尚无交易'} · ${book.mode === 'principal-first' ? '本金优先' : '利润优先'}</p>${summary.lastDate ? `<p class="helper">最近交易 ${esc(summary.lastDate)}</p>` : ''}</div><div><p class="card-label">持有收益率</p><p class="card-return num ${signClass(summary.holdingReturn)}">${percent(summary.holdingReturn)}</p><p class="helper">${summary.valid ? summary.valuationDate ? `净值日期 ${esc(summary.valuationDate)}` : '等待净值' : '有交易待修正'}</p></div><span class="enter-arrow">${icon('arrow')}</span></a>`;
-    }).join('')}</div>
-    <div class="home-bottom"><section class="panel"><h2>两种模式，同一本账</h2><div class="method-inline"><div><h3>利润优先</h3><p>卖出到账先提取当时可用利润，剩余部分冲减本金。</p></div><div><h3>本金优先</h3><p>卖出到账先回收本金，超过剩余本金的部分计作提取利润。</p></div></div><p class="helper details-box">在基金页随时切换，全部历史交易会按所选口径重新计算。</p></section><section class="panel"><h2>使用提醒</h2><ul class="quiet-list"><li>以交易确认单的净值、份额和实际手续费为准。</li><li>QDII 净值可能延迟公布，请留意估值采用的日期。</li><li>账本展示已发布的数据快照，数据更新后重新发布。</li></ul></section></div>
+function disciplineCopy(value, linkFunds = false) {
+  let copy = esc(value).replace(/【([^】]+)】|(?:大幅|适当)止盈|进行一次加仓|\d+(?:\.\d+)?%|\d+(?:\.\d+)?倍|1\/[36]/g, (match, emphasis) => {
+    const text = emphasis || match;
+    return `<strong class="discipline-emphasis${/^(\d+(?:\.\d+)?%|\d+(?:\.\d+)?倍|1\/[36](?:～1\/[36])?|5万元)$/.test(text) ? ' discipline-number' : ''}">${text}</strong>`;
+  });
+  copy = copy.replace(/(<strong class="discipline-emphasis">立刻<\/strong>[^。]+。)/, '<span class="discipline-urgent">$1</span>');
+  if (linkFunds) for (const fund of FUNDS) copy = copy.replace(fund.navLabel, `<a href="#/fund/${fund.code}" aria-label="进入${fund.navLabel}账本">${fund.navLabel}</a>`);
+  return copy;
+}
+
+function annualDisciplineAlert(code) {
+  const matches = state.disciplines.filter(entry => entry.id === 'annual-profit' || entry.id.startsWith('annual-profit-'))
+    .map(rule => ({ rule, kind: 'annual', signal: evaluateAnnualDiscipline(state.nav[code]?.history, { rule, now: new Date() }) }))
+    .filter(({ signal }) => signal.triggered);
+  const addRule = state.disciplines.find(entry => entry.id === 'add-discipline-decline');
+  if (addRule) {
+    const row = ledger(code).rows.filter(item => item.status === 'included' && ['buy', 'sip', 'sell', 'transfer-in', 'reinvest'].includes(item.type)).at(-1);
+    const original = row && getBook(code).transactions.find(item => item.id === row.id);
+    const tradePoint = row ? { date: row.date, nav: row.nav, estimated: row.estimated === true || ['estimated', '历史估算'].includes(original?.status) } : null;
+    const signal = evaluateAddDiscipline(state.nav[code]?.history, { rule: addRule, tradePoint, now: new Date() });
+    if (signal.triggered) matches.push({ rule: addRule, kind: 'add', signal });
+  }
+  if (!matches.length) return '';
+  const { signal } = matches[0];
+  const annual = matches.find(item => item.kind === 'annual')?.signal;
+  const add = matches.find(item => item.kind === 'add')?.signal;
+  return `<aside class="annual-discipline-alert${routeSection() === 'us-exposure' ? ' exposure-route-alert' : ''}" role="alert" aria-label="交易纪律提醒" data-fund="${esc(code)}"><div class="alert-heading"><strong>交易纪律提醒</strong></div>${annual ? `<p class="annual-alert-return">年内涨幅<strong class="num">${percent(annual.yearReturn)}</strong></p>` : ''}${add ? `<p class="annual-alert-return">节点后跌幅<strong class="num">${number(add.decline * 100)}%</strong></p>` : ''}<p class="annual-alert-date">截至 ${esc(signal.asOf)}${annual ? ` · 年初基准 ${esc(annual.baselineDate)}` : ''}${add ? ` · 交易基准 ${esc(add.baselineDate)}${add.estimated ? '（估算）' : ''}` : ''}</p><div class="annual-alert-rules">${matches.map(({ rule }) => {
+    const content = esc(`${rule.title}${rule.detail ? ` ${rule.detail}` : ''}`).replace(/【([^】]+)】|(?:大幅|适当)止盈|进行一次加仓|\d+(?:\.\d+)?%|\d+(?:\.\d+)?倍/g, (match, emphasis) => `<strong>${emphasis || match}</strong>`);
+    return `<p class="annual-alert-rule" data-rule="${esc(rule.id)}"><small>${rule.id === 'annual-profit-100' ? '6.1' : rule.id === 'annual-profit-multiple' ? '6.2' : rule.id === 'add-discipline-decline' ? '7.1' : '6'}</small><span>${content}</span></p>`;
+  }).join('')}</div></aside>`;
+}
+
+function exposureRuleDetails(checks) {
+  const below = checks.filter(check => check.status === 'below');
+  return `<div class="discipline-compliance-details"><div class="exposure-reasons"><ul class="exposure-checks">${below.map(({ fund, ...check }) => {
+    const source = safeSource(check.source?.url);
+    const comparison = `美股占比 <strong class="num">${number(check.usPercent)}%</strong>，低于规则门槛 <strong>${esc(check.thresholdPercent)}%</strong>，相差 <strong>${number(check.gapPercent)}</strong> 个百分点。`;
+    return `<li class="exposure-check exposure-check-below" data-exposure-fund="${fund.code}"><a class="exposure-check-target" href="#/fund/${fund.code}?section=us-exposure" aria-label="查看${esc(fund.name)}的美国持仓比例"><div class="exposure-check-heading"><span class="exposure-check-name">${esc(fund.name)}<span class="fund-code">${fund.code}</span></span><span class="exposure-check-state">未达标</span></div><p>${comparison}</p></a>${check.asOf ? `<p class="exposure-check-source">持仓截至 <time datetime="${esc(check.asOf)}">${esc(check.asOf)}</time>${check.publishedAt ? ` · 公告 ${esc(check.publishedAt)}` : ''}${source ? ` · <a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(check.source.title)}">原报告</a>` : ''}</p>` : ''}</li>`;
+  }).join('')}</ul></div></div>`;
+}
+
+function holdingDurationDetails() {
+  const now = new Date();
+  return `<div class="discipline-compliance-details"><ul class="holding-duration-list">${FUNDS.map(fund => {
+    const book = getBook(fund.code), result = ledger(fund.code);
+    const originals = new Map(book.transactions.map(transaction => [transaction.id, transaction]));
+    const rows = result.rows.map(row => ({ ...row, estimated: row.estimated === true || ['estimated', '历史估算'].includes(originals.get(row.id)?.status) }));
+    const duration = calculateHoldingDuration(rows, { now, incomplete: book.incomplete === true, hasErrors: result.errors.length > 0 });
+    const text = duration.status === 'holding'
+      ? `${duration.estimated ? '约' : '已持有'} <span class="num">${number(duration.days, 0)}</span> 天`
+      : duration.status === 'closed' ? '已清仓' : book.transactions.length ? '待核验' : '暂无记录';
+    let progress = '';
+    if (duration.status === 'holding') {
+      if (!holdingFractions.has(fund.code)) holdingFractions.set(fund.code, 0.64 + Math.random() * 0.24);
+      const scale = createHoldingDurationScale(duration.days, holdingFractions.get(fund.code));
+      if (scale) progress = `<div class="holding-progress-layout"><div class="holding-progress-track" role="progressbar" aria-label="${esc(fund.name)}持有时间" aria-valuemin="0" aria-valuenow="${duration.days}" aria-valuemax="${scale.maximum}" aria-valuetext="${duration.estimated ? '约' : '已持有'} ${duration.days} 天"><span class="holding-progress-fill" style="width: ${(scale.ratio * 100).toFixed(3)}%"></span></div><span class="holding-progress-maximum" aria-hidden="true"><span class="num">${number(scale.maximum, 0)}</span> 天</span></div>`;
+    }
+    return `<li data-holding-fund="${fund.code}"><div class="holding-duration-heading"><span class="holding-fund-name">${esc(fund.name)}</span><strong class="holding-duration${duration.status === 'holding' ? '' : ' holding-duration-empty'}">${text}</strong></div>${progress}</li>`;
+  }).join('')}</ul></div>`;
+}
+
+function homePage(reserve) {
+  const labels = { 'us-exposure': '美股含量', 'long-term': '长期持有', 'bond-reserve': '债基配置', 'equity-scope': '基金精简', 'annual-profit': '年度止盈', 'add-discipline': '加仓纪律' };
+  const headingNumbers = { 'us-exposure': '1', 'long-term': '2', 'bond-reserve': '3', 'equity-scope': '4', 'annual-profit': '6', 'add-discipline': '7' };
+  const groups = ['annual-profit', 'add-discipline'].filter(id => state.disciplines.some(entry => entry.id === id));
+  const entries = state.disciplines.filter(entry => !groups.some(id => entry.id.startsWith(`${id}-`)));
+  const clauseLabels = { 'annual-profit-100': '6.1', 'annual-profit-multiple': '6.2', 'add-discipline-decline': '7.1' };
+  return `<main id="main" class="workspace home-page discipline-home"><header class="discipline-heading"><h1>交易纪律</h1></header>
+    ${estimateHomePanel()}
+    <section class="discipline-sheet" aria-label="持有与交易纪律">${entries.map(entry => {
+      const children = groups.includes(entry.id) ? state.disciplines.filter(child => child.id.startsWith(`${entry.id}-`)) : [];
+      const punctuation = entry.detail.match(/^[。！？]+/)?.[0] || '';
+      const detail = entry.detail.slice(punctuation.length).trim();
+      const headingNumber = headingNumbers[entry.id];
+      const heading = `<h2${headingNumber ? ' class="discipline-numbered-heading"' : ''}>${headingNumber ? `<span class="discipline-heading-number">${headingNumber}.</span>` : ''}<span>${disciplineCopy(entry.title + punctuation, entry.id === 'equity-scope')}</span></h2>`;
+      const content = `${heading}${detail ? `<p>${disciplineCopy(detail, entry.id === 'equity-scope')}</p>` : ''}${children.length ? `<div class="discipline-subrules">${children.map(child => `<div class="discipline-subrule" data-discipline="${esc(child.id)}"><small class="discipline-clause-label">${esc(clauseLabels[child.id] || '')}</small><p>${disciplineCopy(`${child.title}${child.detail ? ` ${child.detail}` : ''}`)}</p></div>`).join('')}</div>` : ''}`;
+      if (entry.id === 'us-exposure') {
+        const checks = FUNDS.map(fund => ({ fund, ...fundExposure(fund.code) }));
+        const below = checks.filter(check => check.status === 'below').length;
+        if (below) return `<details class="discipline-entry discipline-entry-checkable discipline-entry-warning" data-discipline="us-exposure" data-panel="discipline-us-exposure" data-exposure-status="below" ${state.expandedPanels['discipline-us-exposure'] ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="exposure-badge exposure-warning">${icon('info')}未完全遵守 · ${below}只未达标</span><span class="discipline-expand-hint"><span class="when-closed">查看原因</span><span class="when-open">收起原因</span>${icon('down')}</span></div></div></summary>${exposureRuleDetails(checks)}</details>`;
+      }
+      if (entry.id === 'long-term') return `<details class="discipline-entry discipline-entry-checkable${state.expandedPanels['discipline-long-term'] ? ' holding-progress-visible' : ''}" data-discipline="long-term" data-panel="discipline-long-term" ${state.expandedPanels['discipline-long-term'] ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="discipline-expand-hint"><span class="when-closed">查看持有时间</span><span class="when-open">收起持有时间</span>${icon('down')}</span></div></div></summary>${holdingDurationDetails()}</details>`;
+      if (entry.id === 'bond-reserve' && reserve.status !== 'met') {
+        const below = reserve.status === 'below', label = below ? '未完全遵守' : '待核验';
+        return `<details class="discipline-entry discipline-entry-checkable${below ? ' discipline-entry-warning' : ''}" data-discipline="bond-reserve" data-panel="discipline-bond-reserve" data-bond-reserve-status="${reserve.status}" ${state.expandedPanels['discipline-bond-reserve'] ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="exposure-badge ${below ? 'exposure-warning' : 'bond-reserve-pending'}">${icon('info')}${label}</span><span class="discipline-expand-hint"><span class="when-closed">查看原因</span><span class="when-open">收起原因</span>${icon('down')}</span></div></div></summary><div class="discipline-compliance-details"><a class="exposure-check-target bond-reserve-target" href="#/bonds?section=bond-reserve" aria-label="查看债基配置"><p>${esc(reserve.message)}</p><span class="bond-reserve-link">查看债基${icon('arrow')}</span></a></div></details>`;
+      }
+      if (entry.id === 'bond-reserve') return `<article class="discipline-entry" data-discipline="bond-reserve" data-bond-reserve-status="met" tabindex="-1"><p class="discipline-entry-label">${esc(labels[entry.id])}</p><div class="discipline-entry-content">${content}</div></article>`;
+      return `<article class="discipline-entry${entry.id === 'add-discipline' ? ' discipline-entry-focus' : ''}" data-discipline="${esc(entry.id)}"><p class="discipline-entry-label">${esc(labels[entry.id] || '交易纪律')}</p><div class="discipline-entry-content">${content}</div></article>`;
+    }).join('')}</section>
   </main>`;
 }
 
 function metric(label, value, digits = 2, extra = '') {
   return `<div><dt>${label}</dt><dd class="num ${extra}">${sensitive(value, digits)}</dd></div>`;
+}
+
+function fundRegions(fund) {
+  const data = REGION_DATA[fund.code];
+  if (!data) return '';
+  const check = fundExposure(fund.code), below = check.status === 'below';
+  const source = safeSource(data.source?.url);
+  return `<section class="panel fund-regions${below ? ' exposure-below' : ''}" aria-label="股票地区分布"><div class="section-heading"><h2>股票地区分布</h2><time class="helper" datetime="${esc(data.asOf)}" title="报告公告日期 ${esc(data.publishedAt || '待核实')}">截至 ${esc(data.asOf)}</time></div><p class="region-basis">直接股票持仓 · 占基金净资产</p>${below ? `<div class="fund-exposure-note">${icon('info')}<p><strong>美股含量未达标</strong>：${number(check.usPercent)}%，低于规则门槛 ${esc(check.thresholdPercent)}%，相差 ${number(check.gapPercent)} 个百分点。<a href="#/?section=us-exposure">查看首页规则与原因</a></p></div>` : ''}<ul class="region-shares">${data.regions.map(region => `<li${region.name === '美国' ? ` id="fund-${fund.code}-us-exposure" tabindex="-1" class="region-us${below ? ' region-us-below' : ''}${routeSection() === 'us-exposure' ? ' exposure-location' : ''}"` : ''}><span>${esc(region.name)}${region.name === '美国' && below ? '<small class="region-state">未达标</small>' : ''}</span><strong class="num">${number(region.percent, 2)}%</strong></li>`).join('')}</ul>${data.note ? `<p class="helper region-note">${esc(data.note)}</p>` : ''}${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(data.source.title)}">原报告</a>` : ''}</section>`;
 }
 
 function fundPage(fund) {
@@ -292,26 +738,181 @@ function fundPage(fund) {
   const info = book.incomplete ? applicationInfo(book) : null;
   const sourceDescription = book.incomplete
     ? `估算仅覆盖截图记录 ${info.firstDate} 至 ${info.lastDate}，按全额申购成功和参考费率推算；限购、比例确认及实际成交可能不同，以平台确认为准。`
-    : book.sourceNote ? state.visible ? book.sourceNote : '来源说明已隐藏' : '';
-  return `<main id="main" class="workspace fund-page brand-${fund.brand}"><a class="back-link" href="#/">${icon('back')}我的基金</a><div class="page-heading"><div class="fund-title-line"><span class="fund-initial">${fund.initial}</span><div><h1>${fund.name}</h1><p class="fund-subtitle"><span class="fund-code">${fund.code}</span>${fund.category}</p></div></div><span class="status-chip dot">${summary.estimatedCount ? '含估算记录' : '已发布账本'}</span></div>
-    <div class="fund-layout"><div class="main-column"><section class="panel summary-panel"><div class="section-heading"><h2>持仓与收益</h2><span class="status-chip">${principalState}</span></div>
+    : state.visible ? book.sourceNote : '';
+  const exposure = fundExposure(fund.code);
+  return `<main id="main" class="workspace fund-page brand-${fund.brand}"><a class="back-link" href="#/">${icon('back')}返回首页</a><div class="page-heading"><div class="fund-title-line"><span class="fund-initial">${fund.initial}</span><div><h1>${fund.name}</h1><p class="fund-subtitle"><span class="fund-code">${fund.code}</span>${fund.category}</p></div></div><div class="fund-heading-flags">${exposure.status === 'below' ? `<span class="status-chip exposure-warning">${icon('info')}美股含量未达标</span>` : ''}${summary.estimatedCount ? '<span class="status-chip dot">含估算记录</span>' : ''}</div></div>
+    ${fundRegions(fund)}<div class="fund-layout">${navPanel(fund)}<div class="main-column"><details class="panel summary-panel panel-disclosure" data-panel="holdings" data-fund="${fund.code}" ${state.expandedPanels.holdings ? 'open' : ''}><summary class="panel-toggle"><h2>持仓与收益</h2><span class="status-chip">${principalState}</span></summary><div class="panel-content">
       ${summary.lastDate ? `<p class="helper">最近交易日期 ${esc(summary.lastDate)}</p>` : ''}
-      ${sourceDescription ? `<p class="source-note">${icon('info')}<span>${esc(sourceDescription)}</span></p>` : ''}
-      <div class="mode-control ${book.mode}" role="group" aria-label="卖出到账分配模式"><button data-action="mode" data-mode="profit-first" aria-pressed="${book.mode === 'profit-first'}">利润优先</button><button data-action="mode" data-mode="principal-first" aria-pressed="${book.mode === 'principal-first'}">本金优先</button></div><p class="mode-explanation">${book.mode === 'profit-first' ? '到账先提取当时可用利润，再回收本金。' : '到账先回收剩余本金，超出部分计为提取利润。'} 切换会重算全部历史。</p>
+      <div class="mode-control ${book.mode}" role="group" aria-label="卖出到账分配模式"><button data-action="mode" data-mode="profit-first" aria-pressed="${book.mode === 'profit-first'}">利润优先</button><button data-action="mode" data-mode="principal-first" aria-pressed="${book.mode === 'principal-first'}">本金优先</button></div>
       ${errors.length ? `<div class="error-note" role="alert">第 ${errors[0].index} 笔交易待修正：${esc(errors[0].message)}<br>修正前暂停展示汇总结果。</div>` : ''}
       <div class="summary-main"><div><p class="card-label">当前市值（元）</p><p class="card-value num">${sensitive(summary.marketValue)}</p><p class="helper">估值净值日期 ${esc(summary.valuationDate || '尚无可用净值')}</p></div><div class="summary-return"><p class="card-label">持有收益率</p><span class="num ${signClass(summary.holdingReturn)}">${percent(summary.holdingReturn)}</span></div></div>
       <dl class="summary-grid">${metric('剩余本金（元）', summary.principal)}${metric('持有收益（元）', summary.holdingProfit, 2, signClass(summary.holdingProfit))}${metric('持有份额', summary.shares, 6)}${metric('累计投入（元）', summary.totalInvested)}${metric('累计到账（元）', summary.totalRecovered)}${metric('已提取利润（元）', summary.totalProfitWithdrawn)}${metric('累计收益（元）', summary.totalProfit, 2, signClass(summary.totalProfit))}<div><dt>累计收益率</dt><dd class="num ${signClass(summary.totalReturn)}">${percent(summary.totalReturn)}</dd></div>${metric('清仓损失（元）', summary.totalClosedLoss)}</dl>
-      <p class="summary-foot">${icon('info')}<span>${summary.includedCount} 笔计入 · ${summary.pendingCount} 笔待确认或待修正 · ${summary.estimatedCount} 笔历史估算。累计收益率为累计收益 ÷ 累计投入，非年化。未确认及撤单不计入持仓和收益。</span></p>
-    </section>${ledgerPanel(result, book)}</div><aside class="side-column">${navPanel(fund)}${feePanel(fund, book)}</aside></div></main>`;
+      <p class="summary-foot">${summary.includedCount} 笔计入${summary.pendingCount ? ` · ${summary.pendingCount} 笔待确认或待修正` : ''}${summary.estimatedCount ? ` · ${summary.estimatedCount} 笔历史估算` : ''}</p>
+      ${sourceDescription ? `<details class="details-box data-description"><summary>数据说明</summary><p class="helper detail-date-note">${esc(sourceDescription)}</p></details>` : ''}
+    </div></details>${ledgerPanel(result, book, fund.code)}</div></div></main>`;
 }
-function sparkline(history) {
-  const points = history.slice(-60);
-  if (points.length < 2) return '';
-  const min = Math.min(...points.map(point => point.nav));
-  const max = Math.max(...points.map(point => point.nav));
-  const range = max - min || 1;
-  const coordinates = points.map((point, index) => `${number(index / (points.length - 1) * 250, 2).replaceAll(',', '')},${number(76 - (point.nav - min) / range * 64, 2).replaceAll(',', '')}`).join(' ');
-  return `<svg class="sparkline" viewBox="0 0 250 87" preserveAspectRatio="none" role="img" aria-label="最近 ${points.length} 个已公布净值走势"><path d="M0 81H250" stroke="var(--line)" stroke-width="1"/><polyline points="${coordinates}" pathLength="1"/></svg><p class="chart-caption"><span>${esc(points[0].date)}</span><span>${esc(points.at(-1).date)}</span></p>`;
+function chartOverlays(code) {
+  const { summary, rows } = ledger(code);
+  const originals = new Map(getBook(code).transactions.map(tx => [tx.id, tx]));
+  const costNav = summary.valid && Number.isFinite(summary.principal) && summary.principal >= 0 && Number.isFinite(summary.shares) && summary.shares > 0
+    ? summary.principal / summary.shares : null;
+  const markers = rows.filter(row => row.status === 'included' && ['buy', 'sip', 'transfer-in', 'reinvest', 'sell'].includes(row.type))
+    .map(row => ({ date: row.date, nav: row.nav, type: row.type === 'sell' ? 'sell' : 'buy', estimated: row.estimated === true || ['estimated', '历史估算'].includes(originals.get(row.id)?.status) }));
+  return { costNav, costEstimated: summary.estimatedCount > 0, markers };
+}
+
+function sparkline(history, code, range = null) {
+  const official = state.nav[code]?.history || [], latest = official.at(-1)?.date;
+  const live = history.length && history.at(-1)?.date === latest && range?.preset !== 'last-month';
+  const data = estimatedNav(code);
+  return renderNavChart(history, { ...chartOverlays(code), referenceHistory: official, ...(live ? { domainEnd: data.today, estimatedPoints: data.points.filter(point => point.estimated) } : {}) });
+}
+
+function navPeriodDisabled(period, range) {
+  return period === 'recent-decline' && !range.declineAvailable || period === 'recent-rise' && !range.riseAvailable || period === 'since-trade' && !range.tradeAvailable;
+}
+
+function navContext(code) {
+  const rows = ledger(code).rows.filter(row => row.status === 'included' && ['buy', 'sip', 'sell', 'transfer-in', 'reinvest'].includes(row.type));
+  return { tradeDate: rows.at(-1)?.date || null };
+}
+
+function navSelection(code) {
+  return state.navRanges[code] || (state.navPreset ? { preset: state.navPreset } : undefined);
+}
+
+function selectedNavRange(code, history) {
+  const selection = navSelection(code);
+  const range = resolveNavRange(history, selection, navContext(code));
+  if (!selection && history.length && range.preset) state.navPreset = range.preset;
+  return navPeriodDisabled(range.preset, range)
+    ? { ...range, from: null, to: null, points: [], unavailable: true } : range;
+}
+
+function navRangeDate(summary, nav, range) {
+  if (range?.unavailable) return ({ 'recent-rise': '暂无上涨区间', 'recent-decline': '暂无下跌区间', 'since-trade': '暂无交易区间' })[range.preset] || '所选时段暂无净值';
+  return summary.endDate ? `净值日期 ${esc(summary.endDate)}` : nav?.unavailable ? '公开净值暂不可用' : nav?.history?.length ? '所选时段暂无净值' : nav ? '暂无净值' : '正在读取公开净值…';
+}
+
+function railAnchor(history, value) {
+  const bounded = Math.max(0, Math.min(history.length - 1, value));
+  const index = Math.floor(bounded);
+  return { date: history[index].date, fraction: bounded - index };
+}
+
+function railValue(history, anchor, fallback) {
+  const index = history.findIndex(point => point.date === anchor?.date);
+  return index >= 0 ? Math.min(history.length - 1, index + (anchor.fraction || 0)) : fallback;
+}
+
+function navSliderDomain(code, history, range, { reset = false, visualDomain, visualValues } = {}) {
+  if (reset) { delete state.navDomains[code]; delete state.navVisuals[code]; }
+  const previous = state.navDomains[code];
+  const domain = resolveNavSliderDomain(history, range, previous);
+  if (visualDomain) domain.min = Math.max(0, Math.min(domain.max, visualDomain.min));
+  else if (previous?.from === domain.from) domain.min = Math.min(range.start, domain.min + (previous.fraction || 0));
+  const anchor = railAnchor(history, domain.min);
+  state.navDomains[code] = { from: anchor.date, to: domain.to, ...(anchor.fraction ? { fraction: anchor.fraction } : {}) };
+  if (visualValues) state.navVisuals[code] = { from: range.from, to: range.to, start: railAnchor(history, visualValues.start), end: railAnchor(history, visualValues.end) };
+  else if (state.navVisuals[code]?.from !== range.from || state.navVisuals[code]?.to !== range.to) delete state.navVisuals[code];
+  return domain;
+}
+
+function navVisualValues(code, history, range, domain) {
+  const saved = state.navVisuals[code];
+  const start = saved?.from === range.from && saved?.to === range.to ? railValue(history, saved.start, range.start) : range.start;
+  const end = saved?.from === range.from && saved?.to === range.to ? railValue(history, saved.end, range.end) : range.end;
+  return { start: Math.max(domain.min, Math.min(domain.max, start)), end: Math.max(domain.min, Math.min(domain.max, end)) };
+}
+
+const NAV_CYCLES = { months: ['1m', '3m', '6m'], years: ['1y', '3y'] };
+
+function syncNavCycle(preset) {
+  for (const [cycle, periods] of Object.entries(NAV_CYCLES)) if (periods.includes(preset)) state.navCycles[cycle] = preset;
+}
+
+function navCycleDetails(cycle) {
+  const periods = NAV_CYCLES[cycle];
+  if (!periods) return null;
+  const index = Math.max(0, periods.indexOf(state.navCycles[cycle]));
+  const current = periods[index], next = periods[(index + 1) % periods.length];
+  const label = id => id.endsWith('m') ? `最近${parseInt(id)}个月` : `最近${parseInt(id)}年`;
+  return { current, next, label: label(current), hint: `点击切换为${label(next)}` };
+}
+
+function navPeriodButton(code, period, range) {
+  return `<button type="button" data-action="nav-period" data-period="${period.id}" data-fund="${code}" aria-pressed="${range.preset === period.id}" ${navPeriodDisabled(period.id, range) ? 'disabled' : ''}>${period.label}</button>`;
+}
+
+function navCycleButton(code, cycle, range) {
+  const { current, label, hint } = navCycleDetails(cycle);
+  return `<button type="button" data-action="nav-cycle" data-cycle="${cycle}" data-period="${current}" data-fund="${code}" aria-pressed="${range.preset === current}" aria-label="${label}，${hint}" title="${hint}">${label}</button>`;
+}
+
+function navRangeControls(code, history, range) {
+  if (!history.length) return '';
+  syncNavCycle(range.preset);
+  const domain = navSliderDomain(code, history, range);
+  const visual = navVisualValues(code, history, range, domain);
+  const position = index => domain.max > domain.min ? (index - domain.min) / (domain.max - domain.min) * 100 : 0;
+  return `<div class="nav-range-controls"><div class="nav-range-labels num"><span data-nav-start>${esc(range.from)}</span><span data-nav-end>${esc(range.to)}</span></div>
+    <div class="nav-range-slider" role="group" aria-label="净值日期范围" data-start-at-end="${range.start === domain.max}" style="--range-start:${position(visual.start)}%;--range-end:${position(visual.end)}%"><div class="nav-range-track" aria-hidden="true"></div>${['start', 'end'].map(boundary => `<input type="range" class="nav-range-input" data-nav-boundary="${boundary}" data-fund="${code}" min="${domain.min}" max="${domain.max}" step="any" value="${visual[boundary]}" aria-label="${boundary === 'start' ? '开始日期' : '结束日期'}" aria-valuetext="${esc(history[range[boundary]].date)}" aria-controls="nav-chart-${code}" ${domain.max > domain.min && range.points.length ? '' : 'disabled'}>`).join('')}</div>
+    <div class="nav-periods" role="group" aria-label="净值快捷时段">${navCycleButton(code, 'months', range)}${navPeriodButton(code, NAV_PERIODS.find(period => period.id === 'last-month'), range)}${navCycleButton(code, 'years', range)}${navPeriodButton(code, NAV_PERIODS.find(period => period.id === 'all'), range)}</div>
+    <div class="nav-periods nav-trends" role="group" aria-label="趋势与交易时段">${NAV_PERIODS.filter(period => period.id.startsWith('recent-') || period.id === 'since-trade').map(period => navPeriodButton(code, period, range)).join('')}</div></div>`;
+}
+
+function updateNavRange(code, selection, interaction = {}) {
+  const history = state.nav[code]?.history;
+  const panel = app.querySelector(`.nav-panel[data-fund="${code}"]`);
+  if (!history?.length || !panel) return;
+  if (selection.preset && !NAV_PERIODS.some(period => period.id === selection.preset)) return;
+  const range = resolveNavRange(history, selection, navContext(code));
+  if (navPeriodDisabled(selection.preset, range)) return;
+  const previous = navSelection(code);
+  const sameDates = previous?.from === range.from && previous?.to === range.to;
+  if (selection.preset) {
+    state.navPreset = selection.preset;
+    syncNavCycle(selection.preset);
+    state.navRanges = {};
+    state.navDomains = {};
+    state.navVisuals = {};
+  } else state.navRanges[code] = selection;
+  const domain = navSliderDomain(code, history, range, interaction);
+  const summary = summarizeNavRange(range.points);
+  panel.querySelector('[data-nav-value]').textContent = number(summary.endNav, 4);
+  const change = panel.querySelector('[data-nav-change]');
+  change.textContent = percent(summary.change);
+  change.className = `num ${signClass(summary.change)}`;
+  panel.querySelector('[data-nav-date]').textContent = navRangeDate(summary, state.nav[code], range);
+  if (!sameDates || !interaction.visualDomain) panel.querySelector('[data-nav-chart]').innerHTML = sparkline(range.points, code, range);
+  panel.querySelector('[data-nav-count]').textContent = `${range.points.length} 期`;
+  panel.querySelector('[data-nav-start]').textContent = range.from;
+  panel.querySelector('[data-nav-end]').textContent = range.to;
+  const slider = panel.querySelector('.nav-range-slider');
+  const visual = navVisualValues(code, history, range, domain);
+  const position = index => domain.max > domain.min ? (index - domain.min) / (domain.max - domain.min) * 100 : 0;
+  slider.dataset.startAtEnd = String(range.start === domain.max);
+  slider.style.setProperty('--range-start', `${position(visual.start)}%`);
+  slider.style.setProperty('--range-end', `${position(visual.end)}%`);
+  slider.querySelectorAll('[data-nav-boundary]').forEach(input => {
+    input.min = domain.min;
+    input.max = domain.max;
+    input.value = visual[input.dataset.navBoundary];
+    input.disabled = domain.max <= domain.min || !range.points.length;
+    input.setAttribute('aria-valuetext', history[range[input.dataset.navBoundary]].date);
+  });
+  panel.querySelectorAll('[data-cycle]').forEach(button => {
+    const details = navCycleDetails(button.dataset.cycle);
+    if (!details) return;
+    button.dataset.period = details.current;
+    button.textContent = details.label;
+    button.setAttribute('aria-label', `${details.label}，${details.hint}`);
+    button.title = details.hint;
+  });
+  panel.querySelectorAll('[data-period]').forEach(button => {
+    button.setAttribute('aria-pressed', String(button.dataset.period === range.preset));
+    button.disabled = navPeriodDisabled(button.dataset.period, range);
+  });
 }
 
 function safeSource(value) {
@@ -320,26 +921,27 @@ function safeSource(value) {
 
 function navPanel(fund) {
   const nav = state.nav[fund.code];
-  const last = nav?.history.at(-1);
-  const before = nav?.history.at(-2);
-  const change = last && before ? last.nav / before.nav - 1 : null;
   const source = safeSource(nav?.source);
-  return `<section class="panel nav-panel"><div class="section-heading"><h2>公开净值</h2><span class="helper">人民币 A</span></div><div class="nav-value"><strong class="num">${last ? number(last.nav, 4) : '—'}</strong><span class="num ${signClass(change)}">${percent(change)}</span></div><p class="nav-date">${last ? `净值日期 ${esc(last.date)}` : nav?.unavailable ? '公开净值暂不可用' : '正在读取公开净值…'}</p>${nav?.history ? sparkline(nav.history) : ''}<p class="helper">最近 60 个已公布净值 · 非账户收益曲线</p><p class="helper details-box">${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer">公开净值来源</a> · ` : ''}本站净值为发布时快照，非实时自动更新。同步日期不等于净值日期。</p></section>`;
+  const history = nav?.history || [];
+  const range = selectedNavRange(fund.code, history);
+  const summary = summarizeNavRange(range.points);
+  const annualized = calculateNavAnnualized(history);
+  return `<section class="panel nav-panel" data-fund="${fund.code}"><div class="section-heading"><h2>公开净值</h2><span class="helper" data-nav-count>${range.points.length} 期</span></div><div class="nav-value"><strong class="num" data-nav-value>${number(summary.endNav, 4)}</strong><span class="num ${signClass(summary.change)}" data-nav-change title="所选区间涨跌幅">${percent(summary.change)}</span></div><p class="nav-annualized" title="按全部已载入历史净值计算复合年化；未计现金分红再投资"><span>平均年化</span><strong class="num ${signClass(annualized)}" data-nav-annualized>${percent(annualized)}</strong></p><p class="nav-date" data-nav-date>${navRangeDate(summary, nav, range)}</p><div id="nav-chart-${fund.code}" data-nav-chart>${history.length ? sparkline(range.points, fund.code, range) : ''}</div>${navRangeControls(fund.code, history, range)}<p class="helper nav-meta">${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer">来源</a> · ` : ''}非实时</p></section>`;
 }
 
-function feePanel(fund, book) {
-  return `<section class="panel fee-panel"><h2>费用与口径</h2><dl class="fee-display"><dt>买入参考费率</dt>${book.rate === null ? '<dd class="fee-unknown">以实际确认为准</dd>' : `<dd class="num">${esc(book.rate)}<small>%</small></dd>`}</dl><p class="helper">${book.incomplete ? '按你确认的买入费率推算费用和份额，估算结果以实际成交确认为准。' : `${book.rate === null ? '参考费率尚未配置，' : '平台优惠费率仅供参考，'}账本计算使用每笔交易的实际手续费。`}</p><details class="details-box"><summary>查看计算说明</summary><ul class="quiet-list"><li>买入和定投：本金按含手续费的总支出累计。</li><li>红利再投：增加份额，不增加投入本金。</li><li>现金分红：按实际到账金额处理。</li><li>卖出：实际到账按所选模式分配给本金与利润。</li><li>撤单、失败、关闭与待确认交易不计入持仓。</li><li>全部份额卖出时，未收回本金计入清仓损失。</li></ul></details></section>`;
-}
-function ledgerPanel(result, book) {
+function ledgerPanel(result, book, code) {
+  const originalById = new Map(book.transactions.map(tx => [tx.id, tx]));
+  const quote = valuation(code);
+  const performance = calculateTransactionPerformance(result.rows.map(row => ({ ...row, estimated: row.estimated === true || ['estimated', '历史估算'].includes(originalById.get(row.id)?.status) })), { valuationNav: quote?.nav ?? null, valuationDate: quote?.date ?? null });
   const filtered = result.rows.filter(row => (state.filter === 'all' || row.type === state.filter) && (state.statusFilter === 'all' || row.status === state.statusFilter || (state.statusFilter === 'error' && row.status === 'blocked')));
   const shown = filtered.slice().reverse().slice(0, state.limit);
   const statusOptions = [['all', '全部状态'], ['included', '已计入'], ['pending', '待确认'], ['excluded', '未计入'], ['error', '待修正']];
-  return `<section class="panel ledger-panel"><div class="section-heading"><div><h2>逐笔交易</h2><p class="helper">最近交易在前 · 展开查看分配明细</p></div><span class="fund-code">${book.transactions.length} 笔</span></div>
+  return `<details class="panel ledger-panel panel-disclosure" data-panel="transactions" data-fund="${code}" ${state.expandedPanels.transactions ? 'open' : ''}><summary class="panel-toggle"><h2>逐笔交易</h2><span class="fund-code">${book.transactions.length} 笔</span></summary><div class="panel-content">
     <div class="ledger-toolbar"><select id="type-filter" aria-label="筛选交易类型"><option value="all">全部类型</option>${Object.entries(TYPE_NAMES).map(([key, label]) => `<option value="${key}" ${state.filter === key ? 'selected' : ''}>${label}</option>`).join('')}</select><select id="status-filter" aria-label="筛选记录状态">${statusOptions.map(([key, label]) => `<option value="${key}" ${state.statusFilter === key ? 'selected' : ''}>${label}</option>`).join('')}</select></div>
-    <div class="transaction-list">${shown.length ? shown.map(row => transactionCard(row, book)).join('') : `<div class="empty-state">${icon('book')}<h3>${book.transactions.length ? '没有符合条件的交易' : '尚未配置交易数据'}</h3><p>${book.transactions.length ? '调整类型或状态筛选，查看其他记录。' : '此账本已准备好，更新交易数据并重新发布后即可查看。'}</p>${book.transactions.length ? '<button class="button" data-action="reset-filter">清除筛选</button>' : ''}</div>`}</div>${filtered.length > shown.length ? `<button class="button more-button" data-action="more">再显示 25 笔 · 还有 ${filtered.length - shown.length} 笔</button>` : ''}</section>`;
+    <div class="transaction-list">${shown.length ? shown.map(row => transactionCard(row, book, performance.get(row.id))).join('') : `<div class="empty-state"><h3>${book.transactions.length ? '没有符合条件的交易' : '尚未配置交易数据'}</h3>${book.transactions.length ? '<button class="button" data-action="reset-filter">清除筛选</button>' : ''}</div>`}</div>${filtered.length > shown.length ? `<button class="button more-button" data-action="more">再显示 25 笔 · 还有 ${filtered.length - shown.length} 笔</button>` : ''}</div></details>`;
 }
 
-function transactionCard(row, book) {
+function transactionCard(row, book, performance = {}) {
   const tx = book.transactions.find(item => item.id === row.id) || row;
   const included = row.status === 'included';
   const estimated = included && (row.estimated === true || ['estimated', '历史估算'].includes(tx.status));
@@ -352,33 +954,46 @@ function transactionCard(row, book) {
   const hasNote = tx.note !== undefined && tx.note !== null && String(tx.note).trim() !== '';
   const displayDate = included && row.date ? `${estimated ? '估算净值日期' : '净值日期'} ${esc(row.date)}` : tx.submittedAt ? `申请日期 ${esc(tx.submittedAt)}` : esc(row.date || '净值日期待填');
   const dateNote = tx.submittedAt
-    ? `申请日期：${esc(tx.submittedAt)} · ${estimated ? '估算净值日期' : '净值日期'}：${esc(row.date || '待确认')}。申请日期与净值日期含义不同。`
-    : `净值日期：${esc(row.date || '待填')}${tx.recordedAt ? ` · 录入日期：${esc(String(tx.recordedAt).slice(0, 10))}` : ' · 录入日期：原表未记录'}。两者含义不同。`;
+    ? `申请日期：${esc(tx.submittedAt)} · ${estimated ? '估算净值日期' : '净值日期'}：${esc(row.date || '待确认')}`
+    : `净值日期：${esc(row.date || '待填')}${tx.recordedAt ? ` · 录入日期：${esc(String(tx.recordedAt).slice(0, 10))}` : ' · 录入日期：原表未记录'}`;
   const detailMetrics = [
     `<div><dt>成交净值</dt><dd class="num">${number(values.nav, 4)}</dd></div>`,
     metric('确认份额', values.shares, 6), metric('实际手续费', values.fee),
-    metric('本笔份额变动', values.shareChange, 6), metric('交易后份额', values.sharesAfter, 6),
-    metric('交易前市值', values.valueBefore), metric('当时可用利润', values.availableProfit),
-    metric('本笔提取利润', values.profitWithdrawn), metric('本笔回收本金', values.principalRecovered),
-    metric('交易后本金', values.principalAfter), metric('交易后市值', values.valueAfter),
-    metric('本笔清仓损失', values.closedLoss), metric('累计投入', values.totalInvested),
-    metric('累计到账', values.totalRecovered), metric('累计提取利润', values.totalProfitWithdrawn),
-    metric('累计清仓损失', values.totalClosedLoss), metric('累计收益', values.totalProfit),
+    ...(performance.kind === 'lot' || performance.kind === 'sell' ? [metric(performance.kind === 'sell' ? '卖出成本（FIFO）' : row.type === 'reinvest' ? '新增投入' : '本笔原始成本', performance.cost)] : []),
+    ...(performance.kind === 'lot' ? [metric('本笔剩余份额', performance.remainingShares, 6), metric('本笔剩余成本', performance.remainingCost), metric('本笔卖出回款', performance.proceeds), metric('本笔分红', performance.cashDividends), metric('本笔已实现盈亏', performance.realizedProfit, 2, signClass(performance.realizedProfit)), metric('本笔未实现盈亏', performance.unrealizedProfit, 2, signClass(performance.unrealizedProfit))] : []),
   ];
-  const latest = valuation(selectedCode());
-  const currentValue = row.estimated === true && included && latest && latest.date >= row.date ? Math.round(row.shares * latest.nav * 100) / 100 : null;
-  const currentProfit = currentValue === null ? null : Math.round((currentValue - row.amount) * 100) / 100;
-  const currentReturn = currentProfit === null || !(row.amount > 0) ? null : currentProfit / row.amount;
-  const estimateExtras = row.estimated === true && included ? `<dl class="transaction-stats">${metric('估算净申购金额', row.netAmount)}${metric('本笔估算市值', currentValue)}${metric('本笔估算收益', currentProfit, 2, signClass(currentProfit))}<div><dt>本笔估算收益率</dt><dd class="num ${signClass(currentReturn)}">${percent(currentReturn)}</dd></div></dl><p class="helper detail-date-note">净申购金额＝申请金额 ÷ (1＋参考费率)，份额＝净申购金额 ÷ 对应净值；金额及估算份额四舍五入保留两位。本笔当前估算收益采用 ${esc(latest?.date || '待更新')} 净值，按全额成交推算。</p>` : '';
+  const profitLabel = performance.kind === 'sell' ? performance.estimated ? '本笔已实现盈亏（估算）' : '本笔已实现盈亏' : performance.kind === 'dividend' ? '本笔分红收益' : performance.estimated ? '本笔累计盈亏（估算）' : '本笔累计盈亏';
+  const performanceMetrics = `${performance.kind === 'lot' ? metric('本笔剩余市值', performance.marketValue) : performance.kind === 'sell' ? metric('本笔卖出成本', performance.cost) : ''}${metric(profitLabel, performance.profit, 2, signClass(performance.profit))}${performance.kind === 'dividend' ? '' : `<div><dt>本笔收益率</dt><dd class="num ${signClass(performance.returnRate)}">${percent(performance.returnRate)}</dd></div>`}`;
+  const estimateExtras = performance.kind === 'lot' ? `<p class="helper detail-date-note">估值净值日期 ${esc(performance.valuationDate || '待更新')}${performance.estimated ? ' · 含估算交易' : ''}</p>` : '';
   return `<article class="transaction"><div class="transaction-top"><div class="transaction-label"><span class="transaction-type-icon ${out ? 'out' : ''}">${icon(out ? 'up' : row.type === 'reinvest' ? 'coins' : 'down')}</span><div><p class="transaction-title">${esc(TYPE_NAMES[row.type] || '未知类型')}<span class="row-status">${esc(label)}</span></p><p class="transaction-date">${displayDate} · 第 ${row.index} 笔</p></div></div><p class="transaction-amount num">${row.type === 'reinvest' ? sensitive(values.shares, 6) : sensitive(row.amount ?? tx.amount ?? tx.cost)}<small>${!included ? '记录金额 · 元' : row.type === 'reinvest' ? '增加份额 · 份' : estimated ? '估算支出 · 元' : out ? '实际到账 · 元' : '确认支出 · 元'}</small></p></div>
-    <dl class="transaction-stats">${metric('剩余本金', values.principalAfter)}${metric('交易后收益', values.holdingProfit, 2, signClass(values.holdingProfit))}<div><dt>交易后收益率</dt><dd class="num ${signClass(values.holdingReturn)}">${percent(values.holdingReturn)}</dd></div></dl>${row.error ? `<p class="row-error">${esc(row.error)}</p>` : ''}
-    <details class="transaction-detail" data-id="${esc(row.id)}"><summary>成交与分配明细</summary><div class="detail-inner"><dl class="transaction-stats">${detailMetrics.join('')}</dl><p class="helper detail-date-note">${dateNote}</p>${row.estimateReason ? `<p class="helper detail-date-note">${esc(row.estimateReason)}</p>` : ''}${estimateExtras}${hasNote ? `<p class="transaction-note">${state.visible ? `备注：${esc(tx.note)}` : '备注已隐藏'}</p>` : ''}</div></details></article>`;
+    <dl class="transaction-stats">${performanceMetrics}</dl>${row.error ? `<p class="row-error">${esc(row.error)}</p>` : ''}
+    <details class="transaction-detail" data-id="${esc(row.id)}"><summary>本笔明细</summary><div class="detail-inner"><dl class="transaction-stats">${detailMetrics.join('')}</dl><p class="helper detail-date-note">${dateNote}</p>${row.estimateReason ? `<p class="helper detail-date-note">${esc(row.estimateReason)}</p>` : ''}${estimateExtras}${hasNote && state.visible ? `<p class="transaction-note">备注：${esc(tx.note)}</p>` : ''}</div></details></article>`;
 }
+app.addEventListener('toggle', event => {
+  const panel = event.target;
+  if (!panel.matches('details[data-panel]') || !app.contains(panel) || !state.unlocked || !checkSession()) return;
+  state.expandedPanels[panel.dataset.panel] = panel.open;
+  if (panel.dataset.panel === 'discipline-long-term' && panel.classList) {
+    if (!panel.open) panel.classList.remove('holding-progress-visible');
+    else if (!panel.classList.contains('holding-progress-visible')) {
+      panel.querySelectorAll('.holding-progress-fill').forEach(fill => fill.getBoundingClientRect());
+      panel.classList.add('holding-progress-visible');
+    }
+  }
+}, true);
 app.addEventListener('submit', event => {
   if (event.target.id === 'unlock-form') return unlock(event);
+  if (event.target.id === 'nav-estimate-form') return saveNavEstimateEdits(event);
+  if (event.target.id === 'bond-edit-form') return saveBondEdits(event);
 });
 app.addEventListener('change', event => {
   if (!state.unlocked || !checkSession()) return;
+  if (event.target.matches?.('[data-nav-boundary]')) {
+    const input = event.target;
+    const code = input.dataset.fund;
+    updateNavRange(code, moveNavBoundary(state.nav[code]?.history || [], navSelection(code), input.dataset.navBoundary, input.value, navContext(code)));
+    return;
+  }
   if (event.target.id === 'type-filter' || event.target.id === 'status-filter') {
     state[event.target.id === 'type-filter' ? 'filter' : 'statusFilter'] = event.target.value;
     state.limit = 25;
@@ -386,6 +1001,24 @@ app.addEventListener('change', event => {
     render();
     scrollTo({ top: position, behavior: 'instant' });
   }
+});
+app.addEventListener('input', event => {
+  const input = event.target;
+  if (input.closest?.('#nav-estimate-form')) {
+    if (state.unlocked && checkSession() && /^estimate-\d{6}$/.test(input.name)) {
+      const code = input.name.slice(9);
+      if (FUND_CODES.includes(code)) state.estimateDrafts[code] = input.value;
+    }
+    return;
+  }
+  if (input.closest?.('#bond-edit-form')) {
+    if (state.unlocked && checkSession() && state.bondDraft && ['marketValue', 'holdingProfit'].includes(input.name)) state.bondDraft[input.name] = input.value;
+    return;
+  }
+  if (!input.matches('[data-nav-boundary]') || !state.unlocked || !checkSession()) return;
+  const code = input.dataset.fund;
+  const history = state.nav[code]?.history || [];
+  updateNavRange(code, moveNavBoundary(history, navSelection(code), input.dataset.navBoundary, input.value, navContext(code)));
 });
 function actionClick(event) {
   if (state.unlocked && !checkSession()) { event.preventDefault(); return; }
@@ -396,7 +1029,7 @@ function actionClick(event) {
     return;
   }
   const target = event.target.closest('[data-action]');
-  if (!target) return;
+  if (!target || target.disabled) return;
   const action = target.dataset.action;
   if (action === 'theme') {
     const next = currentTheme() === 'dark' ? 'light' : 'dark';
@@ -408,6 +1041,26 @@ function actionClick(event) {
     return;
   }
   if (!state.unlocked) return;
+  if (action === 'bond-edit' && selectedBonds() && !state.bondBusy && bondStore) {
+    const entry = state.bonds.find(item => item.code === target.dataset.code);
+    if (entry) {
+      state.bondEditing = entry.code;
+      state.bondDraft = { code: entry.code, marketValue: entry.marketValue.toFixed(2), holdingProfit: entry.holdingProfit.toFixed(2) };
+      state.bondError = '';
+      render();
+    }
+  }
+  if (action === 'bond-cancel' && !state.bondBusy) {
+    state.bondEditing = null;
+    state.bondDraft = null;
+    state.bondError = '';
+    render();
+  }
+  if (action === 'nav-period') updateNavRange(target.dataset.fund, { preset: target.dataset.period }, { reset: true });
+  if (action === 'nav-cycle') {
+    const details = navCycleDetails(target.dataset.cycle);
+    if (details) updateNavRange(target.dataset.fund, { preset: details.next }, { reset: true });
+  }
   if (action === 'privacy') {
     activeTransition?.skipTransition();
     state.visible = !state.visible;
@@ -427,9 +1080,18 @@ function actionClick(event) {
   if (action === 'more') { const position = scrollY; state.limit += 25; render(); scrollTo({ top: position, behavior: 'instant' }); }
   if (action === 'reset-filter') { state.filter = 'all'; state.statusFilter = 'all'; render(); }
 }
+setupNavChartInteractions(app);
+navSliders = setupNavSliderInteractions(app, { onUpdate(update) {
+  if (!state.unlocked || !checkSession()) { navSliders?.cancel(); return; }
+  const history = state.nav[update.code]?.history;
+  if (!history?.length) return;
+  const { start, end } = update.range;
+  if (!history[start] || !history[end]) return;
+  updateNavRange(update.code, { from: history[start].date, to: history[end].date }, { visualDomain: update.domain, visualValues: update.values });
+} });
 document.addEventListener('click', actionClick);
-window.addEventListener('hashchange', () => { if (!state.unlocked || !checkSession()) return; state.limit = 25; state.filter = 'all'; state.statusFilter = 'all'; render(); scrollTo({ top: 0, behavior: 'instant' }); });
+window.addEventListener('hashchange', () => { if (!state.unlocked || !checkSession()) return; state.limit = 25; state.filter = 'all'; state.statusFilter = 'all'; state.expandedPanels = {}; render(); if (!['us-exposure', 'bond-reserve'].includes(routeSection())) scrollTo({ top: 0, behavior: 'instant' }); });
 window.addEventListener('pageshow', event => { if (event.persisted) lock(); });
-document.addEventListener('visibilitychange', checkSession);
-window.addEventListener('focus', checkSession);
+document.addEventListener('visibilitychange', () => { if (checkSession()) dataRefresh.check(); });
+window.addEventListener('focus', () => { if (checkSession()) dataRefresh.check(); });
 renderGate();

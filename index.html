@@ -3,16 +3,19 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="theme-color" content="#245BDC">
+    <meta name="theme-color" content="#0c725d">
     <meta name="referrer" content="no-referrer">
-    <meta name="description" content="四只基金的个人交易账本，支持双模式收益计算、历史净值、移动端使用与每次三分钟的日期密码解锁。">
+    <meta name="description" content="华夏、广发、银华、国富四只基金的个人账本与公开净值，支持双模式收益计算、移动端使用与密码解锁。">
     <title>基金账本</title>
     <link rel="icon" href="./assets/mark.svg" type="image/svg+xml">
     <link rel="manifest" href="./manifest.webmanifest">
-    <link rel="stylesheet" href="./styles.css?v=20261015-unified5">
-    <script type="module" src="./app.js?v=20261015-unified5"></script>
+    <link rel="stylesheet" href="./styles.css?v=20261019-holding-duration">
+    <link rel="stylesheet" href="./redesign.css?v=20261019-nav-estimates">
+    <script type="module" src="./app.js?v=20261019-nav-estimates"></script>
+    <script type="module" src="./visual-runtime.js?v=20261019-orbit"></script>
   </head>
   <body>
+    <div id="ambient-scene" aria-hidden="true"></div>
     <a class="skip-link" href="#main">跳到主要内容</a>
     <div id="app"></div>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>

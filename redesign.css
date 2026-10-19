@@ -1,0 +1,638 @@
+/* Orbit Ledger — interface skin. Data, routing and disclosure behavior stay in app.js. */
+:root {
+  --bg: #f3f4ee;
+  --paper: #fffefa;
+  --paper-2: #f3f6f0;
+  --text: #18352f;
+  --muted: #63766e;
+  --line: #dce4dc;
+  --blue: #0c725d;
+  --blue-tint: #e4f1e7;
+  --positive: #b84b45;
+  --negative: #087c63;
+  --danger: #b54842;
+  --red: #b85f58;
+  --teal: #17826f;
+  --purple: #8361ad;
+  --shadow: 0 3px 5px #16362a03, 0 18px 48px #16362a08, inset 0 1px 0 #ffffffb3;
+  --surface-glass: #fffefaeF;
+  --header-glass: #fffefad9;
+  --focus-ring: #08745d;
+  --accent-soft: #d4e8d8;
+  --ambient-opacity: .55;
+  --ease-ui: cubic-bezier(.22, 1, .36, 1);
+  --radius-panel: 22px;
+  --radius-control: 12px;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0c1519;
+  --paper: #142125;
+  --paper-2: #1a2a2c;
+  --text: #e7efea;
+  --muted: #a1b5ad;
+  --line: #2a3e3e;
+  --blue: #92dfbf;
+  --blue-tint: #203d35;
+  --positive: #f6a29a;
+  --negative: #87dfbc;
+  --danger: #f6a29a;
+  --red: #e9a299;
+  --teal: #80d4be;
+  --purple: #bea6e8;
+  --shadow: 0 3px 5px #00000008, 0 18px 48px #00000024, inset 0 1px 0 #ffffff08;
+  --surface-glass: #142125ef;
+  --header-glass: #142125db;
+  --focus-ring: #a3e8c9;
+  --accent-soft: #294b3e;
+  --ambient-opacity: .65;
+}
+
+html { scroll-padding-top: 112px; }
+body {
+  min-width: 320px;
+  background: var(--bg);
+  background-image: radial-gradient(ellipse at 12% 0%, color-mix(in srgb, var(--blue) 6%, transparent), transparent 52%);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background-image: linear-gradient(color-mix(in srgb, var(--line) 28%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--line) 28%, transparent) 1px, transparent 1px);
+  background-size: 68px 68px;
+  mask-image: linear-gradient(#0004, transparent 65%);
+}
+#ambient-scene {
+  display: block;
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--ambient-opacity);
+}
+#app { position: relative; z-index: 1; min-height: 100dvh; }
+:focus-visible { outline: 3px solid var(--focus-ring); outline-offset: 4px; }
+::selection { color: var(--text); background: var(--accent-soft); }
+h1 { font-size: clamp(27px, 3.2vw, 40px); letter-spacing: -.05em; line-height: 1.4; }
+h2 { font-size: 17px; letter-spacing: -.025em; }
+.icon { stroke-width: 1.65; }
+.num { font-variant-numeric: tabular-nums; }
+.helper { line-height: 1.85; }
+.skip-link { border-radius: 12px; box-shadow: var(--shadow); z-index: 100; }
+
+/* Floating navigation forms a stable anchor while the content changes. */
+.site-header {
+  position: sticky;
+  top: 16px;
+  height: 76px;
+  width: calc(100% - 48px);
+  max-width: 1264px;
+  margin: 16px auto 0;
+  z-index: 25;
+  border: 1px solid color-mix(in srgb, var(--line) 86%, transparent);
+  border-radius: 20px;
+  background: var(--header-glass);
+  box-shadow: 0 8px 32px #132e2307, inset 0 1px 0 #ffffff10;
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+.header-inner { max-width: none; padding: 0 24px; gap: 32px; }
+.brand { font-size: 17px; letter-spacing: -.03em; gap: 12px; }
+.brand-mark {
+  width: 41px;
+  height: 41px;
+  border: 1px solid color-mix(in srgb, var(--blue) 15%, transparent);
+  border-radius: 13px;
+  background: var(--blue);
+  color: var(--paper);
+  box-shadow: inset 0 1px 0 #ffffff25, 0 4px 8px color-mix(in srgb, var(--blue) 15%, transparent);
+  transition: transform .35s var(--ease-ui), box-shadow .25s;
+}
+[data-theme="dark"] .brand-mark { color: #153329; }
+.brand-mark .icon { width: 22px; height: 22px; }
+.brand-copy { gap: 4px; }
+.session-timer { font-size: 10px; opacity: .9; }
+.desktop-nav { gap: 6px; align-items: center; padding: 8px 0; }
+.desktop-nav a {
+  min-height: 44px;
+  align-self: auto;
+  padding: 0 13px;
+  border-radius: 11px;
+  transition: color .2s, background .2s;
+}
+.desktop-nav a.active { background: var(--blue-tint); color: var(--blue); }
+.desktop-nav a.active::after { display: none; }
+.desktop-nav a.exposure-nav-warning { color: var(--danger); }
+.desktop-nav a.exposure-nav-warning.active { background: color-mix(in srgb, var(--danger) 10%, transparent); }
+.header-actions { gap: 8px; }
+.icon-button { width: 44px; height: 44px; border-radius: 13px; background: transparent; border-color: transparent; }
+.icon-button, .button {
+  min-height: 44px;
+  transition: background .2s, border-color .2s, color .2s, box-shadow .25s, transform .3s var(--ease-ui);
+}
+.button { border-radius: var(--radius-control); padding: 10px 17px; font-weight: 600; }
+.button.primary { color: var(--paper); background: var(--blue); border-color: var(--blue); box-shadow: 0 6px 16px color-mix(in srgb, var(--blue) 13%, transparent); }
+[data-theme="dark"] .button.primary { color: #132d24; }
+.button.primary:hover { filter: none; box-shadow: 0 8px 22px color-mix(in srgb, var(--blue) 21%, transparent); }
+.button:active, .icon-button:active { transform: scale(.96); }
+input, select { min-height: 48px; border-radius: var(--radius-control); background: var(--paper); padding: 12px 14px; border-color: var(--line); transition: background .2s, border-color .2s, box-shadow .2s; }
+input:focus, select:focus { border-color: var(--blue); box-shadow: 0 0 0 4px color-mix(in srgb, var(--blue) 8%, transparent); }
+input:disabled, select:disabled { opacity: .55; }
+
+/* Content surfaces preserve dense information without visual noise. */
+.workspace { max-width: 1264px; padding: 46px 48px 88px; animation: none; }
+.page-heading { margin-bottom: 30px; }
+.panel, .fund-card, .annual-discipline-alert {
+  background: var(--surface-glass);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow);
+  background-image: linear-gradient(145deg, #ffffff08, transparent 35%);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+.panel { padding: 27px 28px; }
+.section-heading { margin-bottom: 18px; gap: 16px; }
+.status-chip { border: 1px solid color-mix(in srgb, var(--blue) 10%, transparent); padding: 5px 10px; border-radius: 7px; font-size: 11px; }
+.status-chip.dot::before { width: 5px; height: 5px; }
+.back-link { min-height: 44px; margin-bottom: 17px; gap: 8px; border-radius: 8px; font-size: 12px; }
+.back-link .icon { transition: transform .25s var(--ease-ui); }
+.fund-title-line { gap: 16px; }
+.fund-title-line h1 { font-size: clamp(22px, 2.5vw, 30px); line-height: 1.5; }
+.fund-title-line .fund-initial { width: 54px; height: 54px; border-radius: 17px; }
+.fund-subtitle { margin-top: 6px; }
+.fund-code { font-size: 11px; letter-spacing: .04em; }
+.fund-initial { animation: none; border: 1px solid color-mix(in srgb, var(--fund) 13%, transparent); }
+.fund-card { animation: none; padding: 28px; border-radius: 21px; }
+.fund-card::before { top: 26px; bottom: 26px; width: 3px; }
+.fund-card .fund-initial { border-radius: 14px; }
+.fund-card:hover { box-shadow: 0 16px 36px color-mix(in srgb, var(--fund) 8%, transparent); }
+.fund-name { font-size: 16px; }
+.enter-arrow { width: 38px; height: 38px; background: var(--paper-2); }
+
+/* The six rules remain the visual and semantic center of the home page. */
+.discipline-home { --discipline-gutter: 32px; --discipline-label-width: 112px; --discipline-column-gap: 28px; }
+.discipline-home .discipline-heading { margin-bottom: 32px; padding: 4px 2px 0; position: relative; }
+.discipline-home .discipline-heading::after { content: ""; display: block; height: 3px; width: 48px; margin-top: 17px; border-radius: 5px; background: linear-gradient(90deg, var(--blue), color-mix(in srgb, var(--blue) 18%, transparent)); }
+.discipline-home .discipline-heading h1 { font-size: clamp(30px, 3.4vw, 44px); font-weight: 650; letter-spacing: -.05em; }
+.discipline-home .discipline-sheet { display: grid; gap: 14px; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.discipline-home .discipline-entry {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface-glass);
+  box-shadow: 0 3px 3px #16362a02, 0 10px 30px #16362a03;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  transition: border-color .22s, box-shadow .25s, background .2s;
+  scroll-margin-top: 112px;
+}
+.discipline-home .discipline-entry + .discipline-entry { border-top: 1px solid var(--line); }
+.discipline-home .discipline-entry::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; background: radial-gradient(480px circle at var(--spotlight-x, 50%) var(--spotlight-y, 0%), color-mix(in srgb, var(--blue) 7%, transparent), transparent 70%); transition: opacity .35s; }
+.discipline-home .discipline-entry:first-child, .discipline-home .discipline-entry:last-child { border-radius: 20px; }
+.discipline-home :is(.discipline-entry:not(.discipline-entry-checkable), .discipline-rule-toggle) { align-items: start; padding-block: 29px 30px; }
+.discipline-home .discipline-entry-label { margin-top: 11px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .02em; }
+.discipline-home .discipline-entry-content h2 { font-size: 21px; line-height: 1.75; font-weight: 600; letter-spacing: -.02em; }
+.discipline-home .discipline-entry-content .discipline-numbered-heading { grid-template-columns: 38px minmax(0, 1fr); gap: 16px; align-items: baseline; }
+.discipline-home .discipline-heading-number { display: inline-flex; justify-content: center; align-items: center; width: 38px; min-height: 38px; border-radius: 11px; color: var(--blue); background: var(--blue-tint); font: 600 14px/1 var(--digits); letter-spacing: -.03em; transform: translateY(-2px); }
+.discipline-home .discipline-entry-content > p { margin-top: 9px; padding-left: 54px; font-size: 13px; line-height: 1.95; }
+.discipline-home .discipline-entry-content h2 a { text-decoration-thickness: 1px; text-underline-offset: 6px; min-height: 38px; border-radius: 5px; }
+.discipline-home .discipline-number { font-size: 27px; color: var(--blue); }
+.discipline-home .discipline-entry-warning { border-color: color-mix(in srgb, var(--danger) 26%, var(--line)); background: color-mix(in srgb, var(--danger) 2%, var(--surface-glass)); box-shadow: inset 3px 0 0 var(--danger), 0 6px 28px color-mix(in srgb, var(--danger) 3%, transparent); }
+.discipline-home .discipline-entry-warning .discipline-heading-number { color: var(--danger); background: color-mix(in srgb, var(--danger) 9%, var(--paper)); }
+.discipline-home .discipline-entry-warning .discipline-entry-label { color: var(--danger); }
+.discipline-home .discipline-entry-focus { background: color-mix(in srgb, var(--blue) 3%, var(--surface-glass)); border-color: color-mix(in srgb, var(--blue) 19%, var(--line)); }
+.discipline-home .discipline-entry-focus .discipline-entry-label { color: var(--blue); }
+.discipline-home .discipline-rule-toggle { cursor: pointer; border-radius: inherit; }
+.discipline-home .discipline-rule-toggle:hover { background: transparent; }
+.discipline-home .discipline-rule-toggle:focus-visible { outline-offset: -5px; }
+.discipline-home .discipline-compliance-line { margin-top: 13px; padding-left: 54px; gap: 9px 16px; }
+.exposure-badge { border-radius: 7px; padding: 5px 9px; font-size: 11px; }
+.discipline-home .discipline-expand-hint { min-height: 30px; color: var(--muted); font-size: 11px; gap: 8px; }
+.discipline-home .discipline-expand-hint .icon { width: 14px; height: 14px; transition: transform .35s var(--ease-ui); }
+.discipline-home .discipline-compliance-details { padding-bottom: 30px; padding-left: calc(var(--discipline-gutter) + var(--discipline-label-width) + var(--discipline-column-gap) + 54px); }
+.discipline-home .exposure-reasons { padding-top: 8px; border-color: var(--line); }
+.discipline-home .exposure-check { padding: 10px 0; }
+.discipline-home .exposure-check-target { padding: 12px 14px; margin-inline: -14px; border-radius: 11px; transition: background .2s; }
+.discipline-home .exposure-check-name { text-decoration-color: color-mix(in srgb, var(--blue) 35%, transparent); text-underline-offset: 5px; }
+.discipline-home .exposure-check-heading { align-items: center; gap: 12px; margin-bottom: 5px; }
+.discipline-home .exposure-check-state { padding: 2px 6px; background: color-mix(in srgb, var(--danger) 8%, transparent); border-radius: 5px; font-size: 10px; }
+.discipline-home .exposure-check > .exposure-check-source { margin: 0 0 3px; padding-left: 0; }
+.discipline-home .holding-duration-list { padding-top: 5px; }
+.discipline-home .holding-duration-list > li { padding: 20px 0; }
+.discipline-home .holding-duration-heading { gap: 14px; }
+.discipline-home .holding-fund-name { font-size: 13px; }
+.discipline-home .holding-duration { color: var(--blue); font-size: 12px; }
+.discipline-home .holding-duration-empty { color: var(--muted); }
+.discipline-home .holding-progress-layout { gap: 16px; margin-top: 13px; }
+.discipline-home .holding-progress-track { height: 7px; background: var(--paper-2); box-shadow: inset 0 1px 2px color-mix(in srgb, var(--text) 5%, transparent); }
+.discipline-home .holding-progress-fill { background: linear-gradient(90deg, color-mix(in srgb, var(--blue) 65%, var(--paper)), var(--blue)); }
+.discipline-home .holding-progress-maximum { font-size: 10px; min-width: 40px; text-align: right; }
+.discipline-home .discipline-subrules { margin-top: 15px; margin-left: 54px; }
+.discipline-home .discipline-subrule { grid-template-columns: 27px minmax(0, 1fr); gap: 12px; }
+.discipline-home .discipline-clause-label { color: var(--blue); font-size: 11px; }
+.discipline-home .discipline-subrule > p { font-size: 15px; line-height: 1.95; }
+.discipline-home .discipline-subrule + .discipline-subrule { margin-top: 15px; padding-top: 15px; }
+.discipline-home :is([data-discipline="annual-profit"], [data-discipline="add-discipline"]) .discipline-entry-content h2 { font-size: 20px; line-height: 1.75; }
+.discipline-home .discipline-urgent { font-size: 16px; }
+
+/* Fund research, charts and transaction ledger share one material system. */
+.fund-layout { gap: 22px; }
+.fund-regions.panel { padding: 24px 28px; margin-bottom: 22px; }
+.fund-regions .section-heading { margin-bottom: 5px; }
+.fund-regions .region-basis { font-size: 11px; }
+.fund-regions .region-shares { gap: 8px 25px; margin-top: 18px; }
+.fund-regions .region-shares > li { min-height: 57px; padding: 10px 0; transition: background .2s, border-color .2s; border-bottom-color: var(--line); }
+.fund-regions .region-shares > li > span { font-size: 12px; }
+.fund-regions .region-shares > li > strong { font-size: 20px; }
+.fund-regions .region-shares > .region-us { padding-inline: 12px; margin-inline: -12px; border-radius: 9px; background: color-mix(in srgb, var(--blue) 4%, transparent); }
+.fund-regions .region-shares > .region-us-below { background: color-mix(in srgb, var(--danger) 6%, transparent); border-bottom-color: var(--danger); }
+.fund-regions.exposure-below { border-color: color-mix(in srgb, var(--danger) 32%, var(--line)); }
+.fund-exposure-note { border: 1px solid color-mix(in srgb, var(--danger) 13%, transparent); padding: 12px 15px; border-radius: 12px; font-size: 12px; }
+.exposure-location { outline-color: var(--danger); outline-offset: 4px; }
+.fund-regions, .region-us, [data-discipline="us-exposure"] { scroll-margin-top: 120px; }
+.nav-panel { overflow: visible; }
+.nav-value { gap: 15px; margin-top: 16px; }
+.nav-value strong { font-size: 37px; letter-spacing: -.055em; }
+.nav-annualized { font-size: 11px; }
+.nav-annualized > strong { font-size: 14px; }
+.nav-date { font-size: 11px; margin-top: 5px; }
+.nav-chart { --nav-chart-height: 190px; margin-top: 23px; }
+.nav-chart-legend { gap: 16px; min-height: 24px; font-size: 10px; }
+.nav-chart .nav-plot { overflow: visible; }
+.nav-hover-tooltip { padding: 10px 13px; border-radius: 10px; background: var(--paper); box-shadow: 0 8px 25px #00000013; }
+.nav-chart-pending-region { fill: var(--nav-pending-fill, color-mix(in srgb, var(--blue) 4%, transparent)); stroke: color-mix(in srgb, var(--muted) 24%, transparent); stroke-width: 1; stroke-dasharray: 2 5; vector-effect: non-scaling-stroke; pointer-events: none; }
+.nav-chart-pending-label { position: absolute; top: 7px; right: 6px; left: auto !important; z-index: 3; max-width: calc(100% - 12px); padding: 3px 6px; border: 1px dashed color-mix(in srgb, var(--muted) 40%, transparent); border-radius: 5px; background: color-mix(in srgb, var(--paper) 94%, transparent); color: var(--muted); font: 10px/1.5 var(--font); white-space: nowrap; pointer-events: none; }
+.nav-chart-estimated-curve { fill: none; stroke: var(--fund); stroke-width: 1.8; stroke-dasharray: 4 5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.nav-chart > .nav-chart-estimated-point { position: absolute; width: 8px; height: 8px; box-sizing: border-box; z-index: 2; pointer-events: none; transform: translate(-50%, -50%); border: 1.5px solid var(--fund); background: var(--paper); border-radius: 50%; }
+.nav-chart-legend-estimate-price { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+.nav-chart-estimate-swatch { position: relative; display: inline-block; flex: 0 0 26px; width: 26px; height: 8px; }
+.nav-chart-estimate-swatch::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1.5px dashed var(--fund); transform: translateY(-50%); }
+.nav-chart-estimate-swatch::after { content: ""; position: absolute; right: 4px; top: 50%; width: 7px; height: 7px; box-sizing: border-box; border: 1.5px solid var(--fund); border-radius: 50%; background: var(--paper); transform: translateY(-50%); }
+.nav-hover-point.is-estimated { border-color: var(--fund); background: var(--paper); box-shadow: 0 0 0 1px var(--paper); }
+.nav-hover-status { display: block; margin-top: 4px; padding-top: 4px; border-top: 1px dashed var(--line); color: var(--muted); font: 10px/1.6 var(--font); }
+.nav-chart-dates { display: flex; justify-content: space-between; gap: 14px; margin-top: 6px; color: var(--muted); font: 10px/1.6 var(--digits); }
+.nav-chart-dates > time { min-width: 0; }
+.nav-chart-dates > time:last-child { text-align: right; }
+.nav-range-controls { border-top: 1px solid var(--line); margin-top: 18px; padding-top: 17px; }
+.nav-range-labels { font-size: 11px; }
+.nav-range-track { height: 4px; background: var(--paper-2); }
+.nav-range-input { min-height: 0; padding: 0; border: 0; border-radius: 0; background: transparent; }
+.nav-range-input:focus { box-shadow: none; }
+.nav-range-input::-webkit-slider-thumb { width: 20px; height: 20px; margin-top: -8px; box-shadow: 0 2px 7px #0c302a24; }
+.nav-range-input::-moz-range-thumb { width: 17px; height: 17px; box-shadow: 0 2px 7px #0c302a24; }
+.nav-periods { gap: 5px; }
+.nav-periods button { border-radius: 9px; }
+.nav-periods:not(.nav-trends) button { padding-inline: 14px; font-size: 12px; }
+.nav-trends { margin-top: 4px; }
+.nav-panel .nav-meta { font-size: 10px; margin-top: 12px; }
+.panel-disclosure > .panel-toggle { min-height: 44px; }
+.panel-toggle::after { display: grid; place-items: center; width: 28px; height: 28px; flex-basis: 28px; background: var(--paper-2); border-radius: 8px; font-size: 18px; transition: color .2s, background .2s; }
+.panel-disclosure[open] > .panel-toggle { margin-bottom: 20px; }
+.mode-control { padding: 5px; border-radius: 13px; background: var(--paper-2); }
+.mode-control::before { top: 5px; bottom: 5px; left: 5px; width: calc(50% - 5px); border-radius: 9px; box-shadow: 0 2px 5px #00000006; }
+.mode-control button { min-height: 44px; }
+.summary-main { padding-block: 25px; }
+.summary-main .card-value { font-size: 33px; }
+.summary-grid { gap: 24px 18px; padding-top: 24px; }
+.summary-grid dt, .transaction-stats dt { font-size: 11px; line-height: 1.7; }
+.summary-grid dd { font-size: 17px; }
+.summary-foot { font-size: 11px; padding-top: 18px; margin-top: 25px; }
+.ledger-toolbar { gap: 12px; margin-bottom: 22px; }
+.ledger-toolbar select { min-height: 46px; padding: 9px 13px; border-radius: 11px; }
+.transaction { padding-block: 22px; animation: none; }
+.transaction-type-icon { width: 36px; height: 36px; border-radius: 11px; }
+.transaction-title { font-size: 13px; }
+.transaction-date { margin-top: 4px; font-size: 10px; }
+.transaction-detail > summary { min-height: 44px; font-size: 11px; }
+.transaction-note { padding: 12px 14px; border-radius: 11px; }
+.row-status { padding: 2px 6px; border-radius: 5px; }
+.details-box > summary { min-height: 44px; }
+.empty-state { padding: 35px 12px; }
+.more-button { min-height: 48px; }
+
+/* Bond editing is deliberately calm; values keep their existing privacy masking. */
+.bonds-page { animation: none; }
+.bonds-heading { margin-bottom: 27px; }
+.bonds-summary { padding-block: 28px; margin-bottom: 23px; }
+.bonds-summary > dl { gap: 30px; }
+.bonds-summary dd { margin-top: 9px; font-size: 28px; }
+.bonds-summary-return { padding-left: 30px; }
+.bonds-grid { gap: 22px; }
+.bond-card { transition: border-color .2s, box-shadow .25s; }
+.bond-card-heading h2 { font-size: 17px; }
+.bond-code { color: var(--blue); font-size: 10px; margin-bottom: 8px; }
+.bond-edit-button { min-height: 44px; border-radius: 10px; padding-inline: 14px; }
+.bond-editing-state { min-height: 44px; }
+.bond-metrics { gap: 22px; margin-top: 28px; }
+.bond-metrics dd { margin-top: 8px; font-size: 22px; }
+.bond-return { margin-top: 23px; padding-top: 19px; }
+.bond-return > strong { font-size: 24px; }
+.bond-edit-form { margin-top: 26px; }
+.bond-edit-fields { gap: 16px; }
+.bond-form-actions { gap: 10px; margin-top: 20px; }
+.bond-form-actions .button { min-height: 44px; }
+.bonds-rate-note { margin-top: 19px; }
+.estimate-panel { margin-top: 22px; }
+.estimate-date { flex: 0 0 auto; color: var(--muted); font-size: 11px; line-height: 1.8; }
+.estimate-rows { display: grid; }
+.estimate-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(140px, 210px); align-items: center; gap: 8px 24px; padding: 17px 0; border-top: 1px solid var(--line); }
+.estimate-fund { display: grid; gap: 5px; min-width: 0; }
+.estimate-fund-name { display: block; color: var(--text); font-size: 13px; line-height: 1.8; font-weight: 550; overflow-wrap: anywhere; }
+.estimate-base { color: var(--muted); font-size: 10px; line-height: 1.7; }
+.estimate-base time { font-family: var(--digits); }
+.estimate-field { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 6px 10px; min-width: 0; }
+.estimate-input-wrap { position: relative; flex: 1 1 120px; min-width: 0; }
+.estimate-input-wrap input { min-width: 0; padding: 11px 34px 11px 13px; font: 16px/1.5 var(--digits); text-align: right; }
+.estimate-input-wrap input::placeholder { font-size: 12px; letter-spacing: 0; }
+.estimate-unit { position: absolute; top: 50%; right: 13px; transform: translateY(-50%); color: var(--muted); pointer-events: none; font: 12px/1.5 var(--digits); }
+.estimate-official { color: var(--blue); font-size: 10px; white-space: nowrap; }
+.estimate-row-official .estimate-input-wrap { flex-basis: 100%; }
+.estimate-row-official input { background: var(--paper-2); }
+.estimate-row-invalid input { border-color: var(--danger); }
+.estimate-error { grid-column: 2; color: var(--danger); font-size: 11px; line-height: 1.8; overflow-wrap: anywhere; }
+.estimate-unavailable { margin-bottom: 15px; color: var(--muted); font-size: 12px; line-height: 1.85; }
+.estimate-actions { display: flex; justify-content: flex-end; margin-top: 16px; padding-top: 18px; border-top: 1px solid var(--line); }
+.estimate-actions .button { min-width: 112px; }
+#bonds-reserve-summary { scroll-margin-top: 120px; }
+#bonds-reserve-summary[data-bond-reserve-status="below"] { border-color: color-mix(in srgb, var(--danger) 38%, var(--line)); background-color: color-mix(in srgb, var(--danger) 4%, var(--surface-glass)); }
+#bonds-reserve-summary[data-bond-reserve-status="unknown"] { border-color: var(--line); background-color: var(--surface-glass); }
+.bond-reserve-note { display: flex; align-items: flex-start; gap: 9px; margin-top: 20px; padding: 13px 15px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper-2); color: var(--muted); font-size: 12px; line-height: 1.85; overflow-wrap: anywhere; }
+.bonds-summary > .bond-reserve-note:first-child { margin: 0 0 22px; }
+.bonds-state > .bond-reserve-note:first-child { margin-top: 0; }
+.bond-reserve-pending { color: var(--muted); background: var(--paper-2); border-color: var(--line); }
+.bond-nav-pending .exposure-nav-dot { background: var(--muted); }
+.discipline-home .bond-reserve-target > p { color: var(--muted); font-size: 12px; line-height: 1.9; }
+.discipline-home .bond-reserve-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 8px; color: var(--blue); font-size: 12px; text-decoration: underline; text-underline-offset: 4px; }
+.bond-reserve-link .icon { width: 14px; height: 14px; }
+.bond-reserve-note > :not(.icon) { min-width: 0; }
+.bond-reserve-note > .icon { width: 17px; height: 17px; margin-top: 3px; }
+.bond-reserve-note a { display: inline; margin-left: 8px; color: var(--blue); text-decoration: underline; text-underline-offset: 4px; }
+.bond-reserve-note a:focus-visible { outline-offset: 3px; border-radius: 3px; }
+[data-bond-reserve-status="below"] .bond-reserve-note { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 16%, var(--line)); background: color-mix(in srgb, var(--danger) 5%, var(--paper)); }
+.bond-reserve-share { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-top: 18px; color: var(--muted); font-size: 12px; line-height: 1.85; overflow-wrap: anywhere; }
+.bond-reserve-share [data-bond-reserve-share] { color: var(--blue); font-size: 21px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+[data-bond-reserve-status="below"] .bond-reserve-share [data-bond-reserve-share] { color: var(--danger); }
+[data-bond-reserve-status="unknown"] .bond-reserve-share [data-bond-reserve-share] { color: var(--muted); }
+.bond-reserve-location { outline: 2px solid transparent; outline-offset: 5px; }
+.bond-reserve-location:focus { outline-color: var(--blue); animation: bond-reserve-locate 2.5s ease both; }
+.bond-reserve-location:focus-visible { outline-color: var(--focus-ring); animation: none; }
+@keyframes bond-reserve-locate { 0%, 35% { outline-color: var(--blue); } 100% { outline-color: transparent; } }
+.annual-discipline-alert { top: 108px; padding: 23px 25px 26px; border-color: color-mix(in srgb, var(--danger) 38%, var(--line)); border-radius: 18px; box-shadow: 0 16px 60px #00000018; }
+.annual-discipline-alert .annual-alert-rules { margin-top: 18px; padding-top: 18px; }
+.annual-discipline-alert.exposure-route-alert { width: calc(100% - 96px); max-width: 1168px; margin-top: 22px; }
+.toast { background: var(--text); color: var(--paper); border-radius: 13px; padding: 13px 20px; box-shadow: 0 10px 35px #0000001a; }
+
+/* A quiet 3D stage sits behind the two-column access screen. */
+.gate { min-height: 100dvh; padding: 56px 48px; overflow: clip; background: transparent; }
+.gate::before, .gate::after { display: none; }
+.gate-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(340px, .8fr);
+  align-items: center;
+  gap: clamp(50px, 8vw, 120px);
+  width: min(100%, 1080px);
+  min-height: 550px;
+  animation: none;
+}
+.gate .brand { align-self: start; justify-content: flex-start; align-items: center; margin: 35px 0 0; gap: 14px; font-size: 26px; font-weight: 650; }
+.gate .brand-mark { width: 51px; height: 51px; border-radius: 17px; }
+.gate .brand-mark .icon { width: 27px; height: 27px; }
+.gate-theme { position: fixed; right: 32px; top: 28px; z-index: 5; }
+.gate-theme .icon-button { border-color: var(--line); background: var(--header-glass); backdrop-filter: blur(10px); }
+.gate-panel { position: relative; padding: 38px 34px 28px; border: 1px solid var(--line); border-radius: 26px; background: var(--surface-glass); box-shadow: 0 25px 80px #133b2e0c; backdrop-filter: blur(24px); }
+.gate-panel::before { content: ""; position: absolute; left: 34px; right: 34px; top: 0; height: 1px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--blue) 55%, transparent), transparent); }
+.gate-panel::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: radial-gradient(380px circle at var(--spotlight-x, 20%) var(--spotlight-y, 0%), color-mix(in srgb, var(--blue) 5%, transparent), transparent 70%); }
+.gate-lock { animation: none !important; display: grid; place-items: center; width: 49px; height: 49px; border-radius: 16px; border: 1px solid color-mix(in srgb, var(--blue) 15%, transparent); background: var(--blue-tint); color: var(--blue); margin-bottom: 23px; }
+.gate-lock .icon { width: 23px; height: 23px; }
+.gate-panel h1 { font-size: 29px; letter-spacing: -.04em; }
+.gate-form { margin-top: 30px; }
+.gate-form label { gap: 11px; font-size: 12px; color: var(--muted); }
+.gate-form input { min-height: 54px; font-size: 21px; letter-spacing: .28em; padding-inline: 17px; }
+.gate-form .button { min-height: 52px; margin-top: 19px; justify-content: space-between; padding-inline: 20px; font-size: 13px; border-radius: 12px; }
+.gate-error { min-height: 24px; margin-top: 13px; font-size: 12px; line-height: 1.8; }
+
+/* Existing CSS entrances are delegated to the GSAP controller. */
+.workspace, .fund-card, .fund-initial, .transaction, .gate-content,
+details[open] > :not(summary) { animation: none; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .brand:hover .brand-mark { transform: rotate(-7deg) translateY(-1px); }
+  .desktop-nav a:hover { background: var(--paper-2); color: var(--text); }
+  .desktop-nav a.active:hover { color: var(--blue); background: var(--blue-tint); }
+  .icon-button:hover { border-color: var(--line); box-shadow: 0 3px 9px #16362a05; background: var(--paper-2); transform: translateY(-2px); }
+  .button:hover { border-color: color-mix(in srgb, var(--blue) 23%, var(--line)); transform: translateY(-2px); }
+  .button.primary:hover { border-color: var(--blue); }
+  .button:active, .icon-button:active { transform: scale(.96); }
+  .back-link:hover { color: var(--blue); }
+  .back-link:hover .icon { transform: translateX(-4px); }
+  .discipline-home .discipline-entry-checkable:hover { border-color: color-mix(in srgb, var(--blue) 24%, var(--line)); box-shadow: 0 8px 30px #16362a08; }
+  .discipline-home .discipline-entry:hover::before { opacity: 1; }
+  .discipline-home .discipline-entry-warning:hover { border-color: color-mix(in srgb, var(--danger) 48%, var(--line)); }
+  .discipline-home .discipline-rule-toggle:hover .discipline-expand-hint { color: var(--blue); }
+  .discipline-home .exposure-check-target:hover { background: color-mix(in srgb, var(--danger) 4%, transparent); }
+  .panel-toggle:hover::after { color: var(--blue); background: var(--blue-tint); }
+  .bond-card:hover { border-color: color-mix(in srgb, var(--blue) 22%, var(--line)); box-shadow: 0 12px 38px #16362a09; }
+  .panel:hover { background-image: radial-gradient(600px circle at var(--spotlight-x, 50%) var(--spotlight-y, 0%), color-mix(in srgb, var(--blue) 4%, transparent), transparent 70%), linear-gradient(145deg, #ffffff0c, transparent 35%); }
+}
+
+@media (max-width: 1120px) {
+  .header-inner { gap: 20px; padding-inline: 20px; }
+  .desktop-nav { gap: 2px; }
+  .desktop-nav a { padding-inline: 10px; font-size: 12px; }
+  .header-actions { gap: 3px; }
+  .workspace { padding: 40px 36px 80px; }
+  .discipline-home { --discipline-gutter: 28px; --discipline-label-width: 94px; --discipline-column-gap: 23px; }
+  .discipline-home .discipline-entry-content h2 { font-size: 20px; }
+  .annual-discipline-alert.exposure-route-alert { width: calc(100% - 72px); }
+}
+
+@media (max-width: 900px) and (min-width: 761px) {
+  .site-header { width: calc(100% - 32px); }
+  .header-inner { gap: 14px; padding-inline: 16px; }
+  .brand { font-size: 15px; gap: 9px; }
+  .brand-mark { width: 37px; height: 37px; border-radius: 12px; }
+  .desktop-nav a { font-size: 11px; padding-inline: 8px; }
+  .header-actions .icon-button { width: 39px; height: 44px; }
+}
+
+@media (max-width: 760px) {
+  html { scroll-padding-top: 94px; }
+  .site-header { width: calc(100% - 24px); margin-top: 12px; top: 10px; height: 67px; border-radius: 18px; }
+  .header-inner { padding-inline: 15px; gap: 12px; }
+  .brand { font-size: 15px; gap: 10px; }
+  .brand-mark { width: 37px; height: 37px; border-radius: 12px; }
+  .brand-mark .icon { width: 20px; height: 20px; }
+  .brand-copy { gap: 3px; }
+  .session-timer { font-size: 9px; }
+  .header-actions { gap: 2px; }
+  .header-actions .icon-button { width: 40px; height: 44px; border-radius: 12px; }
+  .header-actions .icon { width: 18px; height: 18px; }
+  .desktop-nav { display: none; }
+  .workspace { padding: 30px 20px calc(118px + env(safe-area-inset-bottom)); }
+  .page-heading { margin-bottom: 23px; }
+  .panel { padding: 22px; border-radius: 20px; }
+  .fund-card { padding: 23px; border-radius: 20px; }
+  .fund-name { font-size: 15px; }
+  .fund-title-line { gap: 13px; }
+  .fund-title-line h1 { font-size: 22px; line-height: 1.5; }
+  .fund-title-line .fund-initial { width: 45px; height: 48px; border-radius: 14px; }
+  .fund-heading-flags { margin-top: 15px; gap: 7px; }
+  .fund-page .page-heading { margin-bottom: 23px; }
+  .discipline-home { --discipline-gutter: 22px; }
+  .discipline-home .discipline-heading { margin-bottom: 24px; padding-top: 2px; }
+  .discipline-home .discipline-heading h1 { font-size: 29px; }
+  .discipline-home .discipline-sheet { gap: 12px; }
+  .discipline-home .discipline-entry { border-radius: 19px; }
+  .discipline-home .discipline-entry:first-child, .discipline-home .discipline-entry:last-child { border-radius: 19px; }
+  .discipline-home :is(.discipline-entry:not(.discipline-entry-checkable), .discipline-rule-toggle) { grid-template-columns: minmax(0, 1fr); gap: 11px; padding-block: 23px 25px; }
+  .discipline-home .discipline-entry-label { margin-top: 0; font-size: 11px; padding-left: 0; }
+  .discipline-home .discipline-entry-content .discipline-numbered-heading { grid-template-columns: 31px minmax(0, 1fr); gap: 12px; }
+  .discipline-home .discipline-heading-number { width: 31px; min-height: 32px; font-size: 12px; border-radius: 9px; transform: translateY(-1px); }
+  .discipline-home .discipline-entry-content h2 { font-size: 19px; line-height: 1.8; }
+  .discipline-home .discipline-entry-content > p { padding-left: 43px; margin-top: 10px; font-size: 12px; }
+  .discipline-home .discipline-number { font-size: 25px; }
+  .discipline-home .discipline-compliance-line { padding-left: 43px; margin-top: 12px; gap: 8px 12px; }
+  .discipline-home .discipline-compliance-details { padding: 0 22px 25px; }
+  .discipline-home .discipline-expand-hint { font-size: 11px; }
+  .discipline-home .discipline-subrules { margin-left: 43px; margin-top: 15px; }
+  .discipline-home .discipline-subrule { grid-template-columns: 25px minmax(0, 1fr); gap: 8px; }
+  .discipline-home .discipline-subrule > p { font-size: 14px; line-height: 1.95; }
+  .discipline-home :is([data-discipline="annual-profit"], [data-discipline="add-discipline"]) .discipline-entry-content h2 { font-size: 19px; line-height: 1.8; }
+  .discipline-home .discipline-urgent { font-size: 14px; }
+  .discipline-home .holding-duration-heading { gap: 12px; align-items: start; }
+  .discipline-home .holding-duration { padding-top: 2px; font-size: 11px; }
+  .discipline-home .holding-fund-name { font-size: 12px; }
+  .discipline-home .holding-duration-list > li { padding-block: 18px; }
+  .discipline-home .exposure-check-target { padding: 11px 10px; margin-inline: -10px; }
+  .discipline-home .exposure-check-heading { align-items: start; gap: 8px; }
+  .discipline-home .exposure-check-name { min-height: 0; font-size: 12px; line-height: 1.9; }
+  .discipline-home .exposure-check-state { margin-top: 2px; }
+  .discipline-home .exposure-check-heading .fund-code { font-size: 9px; }
+  .fund-regions.panel { padding: 21px 22px; margin-bottom: 18px; }
+  .fund-regions .region-shares { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px 26px; margin-top: 16px; }
+  .fund-regions .region-shares > li { min-height: 57px; }
+  .fund-regions .region-shares > li > strong { font-size: 18px; }
+  .fund-regions .region-shares > .region-us { margin-inline: -8px; padding-inline: 8px; }
+  .fund-regions .section-heading { flex-wrap: wrap; gap: 4px 12px; }
+  .fund-regions .section-heading .helper { font-size: 10px; }
+  .fund-exposure-note { padding: 11px 12px; font-size: 12px; }
+  .fund-regions, .region-us, [data-discipline="us-exposure"] { scroll-margin-top: 105px; }
+  .fund-layout { gap: 18px; }
+  .nav-chart { --nav-chart-height: 158px; margin-top: 22px; }
+  .nav-value strong { font-size: 34px; }
+  .nav-range-controls { margin-top: 15px; padding-top: 16px; }
+  .nav-periods:not(.nav-trends) { gap: 3px; }
+  .nav-periods:not(.nav-trends) button { min-height: 44px; padding-inline: 10px; font-size: 11px; }
+  .nav-periods button { min-height: 44px; padding-inline: 10px; font-size: 11px; }
+  .summary-grid { gap: 24px 16px; }
+  .summary-grid dt { font-size: 10px; }
+  .summary-grid dd { font-size: 15px; }
+  .summary-main .card-value { font-size: 29px; }
+  .summary-return .num { font-size: 22px; }
+  .ledger-toolbar { gap: 10px; }
+  .ledger-toolbar select { font-size: 11px; padding-inline: 10px; }
+  .transaction { padding-block: 19px; }
+  .transaction-label { gap: 9px; }
+  .transaction-type-icon { width: 33px; height: 33px; border-radius: 10px; }
+  .transaction-amount { font-size: 14px; }
+  .transaction-title { font-size: 12px; }
+  .transaction-top { gap: 10px; }
+  .bonds-summary { padding: 24px 22px; margin-bottom: 18px; }
+  .bonds-summary > dl { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .bonds-summary dd { font-size: 23px; }
+  .bonds-summary-return { border-left: 0; padding: 17px 0 0; }
+  .bonds-summary-return dd { margin-top: 0; font-size: 23px; }
+  .estimate-panel { margin-top: 18px; }
+  .estimate-date { font-size: 10px; }
+  .estimate-row { grid-template-columns: minmax(0, 1fr) minmax(100px, 120px); gap: 8px 16px; padding-block: 16px; }
+  .estimate-fund-name { font-size: 12px; }
+  .estimate-base { font-size: 9px; }
+  .estimate-input-wrap input { min-height: 46px; padding-left: 10px; }
+  .estimate-error { font-size: 10px; }
+  #bonds-reserve-summary { scroll-margin-top: 105px; }
+  .bond-reserve-note { margin-top: 17px; padding: 12px; gap: 8px; font-size: 12px; }
+  .bond-reserve-share { margin-top: 16px; gap: 4px 10px; }
+  .bond-reserve-share [data-bond-reserve-share] { font-size: 20px; }
+  .bonds-grid { grid-template-columns: minmax(0, 1fr); gap: 17px; }
+  .bond-card-heading h2 { font-size: 15px; }
+  .bond-code { font-size: 10px; }
+  .bond-edit-button { font-size: 11px; padding-inline: 12px; }
+  .bond-metrics { margin-top: 24px; }
+  .bond-metrics dd { font-size: 21px; }
+  .bond-return > strong { font-size: 22px; }
+  .bottom-nav { display: flex; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); border: 1px solid var(--line); border-radius: 19px; padding: 5px 6px; background: var(--header-glass); box-shadow: 0 8px 32px #0a251817; backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); gap: 3px; overflow-x: auto; }
+  .bottom-nav a { flex-basis: calc((100% - 15px) / 6); min-width: 46px; min-height: 54px; padding-inline: 4px; border-radius: 13px; font-size: 9px; gap: 4px; }
+  .bottom-nav .icon { width: 19px; height: 19px; }
+  .bottom-nav .nav-letter { font-size: 16px; }
+  .bottom-nav .active { background: var(--blue-tint); }
+  .bottom-nav a.exposure-nav-warning { color: var(--danger); }
+  .bottom-nav a.exposure-nav-warning.active { background: color-mix(in srgb, var(--danger) 9%, var(--paper)); }
+  .toast { bottom: calc(96px + env(safe-area-inset-bottom)); font-size: 12px; }
+  .annual-discipline-alert { top: 96px; left: 16px; right: 16px; width: auto; padding: 21px 22px; max-height: calc(100dvh - 190px); }
+  .annual-discipline-alert.exposure-route-alert { width: calc(100% - 40px); margin-top: 18px; }
+  .gate { padding: 82px 24px 40px; }
+  .gate-content { grid-template-columns: minmax(0, 1fr); gap: 32px; min-height: 0; width: min(100%, 390px); }
+  .gate .brand { justify-content: center; align-self: auto; margin: 0; gap: 12px; font-size: 23px; }
+  .gate .brand-mark { width: 45px; height: 45px; border-radius: 15px; }
+  .gate .brand-mark .icon { width: 24px; height: 24px; }
+  .gate-panel { padding: 31px 28px 23px; border-radius: 24px; }
+  .gate-panel h1 { font-size: 27px; }
+  .gate-form { margin-top: 26px; }
+  .gate-theme { top: 20px; right: 19px; }
+}
+
+@media (min-width: 560px) and (max-width: 760px) {
+  .fund-regions .region-shares { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 370px) {
+  .workspace { padding-inline: 14px; }
+  .header-inner { padding-inline: 11px; }
+  .brand { font-size: 14px; gap: 8px; }
+  .brand-mark { width: 32px; height: 35px; border-radius: 10px; }
+  .session-timer { font-size: 8px; }
+  .header-actions { gap: 0; }
+  .header-actions .icon-button { width: 36px; }
+  .panel, .fund-card { padding-inline: 18px; }
+  .discipline-home { --discipline-gutter: 18px; }
+  .discipline-home .discipline-entry-content h2 { font-size: 18px; }
+  .discipline-home .discipline-entry-content .discipline-numbered-heading { grid-template-columns: 28px minmax(0, 1fr); gap: 10px; }
+  .discipline-home .discipline-heading-number { width: 28px; min-height: 30px; }
+  .discipline-home .discipline-entry-content > p, .discipline-home .discipline-compliance-line { padding-left: 38px; }
+  .discipline-home .discipline-subrules { margin-left: 0; }
+  .discipline-home .discipline-compliance-details { padding-inline: 18px; }
+  .discipline-home :is([data-discipline="annual-profit"], [data-discipline="add-discipline"]) .discipline-entry-content h2 { font-size: 18px; }
+  .discipline-home .holding-duration-heading { grid-template-columns: minmax(0, 1fr); gap: 3px; }
+  .discipline-home .holding-progress-layout { margin-top: 10px; }
+  .fund-regions.panel { padding-inline: 18px; }
+  .fund-title-line h1 { font-size: 20px; }
+  .fund-regions .region-shares { gap: 3px 20px; }
+  .fund-regions .region-shares > li > strong { font-size: 16px; }
+  .nav-periods:not(.nav-trends) button { padding-inline: 7px; }
+  .bond-edit-fields { grid-template-columns: minmax(0, 1fr); }
+  .estimate-row { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .estimate-field { justify-content: flex-start; }
+  .estimate-input-wrap { flex: 1 1 auto; }
+  .estimate-row-official .estimate-input-wrap { flex-basis: 0; }
+  .estimate-error { grid-column: 1; }
+  .gate { padding-inline: 20px; }
+  .gate-panel { padding-inline: 24px; }
+  .bottom-nav { left: 9px; right: 9px; }
+  .annual-discipline-alert.exposure-route-alert { width: calc(100% - 28px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .discipline-home .holding-progress-fill { transition: none; }
+  .icon-button:hover, .button:hover, .fund-card:hover, .brand:hover .brand-mark, .back-link:hover .icon { transform: none; }
+}
