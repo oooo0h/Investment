@@ -1,7 +1,7 @@
 import { calculateLedger } from './engine.js?v=20261019-estimated-chip';
-import { estimateApplications, GUOFU_TRADING_DATES } from './application-estimates.js';
 import { createRefreshController } from './refresh-controller.js';
-import { NAV_PERIODS, resolveNavRange, moveNavBoundary, resolveNavSliderDomain } from './nav-range.js';
+import { unlockErrorMessage } from './unlock-errors.js';
+import { NAV_PERIODS, recentNavPeriod, resolveNavRange, moveNavBoundary, resolveNavSliderDomain } from './nav-range.js';
 import { renderNavChart } from './nav-chart.js?v=20261019-transactions';
 import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap } from './nav-annualized.js?v=20261019-sheet-discipline';
 import { setupNavChartInteractions } from './nav-interaction.js?v=20261019-gap-scroll-markers';
@@ -12,6 +12,7 @@ import { DISCIPLINE_ENTRIES } from './discipline.js?v=20261019-sheet-discipline'
 import { createDisciplineSync } from './discipline-sync.js';
 import { REGION_DATA } from './region-data.js';
 import { evaluateUsExposure } from './us-exposure.js';
+import { calculatePortfolioAllocation, evaluateHoldingLimit } from './portfolio-allocation.js';
 import { calculateHoldingDuration, createHoldingDurationScale } from './holding-duration.js';
 import { openBondStore } from './bond-store.js?v=20261019-bond-calculated-lots';
 import { calculateBondSummary } from './bond-model.js';
@@ -63,6 +64,8 @@ const selectedFund = () => FUNDS.find(fund => fund.code === selectedCode());
 const selectedBonds = () => /^#\/bonds(?:\?[^#]*)?$/.test(location.hash);
 const getBook = code => state.funds[code] ||= { transactions: [], mode: 'profit-first', rate: FUNDS.find(fund => fund.code === code).rate, incomplete: false, sourceNote: '' };
 const currentTheme = () => document.documentElement.dataset.theme;
+const desktopPanelsOpen = () => matchMedia('(min-width: 761px)').matches;
+const panelExpanded = (id, mobileDefault = false) => state.expandedPanels[id] ?? (desktopPanelsOpen() || mobileDefault);
 let toastTimer;
 let transitioning = false;
 let activeTransition = null;
@@ -246,6 +249,7 @@ async function unlock(event) {
     state.cashBusy = false;
     state.cashError = '';
     state.bondUpdatedAt = bondSnapshot?.updatedAt || null;
+    state.bondValuationDate = bondSnapshot?.valuationDate || null;
     state.bondUnavailable = !bondStore;
     dataVersionBaseline = initial.version || { revision: '__initial_unverified__' };
     state.nav = initial.nav;
@@ -255,7 +259,7 @@ async function unlock(event) {
     render();
     disciplineSync.start();
     if (vaultSession) dataRefresh.start();
-  } catch {
+  } catch (error) {
     password = '';
     openedSession?.close();
     openedBonds?.close();
@@ -275,7 +279,7 @@ async function unlock(event) {
     state.dayDeadline = 0;
     state.sessionDay = null;
     dailyCodeReader = null;
-    renderGate('未能解锁，请检查密码后重试。');
+    renderGate(unlockErrorMessage(error));
     document.querySelector('#vault-password').focus();
   } finally {
     password = '';
@@ -336,6 +340,7 @@ function clearBondSession() {
   state.cashError = '';
   state.bondUnavailable = true;
   state.bondUpdatedAt = null;
+  state.bondValuationDate = null;
 }
 
 async function saveCashFlow(event) {
@@ -449,6 +454,7 @@ async function refreshCurrentData(version) {
     state.freeCashFlow = Number.isFinite(bondSnapshot.freeCashFlow) ? bondSnapshot.freeCashFlow : null;
     state.cashUnavailable = bondSnapshot.cashFlowUnavailable === true;
     state.bondUpdatedAt = bondSnapshot.updatedAt;
+    state.bondValuationDate = bondSnapshot.valuationDate || null;
   }
   state.nav = Object.fromEntries(quotes.map(quote => [quote.code, quote]));
   state.createdAt = vault.createdAt;
@@ -526,7 +532,7 @@ function estimateHomePanel() {
     return { code: fund.code, name: fund.name, short: fund.navLabel, baseDate: previous?.date || null, official: Boolean(data.latestOfficialDate && data.latestOfficialDate >= date) };
   });
   const saved = Object.fromEntries(state.navEstimateEntries.filter(entry => entry.date === date).map(entry => [entry.code, Number((entry.change * 100).toPrecision(12))]));
-  return renderEstimatePanel({ date, funds, saved, drafts: state.estimateDrafts, directions: state.estimateDirections, errors: state.estimateErrors, open: Boolean(state.expandedPanels['nav-estimates']), unavailable: !state.estimateStorageAvailable || !date });
+  return renderEstimatePanel({ date, funds, saved, drafts: state.estimateDrafts, directions: state.estimateDirections, errors: state.estimateErrors, open: panelExpanded('nav-estimates'), unavailable: !state.estimateStorageAvailable || !date });
 }
 
 function cancelEstimateSaves() {
@@ -620,11 +626,10 @@ function saveNavEstimateEdits(event, { automatic = false, onlyCode = null } = {}
 function ledger(code) {
   const book = getBook(code);
   const estimate = valuation(code);
-  const transactions = book.incomplete && code === '006373'
-    ? estimateApplications(book.transactions, state.nav[code]?.history || [], { rate: 0.0015, tradingDates: GUOFU_TRADING_DATES })
-    : book.transactions;
+  // Six-column workbooks are authoritative; absent confirmation fields stay absent.
+  const transactions = book.transactions;
   const result = calculateLedger(transactions, { mode: book.mode, valuationNav: estimate?.nav ?? null, valuationDate: estimate?.date ?? null, openingPrincipal: 0, openingShares: 0 });
-  if (!book.transactions.length || (book.incomplete && !result.summary.includedCount)) {
+  if (!book.transactions.length || book.incomplete) {
     for (const key of ['shares', 'principal', 'marketValue', 'holdingProfit', 'holdingReturn', 'totalInvested', 'totalRecovered', 'totalProfitWithdrawn', 'totalClosedLoss', 'totalProfit', 'totalReturn']) result.summary[key] = null;
   }
   return result;
@@ -632,6 +637,22 @@ function ledger(code) {
 
 function fundExposure(code) {
   return evaluateUsExposure(state.disciplines.find(entry => entry.id === 'us-exposure'), REGION_DATA[code]);
+}
+
+function portfolioAllocation() {
+  const positions = FUNDS.map(fund => {
+    const result = ledger(fund.code);
+    return { code: fund.code, marketValue: result.summary.valid === true && !result.errors.length && !getBook(fund.code).incomplete ? result.summary.marketValue : null };
+  });
+  return calculatePortfolioAllocation([...positions, ...(!state.bondUnavailable ? state.bonds : [])], [...FUND_CODES, '006485', '006663']);
+}
+
+function holdingLimitCopy(code) {
+  const rule = state.disciplines.find(entry => entry.id === 'us-exposure');
+  const check = evaluateHoldingLimit(fundExposure(code), rule, portfolioAllocation().shares[code]);
+  if (check.targetRatio === null || check.status === 'not-applicable') return '';
+  const target = number(check.targetRatio * 100, 0);
+  return `<p class="holding-limit-note" data-holding-limit="${esc(check.status)}">持仓上限：总持仓的 <strong class="num">${target}%</strong>。${check.status === 'above' ? `当前占比 <strong class="num">${number(check.allocationRatio * 100)}%</strong>，高于上限，按纪律降低至 ${target}%。` : check.status === 'within' ? `当前占比 <strong class="num">${number(check.allocationRatio * 100)}%</strong>，已在上限以内，无需因本条加仓。` : '当前占比待核验；资料补全后核对是否超限。'}</p>`;
 }
 
 function exposureNavTitle(fund, check) {
@@ -730,7 +751,7 @@ function render() {
   const bonds = selectedBonds();
   const reserve = bondReserveCheck();
   document.title = fund ? `${fund.short}账本 · 基金账本` : bonds ? '债基 · 基金账本' : '交易纪律 · 基金账本';
-  app.innerHTML = `${header(fund?.code, reserve)}${fund ? fundPage(fund) : bonds ? renderBondsPage({ entries: state.bonds, visible: state.visible, transactions: state.bondTransactions, expandedByCode: state.bondExpanded, holdingByCode: bondHoldingPeriods(), unavailable: state.bondUnavailable, reserve, locateReserve: section === 'bond-reserve', freeCashFlow: state.freeCashFlow, cashEditing: state.cashEditing, cashDraft: state.cashDraft, cashError: state.cashError, cashBusy: state.cashBusy, cashUnavailable: state.cashUnavailable }) : homePage(reserve)}${bottomNav(fund?.code, reserve)}`;
+  app.innerHTML = `${header(fund?.code, reserve)}${fund ? fundPage(fund) : bonds ? renderBondsPage({ entries: state.bonds, valuationDate: state.bondValuationDate, visible: state.visible, transactions: state.bondTransactions, expandedByCode: { ...(desktopPanelsOpen() ? { "006485": true, "006663": true } : {}), ...state.bondExpanded }, holdingByCode: bondHoldingPeriods(), unavailable: state.bondUnavailable, reserve, locateReserve: section === 'bond-reserve', freeCashFlow: state.freeCashFlow, cashEditing: state.cashEditing, cashDraft: state.cashDraft, cashError: state.cashError, cashBusy: state.cashBusy, cashUnavailable: state.cashUnavailable }) : homePage(reserve)}${bottomNav(fund?.code, reserve)}`;
   app.querySelectorAll('.nav-periods').forEach(periods => { periods.scrollLeft = 0; });
   // Reveal a horizontally clipped tab without scrollIntoView moving the document.
   app.querySelectorAll('.desktop-nav, .bottom-nav').forEach(nav => {
@@ -768,7 +789,7 @@ function disciplineCopy(value, linkFunds = false) {
 
 function fundAddSignal(code) {
   const rule = state.disciplines.find(entry => entry.id === 'add-discipline-decline');
-  const row = ledger(code).rows.filter(item => item.status === 'included' && ['buy', 'sip', 'sell', 'transfer-in', 'reinvest'].includes(item.type)).at(-1);
+  const row = ledger(code).rows.filter(item => item.status === 'included' && item.dateBasis !== 'order' && ['buy', 'sip', 'sell', 'transfer-in', 'reinvest'].includes(item.type)).at(-1);
   const original = row && getBook(code).transactions.find(item => item.id === row.id);
   const tradePoint = row ? { date: row.date, nav: row.nav, estimated: row.estimated === true || ['estimated', '历史估算'].includes(original?.status) } : null;
   return { rule, signal: evaluateAddDiscipline(estimatedNav(code).points, { rule, tradePoint, now: new Date(), annualizedHistory: officialNav(code) }) };
@@ -804,7 +825,7 @@ function annualDisciplineAlert(code) {
     const content = esc(`${displayRule.title}${displayRule.detail ? ` ${displayRule.detail}` : ''}`).replace(/【([^】]+)】|(?:大幅|适当)止盈|进行一次加仓|全部卖出|\d+(?:\.\d+)?%|\d+(?:\.\d+)?倍/g, (match, emphasis) => `<strong>${emphasis || match}</strong>`);
     return `<p class="annual-alert-rule" data-rule="${esc(rule.id)}"${rule.id === 'add-discipline-decline' ? ` id="fund-${esc(code)}-add-discipline" tabindex="-1"` : ''}><small>${rule.id === 'annual-profit-100' ? '6.1' : rule.id === 'annual-profit-multiple' ? '6.2' : rule.id === 'add-discipline-decline' ? '7.1' : '6'}</small><span>${content}${rule.id === 'add-discipline-decline' ? '<a class="add-rule-return" href="#/?section=add-discipline">查看首页加仓提醒</a>' : ''}</span></p>`;
   }).join('')}</div>` : '';
-  return `<aside class="annual-discipline-alert" role="alert" aria-label="交易纪律提醒" data-fund="${esc(code)}"><div class="alert-heading"><strong>交易纪律提醒</strong></div>${exposureNote}${summary}${date}${adjustedNote}${rules}</aside>`;
+  return `<aside class="annual-discipline-alert" role="alert" aria-label="交易纪律提醒" data-fund="${esc(code)}"><div class="alert-heading"><strong>交易纪律提醒</strong></div>${exposureNote}${below ? holdingLimitCopy(code) : ''}${summary}${date}${adjustedNote}${rules}</aside>`;
 }
 
 function exposureRuleDetails(checks) {
@@ -812,7 +833,7 @@ function exposureRuleDetails(checks) {
   return `<div class="discipline-compliance-details"><div class="exposure-reasons"><ul class="exposure-checks">${below.map(({ fund, ...check }) => {
     const source = safeSource(check.source?.url);
     const comparison = `美股占比 <strong class="num">${number(check.usPercent)}%</strong>，低于规则门槛 <strong>${esc(check.thresholdPercent)}%</strong>，相差 <strong>${number(check.gapPercent)}</strong> 个百分点。`;
-    return `<li class="exposure-check exposure-check-below" data-exposure-fund="${fund.code}"><a class="exposure-check-target" href="#/fund/${fund.code}?section=us-exposure" aria-label="查看${esc(fund.name)}的美国持仓比例"><div class="exposure-check-heading"><span class="exposure-check-name">${esc(fund.name)}<span class="fund-code">${fund.code}</span></span><span class="exposure-check-state">未达标</span></div><p>${comparison}</p></a>${check.asOf ? `<p class="exposure-check-source">持仓截至 <time datetime="${esc(check.asOf)}">${esc(check.asOf)}</time>${check.publishedAt ? ` · 公告 ${esc(check.publishedAt)}` : ''}${source ? ` · <a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(check.source.title)}">原报告</a>` : ''}</p>` : ''}</li>`;
+    return `<li class="exposure-check exposure-check-below" data-exposure-fund="${fund.code}"><a class="exposure-check-target" href="#/fund/${fund.code}?section=us-exposure" aria-label="查看${esc(fund.name)}的美国持仓比例"><div class="exposure-check-heading"><span class="exposure-check-name">${esc(fund.name)}<span class="fund-code">${fund.code}</span></span><span class="exposure-check-state">未达标</span></div><p>${comparison}</p>${holdingLimitCopy(fund.code)}</a>${check.asOf ? `<p class="exposure-check-source">持仓截至 <time datetime="${esc(check.asOf)}">${esc(check.asOf)}</time>${check.publishedAt ? ` · 公告 ${esc(check.publishedAt)}` : ''}${source ? ` · <a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(check.source.title)}">原报告</a>` : ''}</p>` : ''}</li>`;
   }).join('')}</ul></div></div>`;
 }
 
@@ -824,13 +845,13 @@ function holdingDurationDetails() {
     const rows = result.rows.map(row => ({ ...row, estimated: row.estimated === true || ['estimated', '历史估算'].includes(originals.get(row.id)?.status) }));
     const duration = calculateHoldingDuration(rows, { now, incomplete: book.incomplete === true, hasErrors: result.errors.length > 0 });
     const text = duration.status === 'holding'
-      ? `${duration.estimated ? '约' : '已持有'} <span class="num">${number(duration.days, 0)}</span> 天`
+      ? `已持有 <span class="num">${number(duration.days, 0)}</span> 天`
       : duration.status === 'closed' ? '已清仓' : book.transactions.length ? '待核验' : '暂无记录';
     let progress = '';
     if (duration.status === 'holding') {
       if (!holdingFractions.has(fund.code)) holdingFractions.set(fund.code, 0.64 + Math.random() * 0.24);
       const scale = createHoldingDurationScale(duration.days, holdingFractions.get(fund.code));
-      if (scale) progress = `<div class="holding-progress-layout"><div class="holding-progress-track" role="progressbar" aria-label="${esc(fund.name)}持有时间" aria-valuemin="0" aria-valuenow="${duration.days}" aria-valuemax="${scale.maximum}" aria-valuetext="${duration.estimated ? '约' : '已持有'} ${duration.days} 天"><span class="holding-progress-fill" style="width: ${(scale.ratio * 100).toFixed(3)}%"></span></div><span class="holding-progress-maximum" aria-hidden="true"><span class="num">${number(scale.maximum, 0)}</span> 天</span></div>`;
+      if (scale) progress = `<div class="holding-progress-layout"><div class="holding-progress-track" role="progressbar" aria-label="${esc(fund.name)}持有时间" aria-valuemin="0" aria-valuenow="${duration.days}" aria-valuemax="${scale.maximum}" aria-valuetext="已持有 ${duration.days} 天"><span class="holding-progress-fill" style="width: ${(scale.ratio * 100).toFixed(3)}%"></span></div><span class="holding-progress-maximum" aria-hidden="true"><span class="num">${number(scale.maximum, 0)}</span> 天</span></div>`;
     }
     return `<li data-holding-fund="${fund.code}"><div class="holding-duration-heading"><span class="holding-fund-name">${esc(fund.name)}</span><strong class="holding-duration${duration.status === 'holding' ? '' : ' holding-duration-empty'}">${text}</strong></div>${progress}</li>`;
   }).join('')}</ul></div>`;
@@ -856,12 +877,12 @@ function homeRules(reserve) {
       if (entry.id === 'us-exposure') {
         const checks = FUNDS.map(fund => ({ fund, ...fundExposure(fund.code) }));
         const below = checks.filter(check => check.status === 'below').length;
-        if (below) return `<details class="discipline-entry discipline-entry-checkable discipline-entry-warning" data-discipline="us-exposure" data-panel="discipline-us-exposure" data-exposure-status="below" ${state.expandedPanels['discipline-us-exposure'] ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="exposure-badge exposure-warning">${icon('info')}未完全遵守 · ${below}只未达标</span><span class="discipline-expand-hint"><span class="when-closed">查看原因</span><span class="when-open">收起原因</span>${icon('down')}</span></div></div></summary>${exposureRuleDetails(checks)}</details>`;
+        if (below) return `<details class="discipline-entry discipline-entry-checkable discipline-entry-warning" data-discipline="us-exposure" data-panel="discipline-us-exposure" data-exposure-status="below" ${panelExpanded('discipline-us-exposure') ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="exposure-badge exposure-warning">${icon('info')}未完全遵守 · ${below}只未达标</span><span class="discipline-expand-hint"><span class="when-closed">查看原因</span><span class="when-open">收起原因</span>${icon('down')}</span></div></div></summary>${exposureRuleDetails(checks)}</details>`;
       }
-      if (entry.id === 'long-term') return `<details class="discipline-entry discipline-entry-checkable${state.expandedPanels['discipline-long-term'] ? ' holding-progress-visible' : ''}" data-discipline="long-term" data-panel="discipline-long-term" ${state.expandedPanels['discipline-long-term'] ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="discipline-expand-hint"><span class="when-closed">查看持有时间</span><span class="when-open">收起持有时间</span>${icon('down')}</span></div></div></summary>${holdingDurationDetails()}</details>`;
+      if (entry.id === 'long-term') return `<details class="discipline-entry discipline-entry-checkable${panelExpanded('discipline-long-term') ? ' holding-progress-visible' : ''}" data-discipline="long-term" data-panel="discipline-long-term" ${panelExpanded('discipline-long-term') ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="discipline-expand-hint"><span class="when-closed">查看持有时间</span><span class="when-open">收起持有时间</span>${icon('down')}</span></div></div></summary>${holdingDurationDetails()}</details>`;
       if (entry.id === 'bond-reserve' && reserve.status !== 'met') {
         const below = reserve.status === 'below', label = below ? '未完全遵守' : '待核验';
-        return `<details class="discipline-entry discipline-entry-checkable${below ? ' discipline-entry-warning' : ''}" data-discipline="bond-reserve" data-panel="discipline-bond-reserve" data-bond-reserve-status="${reserve.status}" ${state.expandedPanels['discipline-bond-reserve'] ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="exposure-badge ${below ? 'exposure-warning' : 'bond-reserve-pending'}">${icon('info')}${label}</span><span class="discipline-expand-hint"><span class="when-closed">查看原因</span><span class="when-open">收起原因</span>${icon('down')}</span></div></div></summary><div class="discipline-compliance-details"><a class="exposure-check-target bond-reserve-target" href="#/bonds?section=bond-reserve" aria-label="查看债基配置"><p>${esc(reserve.message)}</p><span class="bond-reserve-link">查看债基${icon('arrow')}</span></a></div></details>`;
+        return `<details class="discipline-entry discipline-entry-checkable${below ? ' discipline-entry-warning' : ''}" data-discipline="bond-reserve" data-panel="discipline-bond-reserve" data-bond-reserve-status="${reserve.status}" ${panelExpanded('discipline-bond-reserve') ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="exposure-badge ${below ? 'exposure-warning' : 'bond-reserve-pending'}">${icon('info')}${label}</span><span class="discipline-expand-hint"><span class="when-closed">查看原因</span><span class="when-open">收起原因</span>${icon('down')}</span></div></div></summary><div class="discipline-compliance-details"><a class="exposure-check-target bond-reserve-target" href="#/bonds?section=bond-reserve" aria-label="查看债基配置"><p>${esc(reserve.message)}</p><span class="bond-reserve-link">查看债基${icon('arrow')}</span></a></div></details>`;
       }
       if (entry.id === 'bond-reserve') return `<article class="discipline-entry" data-discipline="bond-reserve" data-bond-reserve-status="met" tabindex="-1"><p class="discipline-entry-label">${esc(labels[entry.id])}</p><div class="discipline-entry-content">${content}</div></article>`;
       return `<article class="discipline-entry${entry.id === 'add-discipline' ? ' discipline-entry-focus' : ''}" data-discipline="${esc(entry.id)}"${entry.id === 'add-discipline' ? ' tabindex="-1"' : ''}><p class="discipline-entry-label">${esc(labels[entry.id] || '交易纪律')}</p><div class="discipline-entry-content">${content}${entry.id === 'add-discipline' ? addDisciplineMatches() : ''}</div></article>`;
@@ -877,34 +898,30 @@ function fundRegions(fund) {
   if (!data) return '';
   const history = officialNav(fund.code);
   const annualized = calculateNavAnnualized(history);
-  const overview = `<div class="fund-basic-overview"><p class="nav-annualized" title="按全部已载入正式净值计算复合年化；不含昨日估值，未计现金分红再投资"><span>平均年化</span><strong class="num ${signClass(annualized)}" data-nav-annualized>${percent(annualized)}</strong></p>${history.at(-1)?.date ? `<p class="helper">净值截至 <time datetime="${esc(history.at(-1).date)}">${esc(history.at(-1).date)}</time></p>` : ''}</div>`;
+  const allocation = portfolioAllocation().shares[fund.code];
+  const overview = `<div class="fund-basic-overview"><p class="fund-portfolio-share"><span>占总持仓比例</span><strong class="num" data-fund-portfolio-share>${Number.isFinite(allocation) ? number(allocation * 100) + '%' : '待核验'}</strong></p><p class="nav-annualized" title="按全部已载入正式净值计算复合年化；不含昨日估值，未计现金分红再投资"><span>平均年化</span><strong class="num ${signClass(annualized)}" data-nav-annualized>${percent(annualized)}</strong></p>${history.at(-1)?.date ? `<p class="helper">净值截至 <time datetime="${esc(history.at(-1).date)}">${esc(history.at(-1).date)}</time></p>` : ''}</div>`;
   const check = fundExposure(fund.code), below = check.status === 'below';
   const source = safeSource(data.source?.url);
-  return `<details class="panel fund-regions panel-disclosure${below ? ' exposure-below' : ''}" aria-label="基金基本信息" data-panel="fund-basics" data-fund="${fund.code}"${state.expandedPanels['fund-basics'] !== false ? ' open' : ''}><summary class="panel-toggle"><h2>基金基本信息</h2><time class="helper" datetime="${esc(data.asOf)}" title="报告公告日期 ${esc(data.publishedAt || '待核实')}">地区截至 ${esc(data.asOf)}</time></summary><div class="panel-content">${overview}<p class="region-basis">直接股票持仓 · 占基金净资产</p><ul class="region-shares">${data.regions.map(region => `<li${region.name === '美国' ? ` id="fund-${fund.code}-us-exposure" tabindex="-1" class="region-us${below ? ' region-us-below' : ''}${routeSection() === 'us-exposure' ? ' exposure-location' : ''}"` : ''}><span>${esc(region.name)}${region.name === '美国' && below ? '<small class="region-state">未达标</small>' : ''}</span><strong class="num">${number(region.percent, 2)}%</strong></li>`).join('')}</ul>${data.note ? `<p class="helper region-note">${esc(data.note)}</p>` : ''}${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(data.source.title)}">原报告</a>` : ''}</div></details>`;
+  return `<details class="panel fund-regions panel-disclosure${below ? ' exposure-below' : ''}" aria-label="基金基本信息" data-panel="fund-basics" data-fund="${fund.code}"${panelExpanded('fund-basics', true) ? ' open' : ''}><summary class="panel-toggle"><h2>基金基本信息</h2><time class="helper" datetime="${esc(data.asOf)}" title="报告公告日期 ${esc(data.publishedAt || '待核实')}">地区截至 ${esc(data.asOf)}</time></summary><div class="panel-content">${overview}<p class="region-basis">直接股票持仓 · 占基金净资产</p><ul class="region-shares">${data.regions.map(region => `<li${region.name === '美国' ? ` id="fund-${fund.code}-us-exposure" tabindex="-1" class="region-us${below ? ' region-us-below' : ''}${routeSection() === 'us-exposure' ? ' exposure-location' : ''}"` : ''}><span>${esc(region.name)}${region.name === '美国' && below ? '<small class="region-state">未达标</small>' : ''}</span><strong class="num">${number(region.percent, 2)}%</strong></li>`).join('')}</ul>${data.note ? `<p class="helper region-note">${esc(data.note)}</p>` : ''}${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(data.source.title)}">原报告</a>` : ''}</div></details>`;
 }
 
 function fundPage(fund) {
   const book = getBook(fund.code);
   const result = ledger(fund.code);
   const { summary, errors } = result;
-  const principalState = !book.transactions.length ? '尚未配置交易数据' : { empty: '当前无持仓', recovered: '本金已全部回收', invested: '仍有本金在持' }[summary.principalStatus] || '请先修正交易';
-  const info = book.incomplete ? applicationInfo(book) : null;
-  const sourceDescription = book.incomplete
-    ? `估算仅覆盖截图记录 ${info.firstDate} 至 ${info.lastDate}，按全额申购成功和参考费率推算；限购、比例确认及实际成交可能不同，以平台确认为准。`
-    : state.visible ? book.sourceNote : '';
+  const principalState = !book.transactions.length ? '暂无交易记录' : book.incomplete ? '成交资料待补全' : { empty: '当前无持仓', recovered: '本金已全部回收', invested: '仍有本金在持' }[summary.principalStatus] || '请先修正交易';
+  const sixColumnSource = !book.transactions.length || book.transactions.every(tx => tx.dateBasis === 'order');
   const exposure = fundExposure(fund.code);
   const estimatedChip = summary.estimatedCount
-    ? `<span class="status-chip dot">${summary.latestEstimatedDate ? `已估算 ${esc(summary.latestEstimatedDate)} 净值` : '已估算历史净值'}</span>`
+    ? `<span class="status-chip dot">${sixColumnSource ? '历史估算 · 沿用原表' : summary.latestEstimatedDate ? `已估算 ${esc(summary.latestEstimatedDate)} 净值` : '已估算历史净值'}</span>`
     : '';
   return `<main id="main" class="workspace fund-page brand-${fund.brand}"><a class="back-link" href="#/">${icon('back')}返回首页</a><div class="page-heading"><div class="fund-title-line"><span class="fund-initial">${fund.initial}</span><div><h1>${fund.name}</h1><p class="fund-subtitle"><span class="fund-code">${fund.code}</span>${fund.category}</p></div></div><div class="fund-heading-flags">${exposure.status === 'below' ? `<span class="status-chip exposure-warning">${icon('info')}美股含量未达标</span>` : ''}${estimatedChip}</div></div>
-    ${annualDisciplineAlert(fund.code)}${fundRegions(fund)}<div class="fund-layout">${navPanel(fund)}<div class="main-column"><details class="panel summary-panel panel-disclosure" data-panel="holdings" data-fund="${fund.code}" ${state.expandedPanels.holdings ? 'open' : ''}><summary class="panel-toggle"><h2>持仓与收益</h2><span class="status-chip">${principalState}</span></summary><div class="panel-content">
+    ${annualDisciplineAlert(fund.code)}${fundRegions(fund)}<div class="fund-layout">${navPanel(fund)}<div class="main-column"><details class="panel summary-panel panel-disclosure" data-panel="holdings" data-fund="${fund.code}" ${panelExpanded('holdings') ? 'open' : ''}><summary class="panel-toggle"><h2>持仓与收益</h2><span class="status-chip">${principalState}</span></summary><div class="panel-content">
       ${summary.lastDate ? `<p class="helper">最近交易日期 ${esc(summary.lastDate)}</p>` : ''}
       <div class="mode-control ${book.mode}" role="group" aria-label="卖出到账分配模式"><button data-action="mode" data-mode="profit-first" aria-pressed="${book.mode === 'profit-first'}">利润优先</button><button data-action="mode" data-mode="principal-first" aria-pressed="${book.mode === 'principal-first'}">本金优先</button></div>
       ${errors.length ? `<div class="error-note" role="alert">第 ${errors[0].index} 笔交易待修正：${esc(errors[0].message)}<br>修正前暂停展示汇总结果。</div>` : ''}
       <div class="summary-main"><div><p class="card-label">当前市值（元）</p><p class="card-value num">${sensitive(summary.marketValue)}</p><p class="helper">估值净值日期 ${esc(summary.valuationDate || '尚无可用净值')}</p></div><div class="summary-return"><p class="card-label">持有收益率</p><span class="num ${signClass(summary.holdingReturn)}">${percent(summary.holdingReturn)}</span></div></div>
-      <dl class="summary-grid">${metric('剩余本金（元）', summary.principal)}${metric('持有收益（元）', summary.holdingProfit, 2, signClass(summary.holdingProfit))}${metric('持有份额', summary.shares, 6)}${metric('累计投入（元）', summary.totalInvested)}${metric('累计到账（元）', summary.totalRecovered)}${metric('已提取利润（元）', summary.totalProfitWithdrawn)}${metric('累计收益（元）', summary.totalProfit, 2, signClass(summary.totalProfit))}<div><dt>累计收益率</dt><dd class="num ${signClass(summary.totalReturn)}">${percent(summary.totalReturn)}</dd></div>${metric('清仓损失（元）', summary.totalClosedLoss)}</dl>
-      <p class="summary-foot">${summary.includedCount} 笔计入${summary.pendingCount ? ` · ${summary.pendingCount} 笔待确认或待修正` : ''}${summary.estimatedCount ? ` · ${summary.estimatedCount} 笔历史估算` : ''}</p>
-      ${sourceDescription ? `<details class="details-box data-description"><summary>数据说明</summary><p class="helper detail-date-note">${esc(sourceDescription)}</p></details>` : ''}
+      <dl class="summary-grid">${metric('剩余本金（元）', summary.principal)}${metric('持有收益（元）', summary.holdingProfit, 2, signClass(summary.holdingProfit))}${metric('持有份额', summary.shares, 2)}${metric('累计投入（元）', summary.totalInvested)}${metric('累计到账（元）', summary.totalRecovered)}${metric('已提取利润（元）', summary.totalProfitWithdrawn)}${metric('累计收益（元）', summary.totalProfit, 2, signClass(summary.totalProfit))}<div><dt>累计收益率</dt><dd class="num ${signClass(summary.totalReturn)}">${percent(summary.totalReturn)}</dd></div>${metric('清仓损失（元）', summary.totalClosedLoss)}</dl>
     </div></details>${ledgerPanel(result, book, fund.code)}</div></div></main>`;
 }
 function chartOverlays(code) {
@@ -912,7 +929,7 @@ function chartOverlays(code) {
   const originals = new Map(getBook(code).transactions.map(tx => [tx.id, tx]));
   const costNav = summary.valid && Number.isFinite(summary.principal) && summary.principal >= 0 && Number.isFinite(summary.shares) && summary.shares > 0
     ? summary.principal / summary.shares : null;
-  const markers = rows.filter(row => row.status === 'included' && ['buy', 'sip', 'transfer-in', 'reinvest', 'sell'].includes(row.type))
+  const markers = rows.filter(row => row.status === 'included' && row.dateBasis !== 'order' && ['buy', 'sip', 'transfer-in', 'reinvest', 'sell'].includes(row.type))
     .map(row => ({ date: row.date, nav: row.nav, type: row.type === 'sell' ? 'sell' : 'buy', estimated: row.estimated === true || ['estimated', '历史估算'].includes(originals.get(row.id)?.status) }));
   return { costNav, costEstimated: summary.estimatedCount > 0, markers };
 }
@@ -928,7 +945,7 @@ function navPeriodDisabled(period, range) {
 }
 
 function navContext(code) {
-  const rows = ledger(code).rows.filter(row => row.status === 'included' && ['buy', 'sip', 'sell', 'transfer-in', 'reinvest'].includes(row.type));
+  const rows = ledger(code).rows.filter(row => row.status === 'included' && row.dateBasis !== 'order' && ['buy', 'sip', 'sell', 'transfer-in', 'reinvest'].includes(row.type));
   return { tradeDate: rows.at(-1)?.date || null };
 }
 
@@ -937,7 +954,8 @@ function navSelection(code) {
 }
 
 function selectedNavRange(code, history) {
-  const selection = navSelection(code);
+  let selection = navSelection(code);
+  if (selection?.preset?.startsWith('recent-')) selection = { preset: recentNavPeriod(history)?.id || '3m' };
   const range = resolveNavRange(history, selection, navContext(code));
   if (!selection && history.length && range.preset) state.navPreset = range.preset;
   return navPeriodDisabled(range.preset, range)
@@ -1004,6 +1022,11 @@ function navCycleButton(code, cycle, range) {
   return `<button type="button" data-action="nav-cycle" data-cycle="${cycle}" data-period="${current}" data-fund="${code}" aria-pressed="${range.preset === current}" aria-label="${label}，${hint}" title="${hint}">${label}</button>`;
 }
 
+function navTrendButtons(code, history, range) {
+  const trend = recentNavPeriod(history);
+  return `${trend ? navPeriodButton(code, trend, range) : '<button type="button" disabled>近期走势</button>'}${navPeriodButton(code, NAV_PERIODS.find(period => period.id === 'since-trade'), range)}`;
+}
+
 function navRangeControls(code, history, range) {
   if (!history.length) return '';
   syncNavCycle(range.preset);
@@ -1013,7 +1036,7 @@ function navRangeControls(code, history, range) {
   return `<div class="nav-range-controls"><div class="nav-range-labels num"><span data-nav-start>${esc(range.from)}</span><span data-nav-end>${esc(range.to)}</span></div>
     <div class="nav-range-slider" role="group" aria-label="净值日期范围" data-start-at-end="${range.start === domain.max}" style="--range-start:${position(visual.start)}%;--range-end:${position(visual.end)}%"><div class="nav-range-track" aria-hidden="true"></div>${['start', 'end'].map(boundary => `<input type="range" class="nav-range-input" data-nav-boundary="${boundary}" data-fund="${code}" min="${domain.min}" max="${domain.max}" step="any" value="${visual[boundary]}" aria-label="${boundary === 'start' ? '开始日期' : '结束日期'}" aria-valuetext="${esc(history[range[boundary]].date)}" aria-controls="nav-chart-${code}" ${domain.max > domain.min && range.points.length ? '' : 'disabled'}>`).join('')}</div>
     <div class="nav-periods" role="group" aria-label="净值快捷时段">${navCycleButton(code, 'months', range)}${navPeriodButton(code, NAV_PERIODS.find(period => period.id === 'last-month'), range)}${navCycleButton(code, 'years', range)}${navPeriodButton(code, NAV_PERIODS.find(period => period.id === 'all'), range)}</div>
-    <div class="nav-periods nav-trends" role="group" aria-label="趋势与交易时段">${NAV_PERIODS.filter(period => period.id.startsWith('recent-') || period.id === 'since-trade').map(period => navPeriodButton(code, period, range)).join('')}</div></div>`;
+    <div class="nav-periods nav-trends" role="group" aria-label="趋势与交易时段">${navTrendButtons(code, history, range)}</div></div>`;
 }
 
 function updateNavRange(code, selection, interaction = {}) {
@@ -1074,6 +1097,7 @@ function updateNavRange(code, selection, interaction = {}) {
     button.setAttribute('aria-pressed', String(button.dataset.period === range.preset));
     button.disabled = navPeriodDisabled(button.dataset.period, range);
   });
+  panel.querySelector('.nav-trends').innerHTML = navTrendButtons(code, history, range);
 }
 
 function safeSource(value) {
@@ -1095,14 +1119,13 @@ function navDisciplineGap(code, change) {
 
 function navPanel(fund) {
   const nav = state.nav[fund.code];
-  const source = safeSource(nav?.source);
   const history = nav?.history || [];
   const range = selectedNavRange(fund.code, history);
   const display = getNavChartDisplay(range, estimatedNav(fund.code));
   const { summary } = display;
   const disciplineGap = navDisciplineGap(fund.code, summary.change);
 
-  return `<details class="panel nav-panel panel-disclosure" data-panel="nav-quotes" data-fund="${fund.code}"${state.expandedPanels['nav-quotes'] !== false ? ' open' : ''}><summary class="panel-toggle"><h2>公开净值</h2><span class="helper" data-nav-count>${display.points.length + display.estimatedPoints.length} 期</span></summary><div class="panel-content"><div class="nav-value"><strong class="num" data-nav-value>${number(summary.endNav, 4)}</strong><span class="num ${signClass(summary.change)}" data-nav-change title="所选区间涨跌幅">${percent(summary.change)}</span></div><p class="nav-discipline-gap" data-nav-discipline-gap${disciplineGap ? '' : ' hidden'}>${disciplineGap}</p><p class="nav-date" data-nav-date>${navRangeDate(summary, nav, range)}</p><div id="nav-chart-${fund.code}" data-nav-chart>${history.length ? sparkline(range.points, fund.code, range) : ''}</div>${navRangeControls(fund.code, history, range)}<p class="helper nav-meta">${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer">来源</a> · ` : ''}非实时</p></div></details>`;
+  return `<details class="panel nav-panel panel-disclosure" data-panel="nav-quotes" data-fund="${fund.code}"${panelExpanded('nav-quotes', true) ? ' open' : ''}><summary class="panel-toggle"><h2>公开净值</h2><span class="helper" data-nav-count>${display.points.length + display.estimatedPoints.length} 期</span></summary><div class="panel-content"><div class="nav-value"><strong class="num" data-nav-value>${number(summary.endNav, 4)}</strong><span class="num ${signClass(summary.change)}" data-nav-change title="所选区间涨跌幅">${percent(summary.change)}</span></div><p class="nav-discipline-gap" data-nav-discipline-gap${disciplineGap ? '' : ' hidden'}>${disciplineGap}</p><p class="nav-date" data-nav-date>${navRangeDate(summary, nav, range)}</p><div id="nav-chart-${fund.code}" data-nav-chart>${history.length ? sparkline(range.points, fund.code, range) : ''}</div>${navRangeControls(fund.code, history, range)}</div></details>`;
 }
 
 function ledgerPanel(result, book, code) {
@@ -1116,7 +1139,7 @@ function ledgerPanel(result, book, code) {
   const filtered = visibleRows.filter(row => (state.filter === 'all' || row.type === state.filter) && (state.statusFilter === 'all' || row.status === state.statusFilter || (state.statusFilter === 'error' && row.status === 'blocked')));
   const shown = filtered.slice().reverse().slice(0, state.limit);
   const statusOptions = [['all', '全部状态'], ['included', '已确认'], ['pending', '进行中'], ['error', '待修正']];
-  return `<details class="panel ledger-panel panel-disclosure" data-panel="transactions" data-fund="${code}" ${state.expandedPanels.transactions ? 'open' : ''}><summary class="panel-toggle"><h2>逐笔交易</h2><span class="fund-code">${visibleRows.length} 笔</span></summary><div class="panel-content">
+  return `<details class="panel ledger-panel panel-disclosure" data-panel="transactions" data-fund="${code}" ${panelExpanded('transactions') ? 'open' : ''}><summary class="panel-toggle"><h2>逐笔交易</h2><span class="fund-code">${visibleRows.length} 笔</span></summary><div class="panel-content">
     <div class="ledger-toolbar"><select id="type-filter" aria-label="筛选交易类型"><option value="all">全部类型</option>${Object.entries(TYPE_NAMES).map(([key, label]) => `<option value="${key}" ${state.filter === key ? 'selected' : ''}>${label}</option>`).join('')}</select><select id="status-filter" aria-label="筛选记录状态">${statusOptions.map(([key, label]) => `<option value="${key}" ${state.statusFilter === key ? 'selected' : ''}>${label}</option>`).join('')}</select></div>
     <div class="transaction-list">${shown.length ? shown.map(row => transactionCard(row, book, performance.get(row.id))).join('') : `<div class="empty-state"><h3>${visibleRows.length ? '没有符合条件的交易' : '尚无交易记录'}</h3>${visibleRows.length ? '<button class="button" data-action="reset-filter">清除筛选</button>' : ''}</div>`}</div>${filtered.length > shown.length ? `<button class="button more-button" data-action="more">再显示 25 笔 · 还有 ${filtered.length - shown.length} 笔</button>` : ''}</div></details>`;
 }
@@ -1126,23 +1149,23 @@ function transactionCard(row, book, performance = {}) {
   const included = row.status === 'included';
   const pending = row.status === 'pending';
   const estimated = included && (row.estimated === true || ['estimated', '历史估算'].includes(tx.status));
-  const values = included ? row : {};
+  const values = included || tx.dateBasis === 'order' ? tx : {};
   const out = row.type === 'sell' || row.type === 'dividend';
   const label = included ? estimated ? '估算成交' : '已确认'
     : row.status === 'excluded' ? ['cancelled', '撤单'].includes(tx.status) || tx.sourceStatus === 'cancelled' ? '已撤单' : STATUS_NAMES[tx.status] || '未计入'
-    : row.status === 'pending' ? tx.sourceStatus === 'processing' ? '进行中' : tx.sourceStatus === 'unverified' ? '待核验' : '待确认'
+    : row.status === 'pending' ? tx.sourceStatus === 'processing' ? '进行中' : ['unverified', 'incomplete'].includes(tx.sourceStatus) ? '资料待补全' : '待确认'
     : row.status === 'error' ? '待修正' : '前序待修正';
   const hasNote = tx.note !== undefined && tx.note !== null && String(tx.note).trim() !== '';
-  const displayDate = included && row.date ? `${estimated ? '估算净值日期' : '净值日期'} ${esc(row.date)}` : tx.submittedAt ? `申请日期 ${esc(tx.submittedAt)}` : esc(row.date || '净值日期待填');
-  const dateNote = tx.submittedAt
+  const displayDate = tx.dateBasis === 'order' ? `交易日期（下单） ${esc(tx.submittedAt || row.date)}` : included && row.date ? `${estimated ? '估算净值日期' : '净值日期'} ${esc(row.date)}` : tx.submittedAt ? `申请日期 ${esc(tx.submittedAt)}` : esc(row.date || '净值日期待填');
+  const dateNote = tx.dateBasis === 'order' ? `交易日期沿用原始下单日期；${tx.navDate ? `来源备份净值日期 ${esc(tx.navDate)}${estimated ? '（历史估算）' : '（沿用原确认状态）'}` : '原表未提供成交净值日期'}。` : tx.submittedAt
     ? `申请日期：${esc(tx.submittedAt)} · ${estimated ? '估算净值日期' : '净值日期'}：${esc(row.date || '待确认')}`
     : `净值日期：${esc(row.date || '待填')}${tx.recordedAt ? ` · 录入日期：${esc(String(tx.recordedAt).slice(0, 10))}` : ' · 录入日期：原表未记录'}`;
   const detailMetrics = [
     `<div><dt>成交净值</dt><dd class="num">${number(values.nav, 4)}</dd></div>`,
-    metric('确认份额', values.shares, 6), metric('实际手续费', values.fee),
+    metric('确认份额', values.shares, 2), metric('实际手续费', values.fee),
     ...(performance.kind === 'lot' ? [metric('本笔剩余市值', performance.marketValue)] : []),
     ...(performance.kind === 'lot' || performance.kind === 'sell' ? [metric(performance.kind === 'sell' ? '卖出成本（FIFO）' : row.type === 'reinvest' ? '新增投入' : '本笔原始成本', performance.cost)] : []),
-    ...(performance.kind === 'lot' ? [metric('本笔剩余份额', performance.remainingShares, 6), metric('本笔剩余成本', performance.remainingCost), metric('本笔卖出回款', performance.proceeds), metric('本笔分红', performance.cashDividends), metric('本笔已实现盈亏', performance.realizedProfit, 2, signClass(performance.realizedProfit)), metric('本笔未实现盈亏', performance.unrealizedProfit, 2, signClass(performance.unrealizedProfit))] : []),
+    ...(performance.kind === 'lot' ? [metric('本笔剩余份额', performance.remainingShares, 2), metric('本笔剩余成本', performance.remainingCost), metric('本笔卖出回款', performance.proceeds), metric('本笔分红', performance.cashDividends), metric('本笔已实现盈亏', performance.realizedProfit, 2, signClass(performance.realizedProfit)), metric('本笔未实现盈亏', performance.unrealizedProfit, 2, signClass(performance.unrealizedProfit))] : []),
   ];
   const profitLabel = performance.kind === 'sell' ? performance.estimated ? '本笔已实现盈亏（估算）' : '本笔已实现盈亏' : performance.kind === 'dividend' ? '本笔分红收益' : performance.estimated ? '本笔累计盈亏（估算）' : '本笔累计盈亏';
   const pendingHint = Number.isFinite(tx.nav) && tx.nav > 0 ? '表格资料待补全' : '表格净值待补全';
@@ -1150,9 +1173,9 @@ function transactionCard(row, book, performance = {}) {
     ? `<span class="transaction-pending-hint">${pendingHint}</span>`
     : `<span class="transaction-profit-summary"><span class="transaction-profit-label">${profitLabel}</span><span class="transaction-profit-values"><strong class="transaction-profit-value num ${signClass(performance.profit)}">${sensitive(performance.profit)}</strong>${performance.kind === 'dividend' ? '' : `<span class="transaction-profit-rate num ${signClass(performance.returnRate)}">${percent(performance.returnRate)}</span>`}</span></span>`;
   const estimateExtras = performance.kind === 'lot' ? `<p class="helper detail-date-note">估值净值日期 ${esc(performance.valuationDate || '待更新')}${performance.estimated ? ' · 含估算交易' : ''}</p>` : '';
-  return `<article class="transaction${pending ? ' transaction-pending' : ''}"><div class="transaction-top"><div class="transaction-label"><span class="transaction-type-icon ${out ? 'out' : ''}">${icon(out ? 'up' : row.type === 'reinvest' ? 'coins' : 'down')}</span><div><p class="transaction-title">${esc(TYPE_NAMES[row.type] || '未知类型')}<span class="row-status${pending ? ' row-status-pending' : ''}">${esc(label)}</span></p><p class="transaction-date">${displayDate} · 第 ${row.index} 笔</p></div></div><div class="transaction-top-right"><p class="transaction-amount num">${included && row.type === 'reinvest' ? sensitive(values.shares, 6) : sensitive(row.amount ?? tx.amount ?? tx.cost)}<small>${!included ? '记录金额 · 元' : row.type === 'reinvest' ? '增加份额 · 份' : estimated ? '估算支出 · 元' : out ? '实际到账 · 元' : '确认支出 · 元'}</small></p></div></div>
+  return `<article class="transaction${pending ? ' transaction-pending' : ''}"><details class="transaction-detail" data-id="${esc(row.id)}"><summary class="transaction-expand"><div class="transaction-top"><div class="transaction-label"><span class="transaction-type-icon ${out ? 'out' : ''}">${icon(out ? 'up' : row.type === 'reinvest' ? 'coins' : 'down')}</span><div><p class="transaction-title">${esc(TYPE_NAMES[row.type] || '未知类型')}<span class="row-status${pending ? ' row-status-pending' : ''}">${esc(label)}</span></p><p class="transaction-date">${displayDate} · 第 ${row.index} 笔</p></div></div><div class="transaction-top-right"><p class="transaction-amount num">${included && row.type === 'reinvest' ? sensitive(values.shares, 2) : sensitive(row.amount ?? tx.amount ?? tx.cost)}<small>${!included ? '记录金额 · 元' : row.type === 'reinvest' ? '增加份额 · 份' : estimated ? '估算支出 · 元' : out ? '实际到账 · 元' : '确认支出 · 元'}</small></p></div></div>
     ${row.error ? `<p class="row-error">${esc(row.error)}</p>` : ''}
-    <details class="transaction-detail" data-id="${esc(row.id)}"><summary class="transaction-profit-row">${profitSummary}<span class="transaction-detail-toggle">详细信息<span class="transaction-detail-chevron" aria-hidden="true">⌄</span></span></summary><div class="detail-inner"><dl class="transaction-stats transaction-detail-metrics">${detailMetrics.join('')}</dl><p class="helper detail-date-note">${dateNote}</p>${row.estimateReason ? `<p class="helper detail-date-note">${esc(row.estimateReason)}</p>` : ''}${estimateExtras}${hasNote && state.visible ? `<p class="transaction-note">备注：${esc(tx.note)}</p>` : ''}</div></details></article>`;
+    <div class="transaction-profit-row">${profitSummary}<span class="transaction-detail-toggle">详细信息<span class="transaction-detail-chevron" aria-hidden="true">⌄</span></span></div></summary><div class="detail-inner"><dl class="transaction-stats transaction-detail-metrics">${detailMetrics.join('')}</dl><p class="helper detail-date-note">${dateNote}</p>${row.estimateReason ? `<p class="helper detail-date-note">${esc(row.estimateReason)}</p>` : ''}${estimateExtras}${hasNote && state.visible ? `<p class="transaction-note">备注：${esc(tx.note)}</p>` : ''}</div></details></article>`;
 }
 app.addEventListener('toggle', event => {
   const panel = event.target;

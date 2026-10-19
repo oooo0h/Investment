@@ -9,7 +9,7 @@ export function renderTransactionPreview(result, { visible = false } = {}) {
   const preview = result?.preview;
   if (!preview || result.error) return '<p class="helper">' + esc(result?.error || '填写金额、净值或份额后自动计算。') + '</p>';
   if (preview.status === 'pending') return '<p class="helper">进行中 · 补全后自动确认。</p>';
-  return '<dl><div><dt>确认份额</dt><dd class="num">' + protectedNumber(preview.shares, visible, 6) + '</dd></div><div><dt>手续费（元）</dt><dd class="num">' + protectedNumber(preview.fee, visible) + '</dd></div></dl>';
+  return '<dl><div><dt>确认份额</dt><dd class="num">' + protectedNumber(preview.shares, visible, 2) + '</dd></div><div><dt>手续费（元）</dt><dd class="num">' + protectedNumber(preview.fee, visible) + '</dd></div></dl>';
 }
 
 export function renderTransactionEditor({ editor, result, visible = false, amountVisible = visible, busy = false, error = '', today } = {}) {

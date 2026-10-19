@@ -19,9 +19,12 @@ async function deriveKey(password, salt, iterations, usages = ['decrypt']) {
 
 async function readEnvelope(url, fetchFn) {
   if (!VAULT_URLS.has(url)) throw new Error('不支持的账本文件。');
-  const response = await fetchFn(url, { cache: 'no-store' });
-  if (!response.ok) throw new Error('账本文件加载失败，请稍后重试。');
-  const envelope = await response.json();
+  const unavailable = () => Object.assign(new Error('账本文件加载失败，请稍后重试。'), { code: 'DATA_UNAVAILABLE' });
+  let response;
+  try { response = await fetchFn(url, { cache: 'no-store' }); } catch { throw unavailable(); }
+  if (!response.ok) throw unavailable();
+  let envelope;
+  try { envelope = await response.json(); } catch { throw unavailable(); }
   if (![1, 2].includes(envelope.version) || envelope.kdf !== 'PBKDF2-SHA256' || envelope.iterations !== 600000) {
     throw new Error('账本文件格式不受支持。');
   }

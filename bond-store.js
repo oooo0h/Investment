@@ -9,11 +9,12 @@ export const CASH_FLOW_STORAGE_KEY = 'fund-ledger:cash-flow:local:v1';
 const fail = (code, message) => Object.assign(new Error(message), { code });
 const object = value => value && typeof value === 'object' && !Array.isArray(value);
 function sourceSnapshot(value) {
-  if (!object(value) || Object.keys(value).some(key => !['funds', 'bonds', 'freeCashFlow', 'holdingLots', 'transactions', 'updatedAt'].includes(key))
+  if (!object(value) || Object.keys(value).some(key => !['funds', 'bonds', 'freeCashFlow', 'holdingLots', 'transactions', 'valuationDate', 'updatedAt'].includes(key))
     || (value.funds !== undefined && (!object(value.funds) || Object.keys(value.funds).length))
     || typeof value.updatedAt !== 'string' || !Number.isFinite(Date.parse(value.updatedAt))) throw new Error('Invalid bond source.');
-  return { bonds: normalizeBondEntries(value.bonds), freeCashFlow: normalizeFreeCashFlow(value.freeCashFlow),
-    holdingLots: normalizeBondHoldingLots(value.holdingLots) || {}, transactions: normalizeBondTransactions(value.transactions), updatedAt: value.updatedAt };
+  return { bonds: Array.isArray(value.bonds) && value.bonds.length === 0 ? [] : normalizeBondEntries(value.bonds), freeCashFlow: normalizeFreeCashFlow(value.freeCashFlow),
+    holdingLots: normalizeBondHoldingLots(value.holdingLots) || {}, transactions: normalizeBondTransactions(value.transactions),
+    valuationDate: typeof value.valuationDate === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value.valuationDate) ? value.valuationDate : null, updatedAt: value.updatedAt };
 }
 function cashRecord(value) {
   if (!object(value) || Object.keys(value).sort().join(',') !== 'freeCashFlow,updatedAt' || typeof value.updatedAt !== 'string' || !Number.isFinite(Date.parse(value.updatedAt))) throw new Error('Invalid cash flow record.');
@@ -77,7 +78,9 @@ export async function createBondStore(session, initial, options = {}) {
 export async function openBondStore(password, options = {}) {
   let session = null;
   try {
-    const initial = await unlockVault(password, { url: './data/bonds.enc.json', fetchFn: options.fetchFn, onSession: opened => { session = opened; } });
+    const initial = await unlockVault(password, { url: './data/bonds.enc.json', fetchFn: options.fetchFn,
+      requestTimeoutMs: options.requestTimeoutMs, requestAttempts: options.requestAttempts,
+      onSession: opened => { session = opened; } });
     password = ''; return await createBondStore(session, initial, options);
   } catch (error) { session?.close(); if (error?.code?.startsWith('bond-')) throw error; throw fail('bond-unavailable', '债基资料暂不可用。'); }
   finally { password = ''; }
