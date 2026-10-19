@@ -109,3 +109,37 @@ export function evaluateAddDiscipline(history, { rule = null, tradePoint = null,
     Number.EPSILON * Math.max(1, Math.abs(decline), Math.abs(threshold)) * 4;
   return result;
 }
+
+// Select a nearby discipline using the displayed return's direction. The gap is
+// a difference between return rates (percentage points), not a new price target.
+// Signals retain their existing operation/year baselines and include estimates.
+export function getNavDisciplineGap(change, { addSignal = null, profitSignals = [] } = {}) {
+  if (!Number.isFinite(change) || change === 0) return null;
+  const kind = change < 0 ? 'add' : 'profit';
+  const candidates = [];
+  const consider = (signal, threshold, current) => {
+    if (!Number.isFinite(threshold) || !Number.isFinite(current)) return;
+    const remaining = Math.max(0, threshold - current);
+    const tolerance = Number.EPSILON * Math.max(1, Math.abs(threshold), Math.abs(current)) * 4;
+    if (remaining - 0.05 > tolerance) return;
+    candidates.push({ kind, remaining: remaining <= tolerance ? 0 : remaining, triggered: signal.triggered === true });
+  };
+  if (kind === 'add') {
+    if (addSignal?.annualized > 0 && addSignal?.multiple > 0) {
+      consider(addSignal, addSignal.annualized * addSignal.multiple, addSignal.decline);
+    }
+  } else {
+    for (const signal of Array.isArray(profitSignals) ? profitSignals : []) {
+      if (!signal || !Number.isFinite(signal.yearReturn)) continue;
+      if (Number.isFinite(signal.absoluteThreshold) && signal.absoluteThreshold > 0) {
+        consider(signal, signal.absoluteThreshold, signal.yearReturn);
+      }
+      if (Number.isFinite(signal.annualized) && signal.multiple > 0) {
+        // Existing profit rules also require a positive year return, even when
+        // the historical annualized multiple is zero or negative.
+        consider(signal, Math.max(0, signal.annualized * signal.multiple), signal.yearReturn);
+      }
+    }
+  }
+  return candidates.sort((left, right) => Number(right.triggered) - Number(left.triggered) || left.remaining - right.remaining)[0] || null;
+}

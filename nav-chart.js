@@ -72,16 +72,17 @@ export function renderNavChart(points, { costNav = null, markers = [], reference
   const markerGroups = new Map();
   const seenIds = new Set();
   for (const marker of Array.isArray(markers) ? markers : []) {
-    if (!marker || !validDate(marker.date) || !validNav(marker.nav) || !['buy', 'sell'].includes(marker.type)
-      || marker.date < firstDate || marker.date > lastDate) continue;
+    const type = ['buy', 'sip', 'transfer-in', 'reinvest'].includes(marker?.type) ? 'buy' : marker?.type === 'sell' ? 'sell' : null;
+    if (!marker || !validDate(marker.date) || !validNav(marker.nav) || !type
+      || marker.date < firstDate || marker.date > endDate) continue;
     if (typeof marker.id === 'string' && marker.id) {
       if (seenIds.has(marker.id)) continue;
       seenIds.add(marker.id);
     }
-    const key = `${marker.date}|${marker.type}|${marker.nav}`;
+    const key = `${marker.date}|${type}|${marker.nav}`;
     const existing = markerGroups.get(key);
     if (existing) { existing.count += 1; existing.estimated ||= marker.estimated === true; }
-    else markerGroups.set(key, { date: marker.date, nav: marker.nav, type: marker.type, estimated: marker.estimated === true, count: 1 });
+    else markerGroups.set(key, { date: marker.date, nav: marker.nav, type, estimated: marker.estimated === true, count: 1 });
   }
   const safeMarkers = [...markerGroups.values()].sort((left, right) => left.date.localeCompare(right.date));
   const hasCost = validNav(costNav, true);
@@ -172,9 +173,9 @@ export function renderNavChart(points, { costNav = null, markers = [], reference
     const name = buying ? '买入' : '卖出';
     const dates = marker.from === marker.to ? marker.from : `${marker.from}至${marker.to}`;
     const description = `${name} · ${dates}${marker.count > 1 ? ` · 共${marker.count}笔` : ''}${marker.estimated ? ' · 含估算' : ''}`;
-    return `<span class="nav-trade-marker nav-trade-${marker.type}${marker.estimated ? ' is-estimated' : ''}${marker.count > 1 ? ' is-cluster' : ''}" style="left:${coordinate(marker.x)}%;top:${coordinate(marker.y)}%" role="img" aria-label="${description}" title="${description}"><span class="nav-trade-dot${marker.estimated ? ' is-estimated' : ''}" aria-hidden="true"></span></span>`;
+    return `<span class="nav-trade-marker nav-trade-${marker.type}${marker.estimated ? ' is-estimated' : ''}${marker.count > 1 ? ' is-cluster' : ''}" style="left:${coordinate(marker.x)}%;top:${coordinate(marker.y)}%" role="img" aria-label="${description}" title="${description}"><span class="nav-trade-dot" aria-hidden="true"></span></span>`;
   }).join('');
-  const legend = safeMarkers.length ? `<div class="nav-chart-legend">${safeMarkers.some(marker => marker.type === 'buy') ? '<span class="nav-chart-legend-buy"><span class="nav-trade-dot" aria-hidden="true"></span>买入</span>' : ''}${safeMarkers.some(marker => marker.type === 'sell') ? '<span class="nav-chart-legend-sell"><span class="nav-trade-dot" aria-hidden="true"></span>卖出</span>' : ''}${safeMarkers.some(marker => marker.estimated) ? '<span class="nav-chart-legend-estimated"><span class="nav-trade-dot is-estimated" aria-hidden="true"></span>估算</span>' : ''}</div>` : '';
+  const legend = safeMarkers.length ? `<div class="nav-chart-legend">${safeMarkers.some(marker => marker.type === 'buy') ? '<span class="nav-chart-legend-buy"><span class="nav-trade-dot" aria-hidden="true"></span>买入</span>' : ''}${safeMarkers.some(marker => marker.type === 'sell') ? '<span class="nav-chart-legend-sell"><span class="nav-trade-dot" aria-hidden="true"></span>卖出</span>' : ''}${safeMarkers.some(marker => marker.estimated) ? '<span class="nav-chart-legend-estimated">含估算成交</span>' : ''}</div>` : '';
   // Short visible windows keep each actual/estimated observation connected to the
   // date baseline. Pending dates never manufacture an observation or a guide.
   const resting = duration <= 7 * 86400000 ? publicPoints.map(point => `<span class="nav-chart-rest-line" data-date="${point.date}" style="left:${coordinate(point.x)}%;top:${coordinate(point.y)}%;bottom:0" aria-hidden="true"></span><span class="nav-chart-rest-point${point.estimated ? ' is-estimated' : ''}" data-date="${point.date}" style="left:${coordinate(point.x)}%;top:${coordinate(point.y)}%${colorStyle(point.nav)}" aria-hidden="true"></span>`).join('') : '';

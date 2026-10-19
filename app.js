@@ -2,9 +2,9 @@ import { calculateLedger } from './engine.js?v=20261019-estimated-chip';
 import { estimateApplications, GUOFU_TRADING_DATES } from './application-estimates.js';
 import { createRefreshController } from './refresh-controller.js';
 import { NAV_PERIODS, resolveNavRange, moveNavBoundary, resolveNavSliderDomain } from './nav-range.js';
-import { renderNavChart } from './nav-chart.js?v=20261019-chart-controls';
-import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline } from './nav-annualized.js';
-import { setupNavChartInteractions } from './nav-interaction.js?v=20261019-chart-controls';
+import { renderNavChart } from './nav-chart.js?v=20261019-transactions';
+import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap } from './nav-annualized.js?v=20261019-discipline-gap';
+import { setupNavChartInteractions } from './nav-interaction.js?v=20261019-gap-scroll-markers';
 import { setupNavSliderInteractions } from './nav-slider.js';
 import { calculateTransactionPerformance } from './transaction-performance.js';
 import { FUNDS, FUND_CODES } from './funds.js?v=20261019-collapsible-panels';
@@ -22,11 +22,17 @@ import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js';
 import { renderEstimatePanel } from './estimate-panel.js?v=20261019-collapsible-panels';
 import { getDisciplineActions, adjustDisciplineRule } from './discipline-actions.js';
 import { getNavChartDisplay } from './nav-display.js';
+import { createFundViewportKeeper } from './viewport-anchor.js?v=20261019-semantic-scroll';
+import { createTransactionStore } from './transaction-store.js';
+import { deriveTransactionDraft, validateTransactionMutation } from './transaction-model.js';
+import { renderTransactionEditor, renderTransactionDelete, renderTransactionPreview, renderTransactionDateWheels, normalizeTransactionDate, transactionAmountLabel } from './transaction-view.js';
 const TYPE_NAMES = { buy: '买入', sip: '定投', sell: '卖出', reinvest: '红利再投', dividend: '现金分红', 'transfer-in': '转换转入' };
 const STATUS_NAMES = { confirmed: '已确认', estimated: '历史估算', pending: '待确认', cancelled: '撤单', failed: '交易失败', closed: '交易关闭' };
 const state = { unlocked: false, visible: false, funds: {}, nav: {}, disciplines: DISCIPLINE_ENTRIES, bonds: [], freeCashFlow: null, cashEditing: false, cashDraft: null, cashBusy: false, cashError: '', bondEditing: null, bondDraft: null, bondBusy: false, bondError: '', bondUnavailable: true, bondUpdatedAt: null, navPreset: null, navCycles: { months: '1m', years: '1y' }, navRanges: {}, navDomains: {}, navVisuals: {}, expandedPanels: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null, deadline: 0, dayDeadline: 0, sessionDay: null };
 const app = document.querySelector('#app');
+const fundViewport = createFundViewportKeeper({ root: app, view: window });
 Object.assign(state, { navEstimateEntries: [], estimateDrafts: {}, estimateDirections: {}, estimateErrors: {}, estimateStorageAvailable: true, estimateDate: null, estimateLoaded: false });
+Object.assign(state, { transactionEditor: null, transactionDelete: null, transactionBusy: false, transactionError: '', transactionStoreUnavailable: true, transactionStoreError: '', transactionFeeRates: {}, transactionDatePickerOpen: false, transactionAmountVisible: false });
 const icons = {
   book: '<path d="M6 3h13v18H6zM3 6h5M3 12h5M3 18h5M11 8h5M11 12h5M11 16h3"/>',
   eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
@@ -69,6 +75,9 @@ let dailyCodeReader = null;
 let unlockGeneration = 0;
 let vaultSession = null;
 let bondStore = null;
+let transactionStore = null;
+const transactionWheelTimers = new Map();
+const TRANSACTION_FEE_KEY = 'fund-ledger:transaction-fees:v1';
 let dataVersionBaseline = null;
 let navSliders = null;
 let locatedRoute = null;
@@ -168,6 +177,7 @@ function themeButton() {
 }
 
 function renderGate(notice = '') {
+  fundViewport.cancel();
   document.title = '解锁 · 基金账本';
   app.innerHTML = `<main id="main" class="gate"><div class="gate-theme">${themeButton()}</div><div class="gate-content">
     <div class="brand"><span class="brand-mark">${icon('book')}</span>基金账本</div>
@@ -195,6 +205,7 @@ async function unlock(event) {
   let password = input.value;
   let openedSession = null;
   let openedBonds = null;
+  let openedTransactions = null;
   let bondSnapshot = null;
   input.value = '';
   try {
@@ -214,10 +225,15 @@ async function unlock(event) {
     const initial = await readInitialSnapshot(vault, openedSession, baseline);
     if (!isCurrent()) { openedSession?.close(); openedBonds?.close(); return; }
     vault = initial.vault;
+    let transactionError = '';
+    try { openedTransactions = await createTransactionStore(openedSession, vault.funds); }
+    catch { transactionError = '本机交易记录暂不可用，请检查浏览器存储后重新解锁。'; }
+    if (!isCurrent()) { openedSession?.close(); openedBonds?.close(); openedTransactions?.close(); return; }
     if (getDailyCode() !== sessionDay) throw new Error('day-changed');
     if (!vault || typeof vault.funds !== 'object') throw new Error('invalid');
+    const mergedFunds = openedTransactions ? openedTransactions.getFunds() : vault.funds;
     for (const fund of FUNDS) {
-      const entry = vault.funds[fund.code] || {};
+      const entry = mergedFunds[fund.code] || {};
       const book = getBook(fund.code);
       book.transactions = (Array.isArray(entry.transactions) ? entry.transactions : []).map((tx, index) => ({ ...tx, id: tx.id || `${fund.code}-${index}` }));
       book.mode = entry.mode === 'principal-first' ? 'principal-first' : 'profit-first';
@@ -225,6 +241,11 @@ async function unlock(event) {
       book.sourceNote = typeof entry.sourceNote === 'string' ? entry.sourceNote : '';
     }
     state.createdAt = vault.createdAt;
+    clearTransactionSession();
+    transactionStore = openedTransactions;
+    state.transactionStoreUnavailable = !transactionStore;
+    state.transactionStoreError = transactionError;
+    state.transactionFeeRates = readTransactionFeeRates();
     vaultSession?.close();
     vaultSession = openedSession;
     bondStore?.close();
@@ -253,12 +274,14 @@ async function unlock(event) {
     password = '';
     openedSession?.close();
     openedBonds?.close();
+    openedTransactions?.close();
     if (!isCurrent()) return;
     dataRefresh.stop();
     disciplineSync.stop();
     vaultSession?.close();
     vaultSession = null;
     clearBondSession();
+    clearTransactionSession();
     dataVersionBaseline = null;
     stopSessionTimers();
     state.unlocked = false;
@@ -291,6 +314,7 @@ function lock(reason = 'manual') {
   vaultSession?.close();
   vaultSession = null;
   clearBondSession();
+  clearTransactionSession();
   dataVersionBaseline = null;
   activeTransition?.skipTransition();
   stopSessionTimers();
@@ -330,6 +354,265 @@ function clearBondSession() {
   state.bondError = '';
   state.bondUnavailable = true;
   state.bondUpdatedAt = null;
+}
+
+function clearTransactionSession() {
+  transactionStore?.close();
+  transactionStore = null;
+  for (const timer of transactionWheelTimers.values()) clearTimeout(timer);
+  transactionWheelTimers.clear();
+  state.transactionEditor = null;
+  state.transactionDelete = null;
+  state.transactionBusy = false;
+  state.transactionError = '';
+  state.transactionStoreUnavailable = true;
+  state.transactionStoreError = '';
+  state.transactionFeeRates = {};
+  state.transactionDatePickerOpen = false;
+  state.transactionAmountVisible = false;
+}
+
+function readTransactionFeeRates() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(TRANSACTION_FEE_KEY) || '{}');
+    if (!saved || typeof saved !== 'object' || Array.isArray(saved)) return {};
+    return Object.fromEntries(Object.entries(saved).filter(([key, value]) => {
+      const [code, type] = key.split(':');
+      return FUND_CODES.includes(code) && Object.hasOwn(TYPE_NAMES, type) && Number.isFinite(value) && value >= 0 && value < 100;
+    }));
+  } catch { return {}; }
+}
+
+function rememberTransactionFee(code, draft) {
+  if (!['buy', 'sip', 'sell', 'transfer-in'].includes(draft.type) || !String(draft.feeRate).trim()) return;
+  const value = Number(draft.feeRate);
+  if (!Number.isFinite(value) || value < 0 || value >= 100) return;
+  state.transactionFeeRates[`${code}:${draft.type}`] = value;
+  try { localStorage.setItem(TRANSACTION_FEE_KEY, JSON.stringify(state.transactionFeeRates)); } catch { /* A ratio preference never changes a saved transaction. */ }
+}
+
+function transactionFeeDraft(code, type, original = null) {
+  if (['dividend', 'reinvest'].includes(type)) return '0';
+  if (original?.type === type) {
+    if (Number.isFinite(original.feeRate) && original.feeRate >= 0) return String(original.feeRate);
+    if (Number.isFinite(original.fee) && original.fee >= 0 && Number.isFinite(original.nav) && original.nav > 0 && Number.isFinite(original.shares) && original.shares > 0) return String(Number((original.fee / (original.nav * original.shares) * 100).toPrecision(12)));
+  }
+  const saved = state.transactionFeeRates[`${code}:${type}`];
+  return Number.isFinite(saved) ? String(saved) : '';
+}
+
+function transactionDraft(original, code) {
+  const type = Object.hasOwn(TYPE_NAMES, original?.type) ? original.type : 'buy';
+  const amount = type === 'reinvest' ? original?.status === 'pending' ? original.amount : original?.shares * original?.nav : original?.amount ?? original?.cost ?? (Number.isFinite(original?.shares) && Number.isFinite(original?.nav) ? original.shares * original.nav + (type === 'sell' ? -1 : 1) * (original.fee || 0) : null);
+  return {
+    date: original?.date || String(original?.submittedAt || '').slice(0, 10) || getEstimateDates(new Date()).today,
+    type, amount: Number.isFinite(amount) ? String(amount) : '', nav: Number.isFinite(original?.nav) && original.nav > 0 ? String(original.nav) : '',
+    feeRate: transactionFeeDraft(code, type, original), status: Number.isFinite(original?.nav) && original.nav > 0 ? 'confirmed' : 'pending',
+  };
+}
+
+function transactionDraftResult() {
+  const editor = state.transactionEditor;
+  return editor ? deriveTransactionDraft(editor.draft, { original: editor.original, defaultFeeRate: null, today: getEstimateDates(new Date()).today, id: editor.recordId }) : null;
+}
+
+function transactionDialog() {
+  const code = selectedCode();
+  if (state.transactionEditor?.code === code) return renderTransactionEditor({ editor: state.transactionEditor, result: transactionDraftResult(), visible: state.visible, amountVisible: state.transactionAmountVisible, busy: state.transactionBusy, error: state.transactionError, today: getEstimateDates(new Date()).today });
+  if (state.transactionDelete?.code === code) return renderTransactionDelete({ removal: state.transactionDelete, busy: state.transactionBusy, error: state.transactionError });
+  return '';
+}
+
+function openTransactionEditor(id = null) {
+  const code = selectedCode();
+  if (!code || !transactionStore || state.transactionBusy) return;
+  const original = id ? getBook(code).transactions.find(tx => tx.id === id) : null;
+  if (id && !original) return;
+  state.transactionEditor = { code, id, recordId: id || `local-${crypto.randomUUID()}`, original: original ? structuredClone(original) : null, draft: transactionDraft(original, code) };
+  state.transactionDelete = null;
+  state.transactionError = '';
+  state.transactionDatePickerOpen = false;
+  state.transactionAmountVisible = state.visible;
+  render();
+  app.querySelector?.('.transaction-dialog [name="amount"]')?.focus?.({ preventScroll: true });
+}
+
+function cancelTransactionDialog() {
+  if (state.transactionBusy) return;
+  const previous = state.transactionEditor || state.transactionDelete;
+  const editing = Boolean(state.transactionEditor?.id), deleting = Boolean(state.transactionDelete);
+  state.transactionEditor = null;
+  state.transactionDelete = null;
+  state.transactionError = '';
+  state.transactionDatePickerOpen = false;
+  state.transactionAmountVisible = false;
+  for (const timer of transactionWheelTimers.values()) clearTimeout(timer);
+  transactionWheelTimers.clear();
+  render();
+  const opener = previous?.id && (editing || deleting)
+    ? [...app.querySelectorAll('[data-action]')].find(button => button.dataset.action === `transaction-${deleting ? 'delete' : 'edit'}` && button.dataset.id === previous.id)
+    : app.querySelector?.('[data-action="transaction-new"]');
+  opener?.focus?.({ preventScroll: true });
+}
+
+function updateTransactionPreview() {
+  const editor = state.transactionEditor;
+  if (!editor) return;
+  const result = transactionDraftResult();
+  const navText = String(editor.draft.nav).trim();
+  const status = /^(?:\d+(?:\.\d*)?|\.\d+)$/.test(navText) && Number(navText) > 0 && Number(navText) <= 1e9 ? 'confirmed' : 'pending';
+  editor.draft.status = status;
+  const field = app.querySelector?.('#transaction-form [name="status"]');
+  if (field) field.value = status;
+  const hint = app.querySelector?.('[data-transaction-status]');
+  if (hint) hint.innerHTML = `<span>${status === 'confirmed' ? '已确认' : '进行中'}</span><small>${status === 'confirmed' ? '保存后计入持仓' : '补充净值后自动确认'}</small>`;
+  const label = app.querySelector?.('#transaction-amount-label');
+  if (label) label.textContent = transactionAmountLabel(editor.draft.type);
+  const preview = app.querySelector?.('.transaction-preview');
+  if (preview) preview.innerHTML = renderTransactionPreview(result, { visible: state.visible });
+  const error = app.querySelector?.('#transaction-error');
+  if (error) error.textContent = state.transactionError;
+}
+
+function readTransactionForm(form) {
+  if (!state.transactionEditor || !form?.elements) return;
+  for (const key of ['date', 'type', 'amount', 'nav', 'feeRate']) if (form.elements[key]) state.transactionEditor.draft[key] = String(form.elements[key].value ?? '');
+}
+
+function transactionValidationBase(code) {
+  const book = getBook(code);
+  return book.incomplete && code === '006373' ? estimateApplications(book.transactions, officialNav(code), { rate: 0.0015, tradingDates: GUOFU_TRADING_DATES }) : book.transactions;
+}
+
+function applyTransactionFunds(funds) {
+  for (const fund of FUNDS) {
+    const entry = funds?.[fund.code];
+    if (!entry || !Array.isArray(entry.transactions)) continue;
+    const book = getBook(fund.code);
+    book.transactions = entry.transactions.map((tx, index) => ({ ...tx, id: tx.id || `${fund.code}-${index}` }));
+    book.incomplete = entry.incomplete === true;
+    book.sourceNote = typeof entry.sourceNote === 'string' ? entry.sourceNote : '';
+  }
+}
+
+async function saveTransactionEdits(event) {
+  event.preventDefault();
+  if (!state.unlocked || !checkSession() || state.transactionBusy || !transactionStore || !state.transactionEditor) return;
+  readTransactionForm(event.target);
+  const editor = state.transactionEditor, result = transactionDraftResult();
+  state.transactionError = result?.error || '';
+  if (!result?.transaction || state.transactionError) { updateTransactionPreview(); return; }
+  const mutation = { type: editor.id ? 'update' : 'add', transaction: result.transaction, id: result.transaction.id, mode: getBook(editor.code).mode };
+  const check = validateTransactionMutation(transactionValidationBase(editor.code), mutation);
+  if (!check.valid) { state.transactionError = check.error; updateTransactionPreview(); return; }
+  const store = transactionStore, generation = unlockGeneration;
+  state.transactionBusy = true;
+  render();
+  try {
+    const funds = editor.id ? await store.update(editor.code, editor.id, result.transaction) : await store.add(editor.code, result.transaction);
+    if (generation !== unlockGeneration || store !== transactionStore || !checkSession()) return;
+    applyTransactionFunds(funds);
+    rememberTransactionFee(editor.code, editor.draft);
+    state.transactionEditor = null;
+    state.transactionDelete = null;
+    state.transactionError = '';
+    state.transactionDatePickerOpen = false;
+    state.transactionAmountVisible = false;
+    state.transactionBusy = false;
+    render();
+    toast(editor.id ? '交易已修改' : result.transaction.status === 'pending' ? '已登记进行中交易' : '交易已登记');
+  } catch {
+    if (generation !== unlockGeneration || store !== transactionStore || !checkSession()) return;
+    state.transactionError = '本机加密保存失败，原记录未更改，请重试。';
+  } finally {
+    if (generation === unlockGeneration && store === transactionStore) { state.transactionBusy = false; if (state.transactionEditor || state.transactionDelete) render(); }
+  }
+}
+
+async function confirmTransactionDelete() {
+  const removal = state.transactionDelete;
+  if (!state.unlocked || !checkSession() || state.transactionBusy || !transactionStore || !removal) return;
+  const check = validateTransactionMutation(transactionValidationBase(removal.code), { type: 'remove', id: removal.id, mode: getBook(removal.code).mode });
+  if (!check.valid) { state.transactionError = check.error; render(); return; }
+  const store = transactionStore, generation = unlockGeneration;
+  state.transactionBusy = true;
+  render();
+  try {
+    const funds = await store.remove(removal.code, removal.id);
+    if (generation !== unlockGeneration || store !== transactionStore || !checkSession()) return;
+    applyTransactionFunds(funds);
+    state.transactionDelete = null;
+    state.transactionError = '';
+    state.transactionBusy = false;
+    render();
+    toast('交易已删除');
+  } catch {
+    if (generation !== unlockGeneration || store !== transactionStore || !checkSession()) return;
+    state.transactionError = '本机加密删除失败，原记录未更改，请重试。';
+  } finally {
+    if (generation === unlockGeneration && store === transactionStore) { state.transactionBusy = false; if (state.transactionDelete) render(); }
+  }
+}
+
+function syncTransactionDateWheels({ smooth = false } = {}) {
+  const date = state.transactionEditor?.draft.date;
+  if (!date) return;
+  const parts = date.split('-').map(Number), keys = ['year', 'month', 'day'];
+  app.querySelectorAll?.('[data-date-wheel]').forEach(wheel => {
+    const value = parts[keys.indexOf(wheel.dataset.dateWheel)];
+    const options = [...wheel.querySelectorAll('[data-value]')];
+    options.forEach(option => option.setAttribute('aria-selected', String(Number(option.dataset.value) === value)));
+    const index = options.findIndex(option => Number(option.dataset.value) === value);
+    const height = options[0]?.offsetHeight || 40;
+    if (index >= 0 && Math.abs(wheel.scrollTop - index * height) > 1) {
+      if (typeof wheel.scrollTo === 'function') wheel.scrollTo({ top: index * height, behavior: smooth ? 'smooth' : 'instant' });
+      else wheel.scrollTop = index * height;
+    }
+  });
+}
+
+function updateTransactionDate(key, value, { smooth = true } = {}) {
+  const editor = state.transactionEditor;
+  if (!editor || !['year', 'month', 'day'].includes(key) || !Number.isInteger(value)) return;
+  editor.draft.date = normalizeTransactionDate(editor.draft.date, { [key]: value });
+  const input = app.querySelector?.('#transaction-form [name="date"]');
+  if (input) input.value = editor.draft.date;
+  const toggle = app.querySelector?.('.transaction-date-toggle');
+  if (toggle) toggle.innerHTML = `${esc(editor.draft.date)}<span aria-hidden="true">⌄</span>`;
+  const picker = app.querySelector?.('.transaction-date-picker');
+  // Month/year changes can alter February's day list; replace only that wheel.
+  if (key !== 'day' && picker) {
+    const dayWheel = picker.querySelector?.('[data-date-wheel="day"]');
+    if (dayWheel) {
+      const [year, month, day] = editor.draft.date.split('-').map(Number);
+      dayWheel.innerHTML = Array.from({ length: new Date(Date.UTC(year, month, 0)).getUTCDate() }, (_, index) => `<button type="button" class="transaction-date-option" role="option" tabindex="-1" data-action="transaction-date-option" data-wheel="day" data-value="${index + 1}" aria-selected="${index + 1 === day}">${index + 1}日</button>`).join('');
+    }
+  }
+  state.transactionError = '';
+  syncTransactionDateWheels({ smooth });
+  updateTransactionPreview();
+}
+
+function toggleTransactionDatePicker(open = !state.transactionDatePickerOpen) {
+  if (!state.transactionEditor || state.transactionBusy) return;
+  const editor = state.transactionEditor;
+  if (open && !/^\d{4}-\d{2}-\d{2}$/.test(editor.draft.date)) {
+    editor.draft.date = getEstimateDates(new Date()).today;
+    const input = app.querySelector?.('#transaction-form [name="date"]');
+    if (input) input.value = editor.draft.date;
+    const toggle = app.querySelector?.('.transaction-date-toggle');
+    if (toggle) toggle.innerHTML = `${esc(editor.draft.date)}<span aria-hidden="true">⌄</span>`;
+  }
+  state.transactionDatePickerOpen = open;
+  const picker = app.querySelector?.('.transaction-date-picker');
+  const returnFocus = !open && picker?.contains?.(document.activeElement);
+  if (picker) {
+    if (open) picker.innerHTML = renderTransactionDateWheels(editor.draft.date, getEstimateDates(new Date()).today);
+    picker.hidden = !open;
+  }
+  app.querySelector?.('.transaction-date-toggle')?.setAttribute?.('aria-expanded', String(open));
+  if (open) syncTransactionDateWheels();
+  else if (returnFocus) app.querySelector?.('.transaction-date-toggle')?.focus?.({ preventScroll: true });
 }
 
 async function saveCashFlow(event) {
@@ -463,8 +746,9 @@ async function refreshCurrentData(version) {
   if (!latest || latest.revision !== version.revision) throw new Error('snapshot-changed');
   if (generation !== unlockGeneration || session !== vaultSession || !checkSession()) return;
   if (!vault?.funds || typeof vault.funds !== 'object') throw new Error('invalid');
+  const mergedFunds = transactionStore ? transactionStore.replaceBase(vault.funds) : vault.funds;
   const updatedBooks = FUNDS.map(fund => {
-    const entry = vault.funds[fund.code];
+    const entry = mergedFunds[fund.code];
     if (!entry || !Array.isArray(entry.transactions)) throw new Error('invalid');
     return { code: fund.code, transactions: entry.transactions.map((tx, index) => ({ ...tx, id: tx.id || `${fund.code}-${index}` })), incomplete: entry.incomplete === true, sourceNote: typeof entry.sourceNote === 'string' ? entry.sourceNote : '' };
   });
@@ -736,15 +1020,33 @@ function render() {
   const fund = selectedFund();
   const section = routeSection();
   const locate = locatedRoute !== location.hash && ['us-exposure', 'bond-reserve', 'add-discipline'].includes(section);
+  const previousFund = fundCodeFromHash(lastRenderedRoute);
+  const viewport = !locate && fund && previousFund && (previousFund === fund.code || !section) ? fundViewport.capture() : null;
+  if (!viewport) fundViewport.cancel();
   if (locate && !fund && !selectedBonds()) state.expandedPanels[`discipline-${section}`] = true;
   recordPanelState(fund?.code);
   if (locate && fund && section === 'us-exposure') state.expandedPanels['fund-basics'] = true;
   const bonds = selectedBonds();
   const reserve = bondReserveCheck();
+  const activeField = document.activeElement;
+  const transactionFocus = activeField?.closest?.('#transaction-form') ? { name: activeField.name, start: activeField.selectionStart, end: activeField.selectionEnd } : null;
   document.title = fund ? `${fund.short}账本 · 基金账本` : bonds ? '债基 · 基金账本' : '交易纪律 · 基金账本';
-  app.innerHTML = `${header(fund?.code, reserve)}${fund ? fundPage(fund) : bonds ? renderBondsPage({ entries: state.bonds, visible: state.visible, editing: state.bondEditing, draft: state.bondDraft, error: state.bondError, busy: state.bondBusy, unavailable: state.bondUnavailable, reserve, locateReserve: section === 'bond-reserve', freeCashFlow: state.freeCashFlow, cashEditing: state.cashEditing, cashDraft: state.cashDraft, cashError: state.cashError, cashBusy: state.cashBusy }) : homePage(reserve)}${bottomNav(fund?.code, reserve)}`;
+  app.innerHTML = `${header(fund?.code, reserve)}${fund ? fundPage(fund) : bonds ? renderBondsPage({ entries: state.bonds, visible: state.visible, editing: state.bondEditing, draft: state.bondDraft, error: state.bondError, busy: state.bondBusy, unavailable: state.bondUnavailable, reserve, locateReserve: section === 'bond-reserve', freeCashFlow: state.freeCashFlow, cashEditing: state.cashEditing, cashDraft: state.cashDraft, cashError: state.cashError, cashBusy: state.cashBusy }) : homePage(reserve)}${bottomNav(fund?.code, reserve)}${transactionDialog()}`;
+  if (state.transactionDatePickerOpen) toggleTransactionDatePicker(true);
+  if (transactionFocus) {
+    const field = app.querySelector?.(`#transaction-form [name="${transactionFocus.name}"]`);
+    field?.focus?.({ preventScroll: true });
+    if (typeof field?.setSelectionRange === 'function' && typeof transactionFocus.start === 'number') { try { field.setSelectionRange(transactionFocus.start, transactionFocus.end); } catch {} }
+  }
   app.querySelectorAll('.nav-periods').forEach(periods => { periods.scrollLeft = 0; });
-  app.querySelectorAll('.desktop-nav .active, .bottom-nav .active').forEach(link => link.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'instant' }));
+  // Reveal a horizontally clipped tab without scrollIntoView moving the document.
+  app.querySelectorAll('.desktop-nav, .bottom-nav').forEach(nav => {
+    const link = nav.querySelector('.active');
+    if (!link) return;
+    const bounds = nav.getBoundingClientRect(), active = link.getBoundingClientRect();
+    if (active.left < bounds.left) nav.scrollLeft -= bounds.left - active.left;
+    else if (active.right > bounds.right) nav.scrollLeft += active.right - bounds.right;
+  });
   locatedRoute = location.hash;
   lastRenderedRoute = location.hash;
   if (locate) {
@@ -755,6 +1057,9 @@ function render() {
       : document.querySelector(fund ? `#fund-${fund.code}-us-exposure` : '[data-discipline="us-exposure"] > summary');
     if (typeof target?.focus === 'function') target.focus({ preventScroll: true });
     if (typeof target?.scrollIntoView === 'function') target.scrollIntoView({ block: 'center', behavior: 'instant' });
+  } else if (viewport) {
+    const renderedRoute = location.hash;
+    fundViewport.restore(viewport, { isCurrent: () => state.unlocked && location.hash === renderedRoute });
   }
 }
 
@@ -1041,6 +1346,11 @@ function updateNavRange(code, selection, interaction = {}) {
   const change = panel.querySelector('[data-nav-change]');
   change.textContent = percent(summary.change);
   change.className = `num ${signClass(summary.change)}`;
+  const disciplineGap = panel.querySelector('[data-nav-discipline-gap]');
+  if (disciplineGap) {
+    disciplineGap.innerHTML = navDisciplineGap(code, summary.change);
+    disciplineGap.hidden = !disciplineGap.innerHTML;
+  }
   panel.querySelector('[data-nav-date]').textContent = navRangeDate(summary, state.nav[code], range);
   if (!sameDates || !interaction.visualDomain) panel.querySelector('[data-nav-chart]').innerHTML = sparkline(range.points, code, range);
   panel.querySelector('[data-nav-count]').textContent = `${display.points.length + display.estimatedPoints.length} 期`;
@@ -1077,6 +1387,19 @@ function safeSource(value) {
   try { const url = new URL(value); return url.protocol === 'https:' ? esc(url.href) : ''; } catch { return ''; }
 }
 
+function navDisciplineGap(code, change) {
+  if (!Number.isFinite(change) || change === 0) return '';
+  const gap = getNavDisciplineGap(change, change < 0
+    ? { addSignal: fundAddSignal(code).signal }
+    : { profitSignals: state.disciplines.filter(rule => rule.id === 'annual-profit' || rule.id.startsWith('annual-profit-')).map(rule => evaluateAnnualDiscipline(estimatedNav(code).points, { rule, now: new Date(), annualizedHistory: officialNav(code) })) });
+  if (!gap) return '';
+  const name = gap.kind === 'add' ? '加仓' : '止盈';
+  const context = gap.kind === 'add' ? '按最新净值、上次交易节点及现有加仓纪律计算' : '按最新净值、年内涨幅及现有止盈纪律计算';
+  const distance = gap.remaining > 0 && gap.remaining < 0.00005 ? '&lt;0.01' : number(gap.remaining * 100);
+  const content = gap.triggered ? `已达到${name}标准` : gap.remaining === 0 ? `已到${name}临界值` : `距${name}标准还差 <span class="num">${distance}</span> 个百分点`;
+  return `<span class="nav-discipline-distance ${gap.kind === 'add' ? 'negative' : 'positive'}" title="${context}">${content}</span>`;
+}
+
 function navPanel(fund) {
   const nav = state.nav[fund.code];
   const source = safeSource(nav?.source);
@@ -1084,20 +1407,26 @@ function navPanel(fund) {
   const range = selectedNavRange(fund.code, history);
   const display = getNavChartDisplay(range, estimatedNav(fund.code));
   const { summary } = display;
+  const disciplineGap = navDisciplineGap(fund.code, summary.change);
 
-  return `<details class="panel nav-panel panel-disclosure" data-panel="nav-quotes" data-fund="${fund.code}"${state.expandedPanels['nav-quotes'] !== false ? ' open' : ''}><summary class="panel-toggle"><h2>公开净值</h2><span class="helper" data-nav-count>${display.points.length + display.estimatedPoints.length} 期</span></summary><div class="panel-content"><div class="nav-value"><strong class="num" data-nav-value>${number(summary.endNav, 4)}</strong><span class="num ${signClass(summary.change)}" data-nav-change title="所选区间涨跌幅">${percent(summary.change)}</span></div><p class="nav-date" data-nav-date>${navRangeDate(summary, nav, range)}</p><div id="nav-chart-${fund.code}" data-nav-chart>${history.length ? sparkline(range.points, fund.code, range) : ''}</div>${navRangeControls(fund.code, history, range)}<p class="helper nav-meta">${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer">来源</a> · ` : ''}非实时</p></div></details>`;
+  return `<details class="panel nav-panel panel-disclosure" data-panel="nav-quotes" data-fund="${fund.code}"${state.expandedPanels['nav-quotes'] !== false ? ' open' : ''}><summary class="panel-toggle"><h2>公开净值</h2><span class="helper" data-nav-count>${display.points.length + display.estimatedPoints.length} 期</span></summary><div class="panel-content"><div class="nav-value"><strong class="num" data-nav-value>${number(summary.endNav, 4)}</strong><span class="num ${signClass(summary.change)}" data-nav-change title="所选区间涨跌幅">${percent(summary.change)}</span></div><p class="nav-discipline-gap" data-nav-discipline-gap${disciplineGap ? '' : ' hidden'}>${disciplineGap}</p><p class="nav-date" data-nav-date>${navRangeDate(summary, nav, range)}</p><div id="nav-chart-${fund.code}" data-nav-chart>${history.length ? sparkline(range.points, fund.code, range) : ''}</div>${navRangeControls(fund.code, history, range)}<p class="helper nav-meta">${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer">来源</a> · ` : ''}非实时</p></div></details>`;
 }
 
 function ledgerPanel(result, book, code) {
   const originalById = new Map(book.transactions.map(tx => [tx.id, tx]));
   const quote = valuation(code);
   const performance = calculateTransactionPerformance(result.rows.map(row => ({ ...row, estimated: row.estimated === true || ['estimated', '历史估算'].includes(originalById.get(row.id)?.status) })), { valuationNav: quote?.nav ?? null, valuationDate: quote?.date ?? null });
-  const filtered = result.rows.filter(row => (state.filter === 'all' || row.type === state.filter) && (state.statusFilter === 'all' || row.status === state.statusFilter || (state.statusFilter === 'error' && row.status === 'blocked')));
+  const visibleRows = result.rows.filter(row => {
+    const original = originalById.get(row.id) || row;
+    return !['cancelled', 'canceled', '撤单', '已撤单', '已撤销'].includes(original.status) && !['cancelled', 'canceled'].includes(original.sourceStatus);
+  });
+  const filtered = visibleRows.filter(row => (state.filter === 'all' || row.type === state.filter) && (state.statusFilter === 'all' || row.status === state.statusFilter || (state.statusFilter === 'error' && row.status === 'blocked')));
   const shown = filtered.slice().reverse().slice(0, state.limit);
-  const statusOptions = [['all', '全部状态'], ['included', '已计入'], ['pending', '待确认'], ['excluded', '未计入'], ['error', '待修正']];
-  return `<details class="panel ledger-panel panel-disclosure" data-panel="transactions" data-fund="${code}" ${state.expandedPanels.transactions ? 'open' : ''}><summary class="panel-toggle"><h2>逐笔交易</h2><span class="fund-code">${book.transactions.length} 笔</span></summary><div class="panel-content">
+  const statusOptions = [['all', '全部状态'], ['included', '已确认'], ['pending', '进行中'], ['error', '待修正']];
+  return `<details class="panel ledger-panel panel-disclosure" data-panel="transactions" data-fund="${code}" ${state.expandedPanels.transactions ? 'open' : ''}><summary class="panel-toggle"><h2>逐笔交易</h2><span class="ledger-panel-actions"><span class="fund-code">${visibleRows.length} 笔</span><button class="button transaction-register" type="button" data-action="transaction-new" ${state.transactionStoreUnavailable || state.transactionBusy ? 'disabled' : ''}>登记交易</button></span></summary><div class="panel-content">
+    ${state.transactionStoreError ? `<p class="helper transaction-storage-notice" role="status">${esc(state.transactionStoreError)}</p>` : ''}
     <div class="ledger-toolbar"><select id="type-filter" aria-label="筛选交易类型"><option value="all">全部类型</option>${Object.entries(TYPE_NAMES).map(([key, label]) => `<option value="${key}" ${state.filter === key ? 'selected' : ''}>${label}</option>`).join('')}</select><select id="status-filter" aria-label="筛选记录状态">${statusOptions.map(([key, label]) => `<option value="${key}" ${state.statusFilter === key ? 'selected' : ''}>${label}</option>`).join('')}</select></div>
-    <div class="transaction-list">${shown.length ? shown.map(row => transactionCard(row, book, performance.get(row.id))).join('') : `<div class="empty-state"><h3>${book.transactions.length ? '没有符合条件的交易' : '尚未配置交易数据'}</h3>${book.transactions.length ? '<button class="button" data-action="reset-filter">清除筛选</button>' : ''}</div>`}</div>${filtered.length > shown.length ? `<button class="button more-button" data-action="more">再显示 25 笔 · 还有 ${filtered.length - shown.length} 笔</button>` : ''}</div></details>`;
+    <div class="transaction-list">${shown.length ? shown.map(row => transactionCard(row, book, performance.get(row.id))).join('') : `<div class="empty-state"><h3>${visibleRows.length ? '没有符合条件的交易' : '尚无交易记录'}</h3>${visibleRows.length ? '<button class="button" data-action="reset-filter">清除筛选</button>' : ''}</div>`}</div>${filtered.length > shown.length ? `<button class="button more-button" data-action="more">再显示 25 笔 · 还有 ${filtered.length - shown.length} 笔</button>` : ''}</div></details>`;
 }
 
 function transactionCard(row, book, performance = {}) {
@@ -1125,6 +1454,7 @@ function transactionCard(row, book, performance = {}) {
   const performanceMetrics = `${performance.kind === 'lot' ? metric('本笔剩余市值', performance.marketValue) : performance.kind === 'sell' ? metric('本笔卖出成本', performance.cost) : ''}${metric(profitLabel, performance.profit, 2, signClass(performance.profit))}${performance.kind === 'dividend' ? '' : `<div><dt>本笔收益率</dt><dd class="num ${signClass(performance.returnRate)}">${percent(performance.returnRate)}</dd></div>`}`;
   const estimateExtras = performance.kind === 'lot' ? `<p class="helper detail-date-note">估值净值日期 ${esc(performance.valuationDate || '待更新')}${performance.estimated ? ' · 含估算交易' : ''}</p>` : '';
   return `<article class="transaction"><div class="transaction-top"><div class="transaction-label"><span class="transaction-type-icon ${out ? 'out' : ''}">${icon(out ? 'up' : row.type === 'reinvest' ? 'coins' : 'down')}</span><div><p class="transaction-title">${esc(TYPE_NAMES[row.type] || '未知类型')}<span class="row-status">${esc(label)}</span></p><p class="transaction-date">${displayDate} · 第 ${row.index} 笔</p></div></div><p class="transaction-amount num">${row.type === 'reinvest' ? sensitive(values.shares, 6) : sensitive(row.amount ?? tx.amount ?? tx.cost)}<small>${!included ? '记录金额 · 元' : row.type === 'reinvest' ? '增加份额 · 份' : estimated ? '估算支出 · 元' : out ? '实际到账 · 元' : '确认支出 · 元'}</small></p></div>
+    <div class="transaction-actions"><button class="transaction-edit" type="button" data-action="transaction-edit" data-id="${esc(row.id)}" aria-label="编辑${esc(TYPE_NAMES[row.type] || '交易')}" ${state.transactionStoreUnavailable || state.transactionBusy ? 'disabled' : ''}>编辑</button><button class="transaction-delete" type="button" data-action="transaction-delete" data-id="${esc(row.id)}" aria-label="删除${esc(TYPE_NAMES[row.type] || '交易')}" ${state.transactionStoreUnavailable || state.transactionBusy ? 'disabled' : ''}>×</button></div>
     <dl class="transaction-stats">${performanceMetrics}</dl>${row.error ? `<p class="row-error">${esc(row.error)}</p>` : ''}
     <details class="transaction-detail" data-id="${esc(row.id)}"><summary>本笔明细</summary><div class="detail-inner"><dl class="transaction-stats">${detailMetrics.join('')}</dl><p class="helper detail-date-note">${dateNote}</p>${row.estimateReason ? `<p class="helper detail-date-note">${esc(row.estimateReason)}</p>` : ''}${estimateExtras}${hasNote && state.visible ? `<p class="transaction-note">备注：${esc(tx.note)}</p>` : ''}</div></details></article>`;
 }
@@ -1149,9 +1479,33 @@ app.addEventListener('submit', event => {
   }
   if (event.target.id === 'bond-edit-form') return saveBondEdits(event);
   if (event.target.id === 'cash-flow-form') return saveCashFlow(event);
+  if (event.target.id === 'transaction-form') return saveTransactionEdits(event);
 });
 app.addEventListener('change', event => {
   if (!state.unlocked || !checkSession()) return;
+  if (event.target.closest?.('#transaction-form') && state.transactionEditor && !state.transactionBusy) {
+    const key = event.target.name;
+    if (['date', 'type', 'amount', 'nav', 'feeRate'].includes(key)) {
+      state.transactionEditor.draft[key] = event.target.value;
+      if (key === 'type') {
+        state.transactionEditor.draft.feeRate = transactionFeeDraft(state.transactionEditor.code, event.target.value, state.transactionEditor.original);
+        const fee = app.querySelector?.('#transaction-form [name="feeRate"]');
+        const noFee = ['reinvest', 'dividend'].includes(event.target.value);
+        if (fee) { fee.value = state.transactionEditor.draft.feeRate; fee.disabled = noFee; }
+        const feeDetails = app.querySelector?.('[data-transaction-fees]');
+        if (feeDetails) { feeDetails.hidden = noFee; if (!noFee && !state.transactionEditor.draft.feeRate) feeDetails.open = true; }
+        const free = app.querySelector?.('.transaction-fee-free');
+        if (free) free.hidden = !noFee;
+      }
+      if (key === 'date') {
+        const toggle = app.querySelector?.('.transaction-date-toggle');
+        if (toggle) toggle.innerHTML = `${esc(event.target.value)}<span aria-hidden="true">⌄</span>`;
+      }
+      state.transactionError = '';
+      updateTransactionPreview();
+    }
+    return;
+  }
   if (event.target.closest?.('#nav-estimate-form') && /^estimate-\d{6}$/.test(event.target.name)) { queueEstimateSave(event.target.name.slice(9), 0); return; }
   if (event.target.matches?.('[data-nav-boundary]')) {
     const input = event.target;
@@ -1183,6 +1537,14 @@ function setEstimateDirection(code, direction, source = null) {
 
 app.addEventListener('input', event => {
   const input = event.target;
+  if (input.closest?.('#transaction-form')) {
+    if (state.unlocked && checkSession() && state.transactionEditor && !state.transactionBusy && ['date', 'type', 'amount', 'nav', 'feeRate'].includes(input.name)) {
+      state.transactionEditor.draft[input.name] = input.value;
+      state.transactionError = '';
+      updateTransactionPreview();
+    }
+    return;
+  }
   if (input.closest?.('#nav-estimate-form')) {
     if (state.unlocked && checkSession() && /^estimate-\d{6}$/.test(input.name)) {
       const code = input.name.slice(9);
@@ -1207,6 +1569,42 @@ app.addEventListener('input', event => {
   const history = state.nav[code]?.history || [];
   updateNavRange(code, moveNavBoundary(history, navSelection(code), input.dataset.navBoundary, input.value, navContext(code)));
 });
+app.addEventListener('scroll', event => {
+  const wheel = event.target;
+  const key = wheel?.dataset?.dateWheel;
+  if (!['year', 'month', 'day'].includes(key) || !state.transactionEditor || !state.transactionDatePickerOpen || state.transactionBusy) return;
+  clearTimeout(transactionWheelTimers.get(key));
+  transactionWheelTimers.set(key, setTimeout(() => {
+    transactionWheelTimers.delete(key);
+    if (!state.unlocked || !checkSession() || !state.transactionEditor || !state.transactionDatePickerOpen || state.transactionBusy) return;
+    const options = [...wheel.querySelectorAll('[data-value]')];
+    const height = options[0]?.offsetHeight || 40;
+    const option = options[Math.max(0, Math.min(options.length - 1, Math.round(wheel.scrollTop / height)))];
+    if (option) updateTransactionDate(key, Number(option.dataset.value), { smooth: false });
+  }, 120));
+}, true);
+document.addEventListener('keydown', event => {
+  if ((!state.transactionEditor && !state.transactionDelete) || !state.unlocked || !checkSession()) return;
+  if (event.key === 'Escape') { event.preventDefault(); if (state.transactionDatePickerOpen) toggleTransactionDatePicker(false); else cancelTransactionDialog(); return; }
+  const wheel = event.target?.closest?.('[data-date-wheel]');
+  if (wheel && ['ArrowUp', 'ArrowDown', 'Home', 'End'].includes(event.key) && !state.transactionBusy) {
+    event.preventDefault();
+    const key = wheel.dataset.dateWheel, parts = state.transactionEditor.draft.date.split('-').map(Number);
+    const current = parts[['year', 'month', 'day'].indexOf(key)];
+    const values = [...wheel.querySelectorAll('[data-value]')].map(option => Number(option.dataset.value));
+    const target = event.key === 'Home' ? values[0] : event.key === 'End' ? values.at(-1) : Math.max(values[0], Math.min(values.at(-1), current + (event.key === 'ArrowDown' ? 1 : -1)));
+    updateTransactionDate(key, target);
+    return;
+  }
+  if (event.key === 'Tab') {
+    const dialog = app.querySelector?.('.transaction-dialog');
+    if (!dialog) return;
+    const fields = [...dialog.querySelectorAll('button:not(:disabled):not([tabindex="-1"]), input:not(:disabled):not([type="hidden"]), select:not(:disabled), [tabindex="0"]')].filter(field => field.getClientRects().length);
+    if (!fields.length) { event.preventDefault(); dialog.focus({ preventScroll: true }); return; }
+    if (event.shiftKey && (document.activeElement === fields[0] || document.activeElement === dialog)) { event.preventDefault(); fields.at(-1).focus(); }
+    else if (!event.shiftKey && (document.activeElement === fields.at(-1) || !dialog.contains(document.activeElement))) { event.preventDefault(); fields[0].focus(); }
+  }
+});
 function actionClick(event) {
   if (state.unlocked && !checkSession()) { event.preventDefault(); return; }
   if (event.target.closest('.skip-link')) {
@@ -1228,6 +1626,35 @@ function actionClick(event) {
     return;
   }
   if (!state.unlocked) return;
+  if (action.startsWith('transaction-')) {
+    event.preventDefault();
+    if (action === 'transaction-new') openTransactionEditor();
+    if (action === 'transaction-edit') openTransactionEditor(target.dataset.id);
+    if (action === 'transaction-cancel') cancelTransactionDialog();
+    if (action === 'transaction-delete' && !state.transactionBusy && transactionStore) {
+      const code = selectedCode(), tx = code && getBook(code).transactions.find(item => item.id === target.dataset.id);
+      if (tx) {
+        state.transactionEditor = null;
+        state.transactionDelete = { code, id: tx.id, date: tx.date || String(tx.submittedAt || '').slice(0, 10), type: tx.type };
+        state.transactionError = '';
+        render();
+        app.querySelector?.('.transaction-delete-confirmation [data-action="transaction-cancel"]')?.focus?.({ preventScroll: true });
+      }
+    }
+    if (action === 'transaction-delete-confirm') return confirmTransactionDelete();
+    if (action === 'transaction-date-toggle') toggleTransactionDatePicker();
+    if (action === 'transaction-date-done') toggleTransactionDatePicker(false);
+    if (action === 'transaction-date-option') updateTransactionDate(target.dataset.wheel, Number(target.dataset.value));
+    if (action === 'transaction-amount-visibility' && state.transactionEditor) {
+      state.transactionAmountVisible = !state.transactionAmountVisible;
+      const input = app.querySelector?.('#transaction-form [name="amount"]');
+      if (input) input.type = state.transactionAmountVisible ? 'text' : 'password';
+      target.setAttribute?.('aria-label', state.transactionAmountVisible ? '隐藏输入金额' : '显示输入金额');
+      target.setAttribute?.('aria-pressed', String(state.transactionAmountVisible));
+      target.innerHTML = icon(state.transactionAmountVisible ? 'eye' : 'eye-off');
+    }
+    return;
+  }
   if (action === 'estimate-direction' && FUND_CODES.includes(target.dataset.code)) {
     setEstimateDirection(target.dataset.code, target.dataset.direction === 'down' ? 'up' : 'down', target);
     queueEstimateSave(target.dataset.code);
@@ -1307,15 +1734,13 @@ window.addEventListener('hashchange', () => {
   const section = routeSection();
   // A lateral fund switch keeps the comparison viewport and the panel choices.
   const preserveFundView = Boolean(previousFund && nextFund && previousFund !== nextFund && !section);
-  const position = preserveFundView ? scrollY : 0;
   state.limit = 25;
   state.filter = 'all';
   state.statusFilter = 'all';
   if (preserveFundView) recordPanelState(previousFund);
   else state.expandedPanels = {};
   render();
-  if (preserveFundView) scrollTo({ top: position, behavior: 'instant' });
-  else if (!['us-exposure', 'bond-reserve', 'add-discipline'].includes(section)) scrollTo({ top: 0, behavior: 'instant' });
+  if (!preserveFundView && !['us-exposure', 'bond-reserve', 'add-discipline'].includes(section)) scrollTo({ top: 0, behavior: 'instant' });
 });
 window.addEventListener('pageshow', event => { if (event.persisted) lock(); });
 document.addEventListener('visibilitychange', () => { if (checkSession()) dataRefresh.check(); });
