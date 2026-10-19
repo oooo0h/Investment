@@ -1,0 +1,4601 @@
+{
+  "code": "020902",
+  "name": "招商成长量化选股股票C",
+  "holding_identity_status": "本次仅补齐公开历史净值；不表示当前持仓",
+  "source": "天天基金（东方财富），第三方公开基金净值，非管理人官方主档",
+  "source_urls": [
+    "https://api.fund.eastmoney.com/f10/lsjz?fundCode=020902",
+    "https://fund.eastmoney.com/pingzhongdata/020902.js",
+    "https://fundsuggest.eastmoney.com/FundSearch/api/FundSearchAPI.ashx?m=1&key=020902"
+  ],
+  "downloaded_at": "2026-10-19T18:25:08+08:00",
+  "field_notes": {
+    "nav": "公开单位净值，十进制原值字符串",
+    "accumulated_nav": "公开累计净值；null表示来源缺失，不推算",
+    "daily_growth_pct": "来源日增长率的百分数原值，不代表用户账户收益率",
+    "event": "来源分红等事件文字，不从单位净值推算总回报"
+  },
+  "schema": "public-fund-nav-v1",
+  "first_date": "2024-05-31",
+  "last_date": "2026-10-16",
+  "count": 570,
+  "rows": [
+    {
+      "date": "2024-05-31",
+      "nav": "1.0000",
+      "accumulated_nav": "1.0000",
+      "daily_growth_pct": "0",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2024-06-07",
+      "nav": "0.9955",
+      "accumulated_nav": "0.9955",
+      "daily_growth_pct": "0",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2024-06-14",
+      "nav": "0.9961",
+      "accumulated_nav": "0.9961",
+      "daily_growth_pct": "0",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2024-06-17",
+      "nav": "0.9951",
+      "accumulated_nav": "0.9951",
+      "daily_growth_pct": "-0.10",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2024-06-18",
+      "nav": "0.9987",
+      "accumulated_nav": "0.9987",
+      "daily_growth_pct": "0.36",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2024-06-19",
+      "nav": "0.9936",
+      "accumulated_nav": "0.9936",
+      "daily_growth_pct": "-0.51",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2024-06-20",
+      "nav": "0.9856",
+      "accumulated_nav": "0.9856",
+      "daily_growth_pct": "-0.81",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2024-06-21",
+      "nav": "0.9872",
+      "accumulated_nav": "0.9872",
+      "daily_growth_pct": "0.16",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2024-06-24",
+      "nav": "0.9738",
+      "accumulated_nav": "0.9738",
+      "daily_growth_pct": "-1.36",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2024-06-25",
+      "nav": "0.9757",
+      "accumulated_nav": "0.9757",
+      "daily_growth_pct": "0.20",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2024-06-26",
+      "nav": "0.9862",
+      "accumulated_nav": "0.9862",
+      "daily_growth_pct": "1.08",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-06-27",
+      "nav": "0.9725",
+      "accumulated_nav": "0.9725",
+      "daily_growth_pct": "-1.39",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-06-28",
+      "nav": "0.977",
+      "accumulated_nav": "0.977",
+      "daily_growth_pct": "0.46",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-06-30",
+      "nav": "0.977",
+      "accumulated_nav": "0.977",
+      "daily_growth_pct": "0.0",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-01",
+      "nav": "0.985",
+      "accumulated_nav": "0.985",
+      "daily_growth_pct": "0.82",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-02",
+      "nav": "0.9747",
+      "accumulated_nav": "0.9747",
+      "daily_growth_pct": "-1.05",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-03",
+      "nav": "0.9662",
+      "accumulated_nav": "0.9662",
+      "daily_growth_pct": "-0.87",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-04",
+      "nav": "0.9556",
+      "accumulated_nav": "0.9556",
+      "daily_growth_pct": "-1.1",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-05",
+      "nav": "0.9587",
+      "accumulated_nav": "0.9587",
+      "daily_growth_pct": "0.32",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-08",
+      "nav": "0.9436",
+      "accumulated_nav": "0.9436",
+      "daily_growth_pct": "-1.58",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-09",
+      "nav": "0.9611",
+      "accumulated_nav": "0.9611",
+      "daily_growth_pct": "1.85",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-10",
+      "nav": "0.9605",
+      "accumulated_nav": "0.9605",
+      "daily_growth_pct": "-0.06",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-11",
+      "nav": "0.9799",
+      "accumulated_nav": "0.9799",
+      "daily_growth_pct": "2.02",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-12",
+      "nav": "0.9784",
+      "accumulated_nav": "0.9784",
+      "daily_growth_pct": "-0.15",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-15",
+      "nav": "0.9718",
+      "accumulated_nav": "0.9718",
+      "daily_growth_pct": "-0.67",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-16",
+      "nav": "0.97",
+      "accumulated_nav": "0.97",
+      "daily_growth_pct": "-0.19",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-17",
+      "nav": "0.9577",
+      "accumulated_nav": "0.9577",
+      "daily_growth_pct": "-1.27",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-18",
+      "nav": "0.9589",
+      "accumulated_nav": "0.9589",
+      "daily_growth_pct": "0.13",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-19",
+      "nav": "0.9559",
+      "accumulated_nav": "0.9559",
+      "daily_growth_pct": "-0.31",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-22",
+      "nav": "0.9512",
+      "accumulated_nav": "0.9512",
+      "daily_growth_pct": "-0.49",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-23",
+      "nav": "0.9328",
+      "accumulated_nav": "0.9328",
+      "daily_growth_pct": "-1.93",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-24",
+      "nav": "0.9209",
+      "accumulated_nav": "0.9209",
+      "daily_growth_pct": "-1.28",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-25",
+      "nav": "0.9229",
+      "accumulated_nav": "0.9229",
+      "daily_growth_pct": "0.22",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-26",
+      "nav": "0.9399",
+      "accumulated_nav": "0.9399",
+      "daily_growth_pct": "1.84",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-29",
+      "nav": "0.9285",
+      "accumulated_nav": "0.9285",
+      "daily_growth_pct": "-1.21",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-30",
+      "nav": "0.9287",
+      "accumulated_nav": "0.9287",
+      "daily_growth_pct": "0.02",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-07-31",
+      "nav": "0.9571",
+      "accumulated_nav": "0.9571",
+      "daily_growth_pct": "3.06",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-01",
+      "nav": "0.9532",
+      "accumulated_nav": "0.9532",
+      "daily_growth_pct": "-0.41",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-02",
+      "nav": "0.9412",
+      "accumulated_nav": "0.9412",
+      "daily_growth_pct": "-1.26",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-05",
+      "nav": "0.9214",
+      "accumulated_nav": "0.9214",
+      "daily_growth_pct": "-2.1",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-06",
+      "nav": "0.9306",
+      "accumulated_nav": "0.9306",
+      "daily_growth_pct": "1.0",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-07",
+      "nav": "0.9299",
+      "accumulated_nav": "0.9299",
+      "daily_growth_pct": "-0.08",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-08",
+      "nav": "0.9296",
+      "accumulated_nav": "0.9296",
+      "daily_growth_pct": "-0.03",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-09",
+      "nav": "0.9258",
+      "accumulated_nav": "0.9258",
+      "daily_growth_pct": "-0.41",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-12",
+      "nav": "0.9237",
+      "accumulated_nav": "0.9237",
+      "daily_growth_pct": "-0.23",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-13",
+      "nav": "0.9277",
+      "accumulated_nav": "0.9277",
+      "daily_growth_pct": "0.43",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-14",
+      "nav": "0.916",
+      "accumulated_nav": "0.916",
+      "daily_growth_pct": "-1.26",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-15",
+      "nav": "0.9214",
+      "accumulated_nav": "0.9214",
+      "daily_growth_pct": "0.59",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-16",
+      "nav": "0.9152",
+      "accumulated_nav": "0.9152",
+      "daily_growth_pct": "-0.67",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-19",
+      "nav": "0.9189",
+      "accumulated_nav": "0.9189",
+      "daily_growth_pct": "0.4",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-20",
+      "nav": "0.9053",
+      "accumulated_nav": "0.9053",
+      "daily_growth_pct": "-1.48",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-21",
+      "nav": "0.9029",
+      "accumulated_nav": "0.9029",
+      "daily_growth_pct": "-0.27",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-22",
+      "nav": "0.8956",
+      "accumulated_nav": "0.8956",
+      "daily_growth_pct": "-0.81",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-23",
+      "nav": "0.8968",
+      "accumulated_nav": "0.8968",
+      "daily_growth_pct": "0.13",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-26",
+      "nav": "0.9031",
+      "accumulated_nav": "0.9031",
+      "daily_growth_pct": "0.7",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-27",
+      "nav": "0.8942",
+      "accumulated_nav": "0.8942",
+      "daily_growth_pct": "-0.99",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-28",
+      "nav": "0.8975",
+      "accumulated_nav": "0.8975",
+      "daily_growth_pct": "0.37",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-29",
+      "nav": "0.9089",
+      "accumulated_nav": "0.9089",
+      "daily_growth_pct": "1.27",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-08-30",
+      "nav": "0.9199",
+      "accumulated_nav": "0.9199",
+      "daily_growth_pct": "1.21",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-02",
+      "nav": "0.9089",
+      "accumulated_nav": "0.9089",
+      "daily_growth_pct": "-1.2",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-03",
+      "nav": "0.9187",
+      "accumulated_nav": "0.9187",
+      "daily_growth_pct": "1.08",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-04",
+      "nav": "0.9139",
+      "accumulated_nav": "0.9139",
+      "daily_growth_pct": "-0.52",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-05",
+      "nav": "0.9162",
+      "accumulated_nav": "0.9162",
+      "daily_growth_pct": "0.25",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-06",
+      "nav": "0.9045",
+      "accumulated_nav": "0.9045",
+      "daily_growth_pct": "-1.28",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-09",
+      "nav": "0.896",
+      "accumulated_nav": "0.896",
+      "daily_growth_pct": "-0.94",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-10",
+      "nav": "0.8993",
+      "accumulated_nav": "0.8993",
+      "daily_growth_pct": "0.37",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-11",
+      "nav": "0.9008",
+      "accumulated_nav": "0.9008",
+      "daily_growth_pct": "0.17",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-12",
+      "nav": "0.8988",
+      "accumulated_nav": "0.8988",
+      "daily_growth_pct": "-0.22",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-13",
+      "nav": "0.8886",
+      "accumulated_nav": "0.8886",
+      "daily_growth_pct": "-1.13",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-18",
+      "nav": "0.8935",
+      "accumulated_nav": "0.8935",
+      "daily_growth_pct": "0.55",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-19",
+      "nav": "0.9074",
+      "accumulated_nav": "0.9074",
+      "daily_growth_pct": "1.56",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-20",
+      "nav": "0.9045",
+      "accumulated_nav": "0.9045",
+      "daily_growth_pct": "-0.32",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-23",
+      "nav": "0.9049",
+      "accumulated_nav": "0.9049",
+      "daily_growth_pct": "0.04",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-24",
+      "nav": "0.9323",
+      "accumulated_nav": "0.9323",
+      "daily_growth_pct": "3.03",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-25",
+      "nav": "0.9355",
+      "accumulated_nav": "0.9355",
+      "daily_growth_pct": "0.34",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-26",
+      "nav": "0.9652",
+      "accumulated_nav": "0.9652",
+      "daily_growth_pct": "3.17",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-27",
+      "nav": "0.9994",
+      "accumulated_nav": "0.9994",
+      "daily_growth_pct": "3.54",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-09-30",
+      "nav": "1.0767",
+      "accumulated_nav": "1.0767",
+      "daily_growth_pct": "7.73",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-08",
+      "nav": "1.1268",
+      "accumulated_nav": "1.1268",
+      "daily_growth_pct": "4.65",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-09",
+      "nav": "1.0401",
+      "accumulated_nav": "1.0401",
+      "daily_growth_pct": "-7.69",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-10",
+      "nav": "1.0551",
+      "accumulated_nav": "1.0551",
+      "daily_growth_pct": "1.44",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-11",
+      "nav": "1.0276",
+      "accumulated_nav": "1.0276",
+      "daily_growth_pct": "-2.61",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-14",
+      "nav": "1.0454",
+      "accumulated_nav": "1.0454",
+      "daily_growth_pct": "1.73",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-15",
+      "nav": "1.0207",
+      "accumulated_nav": "1.0207",
+      "daily_growth_pct": "-2.36",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-16",
+      "nav": "1.0196",
+      "accumulated_nav": "1.0196",
+      "daily_growth_pct": "-0.11",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-17",
+      "nav": "1.0131",
+      "accumulated_nav": "1.0131",
+      "daily_growth_pct": "-0.64",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-18",
+      "nav": "1.0384",
+      "accumulated_nav": "1.0384",
+      "daily_growth_pct": "2.5",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-21",
+      "nav": "1.0427",
+      "accumulated_nav": "1.0427",
+      "daily_growth_pct": "0.41",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-22",
+      "nav": "1.0593",
+      "accumulated_nav": "1.0593",
+      "daily_growth_pct": "1.59",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-23",
+      "nav": "1.0615",
+      "accumulated_nav": "1.0615",
+      "daily_growth_pct": "0.21",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-24",
+      "nav": "1.056",
+      "accumulated_nav": "1.056",
+      "daily_growth_pct": "-0.52",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-25",
+      "nav": "1.073",
+      "accumulated_nav": "1.073",
+      "daily_growth_pct": "1.61",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-28",
+      "nav": "1.0871",
+      "accumulated_nav": "1.0871",
+      "daily_growth_pct": "1.31",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-29",
+      "nav": "1.0724",
+      "accumulated_nav": "1.0724",
+      "daily_growth_pct": "-1.35",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-30",
+      "nav": "1.0732",
+      "accumulated_nav": "1.0732",
+      "daily_growth_pct": "0.07",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-10-31",
+      "nav": "1.0777",
+      "accumulated_nav": "1.0777",
+      "daily_growth_pct": "0.42",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-01",
+      "nav": "1.061",
+      "accumulated_nav": "1.061",
+      "daily_growth_pct": "-1.55",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-04",
+      "nav": "1.0807",
+      "accumulated_nav": "1.0807",
+      "daily_growth_pct": "1.86",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-05",
+      "nav": "1.099",
+      "accumulated_nav": "1.099",
+      "daily_growth_pct": "1.69",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-06",
+      "nav": "1.104",
+      "accumulated_nav": "1.104",
+      "daily_growth_pct": "0.45",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-07",
+      "nav": "1.1278",
+      "accumulated_nav": "1.1278",
+      "daily_growth_pct": "2.16",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-08",
+      "nav": "1.1258",
+      "accumulated_nav": "1.1258",
+      "daily_growth_pct": "-0.18",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-11",
+      "nav": "1.1465",
+      "accumulated_nav": "1.1465",
+      "daily_growth_pct": "1.84",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-12",
+      "nav": "1.1346",
+      "accumulated_nav": "1.1346",
+      "daily_growth_pct": "-1.04",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-13",
+      "nav": "1.1388",
+      "accumulated_nav": "1.1388",
+      "daily_growth_pct": "0.37",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-14",
+      "nav": "1.1124",
+      "accumulated_nav": "1.1124",
+      "daily_growth_pct": "-2.32",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-15",
+      "nav": "1.0987",
+      "accumulated_nav": "1.0987",
+      "daily_growth_pct": "-1.23",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-18",
+      "nav": "1.0809",
+      "accumulated_nav": "1.0809",
+      "daily_growth_pct": "-1.62",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-19",
+      "nav": "1.1023",
+      "accumulated_nav": "1.1023",
+      "daily_growth_pct": "1.98",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-20",
+      "nav": "1.1143",
+      "accumulated_nav": "1.1143",
+      "daily_growth_pct": "1.09",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-21",
+      "nav": "1.1147",
+      "accumulated_nav": "1.1147",
+      "daily_growth_pct": "0.04",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-22",
+      "nav": "1.0785",
+      "accumulated_nav": "1.0785",
+      "daily_growth_pct": "-3.25",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-25",
+      "nav": "1.0844",
+      "accumulated_nav": "1.0844",
+      "daily_growth_pct": "0.55",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-26",
+      "nav": "1.0789",
+      "accumulated_nav": "1.0789",
+      "daily_growth_pct": "-0.51",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-27",
+      "nav": "1.0953",
+      "accumulated_nav": "1.0953",
+      "daily_growth_pct": "1.52",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-28",
+      "nav": "1.0873",
+      "accumulated_nav": "1.0873",
+      "daily_growth_pct": "-0.73",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-11-29",
+      "nav": "1.1071",
+      "accumulated_nav": "1.1071",
+      "daily_growth_pct": "1.82",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-02",
+      "nav": "1.1247",
+      "accumulated_nav": "1.1247",
+      "daily_growth_pct": "1.59",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-03",
+      "nav": "1.1209",
+      "accumulated_nav": "1.1209",
+      "daily_growth_pct": "-0.34",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-04",
+      "nav": "1.1079",
+      "accumulated_nav": "1.1079",
+      "daily_growth_pct": "-1.16",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-05",
+      "nav": "1.1152",
+      "accumulated_nav": "1.1152",
+      "daily_growth_pct": "0.66",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-06",
+      "nav": "1.1298",
+      "accumulated_nav": "1.1298",
+      "daily_growth_pct": "1.31",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-09",
+      "nav": "1.1347",
+      "accumulated_nav": "1.1347",
+      "daily_growth_pct": "0.43",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-10",
+      "nav": "1.1451",
+      "accumulated_nav": "1.1451",
+      "daily_growth_pct": "0.92",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-11",
+      "nav": "1.1574",
+      "accumulated_nav": "1.1574",
+      "daily_growth_pct": "1.07",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-12",
+      "nav": "1.1654",
+      "accumulated_nav": "1.1654",
+      "daily_growth_pct": "0.69",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-13",
+      "nav": "1.1455",
+      "accumulated_nav": "1.1455",
+      "daily_growth_pct": "-1.71",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-16",
+      "nav": "1.1369",
+      "accumulated_nav": "1.1369",
+      "daily_growth_pct": "-0.75",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-17",
+      "nav": "1.1203",
+      "accumulated_nav": "1.1203",
+      "daily_growth_pct": "-1.46",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-18",
+      "nav": "1.1268",
+      "accumulated_nav": "1.1268",
+      "daily_growth_pct": "0.58",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-19",
+      "nav": "1.1424",
+      "accumulated_nav": "1.1424",
+      "daily_growth_pct": "1.38",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-20",
+      "nav": "1.1418",
+      "accumulated_nav": "1.1418",
+      "daily_growth_pct": "-0.05",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-23",
+      "nav": "1.1233",
+      "accumulated_nav": "1.1233",
+      "daily_growth_pct": "-1.62",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-24",
+      "nav": "1.1387",
+      "accumulated_nav": "1.1387",
+      "daily_growth_pct": "1.37",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-25",
+      "nav": "1.1337",
+      "accumulated_nav": "1.1337",
+      "daily_growth_pct": "-0.44",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-26",
+      "nav": "1.1511",
+      "accumulated_nav": "1.1511",
+      "daily_growth_pct": "1.53",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-27",
+      "nav": "1.1548",
+      "accumulated_nav": "1.1548",
+      "daily_growth_pct": "0.32",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-30",
+      "nav": "1.1554",
+      "accumulated_nav": "1.1554",
+      "daily_growth_pct": "0.05",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2024-12-31",
+      "nav": "1.1304",
+      "accumulated_nav": "1.1304",
+      "daily_growth_pct": "-2.16",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-02",
+      "nav": "1.1036",
+      "accumulated_nav": "1.1036",
+      "daily_growth_pct": "-2.37",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-03",
+      "nav": "1.0803",
+      "accumulated_nav": "1.0803",
+      "daily_growth_pct": "-2.11",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-06",
+      "nav": "1.08",
+      "accumulated_nav": "1.08",
+      "daily_growth_pct": "-0.03",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-07",
+      "nav": "1.0936",
+      "accumulated_nav": "1.0936",
+      "daily_growth_pct": "1.26",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-08",
+      "nav": "1.0913",
+      "accumulated_nav": "1.0913",
+      "daily_growth_pct": "-0.21",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-09",
+      "nav": "1.0908",
+      "accumulated_nav": "1.0908",
+      "daily_growth_pct": "-0.05",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-10",
+      "nav": "1.0724",
+      "accumulated_nav": "1.0724",
+      "daily_growth_pct": "-1.69",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-13",
+      "nav": "1.0691",
+      "accumulated_nav": "1.0691",
+      "daily_growth_pct": "-0.31",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-14",
+      "nav": "1.1122",
+      "accumulated_nav": "1.1122",
+      "daily_growth_pct": "4.03",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-15",
+      "nav": "1.1098",
+      "accumulated_nav": "1.1098",
+      "daily_growth_pct": "-0.22",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-16",
+      "nav": "1.1177",
+      "accumulated_nav": "1.1177",
+      "daily_growth_pct": "0.71",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-17",
+      "nav": "1.1256",
+      "accumulated_nav": "1.1256",
+      "daily_growth_pct": "0.71",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-20",
+      "nav": "1.1312",
+      "accumulated_nav": "1.1312",
+      "daily_growth_pct": "0.5",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-21",
+      "nav": "1.134",
+      "accumulated_nav": "1.134",
+      "daily_growth_pct": "0.25",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-22",
+      "nav": "1.1324",
+      "accumulated_nav": "1.1324",
+      "daily_growth_pct": "-0.14",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-23",
+      "nav": "1.1272",
+      "accumulated_nav": "1.1272",
+      "daily_growth_pct": "-0.46",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-24",
+      "nav": "1.1476",
+      "accumulated_nav": "1.1476",
+      "daily_growth_pct": "1.81",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-01-27",
+      "nav": "1.142",
+      "accumulated_nav": "1.142",
+      "daily_growth_pct": "-0.49",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-05",
+      "nav": "1.1356",
+      "accumulated_nav": "1.1356",
+      "daily_growth_pct": "-0.56",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-06",
+      "nav": "1.1583",
+      "accumulated_nav": "1.1583",
+      "daily_growth_pct": "2.0",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-07",
+      "nav": "1.1742",
+      "accumulated_nav": "1.1742",
+      "daily_growth_pct": "1.37",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-10",
+      "nav": "1.1748",
+      "accumulated_nav": "1.1748",
+      "daily_growth_pct": "0.05",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-11",
+      "nav": "1.1818",
+      "accumulated_nav": "1.1818",
+      "daily_growth_pct": "0.6",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-12",
+      "nav": "1.1913",
+      "accumulated_nav": "1.1913",
+      "daily_growth_pct": "0.8",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-13",
+      "nav": "1.1796",
+      "accumulated_nav": "1.1796",
+      "daily_growth_pct": "-0.98",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-14",
+      "nav": "1.1854",
+      "accumulated_nav": "1.1854",
+      "daily_growth_pct": "0.49",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-17",
+      "nav": "1.19",
+      "accumulated_nav": "1.19",
+      "daily_growth_pct": "0.39",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-18",
+      "nav": "1.1723",
+      "accumulated_nav": "1.1723",
+      "daily_growth_pct": "-1.49",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-19",
+      "nav": "1.1922",
+      "accumulated_nav": "1.1922",
+      "daily_growth_pct": "1.7",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-20",
+      "nav": "1.2035",
+      "accumulated_nav": "1.2035",
+      "daily_growth_pct": "0.95",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-21",
+      "nav": "1.2245",
+      "accumulated_nav": "1.2245",
+      "daily_growth_pct": "1.74",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-24",
+      "nav": "1.2266",
+      "accumulated_nav": "1.2266",
+      "daily_growth_pct": "0.17",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-25",
+      "nav": "1.2184",
+      "accumulated_nav": "1.2184",
+      "daily_growth_pct": "-0.67",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-26",
+      "nav": "1.2407",
+      "accumulated_nav": "1.2407",
+      "daily_growth_pct": "1.83",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-27",
+      "nav": "1.2376",
+      "accumulated_nav": "1.2376",
+      "daily_growth_pct": "-0.25",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-02-28",
+      "nav": "1.2085",
+      "accumulated_nav": "1.2085",
+      "daily_growth_pct": "-2.35",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-03",
+      "nav": "1.2109",
+      "accumulated_nav": "1.2109",
+      "daily_growth_pct": "0.2",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-04",
+      "nav": "1.219",
+      "accumulated_nav": "1.219",
+      "daily_growth_pct": "0.67",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-05",
+      "nav": "1.2238",
+      "accumulated_nav": "1.2238",
+      "daily_growth_pct": "0.39",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-06",
+      "nav": "1.2358",
+      "accumulated_nav": "1.2358",
+      "daily_growth_pct": "0.98",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-07",
+      "nav": "1.2339",
+      "accumulated_nav": "1.2339",
+      "daily_growth_pct": "-0.15",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-10",
+      "nav": "1.2353",
+      "accumulated_nav": "1.2353",
+      "daily_growth_pct": "0.11",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-11",
+      "nav": "1.2375",
+      "accumulated_nav": "1.2375",
+      "daily_growth_pct": "0.18",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-12",
+      "nav": "1.2423",
+      "accumulated_nav": "1.2423",
+      "daily_growth_pct": "0.39",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-13",
+      "nav": "1.2303",
+      "accumulated_nav": "1.2303",
+      "daily_growth_pct": "-0.97",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-14",
+      "nav": "1.2525",
+      "accumulated_nav": "1.2525",
+      "daily_growth_pct": "1.8",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-17",
+      "nav": "1.2536",
+      "accumulated_nav": "1.2536",
+      "daily_growth_pct": "0.09",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-18",
+      "nav": "1.2646",
+      "accumulated_nav": "1.2646",
+      "daily_growth_pct": "0.88",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-19",
+      "nav": "1.263",
+      "accumulated_nav": "1.263",
+      "daily_growth_pct": "-0.13",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-20",
+      "nav": "1.2613",
+      "accumulated_nav": "1.2613",
+      "daily_growth_pct": "-0.13",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-21",
+      "nav": "1.2406",
+      "accumulated_nav": "1.2406",
+      "daily_growth_pct": "-1.64",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-24",
+      "nav": "1.2435",
+      "accumulated_nav": "1.2435",
+      "daily_growth_pct": "0.23",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-25",
+      "nav": "1.2388",
+      "accumulated_nav": "1.2388",
+      "daily_growth_pct": "-0.38",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-26",
+      "nav": "1.2441",
+      "accumulated_nav": "1.2441",
+      "daily_growth_pct": "0.43",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-27",
+      "nav": "1.2434",
+      "accumulated_nav": "1.2434",
+      "daily_growth_pct": "-0.06",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-28",
+      "nav": "1.2355",
+      "accumulated_nav": "1.2355",
+      "daily_growth_pct": "-0.64",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-03-31",
+      "nav": "1.2263",
+      "accumulated_nav": "1.2263",
+      "daily_growth_pct": "-0.74",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-01",
+      "nav": "1.2317",
+      "accumulated_nav": "1.2317",
+      "daily_growth_pct": "0.44",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-02",
+      "nav": "1.2359",
+      "accumulated_nav": "1.2359",
+      "daily_growth_pct": "0.34",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-03",
+      "nav": "1.2029",
+      "accumulated_nav": "1.2029",
+      "daily_growth_pct": "-2.67",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-07",
+      "nav": "1.089",
+      "accumulated_nav": "1.089",
+      "daily_growth_pct": "-9.47",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-08",
+      "nav": "1.0681",
+      "accumulated_nav": "1.0681",
+      "daily_growth_pct": "-1.92",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-09",
+      "nav": "1.0762",
+      "accumulated_nav": "1.0762",
+      "daily_growth_pct": "0.76",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-10",
+      "nav": "1.1084",
+      "accumulated_nav": "1.1084",
+      "daily_growth_pct": "2.99",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-11",
+      "nav": "1.1099",
+      "accumulated_nav": "1.1099",
+      "daily_growth_pct": "0.14",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-14",
+      "nav": "1.1208",
+      "accumulated_nav": "1.1208",
+      "daily_growth_pct": "0.98",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-15",
+      "nav": "1.1255",
+      "accumulated_nav": "1.1255",
+      "daily_growth_pct": "0.42",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-16",
+      "nav": "1.1053",
+      "accumulated_nav": "1.1053",
+      "daily_growth_pct": "-1.79",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-17",
+      "nav": "1.1058",
+      "accumulated_nav": "1.1058",
+      "daily_growth_pct": "0.05",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-18",
+      "nav": "1.1125",
+      "accumulated_nav": "1.1125",
+      "daily_growth_pct": "0.61",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-21",
+      "nav": "1.1291",
+      "accumulated_nav": "1.1291",
+      "daily_growth_pct": "1.49",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-22",
+      "nav": "1.1281",
+      "accumulated_nav": "1.1281",
+      "daily_growth_pct": "-0.09",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-23",
+      "nav": "1.1422",
+      "accumulated_nav": "1.1422",
+      "daily_growth_pct": "1.25",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-24",
+      "nav": "1.1384",
+      "accumulated_nav": "1.1384",
+      "daily_growth_pct": "-0.33",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-25",
+      "nav": "1.1415",
+      "accumulated_nav": "1.1415",
+      "daily_growth_pct": "0.27",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-28",
+      "nav": "1.128",
+      "accumulated_nav": "1.128",
+      "daily_growth_pct": "-1.18",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-29",
+      "nav": "1.1293",
+      "accumulated_nav": "1.1293",
+      "daily_growth_pct": "0.12",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-04-30",
+      "nav": "1.131",
+      "accumulated_nav": "1.131",
+      "daily_growth_pct": "0.15",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-06",
+      "nav": "1.1533",
+      "accumulated_nav": "1.1533",
+      "daily_growth_pct": "1.97",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-07",
+      "nav": "1.1553",
+      "accumulated_nav": "1.1553",
+      "daily_growth_pct": "0.17",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-08",
+      "nav": "1.1625",
+      "accumulated_nav": "1.1625",
+      "daily_growth_pct": "0.62",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-09",
+      "nav": "1.1576",
+      "accumulated_nav": "1.1576",
+      "daily_growth_pct": "-0.42",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-12",
+      "nav": "1.1764",
+      "accumulated_nav": "1.1764",
+      "daily_growth_pct": "1.62",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-13",
+      "nav": "1.1757",
+      "accumulated_nav": "1.1757",
+      "daily_growth_pct": "-0.06",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-14",
+      "nav": "1.1732",
+      "accumulated_nav": "1.1732",
+      "daily_growth_pct": "-0.21",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-15",
+      "nav": "1.1588",
+      "accumulated_nav": "1.1588",
+      "daily_growth_pct": "-1.23",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-16",
+      "nav": "1.1688",
+      "accumulated_nav": "1.1688",
+      "daily_growth_pct": "0.86",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-19",
+      "nav": "1.1725",
+      "accumulated_nav": "1.1725",
+      "daily_growth_pct": "0.32",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-20",
+      "nav": "1.184",
+      "accumulated_nav": "1.184",
+      "daily_growth_pct": "0.98",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-21",
+      "nav": "1.1835",
+      "accumulated_nav": "1.1835",
+      "daily_growth_pct": "-0.04",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-22",
+      "nav": "1.1749",
+      "accumulated_nav": "1.1749",
+      "daily_growth_pct": "-0.73",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-23",
+      "nav": "1.1693",
+      "accumulated_nav": "1.1693",
+      "daily_growth_pct": "-0.48",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-26",
+      "nav": "1.1708",
+      "accumulated_nav": "1.1708",
+      "daily_growth_pct": "0.13",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-27",
+      "nav": "1.1703",
+      "accumulated_nav": "1.1703",
+      "daily_growth_pct": "-0.04",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-28",
+      "nav": "1.176",
+      "accumulated_nav": "1.176",
+      "daily_growth_pct": "0.49",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-29",
+      "nav": "1.1918",
+      "accumulated_nav": "1.1918",
+      "daily_growth_pct": "1.34",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-05-30",
+      "nav": "1.1766",
+      "accumulated_nav": "1.1766",
+      "daily_growth_pct": "-1.28",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-03",
+      "nav": "1.1816",
+      "accumulated_nav": "1.1816",
+      "daily_growth_pct": "0.42",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-04",
+      "nav": "1.1913",
+      "accumulated_nav": "1.1913",
+      "daily_growth_pct": "0.82",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-05",
+      "nav": "1.2012",
+      "accumulated_nav": "1.2012",
+      "daily_growth_pct": "0.83",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-06",
+      "nav": "1.2027",
+      "accumulated_nav": "1.2027",
+      "daily_growth_pct": "0.12",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-09",
+      "nav": "1.2105",
+      "accumulated_nav": "1.2105",
+      "daily_growth_pct": "0.65",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-10",
+      "nav": "1.2034",
+      "accumulated_nav": "1.2034",
+      "daily_growth_pct": "-0.59",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-11",
+      "nav": "1.2167",
+      "accumulated_nav": "1.2167",
+      "daily_growth_pct": "1.11",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-12",
+      "nav": "1.2224",
+      "accumulated_nav": "1.2224",
+      "daily_growth_pct": "0.47",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-13",
+      "nav": "1.2053",
+      "accumulated_nav": "1.2053",
+      "daily_growth_pct": "-1.4",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-16",
+      "nav": "1.2061",
+      "accumulated_nav": "1.2061",
+      "daily_growth_pct": "0.07",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-17",
+      "nav": "1.2046",
+      "accumulated_nav": "1.2046",
+      "daily_growth_pct": "-0.12",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-18",
+      "nav": "1.2039",
+      "accumulated_nav": "1.2039",
+      "daily_growth_pct": "-0.06",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-19",
+      "nav": "1.187",
+      "accumulated_nav": "1.187",
+      "daily_growth_pct": "-1.4",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-20",
+      "nav": "1.1805",
+      "accumulated_nav": "1.1805",
+      "daily_growth_pct": "-0.55",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-23",
+      "nav": "1.1876",
+      "accumulated_nav": "1.1876",
+      "daily_growth_pct": "0.6",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-24",
+      "nav": "1.2156",
+      "accumulated_nav": "1.2156",
+      "daily_growth_pct": "2.36",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-25",
+      "nav": "1.2284",
+      "accumulated_nav": "1.2284",
+      "daily_growth_pct": "1.05",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-26",
+      "nav": "1.2221",
+      "accumulated_nav": "1.2221",
+      "daily_growth_pct": "-0.51",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-27",
+      "nav": "1.2311",
+      "accumulated_nav": "1.2311",
+      "daily_growth_pct": "0.74",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-06-30",
+      "nav": "1.2462",
+      "accumulated_nav": "1.2462",
+      "daily_growth_pct": "1.23",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-01",
+      "nav": "1.2552",
+      "accumulated_nav": "1.2552",
+      "daily_growth_pct": "0.72",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-02",
+      "nav": "1.2553",
+      "accumulated_nav": "1.2553",
+      "daily_growth_pct": "0.01",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-03",
+      "nav": "1.2689",
+      "accumulated_nav": "1.2689",
+      "daily_growth_pct": "1.08",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-04",
+      "nav": "1.259",
+      "accumulated_nav": "1.259",
+      "daily_growth_pct": "-0.78",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-07",
+      "nav": "1.2625",
+      "accumulated_nav": "1.2625",
+      "daily_growth_pct": "0.28",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-08",
+      "nav": "1.2787",
+      "accumulated_nav": "1.2787",
+      "daily_growth_pct": "1.28",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-09",
+      "nav": "1.2742",
+      "accumulated_nav": "1.2742",
+      "daily_growth_pct": "-0.35",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-10",
+      "nav": "1.2765",
+      "accumulated_nav": "1.2765",
+      "daily_growth_pct": "0.18",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-11",
+      "nav": "1.2816",
+      "accumulated_nav": "1.2816",
+      "daily_growth_pct": "0.4",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-14",
+      "nav": "1.3008",
+      "accumulated_nav": "1.3008",
+      "daily_growth_pct": "1.5",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-15",
+      "nav": "1.3047",
+      "accumulated_nav": "1.3047",
+      "daily_growth_pct": "0.3",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-16",
+      "nav": "1.3116",
+      "accumulated_nav": "1.3116",
+      "daily_growth_pct": "0.53",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-17",
+      "nav": "1.3178",
+      "accumulated_nav": "1.3178",
+      "daily_growth_pct": "0.47",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-18",
+      "nav": "1.3146",
+      "accumulated_nav": "1.3146",
+      "daily_growth_pct": "-0.24",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-07-21",
+      "nav": "1.3354",
+      "accumulated_nav": "1.3354",
+      "daily_growth_pct": "1.58",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-07-22",
+      "nav": "1.3483",
+      "accumulated_nav": "1.3483",
+      "daily_growth_pct": "0.97",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-07-23",
+      "nav": "1.3416",
+      "accumulated_nav": "1.3416",
+      "daily_growth_pct": "-0.50",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-07-24",
+      "nav": "1.3525",
+      "accumulated_nav": "1.3525",
+      "daily_growth_pct": "0.81",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-07-25",
+      "nav": "1.3537",
+      "accumulated_nav": "1.3537",
+      "daily_growth_pct": "0.09",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-07-28",
+      "nav": "1.3636",
+      "accumulated_nav": "1.3636",
+      "daily_growth_pct": "0.73",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-07-29",
+      "nav": "1.3650",
+      "accumulated_nav": "1.3650",
+      "daily_growth_pct": "0.10",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-07-30",
+      "nav": "1.3573",
+      "accumulated_nav": "1.3573",
+      "daily_growth_pct": "-0.56",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-07-31",
+      "nav": "1.3402",
+      "accumulated_nav": "1.3402",
+      "daily_growth_pct": "-1.26",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-08-01",
+      "nav": "1.3483",
+      "accumulated_nav": "1.3483",
+      "daily_growth_pct": "0.60",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-08-04",
+      "nav": "1.3619",
+      "accumulated_nav": "1.3619",
+      "daily_growth_pct": "1.01",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-08-05",
+      "nav": "1.3796",
+      "accumulated_nav": "1.3796",
+      "daily_growth_pct": "1.30",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-08-06",
+      "nav": "1.3944",
+      "accumulated_nav": "1.3944",
+      "daily_growth_pct": "1.07",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-08-07",
+      "nav": "1.3915",
+      "accumulated_nav": "1.3915",
+      "daily_growth_pct": "-0.21",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-08-08",
+      "nav": "1.4000",
+      "accumulated_nav": "1.4000",
+      "daily_growth_pct": "0.61",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-08-11",
+      "nav": "1.4149",
+      "accumulated_nav": "1.4149",
+      "daily_growth_pct": "1.06",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-08-12",
+      "nav": "1.4174",
+      "accumulated_nav": "1.4174",
+      "daily_growth_pct": "0.18",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-08-13",
+      "nav": "1.4355",
+      "accumulated_nav": "1.4355",
+      "daily_growth_pct": "1.28",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-08-14",
+      "nav": "1.4208",
+      "accumulated_nav": "1.4208",
+      "daily_growth_pct": "-1.02",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-08-15",
+      "nav": "1.4468",
+      "accumulated_nav": "1.4468",
+      "daily_growth_pct": "1.83",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2025-08-18",
+      "nav": "1.4589",
+      "accumulated_nav": "1.4589",
+      "daily_growth_pct": "0.84",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-08-19",
+      "nav": "1.4621",
+      "accumulated_nav": "1.4621",
+      "daily_growth_pct": "0.22",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-08-20",
+      "nav": "1.482",
+      "accumulated_nav": "1.482",
+      "daily_growth_pct": "1.36",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-08-21",
+      "nav": "1.4814",
+      "accumulated_nav": "1.4814",
+      "daily_growth_pct": "-0.04",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-08-22",
+      "nav": "1.4892",
+      "accumulated_nav": "1.4892",
+      "daily_growth_pct": "0.53",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-08-25",
+      "nav": "1.5043",
+      "accumulated_nav": "1.5043",
+      "daily_growth_pct": "1.01",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-08-26",
+      "nav": "1.5126",
+      "accumulated_nav": "1.5126",
+      "daily_growth_pct": "0.55",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-08-27",
+      "nav": "1.4858",
+      "accumulated_nav": "1.4858",
+      "daily_growth_pct": "-1.77",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-08-28",
+      "nav": "1.4976",
+      "accumulated_nav": "1.4976",
+      "daily_growth_pct": "0.79",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-08-29",
+      "nav": "1.5002",
+      "accumulated_nav": "1.5002",
+      "daily_growth_pct": "0.17",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-01",
+      "nav": "1.5065",
+      "accumulated_nav": "1.5065",
+      "daily_growth_pct": "0.42",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-02",
+      "nav": "1.4765",
+      "accumulated_nav": "1.4765",
+      "daily_growth_pct": "-1.99",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-03",
+      "nav": "1.4644",
+      "accumulated_nav": "1.4644",
+      "daily_growth_pct": "-0.82",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-04",
+      "nav": "1.4461",
+      "accumulated_nav": "1.4461",
+      "daily_growth_pct": "-1.25",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-05",
+      "nav": "1.4866",
+      "accumulated_nav": "1.4866",
+      "daily_growth_pct": "2.8",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-08",
+      "nav": "1.5104",
+      "accumulated_nav": "1.5104",
+      "daily_growth_pct": "1.6",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-09",
+      "nav": "1.4993",
+      "accumulated_nav": "1.4993",
+      "daily_growth_pct": "-0.73",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-10",
+      "nav": "1.4958",
+      "accumulated_nav": "1.4958",
+      "daily_growth_pct": "-0.23",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-11",
+      "nav": "1.5189",
+      "accumulated_nav": "1.5189",
+      "daily_growth_pct": "1.54",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-12",
+      "nav": "1.5136",
+      "accumulated_nav": "1.5136",
+      "daily_growth_pct": "-0.35",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-15",
+      "nav": "1.5071",
+      "accumulated_nav": "1.5071",
+      "daily_growth_pct": "-0.43",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-16",
+      "nav": "1.521",
+      "accumulated_nav": "1.521",
+      "daily_growth_pct": "0.92",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-17",
+      "nav": "1.5392",
+      "accumulated_nav": "1.5392",
+      "daily_growth_pct": "1.2",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-18",
+      "nav": "1.5254",
+      "accumulated_nav": "1.5254",
+      "daily_growth_pct": "-0.9",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-19",
+      "nav": "1.5206",
+      "accumulated_nav": "1.5206",
+      "daily_growth_pct": "-0.31",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-22",
+      "nav": "1.5204",
+      "accumulated_nav": "1.5204",
+      "daily_growth_pct": "-0.01",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-23",
+      "nav": "1.5108",
+      "accumulated_nav": "1.5108",
+      "daily_growth_pct": "-0.63",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-24",
+      "nav": "1.5348",
+      "accumulated_nav": "1.5348",
+      "daily_growth_pct": "1.59",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-25",
+      "nav": "1.5341",
+      "accumulated_nav": "1.5341",
+      "daily_growth_pct": "-0.05",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-26",
+      "nav": "1.5272",
+      "accumulated_nav": "1.5272",
+      "daily_growth_pct": "-0.45",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-29",
+      "nav": "1.5442",
+      "accumulated_nav": "1.5442",
+      "daily_growth_pct": "1.11",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-09-30",
+      "nav": "1.5482",
+      "accumulated_nav": "1.5482",
+      "daily_growth_pct": "0.26",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-09",
+      "nav": "1.5682",
+      "accumulated_nav": "1.5682",
+      "daily_growth_pct": "1.29",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-10",
+      "nav": "1.5626",
+      "accumulated_nav": "1.5626",
+      "daily_growth_pct": "-0.36",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-13",
+      "nav": "1.5472",
+      "accumulated_nav": "1.5472",
+      "daily_growth_pct": "-0.99",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-14",
+      "nav": "1.5322",
+      "accumulated_nav": "1.5322",
+      "daily_growth_pct": "-0.97",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-15",
+      "nav": "1.5683",
+      "accumulated_nav": "1.5683",
+      "daily_growth_pct": "2.36",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-16",
+      "nav": "1.5502",
+      "accumulated_nav": "1.5502",
+      "daily_growth_pct": "-1.15",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-17",
+      "nav": "1.5058",
+      "accumulated_nav": "1.5058",
+      "daily_growth_pct": "-2.86",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-20",
+      "nav": "1.5199",
+      "accumulated_nav": "1.5199",
+      "daily_growth_pct": "0.94",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-21",
+      "nav": "1.5459",
+      "accumulated_nav": "1.5459",
+      "daily_growth_pct": "1.71",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-22",
+      "nav": "1.5367",
+      "accumulated_nav": "1.5367",
+      "daily_growth_pct": "-0.6",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-23",
+      "nav": "1.5391",
+      "accumulated_nav": "1.5391",
+      "daily_growth_pct": "0.16",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-24",
+      "nav": "1.5529",
+      "accumulated_nav": "1.5529",
+      "daily_growth_pct": "0.9",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-27",
+      "nav": "1.5738",
+      "accumulated_nav": "1.5738",
+      "daily_growth_pct": "1.35",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-28",
+      "nav": "1.5688",
+      "accumulated_nav": "1.5688",
+      "daily_growth_pct": "-0.32",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-29",
+      "nav": "1.5823",
+      "accumulated_nav": "1.5823",
+      "daily_growth_pct": "0.86",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-30",
+      "nav": "1.5572",
+      "accumulated_nav": "1.5572",
+      "daily_growth_pct": "-1.59",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-10-31",
+      "nav": "1.5555",
+      "accumulated_nav": "1.5555",
+      "daily_growth_pct": "-0.11",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-03",
+      "nav": "1.5599",
+      "accumulated_nav": "1.5599",
+      "daily_growth_pct": "0.28",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-04",
+      "nav": "1.5384",
+      "accumulated_nav": "1.5384",
+      "daily_growth_pct": "-1.38",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-05",
+      "nav": "1.556",
+      "accumulated_nav": "1.556",
+      "daily_growth_pct": "1.14",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-06",
+      "nav": "1.5716",
+      "accumulated_nav": "1.5716",
+      "daily_growth_pct": "1.0",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-07",
+      "nav": "1.5676",
+      "accumulated_nav": "1.5676",
+      "daily_growth_pct": "-0.25",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-10",
+      "nav": "1.5609",
+      "accumulated_nav": "1.5609",
+      "daily_growth_pct": "-0.43",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-11",
+      "nav": "1.5571",
+      "accumulated_nav": "1.5571",
+      "daily_growth_pct": "-0.24",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-12",
+      "nav": "1.5492",
+      "accumulated_nav": "1.5492",
+      "daily_growth_pct": "-0.51",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-13",
+      "nav": "1.5637",
+      "accumulated_nav": "1.5637",
+      "daily_growth_pct": "0.94",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-14",
+      "nav": "1.5441",
+      "accumulated_nav": "1.5441",
+      "daily_growth_pct": "-1.25",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-17",
+      "nav": "1.534",
+      "accumulated_nav": "1.534",
+      "daily_growth_pct": "-0.65",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-18",
+      "nav": "1.509",
+      "accumulated_nav": "1.509",
+      "daily_growth_pct": "-1.63",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-19",
+      "nav": "1.4932",
+      "accumulated_nav": "1.4932",
+      "daily_growth_pct": "-1.05",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-20",
+      "nav": "1.4851",
+      "accumulated_nav": "1.4851",
+      "daily_growth_pct": "-0.54",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-21",
+      "nav": "1.4354",
+      "accumulated_nav": "1.4354",
+      "daily_growth_pct": "-3.35",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-24",
+      "nav": "1.4529",
+      "accumulated_nav": "1.4529",
+      "daily_growth_pct": "1.22",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-25",
+      "nav": "1.4716",
+      "accumulated_nav": "1.4716",
+      "daily_growth_pct": "1.29",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-26",
+      "nav": "1.4661",
+      "accumulated_nav": "1.4661",
+      "daily_growth_pct": "-0.37",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-27",
+      "nav": "1.4737",
+      "accumulated_nav": "1.4737",
+      "daily_growth_pct": "0.52",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-11-28",
+      "nav": "1.4872",
+      "accumulated_nav": "1.4872",
+      "daily_growth_pct": "0.92",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-01",
+      "nav": "1.5058",
+      "accumulated_nav": "1.5058",
+      "daily_growth_pct": "1.25",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-02",
+      "nav": "1.5004",
+      "accumulated_nav": "1.5004",
+      "daily_growth_pct": "-0.36",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-03",
+      "nav": "1.4982",
+      "accumulated_nav": "1.4982",
+      "daily_growth_pct": "-0.15",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-04",
+      "nav": "1.4932",
+      "accumulated_nav": "1.4932",
+      "daily_growth_pct": "-0.33",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-05",
+      "nav": "1.5132",
+      "accumulated_nav": "1.5132",
+      "daily_growth_pct": "1.34",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-08",
+      "nav": "1.5203",
+      "accumulated_nav": "1.5203",
+      "daily_growth_pct": "0.47",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-09",
+      "nav": "1.5093",
+      "accumulated_nav": "1.5093",
+      "daily_growth_pct": "-0.72",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-10",
+      "nav": "1.5119",
+      "accumulated_nav": "1.5119",
+      "daily_growth_pct": "0.17",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-11",
+      "nav": "1.4953",
+      "accumulated_nav": "1.4953",
+      "daily_growth_pct": "-1.1",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-12",
+      "nav": "1.5041",
+      "accumulated_nav": "1.5041",
+      "daily_growth_pct": "0.59",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-15",
+      "nav": "1.5048",
+      "accumulated_nav": "1.5048",
+      "daily_growth_pct": "0.05",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-16",
+      "nav": "1.4799",
+      "accumulated_nav": "1.4799",
+      "daily_growth_pct": "-1.65",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-17",
+      "nav": "1.5054",
+      "accumulated_nav": "1.5054",
+      "daily_growth_pct": "1.72",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-18",
+      "nav": "1.5021",
+      "accumulated_nav": "1.5021",
+      "daily_growth_pct": "-0.22",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-19",
+      "nav": "1.5203",
+      "accumulated_nav": "1.5203",
+      "daily_growth_pct": "1.21",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-22",
+      "nav": "1.5327",
+      "accumulated_nav": "1.5327",
+      "daily_growth_pct": "0.82",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-23",
+      "nav": "1.5333",
+      "accumulated_nav": "1.5333",
+      "daily_growth_pct": "0.04",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-24",
+      "nav": "1.5549",
+      "accumulated_nav": "1.5549",
+      "daily_growth_pct": "1.41",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-25",
+      "nav": "1.5672",
+      "accumulated_nav": "1.5672",
+      "daily_growth_pct": "0.79",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-26",
+      "nav": "1.5647",
+      "accumulated_nav": "1.5647",
+      "daily_growth_pct": "-0.16",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-29",
+      "nav": "1.5623",
+      "accumulated_nav": "1.5623",
+      "daily_growth_pct": "-0.15",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-30",
+      "nav": "1.5659",
+      "accumulated_nav": "1.5659",
+      "daily_growth_pct": "0.23",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2025-12-31",
+      "nav": "1.5638",
+      "accumulated_nav": "1.5638",
+      "daily_growth_pct": "-0.13",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-05",
+      "nav": "1.5823",
+      "accumulated_nav": "1.5823",
+      "daily_growth_pct": "1.18",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-06",
+      "nav": "1.5985",
+      "accumulated_nav": "1.5985",
+      "daily_growth_pct": "1.02",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-07",
+      "nav": "1.6022",
+      "accumulated_nav": "1.6022",
+      "daily_growth_pct": "0.23",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-08",
+      "nav": "1.6079",
+      "accumulated_nav": "1.6079",
+      "daily_growth_pct": "0.36",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-09",
+      "nav": "1.627",
+      "accumulated_nav": "1.627",
+      "daily_growth_pct": "1.19",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-12",
+      "nav": "1.6408",
+      "accumulated_nav": "1.6408",
+      "daily_growth_pct": "0.85",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-13",
+      "nav": "1.6183",
+      "accumulated_nav": "1.6183",
+      "daily_growth_pct": "-1.37",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-14",
+      "nav": "1.6199",
+      "accumulated_nav": "1.6199",
+      "daily_growth_pct": "0.1",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-15",
+      "nav": "1.6308",
+      "accumulated_nav": "1.6308",
+      "daily_growth_pct": "0.67",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-16",
+      "nav": "1.6464",
+      "accumulated_nav": "1.6464",
+      "daily_growth_pct": "0.96",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-19",
+      "nav": "1.6688",
+      "accumulated_nav": "1.6688",
+      "daily_growth_pct": "1.36",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-20",
+      "nav": "1.6663",
+      "accumulated_nav": "1.6663",
+      "daily_growth_pct": "-0.15",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-21",
+      "nav": "1.6867",
+      "accumulated_nav": "1.6867",
+      "daily_growth_pct": "1.22",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-22",
+      "nav": "1.6916",
+      "accumulated_nav": "1.6916",
+      "daily_growth_pct": "0.29",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-23",
+      "nav": "1.7092",
+      "accumulated_nav": "1.7092",
+      "daily_growth_pct": "1.04",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-26",
+      "nav": "1.6914",
+      "accumulated_nav": "1.6914",
+      "daily_growth_pct": "-1.04",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-27",
+      "nav": "1.6917",
+      "accumulated_nav": "1.6917",
+      "daily_growth_pct": "0.02",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-28",
+      "nav": "1.6852",
+      "accumulated_nav": "1.6852",
+      "daily_growth_pct": "-0.38",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-29",
+      "nav": "1.6616",
+      "accumulated_nav": "1.6616",
+      "daily_growth_pct": "-1.4",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-01-30",
+      "nav": "1.6544",
+      "accumulated_nav": "1.6544",
+      "daily_growth_pct": "-0.43",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-02",
+      "nav": "1.6052",
+      "accumulated_nav": "1.6052",
+      "daily_growth_pct": "-2.97",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-03",
+      "nav": "1.638",
+      "accumulated_nav": "1.638",
+      "daily_growth_pct": "2.04",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-04",
+      "nav": "1.6474",
+      "accumulated_nav": "1.6474",
+      "daily_growth_pct": "0.57",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-05",
+      "nav": "1.6252",
+      "accumulated_nav": "1.6252",
+      "daily_growth_pct": "-1.35",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-06",
+      "nav": "1.6331",
+      "accumulated_nav": "1.6331",
+      "daily_growth_pct": "0.49",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-09",
+      "nav": "1.6519",
+      "accumulated_nav": "1.6519",
+      "daily_growth_pct": "1.15",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-10",
+      "nav": "1.6519",
+      "accumulated_nav": "1.6519",
+      "daily_growth_pct": "0.0",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-11",
+      "nav": "1.6576",
+      "accumulated_nav": "1.6576",
+      "daily_growth_pct": "0.35",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-12",
+      "nav": "1.6706",
+      "accumulated_nav": "1.6706",
+      "daily_growth_pct": "0.78",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-13",
+      "nav": "1.6559",
+      "accumulated_nav": "1.6559",
+      "daily_growth_pct": "-0.88",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-24",
+      "nav": "1.6827",
+      "accumulated_nav": "1.6827",
+      "daily_growth_pct": "1.62",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-25",
+      "nav": "1.6967",
+      "accumulated_nav": "1.6967",
+      "daily_growth_pct": "0.83",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-26",
+      "nav": "1.7119",
+      "accumulated_nav": "1.7119",
+      "daily_growth_pct": "0.9",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-02-27",
+      "nav": "1.7212",
+      "accumulated_nav": "1.7212",
+      "daily_growth_pct": "0.54",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-02",
+      "nav": "1.6925",
+      "accumulated_nav": "1.6925",
+      "daily_growth_pct": "-1.67",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-03",
+      "nav": "1.6381",
+      "accumulated_nav": "1.6381",
+      "daily_growth_pct": "-3.21",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-04",
+      "nav": "1.6252",
+      "accumulated_nav": "1.6252",
+      "daily_growth_pct": "-0.79",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-05",
+      "nav": "1.6467",
+      "accumulated_nav": "1.6467",
+      "daily_growth_pct": "1.32",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-06",
+      "nav": "1.6719",
+      "accumulated_nav": "1.6719",
+      "daily_growth_pct": "1.53",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-09",
+      "nav": "1.6551",
+      "accumulated_nav": "1.6551",
+      "daily_growth_pct": "-1.0",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-10",
+      "nav": "1.6852",
+      "accumulated_nav": "1.6852",
+      "daily_growth_pct": "1.82",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-11",
+      "nav": "1.6885",
+      "accumulated_nav": "1.6885",
+      "daily_growth_pct": "0.2",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-12",
+      "nav": "1.6833",
+      "accumulated_nav": "1.6833",
+      "daily_growth_pct": "-0.31",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-13",
+      "nav": "1.67",
+      "accumulated_nav": "1.67",
+      "daily_growth_pct": "-0.79",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-16",
+      "nav": "1.6576",
+      "accumulated_nav": "1.6576",
+      "daily_growth_pct": "-0.74",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-17",
+      "nav": "1.6278",
+      "accumulated_nav": "1.6278",
+      "daily_growth_pct": "-1.8",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-18",
+      "nav": "1.6411",
+      "accumulated_nav": "1.6411",
+      "daily_growth_pct": "0.82",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-19",
+      "nav": "1.5966",
+      "accumulated_nav": "1.5966",
+      "daily_growth_pct": "-2.71",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-20",
+      "nav": "1.5746",
+      "accumulated_nav": "1.5746",
+      "daily_growth_pct": "-1.38",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-23",
+      "nav": "1.503",
+      "accumulated_nav": "1.503",
+      "daily_growth_pct": "-4.55",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-24",
+      "nav": "1.544",
+      "accumulated_nav": "1.544",
+      "daily_growth_pct": "2.73",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-25",
+      "nav": "1.5707",
+      "accumulated_nav": "1.5707",
+      "daily_growth_pct": "1.73",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-26",
+      "nav": "1.5527",
+      "accumulated_nav": "1.5527",
+      "daily_growth_pct": "-1.15",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-27",
+      "nav": "1.5676",
+      "accumulated_nav": "1.5676",
+      "daily_growth_pct": "0.96",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-30",
+      "nav": "1.5612",
+      "accumulated_nav": "1.5612",
+      "daily_growth_pct": "-0.41",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-03-31",
+      "nav": "1.5427",
+      "accumulated_nav": "1.5427",
+      "daily_growth_pct": "-1.18",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-01",
+      "nav": "1.5724",
+      "accumulated_nav": "1.5724",
+      "daily_growth_pct": "1.93",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-02",
+      "nav": "1.5494",
+      "accumulated_nav": "1.5494",
+      "daily_growth_pct": "-1.46",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-03",
+      "nav": "1.5269",
+      "accumulated_nav": "1.5269",
+      "daily_growth_pct": "-1.45",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-07",
+      "nav": "1.5347",
+      "accumulated_nav": "1.5347",
+      "daily_growth_pct": "0.51",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-08",
+      "nav": "1.5918",
+      "accumulated_nav": "1.5918",
+      "daily_growth_pct": "3.72",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-09",
+      "nav": "1.5914",
+      "accumulated_nav": "1.5914",
+      "daily_growth_pct": "-0.03",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-10",
+      "nav": "1.6094",
+      "accumulated_nav": "1.6094",
+      "daily_growth_pct": "1.13",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-13",
+      "nav": "1.6038",
+      "accumulated_nav": "1.6038",
+      "daily_growth_pct": "-0.35",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-14",
+      "nav": "1.6209",
+      "accumulated_nav": "1.6209",
+      "daily_growth_pct": "1.07",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-15",
+      "nav": "1.619",
+      "accumulated_nav": "1.619",
+      "daily_growth_pct": "-0.12",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-16",
+      "nav": "1.6356",
+      "accumulated_nav": "1.6356",
+      "daily_growth_pct": "1.03",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-17",
+      "nav": "1.6343",
+      "accumulated_nav": "1.6343",
+      "daily_growth_pct": "-0.08",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-20",
+      "nav": "1.644",
+      "accumulated_nav": "1.644",
+      "daily_growth_pct": "0.59",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-21",
+      "nav": "1.6396",
+      "accumulated_nav": "1.6396",
+      "daily_growth_pct": "-0.27",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-22",
+      "nav": "1.6478",
+      "accumulated_nav": "1.6478",
+      "daily_growth_pct": "0.5",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-23",
+      "nav": "1.6301",
+      "accumulated_nav": "1.6301",
+      "daily_growth_pct": "-1.07",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-24",
+      "nav": "1.6279",
+      "accumulated_nav": "1.6279",
+      "daily_growth_pct": "-0.13",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-27",
+      "nav": "1.6279",
+      "accumulated_nav": "1.6279",
+      "daily_growth_pct": "0.0",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-28",
+      "nav": "1.6094",
+      "accumulated_nav": "1.6094",
+      "daily_growth_pct": "-1.14",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-29",
+      "nav": "1.6252",
+      "accumulated_nav": "1.6252",
+      "daily_growth_pct": "0.98",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-04-30",
+      "nav": "1.6151",
+      "accumulated_nav": "1.6151",
+      "daily_growth_pct": "-0.62",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-06",
+      "nav": "1.6384",
+      "accumulated_nav": "1.6384",
+      "daily_growth_pct": "1.44",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-07",
+      "nav": "1.6495",
+      "accumulated_nav": "1.6495",
+      "daily_growth_pct": "0.68",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-08",
+      "nav": "1.6565",
+      "accumulated_nav": "1.6565",
+      "daily_growth_pct": "0.42",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-11",
+      "nav": "1.6705",
+      "accumulated_nav": "1.6705",
+      "daily_growth_pct": "0.85",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-12",
+      "nav": "1.6538",
+      "accumulated_nav": "1.6538",
+      "daily_growth_pct": "-1.0",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-13",
+      "nav": "1.668",
+      "accumulated_nav": "1.668",
+      "daily_growth_pct": "0.86",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-14",
+      "nav": "1.6376",
+      "accumulated_nav": "1.6376",
+      "daily_growth_pct": "-1.82",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-15",
+      "nav": "1.6298",
+      "accumulated_nav": "1.6298",
+      "daily_growth_pct": "-0.48",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-18",
+      "nav": "1.6185",
+      "accumulated_nav": "1.6185",
+      "daily_growth_pct": "-0.69",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-19",
+      "nav": "1.6276",
+      "accumulated_nav": "1.6276",
+      "daily_growth_pct": "0.56",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-20",
+      "nav": "1.6205",
+      "accumulated_nav": "1.6205",
+      "daily_growth_pct": "-0.44",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-21",
+      "nav": "1.589",
+      "accumulated_nav": "1.589",
+      "daily_growth_pct": "-1.94",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-22",
+      "nav": "1.6125",
+      "accumulated_nav": "1.6125",
+      "daily_growth_pct": "1.48",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-25",
+      "nav": "1.6158",
+      "accumulated_nav": "1.6158",
+      "daily_growth_pct": "0.2",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-26",
+      "nav": "1.6172",
+      "accumulated_nav": "1.6172",
+      "daily_growth_pct": "0.09",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-27",
+      "nav": "1.5928",
+      "accumulated_nav": "1.5928",
+      "daily_growth_pct": "-1.51",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-28",
+      "nav": "1.5918",
+      "accumulated_nav": "1.5918",
+      "daily_growth_pct": "-0.06",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-05-29",
+      "nav": "1.5662",
+      "accumulated_nav": "1.5662",
+      "daily_growth_pct": "-1.61",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-01",
+      "nav": "1.5841",
+      "accumulated_nav": "1.5841",
+      "daily_growth_pct": "1.14",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-02",
+      "nav": "1.5809",
+      "accumulated_nav": "1.5809",
+      "daily_growth_pct": "-0.2",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-03",
+      "nav": "1.5765",
+      "accumulated_nav": "1.5765",
+      "daily_growth_pct": "-0.28",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-04",
+      "nav": "1.5515",
+      "accumulated_nav": "1.5515",
+      "daily_growth_pct": "-1.59",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-05",
+      "nav": "1.554",
+      "accumulated_nav": "1.554",
+      "daily_growth_pct": "0.16",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-08",
+      "nav": "1.5088",
+      "accumulated_nav": "1.5088",
+      "daily_growth_pct": "-2.91",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-09",
+      "nav": "1.5308",
+      "accumulated_nav": "1.5308",
+      "daily_growth_pct": "1.46",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-10",
+      "nav": "1.5141",
+      "accumulated_nav": "1.5141",
+      "daily_growth_pct": "-1.09",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-11",
+      "nav": "1.5003",
+      "accumulated_nav": "1.5003",
+      "daily_growth_pct": "-0.91",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-12",
+      "nav": "1.5266",
+      "accumulated_nav": "1.5266",
+      "daily_growth_pct": "1.75",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-15",
+      "nav": "1.5642",
+      "accumulated_nav": "1.5642",
+      "daily_growth_pct": "2.46",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-16",
+      "nav": "1.5676",
+      "accumulated_nav": "1.5676",
+      "daily_growth_pct": "0.22",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-17",
+      "nav": "1.5703",
+      "accumulated_nav": "1.5703",
+      "daily_growth_pct": "0.17",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-18",
+      "nav": "1.5655",
+      "accumulated_nav": "1.5655",
+      "daily_growth_pct": "-0.31",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-22",
+      "nav": "1.5893",
+      "accumulated_nav": "1.5893",
+      "daily_growth_pct": "1.52",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-23",
+      "nav": "1.5685",
+      "accumulated_nav": "1.5685",
+      "daily_growth_pct": "-1.31",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-24",
+      "nav": "1.5604",
+      "accumulated_nav": "1.5604",
+      "daily_growth_pct": "-0.52",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-25",
+      "nav": "1.5537",
+      "accumulated_nav": "1.5537",
+      "daily_growth_pct": "-0.43",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-26",
+      "nav": "1.5049",
+      "accumulated_nav": "1.5049",
+      "daily_growth_pct": "-3.14",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-29",
+      "nav": "1.514",
+      "accumulated_nav": "1.514",
+      "daily_growth_pct": "0.6",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-06-30",
+      "nav": "1.5327",
+      "accumulated_nav": "1.5327",
+      "daily_growth_pct": "1.24",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-01",
+      "nav": "1.5582",
+      "accumulated_nav": "1.5582",
+      "daily_growth_pct": "1.66",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-02",
+      "nav": "1.5586",
+      "accumulated_nav": "1.5586",
+      "daily_growth_pct": "0.03",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-03",
+      "nav": "1.5871",
+      "accumulated_nav": "1.5871",
+      "daily_growth_pct": "1.83",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-06",
+      "nav": "1.5855",
+      "accumulated_nav": "1.5855",
+      "daily_growth_pct": "-0.1",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-07",
+      "nav": "1.5624",
+      "accumulated_nav": "1.5624",
+      "daily_growth_pct": "-1.46",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-08",
+      "nav": "1.54",
+      "accumulated_nav": "1.54",
+      "daily_growth_pct": "-1.43",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-09",
+      "nav": "1.5453",
+      "accumulated_nav": "1.5453",
+      "daily_growth_pct": "0.34",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-10",
+      "nav": "1.55",
+      "accumulated_nav": "1.55",
+      "daily_growth_pct": "0.3",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-13",
+      "nav": "1.5047",
+      "accumulated_nav": "1.5047",
+      "daily_growth_pct": "-2.92",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-14",
+      "nav": "1.5314",
+      "accumulated_nav": "1.5314",
+      "daily_growth_pct": "1.77",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-15",
+      "nav": "1.5412",
+      "accumulated_nav": "1.5412",
+      "daily_growth_pct": "0.64",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-16",
+      "nav": "1.536",
+      "accumulated_nav": "1.536",
+      "daily_growth_pct": "-0.34",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-17",
+      "nav": "1.4777",
+      "accumulated_nav": "1.4777",
+      "daily_growth_pct": "-3.8",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-20",
+      "nav": "1.4793",
+      "accumulated_nav": "1.4793",
+      "daily_growth_pct": "0.11",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-21",
+      "nav": "1.5039",
+      "accumulated_nav": "1.5039",
+      "daily_growth_pct": "1.66",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-22",
+      "nav": "1.4966",
+      "accumulated_nav": "1.4966",
+      "daily_growth_pct": "-0.49",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-23",
+      "nav": "1.5204",
+      "accumulated_nav": "1.5204",
+      "daily_growth_pct": "1.59",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-24",
+      "nav": "1.4821",
+      "accumulated_nav": "1.4821",
+      "daily_growth_pct": "-2.52",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-27",
+      "nav": "1.5217",
+      "accumulated_nav": "1.5217",
+      "daily_growth_pct": "2.67",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-28",
+      "nav": "1.5103",
+      "accumulated_nav": "1.5103",
+      "daily_growth_pct": "-0.75",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-29",
+      "nav": "1.5434",
+      "accumulated_nav": "1.5434",
+      "daily_growth_pct": "2.19",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-30",
+      "nav": "1.5303",
+      "accumulated_nav": "1.5303",
+      "daily_growth_pct": "-0.85",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-07-31",
+      "nav": "1.5491",
+      "accumulated_nav": "1.5491",
+      "daily_growth_pct": "1.23",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-03",
+      "nav": "1.5587",
+      "accumulated_nav": "1.5587",
+      "daily_growth_pct": "0.62",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-04",
+      "nav": "1.5619",
+      "accumulated_nav": "1.5619",
+      "daily_growth_pct": "0.21",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-05",
+      "nav": "1.5789",
+      "accumulated_nav": "1.5789",
+      "daily_growth_pct": "1.09",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-06",
+      "nav": "1.5746",
+      "accumulated_nav": "1.5746",
+      "daily_growth_pct": "-0.27",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-07",
+      "nav": "1.5839",
+      "accumulated_nav": "1.5839",
+      "daily_growth_pct": "0.59",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-10",
+      "nav": "1.6044",
+      "accumulated_nav": "1.6044",
+      "daily_growth_pct": "1.29",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-11",
+      "nav": "1.5892",
+      "accumulated_nav": "1.5892",
+      "daily_growth_pct": "-0.95",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-12",
+      "nav": "1.5979",
+      "accumulated_nav": "1.5979",
+      "daily_growth_pct": "0.55",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-13",
+      "nav": "1.5841",
+      "accumulated_nav": "1.5841",
+      "daily_growth_pct": "-0.86",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-14",
+      "nav": "1.586",
+      "accumulated_nav": "1.586",
+      "daily_growth_pct": "0.12",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-17",
+      "nav": "1.6136",
+      "accumulated_nav": "1.6136",
+      "daily_growth_pct": "1.74",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-18",
+      "nav": "1.6076",
+      "accumulated_nav": "1.6076",
+      "daily_growth_pct": "-0.37",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-19",
+      "nav": "1.5639",
+      "accumulated_nav": "1.5639",
+      "daily_growth_pct": "-2.72",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-20",
+      "nav": "1.5761",
+      "accumulated_nav": "1.5761",
+      "daily_growth_pct": "0.78",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-21",
+      "nav": "1.5715",
+      "accumulated_nav": "1.5715",
+      "daily_growth_pct": "-0.29",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-24",
+      "nav": "1.5541",
+      "accumulated_nav": "1.5541",
+      "daily_growth_pct": "-1.11",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-25",
+      "nav": "1.5644",
+      "accumulated_nav": "1.5644",
+      "daily_growth_pct": "0.66",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-26",
+      "nav": "1.5712",
+      "accumulated_nav": "1.5712",
+      "daily_growth_pct": "0.43",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-27",
+      "nav": "1.5899",
+      "accumulated_nav": "1.5899",
+      "daily_growth_pct": "1.19",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-28",
+      "nav": "1.594",
+      "accumulated_nav": "1.594",
+      "daily_growth_pct": "0.26",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-08-31",
+      "nav": "1.6036",
+      "accumulated_nav": "1.6036",
+      "daily_growth_pct": "0.6",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-09-01",
+      "nav": "1.606",
+      "accumulated_nav": "1.606",
+      "daily_growth_pct": "0.15",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-09-02",
+      "nav": "1.588",
+      "accumulated_nav": "1.588",
+      "daily_growth_pct": "-1.12",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-09-03",
+      "nav": "1.5946",
+      "accumulated_nav": "1.5946",
+      "daily_growth_pct": "0.42",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-09-04",
+      "nav": "1.5833",
+      "accumulated_nav": "1.5833",
+      "daily_growth_pct": "-0.71",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-09-07",
+      "nav": "1.5799",
+      "accumulated_nav": "1.5799",
+      "daily_growth_pct": "-0.21",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-09-08",
+      "nav": "1.5774",
+      "accumulated_nav": "1.5774",
+      "daily_growth_pct": "-0.16",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-09-09",
+      "nav": "1.5757",
+      "accumulated_nav": "1.5757",
+      "daily_growth_pct": "-0.11",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-09-10",
+      "nav": "1.5546",
+      "accumulated_nav": "1.5546",
+      "daily_growth_pct": "-1.34",
+      "event": "",
+      "source": "天天基金 pingzhongdata"
+    },
+    {
+      "date": "2026-09-11",
+      "nav": "1.5270",
+      "accumulated_nav": "1.5270",
+      "daily_growth_pct": "-1.78",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-09-14",
+      "nav": "1.5346",
+      "accumulated_nav": "1.5346",
+      "daily_growth_pct": "0.50",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-09-15",
+      "nav": "1.5292",
+      "accumulated_nav": "1.5292",
+      "daily_growth_pct": "-0.35",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-09-16",
+      "nav": "1.5464",
+      "accumulated_nav": "1.5464",
+      "daily_growth_pct": "1.12",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-09-17",
+      "nav": "1.5429",
+      "accumulated_nav": "1.5429",
+      "daily_growth_pct": "-0.23",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-09-18",
+      "nav": "1.5633",
+      "accumulated_nav": "1.5633",
+      "daily_growth_pct": "1.32",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-09-21",
+      "nav": "1.5776",
+      "accumulated_nav": "1.5776",
+      "daily_growth_pct": "0.91",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-09-22",
+      "nav": "1.5822",
+      "accumulated_nav": "1.5822",
+      "daily_growth_pct": "0.29",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-09-23",
+      "nav": "1.5791",
+      "accumulated_nav": "1.5791",
+      "daily_growth_pct": "-0.20",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-09-24",
+      "nav": "1.5539",
+      "accumulated_nav": "1.5539",
+      "daily_growth_pct": "-1.60",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-09-28",
+      "nav": "1.5208",
+      "accumulated_nav": "1.5208",
+      "daily_growth_pct": "-2.13",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-09-29",
+      "nav": "1.5257",
+      "accumulated_nav": "1.5257",
+      "daily_growth_pct": "0.32",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-09-30",
+      "nav": "1.5338",
+      "accumulated_nav": "1.5338",
+      "daily_growth_pct": "0.53",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-10-08",
+      "nav": "1.5202",
+      "accumulated_nav": "1.5202",
+      "daily_growth_pct": "-0.89",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-10-09",
+      "nav": "1.5382",
+      "accumulated_nav": "1.5382",
+      "daily_growth_pct": "1.18",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-10-12",
+      "nav": "1.5098",
+      "accumulated_nav": "1.5098",
+      "daily_growth_pct": "-1.85",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-10-13",
+      "nav": "1.4991",
+      "accumulated_nav": "1.4991",
+      "daily_growth_pct": "-0.71",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-10-14",
+      "nav": "1.4715",
+      "accumulated_nav": "1.4715",
+      "daily_growth_pct": "-1.84",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-10-15",
+      "nav": "1.4307",
+      "accumulated_nav": "1.4307",
+      "daily_growth_pct": "-2.77",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-10-16",
+      "nav": "1.4370",
+      "accumulated_nav": "1.4370",
+      "daily_growth_pct": "0.44",
+      "event": "",
+      "source": "天天基金 f10/lsjz"
+    }
+  ],
+  "storage_policy": "本文件为该份额唯一全历史净值主档；更新时合并新日期、按日期去重，原子替换同名文件。",
+  "validation": {
+    "unique_date_count": 570,
+    "duplicate_dates": 0,
+    "prior_full_history_dates_preserved": true,
+    "missing_accumulated_nav_count": 0,
+    "source_verification": {
+      "api_total_count": 570,
+      "unique_date_count": 570,
+      "duplicate_dates": 0,
+      "sample_rows_checked": 50,
+      "earliest_date_checked": "2024-05-31",
+      "latest_pinned_date": "2026-10-16",
+      "missing_accumulated_nav_count": 0,
+      "note": "走势与F10为同一供应商的不同接口，属于同源交叉核验；不填充自然日，不插值，不把未披露日期视为缺失。"
+    }
+  }
+}

@@ -1,0 +1,3765 @@
+{
+  "code": "022459",
+  "name": "易方达中证A500ETF联接A",
+  "holding_identity_status": "已记录A类",
+  "source": "天天基金（东方财富）f10/lsjz 全历史分页核验，第三方公开净值",
+  "source_urls": [
+    "https://api.fund.eastmoney.com/f10/lsjz?fundCode=022459",
+    "https://fund.eastmoney.com/pingzhongdata/022459.js",
+    "https://fundsuggest.eastmoney.com/FundSearch/api/FundSearchAPI.ashx?m=1&key=022459"
+  ],
+  "downloaded_at": "2026-10-18T05:24:09.898Z",
+  "field_notes": {
+    "nav": "公开单位净值，十进制原值字符串",
+    "accumulated_nav": "公开累计净值；null表示来源缺失，不推算",
+    "daily_growth_pct": "来源日增长率的百分数原值，不代表用户账户收益率",
+    "event": "来源分红等事件文字，不从单位净值推算总回报"
+  },
+  "schema": "public-fund-nav-v1",
+  "first_date": "2024-11-11",
+  "last_date": "2026-10-16",
+  "count": 465,
+  "rows": [
+    {
+      "date": "2024-11-11",
+      "nav": "1.0000",
+      "accumulated_nav": "1.0000",
+      "daily_growth_pct": null,
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-11-15",
+      "nav": "0.9977",
+      "accumulated_nav": "0.9977",
+      "daily_growth_pct": null,
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-11-18",
+      "nav": "0.9970",
+      "accumulated_nav": "0.9970",
+      "daily_growth_pct": "-0.07",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-11-19",
+      "nav": "0.9996",
+      "accumulated_nav": "0.9996",
+      "daily_growth_pct": "0.26",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-11-20",
+      "nav": "1.0009",
+      "accumulated_nav": "1.0009",
+      "daily_growth_pct": "0.13",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-11-21",
+      "nav": "1.0009",
+      "accumulated_nav": "1.0009",
+      "daily_growth_pct": "0.00",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-11-22",
+      "nav": "0.9875",
+      "accumulated_nav": "0.9875",
+      "daily_growth_pct": "-1.34",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-11-25",
+      "nav": "0.9855",
+      "accumulated_nav": "0.9855",
+      "daily_growth_pct": "-0.20",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-11-26",
+      "nav": "0.9834",
+      "accumulated_nav": "0.9834",
+      "daily_growth_pct": "-0.21",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-11-27",
+      "nav": "0.9933",
+      "accumulated_nav": "0.9933",
+      "daily_growth_pct": "1.01",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-11-28",
+      "nav": "0.9873",
+      "accumulated_nav": "0.9873",
+      "daily_growth_pct": "-0.60",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-11-29",
+      "nav": "0.9954",
+      "accumulated_nav": "0.9954",
+      "daily_growth_pct": "0.82",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-02",
+      "nav": "1.0036",
+      "accumulated_nav": "1.0036",
+      "daily_growth_pct": "0.82",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-03",
+      "nav": "1.0031",
+      "accumulated_nav": "1.0031",
+      "daily_growth_pct": "-0.05",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-04",
+      "nav": "0.9977",
+      "accumulated_nav": "0.9977",
+      "daily_growth_pct": "-0.54",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-05",
+      "nav": "0.9969",
+      "accumulated_nav": "0.9969",
+      "daily_growth_pct": "-0.08",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-06",
+      "nav": "1.0092",
+      "accumulated_nav": "1.0092",
+      "daily_growth_pct": "1.23",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-09",
+      "nav": "1.0066",
+      "accumulated_nav": "1.0066",
+      "daily_growth_pct": "-0.26",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-10",
+      "nav": "1.0135",
+      "accumulated_nav": "1.0135",
+      "daily_growth_pct": "0.69",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-11",
+      "nav": "1.0138",
+      "accumulated_nav": "1.0138",
+      "daily_growth_pct": "0.03",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-12",
+      "nav": "1.0224",
+      "accumulated_nav": "1.0224",
+      "daily_growth_pct": "0.85",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-13",
+      "nav": "1.0001",
+      "accumulated_nav": "1.0001",
+      "daily_growth_pct": "-2.18",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-16",
+      "nav": "0.9932",
+      "accumulated_nav": "0.9932",
+      "daily_growth_pct": "-0.69",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-17",
+      "nav": "0.9932",
+      "accumulated_nav": "0.9932",
+      "daily_growth_pct": "0.00",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-18",
+      "nav": "0.9986",
+      "accumulated_nav": "0.9986",
+      "daily_growth_pct": "0.54",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-19",
+      "nav": "1.0006",
+      "accumulated_nav": "1.0006",
+      "daily_growth_pct": "0.20",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-20",
+      "nav": "0.9985",
+      "accumulated_nav": "0.9985",
+      "daily_growth_pct": "-0.21",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-23",
+      "nav": "0.9957",
+      "accumulated_nav": "0.9957",
+      "daily_growth_pct": "-0.28",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-24",
+      "nav": "1.0071",
+      "accumulated_nav": "1.0071",
+      "daily_growth_pct": "1.14",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-25",
+      "nav": "1.0053",
+      "accumulated_nav": "1.0053",
+      "daily_growth_pct": "-0.18",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-26",
+      "nav": "1.0077",
+      "accumulated_nav": "1.0077",
+      "daily_growth_pct": "0.24",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-27",
+      "nav": "1.0065",
+      "accumulated_nav": "1.0065",
+      "daily_growth_pct": "-0.12",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-30",
+      "nav": "1.0096",
+      "accumulated_nav": "1.0096",
+      "daily_growth_pct": "0.31",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2024-12-31",
+      "nav": "0.9923",
+      "accumulated_nav": "0.9923",
+      "daily_growth_pct": "-1.71",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-02",
+      "nav": "0.9647",
+      "accumulated_nav": "0.9647",
+      "daily_growth_pct": "-2.78",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-03",
+      "nav": "0.9520",
+      "accumulated_nav": "0.9520",
+      "daily_growth_pct": "-1.32",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-06",
+      "nav": "0.9503",
+      "accumulated_nav": "0.9503",
+      "daily_growth_pct": "-0.18",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-07",
+      "nav": "0.9582",
+      "accumulated_nav": "0.9582",
+      "daily_growth_pct": "0.83",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-08",
+      "nav": "0.9558",
+      "accumulated_nav": "0.9558",
+      "daily_growth_pct": "-0.25",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-09",
+      "nav": "0.9550",
+      "accumulated_nav": "0.9550",
+      "daily_growth_pct": "-0.08",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-10",
+      "nav": "0.9433",
+      "accumulated_nav": "0.9433",
+      "daily_growth_pct": "-1.23",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-13",
+      "nav": "0.9417",
+      "accumulated_nav": "0.9417",
+      "daily_growth_pct": "-0.17",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-14",
+      "nav": "0.9676",
+      "accumulated_nav": "0.9676",
+      "daily_growth_pct": "2.75",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-15",
+      "nav": "0.9610",
+      "accumulated_nav": "0.9610",
+      "daily_growth_pct": "-0.68",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-16",
+      "nav": "0.9624",
+      "accumulated_nav": "0.9624",
+      "daily_growth_pct": "0.15",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-17",
+      "nav": "0.9662",
+      "accumulated_nav": "0.9662",
+      "daily_growth_pct": "0.39",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-20",
+      "nav": "0.9709",
+      "accumulated_nav": "0.9709",
+      "daily_growth_pct": "0.49",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-21",
+      "nav": "0.9723",
+      "accumulated_nav": "0.9723",
+      "daily_growth_pct": "0.14",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-22",
+      "nav": "0.9642",
+      "accumulated_nav": "0.9642",
+      "daily_growth_pct": "-0.83",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-23",
+      "nav": "0.9640",
+      "accumulated_nav": "0.9640",
+      "daily_growth_pct": "-0.02",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-24",
+      "nav": "0.9727",
+      "accumulated_nav": "0.9727",
+      "daily_growth_pct": "0.90",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-01-27",
+      "nav": "0.9674",
+      "accumulated_nav": "0.9674",
+      "daily_growth_pct": "-0.54",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-05",
+      "nav": "0.9653",
+      "accumulated_nav": "0.9653",
+      "daily_growth_pct": "-0.22",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-06",
+      "nav": "0.9801",
+      "accumulated_nav": "0.9801",
+      "daily_growth_pct": "1.53",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-07",
+      "nav": "0.9934",
+      "accumulated_nav": "0.9934",
+      "daily_growth_pct": "1.36",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-10",
+      "nav": "0.9977",
+      "accumulated_nav": "0.9977",
+      "daily_growth_pct": "0.43",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-11",
+      "nav": "0.9927",
+      "accumulated_nav": "0.9927",
+      "daily_growth_pct": "-0.50",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-12",
+      "nav": "1.0028",
+      "accumulated_nav": "1.0028",
+      "daily_growth_pct": "1.02",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-13",
+      "nav": "0.9984",
+      "accumulated_nav": "0.9984",
+      "daily_growth_pct": "-0.44",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-14",
+      "nav": "1.0076",
+      "accumulated_nav": "1.0076",
+      "daily_growth_pct": "0.92",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-17",
+      "nav": "1.0087",
+      "accumulated_nav": "1.0087",
+      "daily_growth_pct": "0.11",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-18",
+      "nav": "0.9981",
+      "accumulated_nav": "0.9981",
+      "daily_growth_pct": "-1.05",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-19",
+      "nav": "1.0073",
+      "accumulated_nav": "1.0073",
+      "daily_growth_pct": "0.92",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-20",
+      "nav": "1.0060",
+      "accumulated_nav": "1.0060",
+      "daily_growth_pct": "-0.13",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-21",
+      "nav": "1.0197",
+      "accumulated_nav": "1.0197",
+      "daily_growth_pct": "1.36",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-24",
+      "nav": "1.0176",
+      "accumulated_nav": "1.0176",
+      "daily_growth_pct": "-0.21",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-25",
+      "nav": "1.0070",
+      "accumulated_nav": "1.0070",
+      "daily_growth_pct": "-1.04",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-26",
+      "nav": "1.0148",
+      "accumulated_nav": "1.0148",
+      "daily_growth_pct": "0.77",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-27",
+      "nav": "1.0147",
+      "accumulated_nav": "1.0147",
+      "daily_growth_pct": "-0.01",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-02-28",
+      "nav": "0.9929",
+      "accumulated_nav": "0.9929",
+      "daily_growth_pct": "-2.15",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-03",
+      "nav": "0.9939",
+      "accumulated_nav": "0.9939",
+      "daily_growth_pct": "0.10",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-04",
+      "nav": "0.9944",
+      "accumulated_nav": "0.9944",
+      "daily_growth_pct": "0.05",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-05",
+      "nav": "0.9982",
+      "accumulated_nav": "0.9982",
+      "daily_growth_pct": "0.38",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-06",
+      "nav": "1.0130",
+      "accumulated_nav": "1.0130",
+      "daily_growth_pct": "1.48",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-07",
+      "nav": "1.0101",
+      "accumulated_nav": "1.0101",
+      "daily_growth_pct": "-0.29",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-10",
+      "nav": "1.0073",
+      "accumulated_nav": "1.0073",
+      "daily_growth_pct": "-0.28",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-11",
+      "nav": "1.0103",
+      "accumulated_nav": "1.0103",
+      "daily_growth_pct": "0.30",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-12",
+      "nav": "1.0072",
+      "accumulated_nav": "1.0072",
+      "daily_growth_pct": "-0.31",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-13",
+      "nav": "1.0014",
+      "accumulated_nav": "1.0014",
+      "daily_growth_pct": "-0.58",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-14",
+      "nav": "1.0233",
+      "accumulated_nav": "1.0233",
+      "daily_growth_pct": "2.19",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-17",
+      "nav": "1.0218",
+      "accumulated_nav": "1.0218",
+      "daily_growth_pct": "-0.15",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-18",
+      "nav": "1.0254",
+      "accumulated_nav": "1.0254",
+      "daily_growth_pct": "0.35",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-19",
+      "nav": "1.0240",
+      "accumulated_nav": "1.0240",
+      "daily_growth_pct": "-0.14",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-20",
+      "nav": "1.0156",
+      "accumulated_nav": "1.0156",
+      "daily_growth_pct": "-0.82",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-21",
+      "nav": "1.0001",
+      "accumulated_nav": "1.0001",
+      "daily_growth_pct": "-1.53",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-24",
+      "nav": "1.0039",
+      "accumulated_nav": "1.0039",
+      "daily_growth_pct": "0.38",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-25",
+      "nav": "1.0022",
+      "accumulated_nav": "1.0022",
+      "daily_growth_pct": "-0.17",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-26",
+      "nav": "0.9994",
+      "accumulated_nav": "0.9994",
+      "daily_growth_pct": "-0.28",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-27",
+      "nav": "1.0021",
+      "accumulated_nav": "1.0021",
+      "daily_growth_pct": "0.27",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-28",
+      "nav": "0.9971",
+      "accumulated_nav": "0.9971",
+      "daily_growth_pct": "-0.50",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-03-31",
+      "nav": "0.9898",
+      "accumulated_nav": "0.9898",
+      "daily_growth_pct": "-0.73",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-01",
+      "nav": "0.9909",
+      "accumulated_nav": "0.9909",
+      "daily_growth_pct": "0.11",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-02",
+      "nav": "0.9898",
+      "accumulated_nav": "0.9898",
+      "daily_growth_pct": "-0.11",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-03",
+      "nav": "0.9822",
+      "accumulated_nav": "0.9822",
+      "daily_growth_pct": "-0.77",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-07",
+      "nav": "0.9092",
+      "accumulated_nav": "0.9092",
+      "daily_growth_pct": "-7.43",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-08",
+      "nav": "0.9217",
+      "accumulated_nav": "0.9217",
+      "daily_growth_pct": "1.37",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-09",
+      "nav": "0.9326",
+      "accumulated_nav": "0.9326",
+      "daily_growth_pct": "1.18",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-10",
+      "nav": "0.9455",
+      "accumulated_nav": "0.9455",
+      "daily_growth_pct": "1.38",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-11",
+      "nav": "0.9505",
+      "accumulated_nav": "0.9505",
+      "daily_growth_pct": "0.53",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-14",
+      "nav": "0.9541",
+      "accumulated_nav": "0.9541",
+      "daily_growth_pct": "0.38",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-15",
+      "nav": "0.9529",
+      "accumulated_nav": "0.9529",
+      "daily_growth_pct": "-0.13",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-16",
+      "nav": "0.9536",
+      "accumulated_nav": "0.9536",
+      "daily_growth_pct": "0.07",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-17",
+      "nav": "0.9531",
+      "accumulated_nav": "0.9531",
+      "daily_growth_pct": "-0.05",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-18",
+      "nav": "0.9535",
+      "accumulated_nav": "0.9535",
+      "daily_growth_pct": "0.04",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-21",
+      "nav": "0.9600",
+      "accumulated_nav": "0.9600",
+      "daily_growth_pct": "0.68",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-22",
+      "nav": "0.9588",
+      "accumulated_nav": "0.9588",
+      "daily_growth_pct": "-0.12",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-23",
+      "nav": "0.9606",
+      "accumulated_nav": "0.9606",
+      "daily_growth_pct": "0.19",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-24",
+      "nav": "0.9586",
+      "accumulated_nav": "0.9586",
+      "daily_growth_pct": "-0.21",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-25",
+      "nav": "0.9604",
+      "accumulated_nav": "0.9604",
+      "daily_growth_pct": "0.19",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-28",
+      "nav": "0.9581",
+      "accumulated_nav": "0.9581",
+      "daily_growth_pct": "-0.24",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-29",
+      "nav": "0.9580",
+      "accumulated_nav": "0.9580",
+      "daily_growth_pct": "-0.01",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-04-30",
+      "nav": "0.9590",
+      "accumulated_nav": "0.9590",
+      "daily_growth_pct": "0.10",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-06",
+      "nav": "0.9710",
+      "accumulated_nav": "0.9710",
+      "daily_growth_pct": "1.25",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-07",
+      "nav": "0.9757",
+      "accumulated_nav": "0.9757",
+      "daily_growth_pct": "0.48",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-08",
+      "nav": "0.9812",
+      "accumulated_nav": "0.9812",
+      "daily_growth_pct": "0.56",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-09",
+      "nav": "0.9777",
+      "accumulated_nav": "0.9777",
+      "daily_growth_pct": "-0.36",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-12",
+      "nav": "0.9894",
+      "accumulated_nav": "0.9894",
+      "daily_growth_pct": "1.20",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-13",
+      "nav": "0.9897",
+      "accumulated_nav": "0.9897",
+      "daily_growth_pct": "0.03",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-14",
+      "nav": "0.9984",
+      "accumulated_nav": "0.9984",
+      "daily_growth_pct": "0.88",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-15",
+      "nav": "0.9887",
+      "accumulated_nav": "0.9887",
+      "daily_growth_pct": "-0.97",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-16",
+      "nav": "0.9856",
+      "accumulated_nav": "0.9856",
+      "daily_growth_pct": "-0.31",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-19",
+      "nav": "0.9835",
+      "accumulated_nav": "0.9835",
+      "daily_growth_pct": "-0.21",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-20",
+      "nav": "0.9892",
+      "accumulated_nav": "0.9892",
+      "daily_growth_pct": "0.58",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-21",
+      "nav": "0.9936",
+      "accumulated_nav": "0.9936",
+      "daily_growth_pct": "0.44",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-22",
+      "nav": "0.9910",
+      "accumulated_nav": "0.9910",
+      "daily_growth_pct": "-0.26",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-23",
+      "nav": "0.9837",
+      "accumulated_nav": "0.9837",
+      "daily_growth_pct": "-0.74",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-26",
+      "nav": "0.9800",
+      "accumulated_nav": "0.9800",
+      "daily_growth_pct": "-0.38",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-27",
+      "nav": "0.9746",
+      "accumulated_nav": "0.9746",
+      "daily_growth_pct": "-0.55",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-28",
+      "nav": "0.9732",
+      "accumulated_nav": "0.9732",
+      "daily_growth_pct": "-0.14",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-29",
+      "nav": "0.9804",
+      "accumulated_nav": "0.9804",
+      "daily_growth_pct": "0.74",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-05-30",
+      "nav": "0.9748",
+      "accumulated_nav": "0.9748",
+      "daily_growth_pct": "-0.57",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-03",
+      "nav": "0.9765",
+      "accumulated_nav": "0.9765",
+      "daily_growth_pct": "0.17",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-04",
+      "nav": "0.9810",
+      "accumulated_nav": "0.9810",
+      "daily_growth_pct": "0.46",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-05",
+      "nav": "0.9845",
+      "accumulated_nav": "0.9845",
+      "daily_growth_pct": "0.36",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-06",
+      "nav": "0.9841",
+      "accumulated_nav": "0.9841",
+      "daily_growth_pct": "-0.04",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-09",
+      "nav": "0.9878",
+      "accumulated_nav": "0.9878",
+      "daily_growth_pct": "0.38",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-10",
+      "nav": "0.9822",
+      "accumulated_nav": "0.9822",
+      "daily_growth_pct": "-0.57",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-11",
+      "nav": "0.9893",
+      "accumulated_nav": "0.9893",
+      "daily_growth_pct": "0.72",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-12",
+      "nav": "0.9901",
+      "accumulated_nav": "0.9901",
+      "daily_growth_pct": "0.08",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-13",
+      "nav": "0.9835",
+      "accumulated_nav": "0.9835",
+      "daily_growth_pct": "-0.67",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-16",
+      "nav": "0.9858",
+      "accumulated_nav": "0.9858",
+      "daily_growth_pct": "0.23",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-17",
+      "nav": "0.9845",
+      "accumulated_nav": "0.9845",
+      "daily_growth_pct": "-0.13",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-18",
+      "nav": "0.9855",
+      "accumulated_nav": "0.9855",
+      "daily_growth_pct": "0.10",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-19",
+      "nav": "0.9772",
+      "accumulated_nav": "0.9772",
+      "daily_growth_pct": "-0.84",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-20",
+      "nav": "0.9767",
+      "accumulated_nav": "0.9767",
+      "daily_growth_pct": "-0.05",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-23",
+      "nav": "0.9804",
+      "accumulated_nav": "0.9804",
+      "daily_growth_pct": "0.38",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-24",
+      "nav": "0.9928",
+      "accumulated_nav": "0.9928",
+      "daily_growth_pct": "1.26",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-25",
+      "nav": "1.0062",
+      "accumulated_nav": "1.0062",
+      "daily_growth_pct": "1.35",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-26",
+      "nav": "1.0036",
+      "accumulated_nav": "1.0036",
+      "daily_growth_pct": "-0.26",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-27",
+      "nav": "1.0014",
+      "accumulated_nav": "1.0014",
+      "daily_growth_pct": "-0.22",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-06-30",
+      "nav": "1.0080",
+      "accumulated_nav": "1.0080",
+      "daily_growth_pct": "0.66",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-01",
+      "nav": "1.0093",
+      "accumulated_nav": "1.0093",
+      "daily_growth_pct": "0.13",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-02",
+      "nav": "1.0075",
+      "accumulated_nav": "1.0075",
+      "daily_growth_pct": "-0.18",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-03",
+      "nav": "1.0136",
+      "accumulated_nav": "1.0136",
+      "daily_growth_pct": "0.61",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-04",
+      "nav": "1.0150",
+      "accumulated_nav": "1.0150",
+      "daily_growth_pct": "0.14",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-07",
+      "nav": "1.0105",
+      "accumulated_nav": "1.0105",
+      "daily_growth_pct": "-0.44",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-08",
+      "nav": "1.0205",
+      "accumulated_nav": "1.0205",
+      "daily_growth_pct": "0.99",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-09",
+      "nav": "1.0182",
+      "accumulated_nav": "1.0182",
+      "daily_growth_pct": "-0.23",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-10",
+      "nav": "1.0229",
+      "accumulated_nav": "1.0229",
+      "daily_growth_pct": "0.46",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-11",
+      "nav": "1.0263",
+      "accumulated_nav": "1.0263",
+      "daily_growth_pct": "0.33",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-14",
+      "nav": "1.0272",
+      "accumulated_nav": "1.0272",
+      "daily_growth_pct": "0.09",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-15",
+      "nav": "1.0289",
+      "accumulated_nav": "1.0289",
+      "daily_growth_pct": "0.17",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-16",
+      "nav": "1.0270",
+      "accumulated_nav": "1.0270",
+      "daily_growth_pct": "-0.18",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-17",
+      "nav": "1.0363",
+      "accumulated_nav": "1.0363",
+      "daily_growth_pct": "0.91",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-18",
+      "nav": "1.0425",
+      "accumulated_nav": "1.0425",
+      "daily_growth_pct": "0.60",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-21",
+      "nav": "1.0498",
+      "accumulated_nav": "1.0498",
+      "daily_growth_pct": "0.70",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-22",
+      "nav": "1.0584",
+      "accumulated_nav": "1.0584",
+      "daily_growth_pct": "0.82",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-23",
+      "nav": "1.0575",
+      "accumulated_nav": "1.0575",
+      "daily_growth_pct": "-0.09",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-24",
+      "nav": "1.0667",
+      "accumulated_nav": "1.0667",
+      "daily_growth_pct": "0.87",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-25",
+      "nav": "1.0634",
+      "accumulated_nav": "1.0634",
+      "daily_growth_pct": "-0.31",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-28",
+      "nav": "1.0664",
+      "accumulated_nav": "1.0664",
+      "daily_growth_pct": "0.28",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-29",
+      "nav": "1.0717",
+      "accumulated_nav": "1.0717",
+      "daily_growth_pct": "0.50",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-30",
+      "nav": "1.0693",
+      "accumulated_nav": "1.0693",
+      "daily_growth_pct": "-0.22",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-07-31",
+      "nav": "1.0513",
+      "accumulated_nav": "1.0513",
+      "daily_growth_pct": "-1.68",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-01",
+      "nav": "1.0471",
+      "accumulated_nav": "1.0471",
+      "daily_growth_pct": "-0.40",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-04",
+      "nav": "1.0515",
+      "accumulated_nav": "1.0515",
+      "daily_growth_pct": "0.42",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-05",
+      "nav": "1.0583",
+      "accumulated_nav": "1.0583",
+      "daily_growth_pct": "0.65",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-06",
+      "nav": "1.0625",
+      "accumulated_nav": "1.0625",
+      "daily_growth_pct": "0.40",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-07",
+      "nav": "1.0620",
+      "accumulated_nav": "1.0620",
+      "daily_growth_pct": "-0.05",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-08",
+      "nav": "1.0599",
+      "accumulated_nav": "1.0599",
+      "daily_growth_pct": "-0.20",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-11",
+      "nav": "1.0670",
+      "accumulated_nav": "1.0670",
+      "daily_growth_pct": "0.67",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-12",
+      "nav": "1.0714",
+      "accumulated_nav": "1.0714",
+      "daily_growth_pct": "0.41",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-13",
+      "nav": "1.0815",
+      "accumulated_nav": "1.0815",
+      "daily_growth_pct": "0.94",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-14",
+      "nav": "1.0781",
+      "accumulated_nav": "1.0781",
+      "daily_growth_pct": "-0.31",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-15",
+      "nav": "1.0879",
+      "accumulated_nav": "1.0879",
+      "daily_growth_pct": "0.91",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-18",
+      "nav": "1.0988",
+      "accumulated_nav": "1.0988",
+      "daily_growth_pct": "1.00",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-19",
+      "nav": "1.0944",
+      "accumulated_nav": "1.0944",
+      "daily_growth_pct": "-0.40",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-20",
+      "nav": "1.1066",
+      "accumulated_nav": "1.1066",
+      "daily_growth_pct": "1.11",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-21",
+      "nav": "1.1095",
+      "accumulated_nav": "1.1095",
+      "daily_growth_pct": "0.26",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-22",
+      "nav": "1.1321",
+      "accumulated_nav": "1.1321",
+      "daily_growth_pct": "2.04",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-25",
+      "nav": "1.1553",
+      "accumulated_nav": "1.1553",
+      "daily_growth_pct": "2.05",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-26",
+      "nav": "1.1541",
+      "accumulated_nav": "1.1541",
+      "daily_growth_pct": "-0.10",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-27",
+      "nav": "1.1385",
+      "accumulated_nav": "1.1385",
+      "daily_growth_pct": "-1.35",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-28",
+      "nav": "1.1588",
+      "accumulated_nav": "1.1588",
+      "daily_growth_pct": "1.78",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-08-29",
+      "nav": "1.1686",
+      "accumulated_nav": "1.1686",
+      "daily_growth_pct": "0.85",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-01",
+      "nav": "1.1779",
+      "accumulated_nav": "1.1779",
+      "daily_growth_pct": "0.80",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-02",
+      "nav": "1.1654",
+      "accumulated_nav": "1.1654",
+      "daily_growth_pct": "-1.06",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-03",
+      "nav": "1.1582",
+      "accumulated_nav": "1.1582",
+      "daily_growth_pct": "-0.62",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-04",
+      "nav": "1.1312",
+      "accumulated_nav": "1.1312",
+      "daily_growth_pct": "-2.33",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-05",
+      "nav": "1.1606",
+      "accumulated_nav": "1.1606",
+      "daily_growth_pct": "2.60",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-08",
+      "nav": "1.1659",
+      "accumulated_nav": "1.1659",
+      "daily_growth_pct": "0.46",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-09",
+      "nav": "1.1567",
+      "accumulated_nav": "1.1567",
+      "daily_growth_pct": "-0.79",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-10",
+      "nav": "1.1590",
+      "accumulated_nav": "1.1590",
+      "daily_growth_pct": "0.20",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-11",
+      "nav": "1.1853",
+      "accumulated_nav": "1.1853",
+      "daily_growth_pct": "2.27",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-12",
+      "nav": "1.1811",
+      "accumulated_nav": "1.1811",
+      "daily_growth_pct": "-0.35",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-15",
+      "nav": "1.1843",
+      "accumulated_nav": "1.1843",
+      "daily_growth_pct": "0.27",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-16",
+      "nav": "1.1848",
+      "accumulated_nav": "1.1848",
+      "daily_growth_pct": "0.04",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-17",
+      "nav": "1.1935",
+      "accumulated_nav": "1.1935",
+      "daily_growth_pct": "0.73",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-18",
+      "nav": "1.1815",
+      "accumulated_nav": "1.1815",
+      "daily_growth_pct": "-1.01",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-19",
+      "nav": "1.1816",
+      "accumulated_nav": "1.1816",
+      "daily_growth_pct": "0.01",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-22",
+      "nav": "1.1865",
+      "accumulated_nav": "1.1865",
+      "daily_growth_pct": "0.41",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-23",
+      "nav": "1.1841",
+      "accumulated_nav": "1.1841",
+      "daily_growth_pct": "-0.20",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-24",
+      "nav": "1.2000",
+      "accumulated_nav": "1.2000",
+      "daily_growth_pct": "1.34",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-25",
+      "nav": "1.2086",
+      "accumulated_nav": "1.2086",
+      "daily_growth_pct": "0.72",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-26",
+      "nav": "1.1955",
+      "accumulated_nav": "1.1955",
+      "daily_growth_pct": "-1.08",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-29",
+      "nav": "1.2123",
+      "accumulated_nav": "1.2123",
+      "daily_growth_pct": "1.41",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-09-30",
+      "nav": "1.2208",
+      "accumulated_nav": "1.2208",
+      "daily_growth_pct": "0.70",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-09",
+      "nav": "1.2386",
+      "accumulated_nav": "1.2386",
+      "daily_growth_pct": "1.46",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-10",
+      "nav": "1.2118",
+      "accumulated_nav": "1.2118",
+      "daily_growth_pct": "-2.16",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-13",
+      "nav": "1.2064",
+      "accumulated_nav": "1.2064",
+      "daily_growth_pct": "-0.45",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-14",
+      "nav": "1.1863",
+      "accumulated_nav": "1.1863",
+      "daily_growth_pct": "-1.67",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-15",
+      "nav": "1.2033",
+      "accumulated_nav": "1.2033",
+      "daily_growth_pct": "1.43",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-16",
+      "nav": "1.2031",
+      "accumulated_nav": "1.2031",
+      "daily_growth_pct": "-0.02",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-17",
+      "nav": "1.1747",
+      "accumulated_nav": "1.1747",
+      "daily_growth_pct": "-2.36",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-20",
+      "nav": "1.1816",
+      "accumulated_nav": "1.1816",
+      "daily_growth_pct": "0.59",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-21",
+      "nav": "1.2001",
+      "accumulated_nav": "1.2001",
+      "daily_growth_pct": "1.57",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-22",
+      "nav": "1.1959",
+      "accumulated_nav": "1.1959",
+      "daily_growth_pct": "-0.35",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-23",
+      "nav": "1.1991",
+      "accumulated_nav": "1.1991",
+      "daily_growth_pct": "0.27",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-24",
+      "nav": "1.2156",
+      "accumulated_nav": "1.2156",
+      "daily_growth_pct": "1.38",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-27",
+      "nav": "1.2307",
+      "accumulated_nav": "1.2307",
+      "daily_growth_pct": "1.24",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-28",
+      "nav": "1.2248",
+      "accumulated_nav": "1.2248",
+      "daily_growth_pct": "-0.48",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-29",
+      "nav": "1.2405",
+      "accumulated_nav": "1.2405",
+      "daily_growth_pct": "1.28",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-30",
+      "nav": "1.2302",
+      "accumulated_nav": "1.2302",
+      "daily_growth_pct": "-0.83",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-10-31",
+      "nav": "1.2158",
+      "accumulated_nav": "1.2158",
+      "daily_growth_pct": "-1.17",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-03",
+      "nav": "1.2180",
+      "accumulated_nav": "1.2180",
+      "daily_growth_pct": "0.18",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-04",
+      "nav": "1.2058",
+      "accumulated_nav": "1.2058",
+      "daily_growth_pct": "-1.00",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-05",
+      "nav": "1.2085",
+      "accumulated_nav": "1.2085",
+      "daily_growth_pct": "0.22",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-06",
+      "nav": "1.2262",
+      "accumulated_nav": "1.2262",
+      "daily_growth_pct": "1.46",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-07",
+      "nav": "1.2239",
+      "accumulated_nav": "1.2239",
+      "daily_growth_pct": "-0.19",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-10",
+      "nav": "1.2266",
+      "accumulated_nav": "1.2266",
+      "daily_growth_pct": "0.22",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-11",
+      "nav": "1.2169",
+      "accumulated_nav": "1.2169",
+      "daily_growth_pct": "-0.79",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-12",
+      "nav": "1.2142",
+      "accumulated_nav": "1.2142",
+      "daily_growth_pct": "-0.22",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-13",
+      "nav": "1.2305",
+      "accumulated_nav": "1.2305",
+      "daily_growth_pct": "1.34",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-14",
+      "nav": "1.2119",
+      "accumulated_nav": "1.2119",
+      "daily_growth_pct": "-1.51",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-17",
+      "nav": "1.2069",
+      "accumulated_nav": "1.2069",
+      "daily_growth_pct": "-0.41",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-18",
+      "nav": "1.1981",
+      "accumulated_nav": "1.1981",
+      "daily_growth_pct": "-0.73",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-19",
+      "nav": "1.2015",
+      "accumulated_nav": "1.2015",
+      "daily_growth_pct": "0.28",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-20",
+      "nav": "1.1939",
+      "accumulated_nav": "1.1939",
+      "daily_growth_pct": "-0.63",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-21",
+      "nav": "1.1629",
+      "accumulated_nav": "1.1629",
+      "daily_growth_pct": "-2.60",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-24",
+      "nav": "1.1647",
+      "accumulated_nav": "1.1647",
+      "daily_growth_pct": "0.15",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-25",
+      "nav": "1.1769",
+      "accumulated_nav": "1.1769",
+      "daily_growth_pct": "1.05",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-26",
+      "nav": "1.1829",
+      "accumulated_nav": "1.1829",
+      "daily_growth_pct": "0.51",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-27",
+      "nav": "1.1816",
+      "accumulated_nav": "1.1816",
+      "daily_growth_pct": "-0.11",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-11-28",
+      "nav": "1.1868",
+      "accumulated_nav": "1.1868",
+      "daily_growth_pct": "0.44",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-01",
+      "nav": "1.2000",
+      "accumulated_nav": "1.2000",
+      "daily_growth_pct": "1.11",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-02",
+      "nav": "1.1930",
+      "accumulated_nav": "1.1930",
+      "daily_growth_pct": "-0.58",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-03",
+      "nav": "1.1867",
+      "accumulated_nav": "1.1867",
+      "daily_growth_pct": "-0.53",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-04",
+      "nav": "1.1911",
+      "accumulated_nav": "1.1911",
+      "daily_growth_pct": "0.37",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-05",
+      "nav": "1.2036",
+      "accumulated_nav": "1.2036",
+      "daily_growth_pct": "1.05",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-08",
+      "nav": "1.2134",
+      "accumulated_nav": "1.2134",
+      "daily_growth_pct": "0.81",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-09",
+      "nav": "1.2070",
+      "accumulated_nav": "1.2070",
+      "daily_growth_pct": "-0.53",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-10",
+      "nav": "1.2075",
+      "accumulated_nav": "1.2075",
+      "daily_growth_pct": "0.04",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-11",
+      "nav": "1.1985",
+      "accumulated_nav": "1.1985",
+      "daily_growth_pct": "-0.75",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-12",
+      "nav": "1.2074",
+      "accumulated_nav": "1.2074",
+      "daily_growth_pct": "0.74",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-15",
+      "nav": "1.1989",
+      "accumulated_nav": "1.1989",
+      "daily_growth_pct": "-0.70",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-16",
+      "nav": "1.1835",
+      "accumulated_nav": "1.1835",
+      "daily_growth_pct": "-1.28",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-17",
+      "nav": "1.2063",
+      "accumulated_nav": "1.2063",
+      "daily_growth_pct": "1.93",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-18",
+      "nav": "1.1993",
+      "accumulated_nav": "1.1993",
+      "daily_growth_pct": "-0.58",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-19",
+      "nav": "1.2060",
+      "accumulated_nav": "1.2060",
+      "daily_growth_pct": "0.56",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-22",
+      "nav": "1.2180",
+      "accumulated_nav": "1.2180",
+      "daily_growth_pct": "1.00",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-23",
+      "nav": "1.2205",
+      "accumulated_nav": "1.2205",
+      "daily_growth_pct": "0.21",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-24",
+      "nav": "1.2267",
+      "accumulated_nav": "1.2267",
+      "daily_growth_pct": "0.51",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-25",
+      "nav": "1.2298",
+      "accumulated_nav": "1.2298",
+      "daily_growth_pct": "0.25",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-26",
+      "nav": "1.2362",
+      "accumulated_nav": "1.2362",
+      "daily_growth_pct": "0.52",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-29",
+      "nav": "1.2305",
+      "accumulated_nav": "1.2305",
+      "daily_growth_pct": "-0.46",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-30",
+      "nav": "1.2343",
+      "accumulated_nav": "1.2343",
+      "daily_growth_pct": "0.31",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2025-12-31",
+      "nav": "1.2310",
+      "accumulated_nav": "1.2310",
+      "daily_growth_pct": "-0.27",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-05",
+      "nav": "1.2550",
+      "accumulated_nav": "1.2550",
+      "daily_growth_pct": "1.95",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-06",
+      "nav": "1.2746",
+      "accumulated_nav": "1.2746",
+      "daily_growth_pct": "1.56",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-07",
+      "nav": "1.2746",
+      "accumulated_nav": "1.2746",
+      "daily_growth_pct": "0.00",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-08",
+      "nav": "1.2687",
+      "accumulated_nav": "1.2687",
+      "daily_growth_pct": "-0.46",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-09",
+      "nav": "1.2794",
+      "accumulated_nav": "1.2794",
+      "daily_growth_pct": "0.84",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-12",
+      "nav": "1.2931",
+      "accumulated_nav": "1.2931",
+      "daily_growth_pct": "1.07",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-13",
+      "nav": "1.2834",
+      "accumulated_nav": "1.2834",
+      "daily_growth_pct": "-0.75",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-14",
+      "nav": "1.2834",
+      "accumulated_nav": "1.2834",
+      "daily_growth_pct": "0.00",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-15",
+      "nav": "1.2861",
+      "accumulated_nav": "1.2861",
+      "daily_growth_pct": "0.21",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-16",
+      "nav": "1.2815",
+      "accumulated_nav": "1.2815",
+      "daily_growth_pct": "-0.36",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-19",
+      "nav": "1.2848",
+      "accumulated_nav": "1.2848",
+      "daily_growth_pct": "0.26",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-20",
+      "nav": "1.2791",
+      "accumulated_nav": "1.2791",
+      "daily_growth_pct": "-0.44",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-21",
+      "nav": "1.2845",
+      "accumulated_nav": "1.2845",
+      "daily_growth_pct": "0.42",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-22",
+      "nav": "1.2859",
+      "accumulated_nav": "1.2859",
+      "daily_growth_pct": "0.11",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-23",
+      "nav": "1.2910",
+      "accumulated_nav": "1.2910",
+      "daily_growth_pct": "0.40",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-26",
+      "nav": "1.2889",
+      "accumulated_nav": "1.2889",
+      "daily_growth_pct": "-0.16",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-27",
+      "nav": "1.2899",
+      "accumulated_nav": "1.2899",
+      "daily_growth_pct": "0.08",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-28",
+      "nav": "1.2941",
+      "accumulated_nav": "1.2941",
+      "daily_growth_pct": "0.33",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-29",
+      "nav": "1.2976",
+      "accumulated_nav": "1.2976",
+      "daily_growth_pct": "0.27",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-01-30",
+      "nav": "1.2828",
+      "accumulated_nav": "1.2828",
+      "daily_growth_pct": "-1.14",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-02",
+      "nav": "1.2507",
+      "accumulated_nav": "1.2507",
+      "daily_growth_pct": "-2.50",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-03",
+      "nav": "1.2733",
+      "accumulated_nav": "1.2733",
+      "daily_growth_pct": "1.81",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-04",
+      "nav": "1.2804",
+      "accumulated_nav": "1.2804",
+      "daily_growth_pct": "0.56",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-05",
+      "nav": "1.2661",
+      "accumulated_nav": "1.2661",
+      "daily_growth_pct": "-1.12",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-06",
+      "nav": "1.2615",
+      "accumulated_nav": "1.2615",
+      "daily_growth_pct": "-0.36",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-09",
+      "nav": "1.2837",
+      "accumulated_nav": "1.2837",
+      "daily_growth_pct": "1.76",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-10",
+      "nav": "1.2848",
+      "accumulated_nav": "1.2848",
+      "daily_growth_pct": "0.09",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-11",
+      "nav": "1.2834",
+      "accumulated_nav": "1.2834",
+      "daily_growth_pct": "-0.11",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-12",
+      "nav": "1.2892",
+      "accumulated_nav": "1.2892",
+      "daily_growth_pct": "0.45",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-13",
+      "nav": "1.2721",
+      "accumulated_nav": "1.2721",
+      "daily_growth_pct": "-1.33",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-24",
+      "nav": "1.2864",
+      "accumulated_nav": "1.2864",
+      "daily_growth_pct": "1.12",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-25",
+      "nav": "1.2980",
+      "accumulated_nav": "1.2980",
+      "daily_growth_pct": "0.90",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-26",
+      "nav": "1.2967",
+      "accumulated_nav": "1.2967",
+      "daily_growth_pct": "-0.10",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-02-27",
+      "nav": "1.2975",
+      "accumulated_nav": "1.2975",
+      "daily_growth_pct": "0.06",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-02",
+      "nav": "1.3014",
+      "accumulated_nav": "1.3014",
+      "daily_growth_pct": "0.30",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-03",
+      "nav": "1.2715",
+      "accumulated_nav": "1.2715",
+      "daily_growth_pct": "-2.30",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-04",
+      "nav": "1.2599",
+      "accumulated_nav": "1.2599",
+      "daily_growth_pct": "-0.91",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-05",
+      "nav": "1.2720",
+      "accumulated_nav": "1.2720",
+      "daily_growth_pct": "0.96",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-06",
+      "nav": "1.2754",
+      "accumulated_nav": "1.2754",
+      "daily_growth_pct": "0.27",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-09",
+      "nav": "1.2640",
+      "accumulated_nav": "1.2640",
+      "daily_growth_pct": "-0.89",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-10",
+      "nav": "1.2817",
+      "accumulated_nav": "1.2817",
+      "daily_growth_pct": "1.40",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-11",
+      "nav": "1.2879",
+      "accumulated_nav": "1.2879",
+      "daily_growth_pct": "0.48",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-12",
+      "nav": "1.2813",
+      "accumulated_nav": "1.2813",
+      "daily_growth_pct": "-0.51",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-13",
+      "nav": "1.2723",
+      "accumulated_nav": "1.2723",
+      "daily_growth_pct": "-0.70",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-16",
+      "nav": "1.2705",
+      "accumulated_nav": "1.2705",
+      "daily_growth_pct": "-0.14",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-17",
+      "nav": "1.2567",
+      "accumulated_nav": "1.2567",
+      "daily_growth_pct": "-1.09",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-18",
+      "nav": "1.2638",
+      "accumulated_nav": "1.2638",
+      "daily_growth_pct": "0.56",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-19",
+      "nav": "1.2403",
+      "accumulated_nav": "1.2403",
+      "daily_growth_pct": "-1.86",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-20",
+      "nav": "1.2343",
+      "accumulated_nav": "1.2343",
+      "daily_growth_pct": "-0.48",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-23",
+      "nav": "1.1941",
+      "accumulated_nav": "1.1941",
+      "daily_growth_pct": "-3.26",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-24",
+      "nav": "1.2099",
+      "accumulated_nav": "1.2099",
+      "daily_growth_pct": "1.32",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-25",
+      "nav": "1.2285",
+      "accumulated_nav": "1.2285",
+      "daily_growth_pct": "1.54",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-26",
+      "nav": "1.2120",
+      "accumulated_nav": "1.2120",
+      "daily_growth_pct": "-1.34",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-27",
+      "nav": "1.2219",
+      "accumulated_nav": "1.2219",
+      "daily_growth_pct": "0.82",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-30",
+      "nav": "1.2207",
+      "accumulated_nav": "1.2207",
+      "daily_growth_pct": "-0.10",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-03-31",
+      "nav": "1.2067",
+      "accumulated_nav": "1.2067",
+      "daily_growth_pct": "-1.15",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-01",
+      "nav": "1.2273",
+      "accumulated_nav": "1.2273",
+      "daily_growth_pct": "1.71",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-02",
+      "nav": "1.2115",
+      "accumulated_nav": "1.2115",
+      "daily_growth_pct": "-1.29",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-03",
+      "nav": "1.2016",
+      "accumulated_nav": "1.2016",
+      "daily_growth_pct": "-0.82",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-07",
+      "nav": "1.2035",
+      "accumulated_nav": "1.2035",
+      "daily_growth_pct": "0.16",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-08",
+      "nav": "1.2486",
+      "accumulated_nav": "1.2486",
+      "daily_growth_pct": "3.75",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-09",
+      "nav": "1.2425",
+      "accumulated_nav": "1.2425",
+      "daily_growth_pct": "-0.49",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-10",
+      "nav": "1.2599",
+      "accumulated_nav": "1.2599",
+      "daily_growth_pct": "1.40",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-13",
+      "nav": "1.2619",
+      "accumulated_nav": "1.2619",
+      "daily_growth_pct": "0.16",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-14",
+      "nav": "1.2769",
+      "accumulated_nav": "1.2769",
+      "daily_growth_pct": "1.19",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-15",
+      "nav": "1.2715",
+      "accumulated_nav": "1.2715",
+      "daily_growth_pct": "-0.42",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-16",
+      "nav": "1.2875",
+      "accumulated_nav": "1.2875",
+      "daily_growth_pct": "1.26",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-17",
+      "nav": "1.2875",
+      "accumulated_nav": "1.2875",
+      "daily_growth_pct": "0.00",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-20",
+      "nav": "1.2958",
+      "accumulated_nav": "1.2958",
+      "daily_growth_pct": "0.64",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-21",
+      "nav": "1.2976",
+      "accumulated_nav": "1.2976",
+      "daily_growth_pct": "0.14",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-22",
+      "nav": "1.3083",
+      "accumulated_nav": "1.3083",
+      "daily_growth_pct": "0.82",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-23",
+      "nav": "1.3013",
+      "accumulated_nav": "1.3013",
+      "daily_growth_pct": "-0.54",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-24",
+      "nav": "1.2975",
+      "accumulated_nav": "1.2975",
+      "daily_growth_pct": "-0.29",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-27",
+      "nav": "1.3003",
+      "accumulated_nav": "1.3003",
+      "daily_growth_pct": "0.22",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-28",
+      "nav": "1.2930",
+      "accumulated_nav": "1.2930",
+      "daily_growth_pct": "-0.56",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-29",
+      "nav": "1.3107",
+      "accumulated_nav": "1.3107",
+      "daily_growth_pct": "1.37",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-04-30",
+      "nav": "1.3125",
+      "accumulated_nav": "1.3125",
+      "daily_growth_pct": "0.14",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-06",
+      "nav": "1.3367",
+      "accumulated_nav": "1.3367",
+      "daily_growth_pct": "1.84",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-07",
+      "nav": "1.3465",
+      "accumulated_nav": "1.3465",
+      "daily_growth_pct": "0.73",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-08",
+      "nav": "1.3405",
+      "accumulated_nav": "1.3405",
+      "daily_growth_pct": "-0.45",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-11",
+      "nav": "1.3629",
+      "accumulated_nav": "1.3629",
+      "daily_growth_pct": "1.67",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-12",
+      "nav": "1.3600",
+      "accumulated_nav": "1.3600",
+      "daily_growth_pct": "-0.21",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-13",
+      "nav": "1.3747",
+      "accumulated_nav": "1.3747",
+      "daily_growth_pct": "1.08",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-14",
+      "nav": "1.3470",
+      "accumulated_nav": "1.3470",
+      "daily_growth_pct": "-2.01",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-15",
+      "nav": "1.3312",
+      "accumulated_nav": "1.3312",
+      "daily_growth_pct": "-1.17",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-18",
+      "nav": "1.3269",
+      "accumulated_nav": "1.3269",
+      "daily_growth_pct": "-0.32",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-19",
+      "nav": "1.3346",
+      "accumulated_nav": "1.3346",
+      "daily_growth_pct": "0.58",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-20",
+      "nav": "1.3367",
+      "accumulated_nav": "1.3367",
+      "daily_growth_pct": "0.16",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-21",
+      "nav": "1.3140",
+      "accumulated_nav": "1.3140",
+      "daily_growth_pct": "-1.70",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-22",
+      "nav": "1.3336",
+      "accumulated_nav": "1.3336",
+      "daily_growth_pct": "1.49",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-25",
+      "nav": "1.3534",
+      "accumulated_nav": "1.3534",
+      "daily_growth_pct": "1.48",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-26",
+      "nav": "1.3569",
+      "accumulated_nav": "1.3569",
+      "daily_growth_pct": "0.26",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-27",
+      "nav": "1.3432",
+      "accumulated_nav": "1.3432",
+      "daily_growth_pct": "-1.01",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-28",
+      "nav": "1.3457",
+      "accumulated_nav": "1.3457",
+      "daily_growth_pct": "0.19",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-05-29",
+      "nav": "1.3315",
+      "accumulated_nav": "1.3315",
+      "daily_growth_pct": "-1.06",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-01",
+      "nav": "1.3171",
+      "accumulated_nav": "1.3171",
+      "daily_growth_pct": "-1.08",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-02",
+      "nav": "1.3339",
+      "accumulated_nav": "1.3339",
+      "daily_growth_pct": "1.28",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-03",
+      "nav": "1.3411",
+      "accumulated_nav": "1.3411",
+      "daily_growth_pct": "0.54",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-04",
+      "nav": "1.3347",
+      "accumulated_nav": "1.3347",
+      "daily_growth_pct": "-0.48",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-05",
+      "nav": "1.3136",
+      "accumulated_nav": "1.3136",
+      "daily_growth_pct": "-1.58",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-08",
+      "nav": "1.2820",
+      "accumulated_nav": "1.2820",
+      "daily_growth_pct": "-2.41",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-09",
+      "nav": "1.3080",
+      "accumulated_nav": "1.3080",
+      "daily_growth_pct": "2.03",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-10",
+      "nav": "1.2930",
+      "accumulated_nav": "1.2930",
+      "daily_growth_pct": "-1.15",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-11",
+      "nav": "1.2872",
+      "accumulated_nav": "1.2872",
+      "daily_growth_pct": "-0.45",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-12",
+      "nav": "1.2994",
+      "accumulated_nav": "1.2994",
+      "daily_growth_pct": "0.95",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-15",
+      "nav": "1.3340",
+      "accumulated_nav": "1.3340",
+      "daily_growth_pct": "2.66",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-16",
+      "nav": "1.3368",
+      "accumulated_nav": "1.3368",
+      "daily_growth_pct": "0.21",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-17",
+      "nav": "1.3526",
+      "accumulated_nav": "1.3526",
+      "daily_growth_pct": "1.18",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-18",
+      "nav": "1.3595",
+      "accumulated_nav": "1.3595",
+      "daily_growth_pct": "0.51",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-22",
+      "nav": "1.3912",
+      "accumulated_nav": "1.3912",
+      "daily_growth_pct": "2.33",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-23",
+      "nav": "1.3516",
+      "accumulated_nav": "1.3516",
+      "daily_growth_pct": "-2.85",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-24",
+      "nav": "1.3652",
+      "accumulated_nav": "1.3652",
+      "daily_growth_pct": "1.01",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-25",
+      "nav": "1.3851",
+      "accumulated_nav": "1.3851",
+      "daily_growth_pct": "1.46",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-26",
+      "nav": "1.3458",
+      "accumulated_nav": "1.3458",
+      "daily_growth_pct": "-2.84",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-29",
+      "nav": "1.3620",
+      "accumulated_nav": "1.3620",
+      "daily_growth_pct": "1.20",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-06-30",
+      "nav": "1.3815",
+      "accumulated_nav": "1.3815",
+      "daily_growth_pct": "1.43",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-01",
+      "nav": "1.3736",
+      "accumulated_nav": "1.3736",
+      "daily_growth_pct": "-0.57",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-02",
+      "nav": "1.3322",
+      "accumulated_nav": "1.3322",
+      "daily_growth_pct": "-3.01",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-03",
+      "nav": "1.3409",
+      "accumulated_nav": "1.3409",
+      "daily_growth_pct": "0.65",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-06",
+      "nav": "1.3363",
+      "accumulated_nav": "1.3363",
+      "daily_growth_pct": "-0.34",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-07",
+      "nav": "1.3215",
+      "accumulated_nav": "1.3215",
+      "daily_growth_pct": "-1.11",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-08",
+      "nav": "1.3070",
+      "accumulated_nav": "1.3070",
+      "daily_growth_pct": "-1.10",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-09",
+      "nav": "1.3423",
+      "accumulated_nav": "1.3423",
+      "daily_growth_pct": "2.70",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-10",
+      "nav": "1.3194",
+      "accumulated_nav": "1.3194",
+      "daily_growth_pct": "-1.71",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-13",
+      "nav": "1.2877",
+      "accumulated_nav": "1.2877",
+      "daily_growth_pct": "-2.40",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-14",
+      "nav": "1.3151",
+      "accumulated_nav": "1.3151",
+      "daily_growth_pct": "2.13",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-15",
+      "nav": "1.3067",
+      "accumulated_nav": "1.3067",
+      "daily_growth_pct": "-0.64",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-16",
+      "nav": "1.2830",
+      "accumulated_nav": "1.2830",
+      "daily_growth_pct": "-1.81",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-17",
+      "nav": "1.2323",
+      "accumulated_nav": "1.2323",
+      "daily_growth_pct": "-3.95",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-20",
+      "nav": "1.2412",
+      "accumulated_nav": "1.2412",
+      "daily_growth_pct": "0.72",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-21",
+      "nav": "1.2863",
+      "accumulated_nav": "1.2863",
+      "daily_growth_pct": "3.63",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-22",
+      "nav": "1.2788",
+      "accumulated_nav": "1.2788",
+      "daily_growth_pct": "-0.58",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-23",
+      "nav": "1.2811",
+      "accumulated_nav": "1.2811",
+      "daily_growth_pct": "0.18",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-24",
+      "nav": "1.2582",
+      "accumulated_nav": "1.2582",
+      "daily_growth_pct": "-1.79",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-27",
+      "nav": "1.2794",
+      "accumulated_nav": "1.2794",
+      "daily_growth_pct": "1.68",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-28",
+      "nav": "1.2405",
+      "accumulated_nav": "1.2405",
+      "daily_growth_pct": "-3.04",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-29",
+      "nav": "1.2496",
+      "accumulated_nav": "1.2496",
+      "daily_growth_pct": "0.73",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-30",
+      "nav": "1.2309",
+      "accumulated_nav": "1.2309",
+      "daily_growth_pct": "-1.50",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-07-31",
+      "nav": "1.2463",
+      "accumulated_nav": "1.2463",
+      "daily_growth_pct": "1.25",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-03",
+      "nav": "1.2342",
+      "accumulated_nav": "1.2342",
+      "daily_growth_pct": "-0.97",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-04",
+      "nav": "1.2549",
+      "accumulated_nav": "1.2549",
+      "daily_growth_pct": "1.68",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-05",
+      "nav": "1.2744",
+      "accumulated_nav": "1.2744",
+      "daily_growth_pct": "1.55",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-06",
+      "nav": "1.2722",
+      "accumulated_nav": "1.2722",
+      "daily_growth_pct": "-0.17",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-07",
+      "nav": "1.2887",
+      "accumulated_nav": "1.2887",
+      "daily_growth_pct": "1.30",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-10",
+      "nav": "1.2902",
+      "accumulated_nav": "1.2902",
+      "daily_growth_pct": "0.12",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-11",
+      "nav": "1.2803",
+      "accumulated_nav": "1.2803",
+      "daily_growth_pct": "-0.77",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-12",
+      "nav": "1.2895",
+      "accumulated_nav": "1.2895",
+      "daily_growth_pct": "0.72",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-13",
+      "nav": "1.2803",
+      "accumulated_nav": "1.2803",
+      "daily_growth_pct": "-0.71",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-14",
+      "nav": "1.2827",
+      "accumulated_nav": "1.2827",
+      "daily_growth_pct": "0.19",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-17",
+      "nav": "1.3062",
+      "accumulated_nav": "1.3062",
+      "daily_growth_pct": "1.83",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-18",
+      "nav": "1.3020",
+      "accumulated_nav": "1.3020",
+      "daily_growth_pct": "-0.32",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-19",
+      "nav": "1.2586",
+      "accumulated_nav": "1.2586",
+      "daily_growth_pct": "-3.33",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-20",
+      "nav": "1.2612",
+      "accumulated_nav": "1.2612",
+      "daily_growth_pct": "0.21",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-21",
+      "nav": "1.2682",
+      "accumulated_nav": "1.2682",
+      "daily_growth_pct": "0.56",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-24",
+      "nav": "1.2496",
+      "accumulated_nav": "1.2496",
+      "daily_growth_pct": "-1.47",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-25",
+      "nav": "1.2483",
+      "accumulated_nav": "1.2483",
+      "daily_growth_pct": "-0.10",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-26",
+      "nav": "1.2576",
+      "accumulated_nav": "1.2576",
+      "daily_growth_pct": "0.75",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-27",
+      "nav": "1.2719",
+      "accumulated_nav": "1.2719",
+      "daily_growth_pct": "1.14",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-28",
+      "nav": "1.2657",
+      "accumulated_nav": "1.2657",
+      "daily_growth_pct": "-0.49",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-08-31",
+      "nav": "1.2697",
+      "accumulated_nav": "1.2697",
+      "daily_growth_pct": "0.32",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-01",
+      "nav": "1.2633",
+      "accumulated_nav": "1.2633",
+      "daily_growth_pct": "-0.50",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-02",
+      "nav": "1.2453",
+      "accumulated_nav": "1.2453",
+      "daily_growth_pct": "-1.42",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-03",
+      "nav": "1.2474",
+      "accumulated_nav": "1.2474",
+      "daily_growth_pct": "0.17",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-04",
+      "nav": "1.2416",
+      "accumulated_nav": "1.2416",
+      "daily_growth_pct": "-0.46",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-07",
+      "nav": "1.2518",
+      "accumulated_nav": "1.2518",
+      "daily_growth_pct": "0.82",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-08",
+      "nav": "1.2486",
+      "accumulated_nav": "1.2486",
+      "daily_growth_pct": "-0.26",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-09",
+      "nav": "1.2515",
+      "accumulated_nav": "1.2515",
+      "daily_growth_pct": "0.23",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-10",
+      "nav": "1.2442",
+      "accumulated_nav": "1.2442",
+      "daily_growth_pct": "-0.58",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-11",
+      "nav": "1.2319",
+      "accumulated_nav": "1.2319",
+      "daily_growth_pct": "-0.99",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-14",
+      "nav": "1.2253",
+      "accumulated_nav": "1.2253",
+      "daily_growth_pct": "-0.54",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-15",
+      "nav": "1.2190",
+      "accumulated_nav": "1.2190",
+      "daily_growth_pct": "-0.51",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-16",
+      "nav": "1.2302",
+      "accumulated_nav": "1.2302",
+      "daily_growth_pct": "0.92",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-17",
+      "nav": "1.2257",
+      "accumulated_nav": "1.2257",
+      "daily_growth_pct": "-0.37",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-18",
+      "nav": "1.2407",
+      "accumulated_nav": "1.2407",
+      "daily_growth_pct": "1.22",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-21",
+      "nav": "1.2494",
+      "accumulated_nav": "1.2494",
+      "daily_growth_pct": "0.70",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-22",
+      "nav": "1.2504",
+      "accumulated_nav": "1.2504",
+      "daily_growth_pct": "0.08",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-23",
+      "nav": "1.2433",
+      "accumulated_nav": "1.2433",
+      "daily_growth_pct": "-0.57",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-24",
+      "nav": "1.2203",
+      "accumulated_nav": "1.2203",
+      "daily_growth_pct": "-1.85",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-28",
+      "nav": "1.1913",
+      "accumulated_nav": "1.1913",
+      "daily_growth_pct": "-2.38",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-29",
+      "nav": "1.1939",
+      "accumulated_nav": "1.1939",
+      "daily_growth_pct": "0.22",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-09-30",
+      "nav": "1.1962",
+      "accumulated_nav": "1.1962",
+      "daily_growth_pct": "0.19",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-10-08",
+      "nav": "1.1790",
+      "accumulated_nav": "1.1790",
+      "daily_growth_pct": "-1.44",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-10-09",
+      "nav": "1.1810",
+      "accumulated_nav": "1.1810",
+      "daily_growth_pct": "0.17",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-10-12",
+      "nav": "1.1676",
+      "accumulated_nav": "1.1676",
+      "daily_growth_pct": "-1.13",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-10-13",
+      "nav": "1.1651",
+      "accumulated_nav": "1.1651",
+      "daily_growth_pct": "-0.21",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-10-14",
+      "nav": "1.1481",
+      "accumulated_nav": "1.1481",
+      "daily_growth_pct": "-1.46",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-10-15",
+      "nav": "1.1299",
+      "accumulated_nav": "1.1299",
+      "daily_growth_pct": "-1.59",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    },
+    {
+      "date": "2026-10-16",
+      "nav": "1.1317",
+      "accumulated_nav": "1.1317",
+      "daily_growth_pct": "0.16",
+      "event": "",
+      "source": "天天基金 f10/lsjz 全量分页"
+    }
+  ],
+  "storage_policy": "本文件为该份额唯一全历史净值主档；更新时合并新日期、按日期去重，原子替换同名文件。",
+  "validation": {
+    "unique_date_count": 465,
+    "duplicate_dates": 0,
+    "prior_full_history_dates_preserved": true,
+    "missing_accumulated_nav_count": 0,
+    "source_verification": {
+      "api_total_count": 465,
+      "pages": 24,
+      "unique_date_count": 465,
+      "duplicate_dates": 0,
+      "all_pages_pinned_end_date": "2026-10-16",
+      "all_pages_archived": true,
+      "full_page_row_comparison_passed": true,
+      "prior_dates_missing": [],
+      "prior_unit_nav_mismatches": [],
+      "prior_accumulated_nav_mismatches": [],
+      "missing_accumulated_nav_count": 0,
+      "official_independent_full_validation": false
+    }
+  }
+}

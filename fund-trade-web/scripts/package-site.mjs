@@ -1,9 +1,11 @@
 // Explicit allowlist: no spreadsheets, private source files, or account logs.
 import { cp, mkdir, readdir, readFile, writeFile, lstat, realpath, rm } from 'node:fs/promises';
 import path from 'node:path';
+import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { FUND_CODES } from '../src/funds.js';
 import { createDisciplineSource } from './discipline-source.mjs';
+import { createLiveDataStore } from './live-data.mjs';
 import { validateEncryptedEnvelope, validatePublicNav } from './publish-data.mjs';
 import { STATIC_FILE_SOURCES, DEPLOY_FILES, WORKSPACE_ROOT, staticSourcePath, isPublicAsset } from './site-files.mjs';
 const root = await realpath(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'));
@@ -16,6 +18,8 @@ try {
 } catch (error) { if (error.code !== 'ENOENT') throw error; }
 const files = Object.keys(STATIC_FILE_SOURCES);
 const expected = new Set(DEPLOY_FILES);
+const current = await (await createLiveDataStore({ workspace: WORKSPACE_ROOT, root,
+  pythonPath: process.env.FUND_PREVIEW_PYTHON || path.join(os.homedir(), '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe') })).snapshot();
 await mkdir(dist, { recursive: true });
 for (const file of files) {
   await mkdir(path.dirname(path.join(dist, file)), { recursive: true });
@@ -39,7 +43,7 @@ for (const name of ['ledger', 'bonds']) {
   await writeFile(path.join(dist, 'data', `${name}.enc.json`), JSON.stringify(envelope));
 }
 for (const code of FUND_CODES) {
-  const data = validatePublicNav(JSON.parse(await readFile(path.join(root, 'data', 'nav', `${code}.json`), 'utf8')), code);
+  const data = validatePublicNav(current.nav[code], code);
   await writeFile(path.join(dist, 'data', 'nav', `${code}.json`), JSON.stringify(data));
 }
 await writeFile(path.join(dist, '.nojekyll'), '');

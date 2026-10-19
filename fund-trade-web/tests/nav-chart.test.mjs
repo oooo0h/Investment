@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { renderNavChart } from '../src/nav-chart.js';
+import { renderNavChart, createNavScale } from '../src/nav-chart.js';
 
 // Invented NAVs and markers only. Never read account snapshots in this suite.
 const point = (date, nav) => ({ date, nav });
@@ -11,7 +11,7 @@ const markerPosition = (markup, type) => {
   return match ? [Number(match[1]) / 100 * 300, Number(match[2]) / 100 * 128] : null;
 };
 const assertSafe = markup => {
-  assert.doesNotMatch(markup, /NaN|Infinity|nav-y-axis|nav-axis|nav-chart-axis|<text\b|chart-caption|data-cost/);
+  assert.doesNotMatch(markup, /NaN|Infinity|<text\b|chart-caption|data-cost/);
   assert.equal((markup.match(/<svg\b/g) || []).length, 1);
 };
 const hoverPoints = markup => JSON.parse(/data-nav-points="([^"]*)"/.exec(markup)[1].replaceAll('&quot;', '"').replaceAll('&#39;', "'").replaceAll('&lt;', '<').replaceAll('&gt;', '>').replaceAll('&amp;', '&'));
@@ -21,7 +21,22 @@ const coloredSegments = markup => [...markup.matchAll(/<polyline class="(nav-cha
   points: match[2].split(' ').map(pair => pair.split(',').map(Number)), markup: match[0],
 }));
 
-test('plain NAV curve has one SVG, no vertical axis, and elapsed-date x coordinates', () => {
+test('adaptive Y ticks divide a tight visible domain evenly, including flat and tiny series', () => {
+  for (const values of [[2.111, 2.115, 2.113], [1.2, 1.2], [1e-10, 2e-10], [100, 200]]) {
+    const scale = createNavScale(values);
+    assert.ok(scale.lower < Math.min(...values) && scale.upper > Math.max(...values));
+    assert.ok(scale.ticks.length >= 4 && scale.ticks.length <= 8);
+    const step = scale.ticks[1].value - scale.ticks[0].value;
+    for (let index = 2; index < scale.ticks.length; index++) {
+      assert.ok(Math.abs((scale.ticks[index].value - scale.ticks[index - 1].value) / step - 1) < 1e-10);
+    }
+    assert.equal(new Set(scale.ticks.map(tick => tick.label)).size, scale.ticks.length);
+  }
+  const scale = createNavScale([2.111, 2.115]);
+  assert.ok(scale.upper - scale.lower < .01, 'small visible changes use a close scale');
+});
+
+test('plain NAV curve has one SVG, an adaptive vertical axis, and elapsed-date x coordinates', () => {
   const input = [points[2], points[0], points[1]];
   const original = structuredClone(input);
   const markup = renderNavChart(input);
@@ -37,18 +52,17 @@ test('plain NAV curve has one SVG, no vertical axis, and elapsed-date x coordina
   assert.doesNotMatch(markup, /class="nav-cost|class="nav-trade|class="nav-chart-legend/);
 });
 
-test('cost line stays visible even outside the NAV range and shows only a short label', () => {
+test('cost outside the visible NAV scale uses a directional label without flattening the public curve', () => {
   for (const costNav of [0, 0.9134567, 4.1234567]) {
     const markup = renderNavChart(points, { costNav });
     assertSafe(markup);
-    const [, rawY] = /class="nav-cost-line"[^>]*y1="([^"]+)"/.exec(markup);
-    const costY = Number(rawY);
-    assert.ok(costY > 12 && costY < 116, 'cost line has padding inside the plot');
-    assert.match(markup, /stroke-dasharray="5 4"/);
-    assert.match(markup, /class="nav-cost-label"[^>]*>成本<\/span>/);
+    assert.doesNotMatch(markup, /class="nav-cost-line"/);
+    assert.match(markup, /class="nav-cost-label"[^>]*>成本 [↑↓]<\/span>/);
+    assert.deepEqual(curve(markup), curve(renderNavChart(points)));
     assert.doesNotMatch(markup, /成本[：:\d]|costNav|data-cost/);
     assert.ok(curve(markup).every(([, y]) => y > 12 && y < 116), 'NAV curve also stays inside the plot');
   }
+  assert.match(renderNavChart(points, { costNav: 1.9 }), /class="nav-cost-line"[^>]*stroke-dasharray="5 4"/);
 });
 
 test('buy and sell positions use actual marker NAV and interpolate dates within the selected window', () => {
@@ -63,10 +77,10 @@ test('buy and sell positions use actual marker NAV and interpolate dates within 
   assert.ok(Math.abs(sell[0] - 292) < 0.001);
   assert.ok(buy[1] < Math.min(...curve(markup).map(([, y]) => y)), 'marker uses its own execution NAV');
   assert.ok(sell[1] > Math.max(...curve(markup).map(([, y]) => y)));
-  assert.match(markup, /nav-trade-buy[^>]*aria-label="买入 · 2026-01-06"/);
-  assert.match(markup, /nav-trade-sell is-estimated[^>]*aria-label="卖出 · 2026-01-11 · 含估算"/);
-  assert.match(markup, /title="买入 · 2026-01-06"><span class="nav-trade-dot" aria-hidden="true"><\/span><\/span>/);
-  assert.match(markup, /title="卖出 · 2026-01-11 · 含估算"><span class="nav-trade-dot" aria-hidden="true"><\/span><\/span>/);
+  assert.match(markup, /nav-trade-buy[^>]*aria-label="买入 · 2026-01-06 · 超出当前刻度"/);
+  assert.match(markup, /nav-trade-sell is-estimated[^>]*aria-label="卖出 · 2026-01-11 · 含估算 · 超出当前刻度"/);
+  assert.match(markup, /nav-trade-offscale-above/);
+  assert.match(markup, /nav-trade-offscale-below/);
   assert.ok(markup.indexOf('class="nav-trade-marker') > markup.indexOf('</svg>'), 'trade symbols render in HTML so SVG stretching cannot resize them');
   assert.doesNotMatch(markup, /<g\b|<path\b/);
   assert.match(markup, /nav-chart-legend-buy/);
@@ -165,7 +179,8 @@ test('hover payload includes only public selected-date values and daily changes 
     { id: 'private-identifier', date: '2026-01-02', nav: 1.8, type: 'buy', amount: 'private-amount', shares: 'private-shares', note: 'private-note' },
   ] });
   const payload = hoverPoints(markup);
-  assert.match(markup, /tabindex="0" aria-label="净值图，使用左右方向键查看日期"/);
+  assert.match(markup, /tabindex="0" aria-label="净值图，使用左右方向键查看日期，回车选择起点或清空，Escape清除选点"/);
+  assert.doesNotMatch(markup, /清除选点<\/button>|nav-measure-status|区间已固定/);
   assert.match(markup, /data-nav-points="\[\{&quot;date&quot;/);
   assert.deepEqual(payload.map(value => value.date), ['2026-01-02', '2026-01-11']);
   assert.ok(Math.abs(payload[0].change - (1.8 / 1.7 - 1)) < 1e-12, 'first selected day uses the actual preceding NAV');
@@ -407,9 +422,11 @@ test('a cost crossing splits the edge at its interpolated coordinate and preserv
   const markup = renderNavChart(series, { costNav: 2 });
   const segments = coloredSegments(markup);
   assert.deepEqual(segments.map(segment => segment.color), ['negative', 'positive']);
-  assert.deepEqual(segments[0].points.at(-1), [150, 64]);
-  assert.deepEqual(segments[1].points[0], [150, 64]);
-  assert.match(markup, /style="--nav-cost-y:50%"/);
+  const scale = createNavScale([1, 3]);
+  const crossingY = Number((12 + (1 - (2 - scale.lower) / (scale.upper - scale.lower)) * 104).toFixed(4));
+  assert.deepEqual(segments[0].points.at(-1), [150, crossingY]);
+  assert.deepEqual(segments[1].points[0], [150, crossingY]);
+  assert.match(markup, /style="--nav-cost-y:[\d.]+%"/);
   assert.deepEqual(hoverPoints(markup).map(({ date, nav }) => ({ date, nav })), series);
   assert.deepEqual(series, original);
   assert.equal(hoverPoints(markup).length, 2, 'the rendering-only crossing is never a made-up NAV');

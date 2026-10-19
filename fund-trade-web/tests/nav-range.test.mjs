@@ -222,9 +222,9 @@ test('recent rise follows the latest published date and manual boundaries remain
   assert.equal(resolveNavRange(rows, custom).preset, null);
 });
 
-test('default selection chooses an available decline, then rise, then three months', () => {
+test('the single recent-move choice follows the latest turn, with a three-month fallback', () => {
   const cases = [
-    { values: [1, 1.4, 1.1, 1.2], preset: 'recent-decline' },
+    { values: [1, 1.4, 1.1, 1.2], preset: 'recent-rise' },
     { values: [1, 1.1, 1.2], preset: 'recent-rise' },
     { values: [1, 2, 1.3, 1.5, 1.4, 1.6], preset: 'recent-rise' },
     { values: [2, 1, 1.8, 1.5, 1.6, 1.4], preset: 'recent-decline' },

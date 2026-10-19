@@ -7,7 +7,8 @@ import { createRequire } from 'node:module';
 
 // Use the loader-provided runtime and its node_modules junction only.
 // Run mark_artifact_operation_started.mjs once for the whole export operation
-// before invoking this builder. Existing CSV archives are never overwritten.
+// before invoking this builder. Dated legacy archives remain immutable;
+// validated fixed-name current CSV files can be replaced atomically.
 const toolDir = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.resolve(toolDir, '../..');
 const tempDir = path.join(toolDir, 'tmp', 'nav_csv_2026-10-18');
@@ -65,9 +66,10 @@ const results = [];
 for (const input of inputPaths) {
   const inputPath = path.resolve(rootDir, input);
   assert.ok(inputPath.startsWith(rootDir + path.sep), 'Input is outside the project');
-  assert.match(inputPath, /_全部历史净值_截至\d{4}-\d{2}-\d{2}(?:_修订_核验\d{4}-\d{2}-\d{2}_[A-Za-z0-9]+)?\.json$/);
+  assert.match(inputPath, /_全部历史净值(?:_截至\d{4}-\d{2}-\d{2}(?:_修订_核验\d{4}-\d{2}-\d{2}_[A-Za-z0-9]+)?)?\.json$/);
+  const fixedName = /^\d{6}_全部历史净值\.json$/.test(path.basename(inputPath));
   const outputPath = inputPath.replace(/\.json$/, '.csv');
-  if (!verifyExisting) await ensureAbsent(outputPath);
+  if (!verifyExisting && !fixedName) await ensureAbsent(outputPath);
   const inputBytes = await fs.readFile(inputPath);
   const doc = JSON.parse(inputBytes.toString('utf8').replace(/^\uFEFF/, ''));
   assert.match(doc.code, /^\d{6}$/);
@@ -110,7 +112,7 @@ for (const input of inputPaths) {
   const formulaErrors = await workbook.inspect({ kind: 'match', searchTerm: '#REF!|#DIV/0!|#VALUE!|#NAME\\?|#N/A|#NUM!|#NULL!|#SPILL!|#CALC!', options: { useRegex: true, maxResults: 20 }, maxChars: 1200 });
   const readback = sheet.getRange(`A2:H${last}`).values;
   assert.equal(readback.length, rows.length);
-  const serialized = readback.map((row, index) => {
+  let serialized = readback.map((row, index) => {
     const source = rows[index];
     assert.equal(row[0], doc.code);
     assert.equal(row[1], doc.name);
@@ -122,17 +124,24 @@ for (const input of inputPaths) {
   const preview = await workbook.render({ sheetName: doc.code, range: 'A1:H4', scale: 1, format: 'png' });
   const previewPath = path.join(tempDir, `public_nav_csv_preview_${doc.code}_${doc.last_date}.png`);
   await fs.writeFile(previewPath, new Uint8Array(await preview.arrayBuffer()));
-  const csvText = '\uFEFF' + [headers, ...serialized].map(row => row.map(csvCell).join(',')).join('\r\n') + '\r\n';
+  const official = doc.code === '270023' && doc.source_type === 'fund_manager_official_public_API';
+  const outputHeaders = ['日期', '净值', '日增长率'];
+  serialized = serialized.map(row => [row[2], row[3], isMissing(row[5]) ? '' : row[5] + '%']);
+  const csvText = '\uFEFF' + [outputHeaders, ...serialized].map(row => row.map(csvCell).join(',')).join('\r\n') + '\r\n';
   if (verifyExisting) {
     assert.equal(await fs.readFile(outputPath, 'utf8'), csvText, 'Existing CSV differs; it was not overwritten');
   } else {
-    await fs.writeFile(outputPath, csvText, { encoding: 'utf8', flag: 'wx' });
+    if (fixedName) {
+      const temporary = outputPath + '.tmp';
+      await fs.writeFile(temporary, csvText, 'utf8');
+      await fs.rename(temporary, outputPath);
+    } else await fs.writeFile(outputPath, csvText, { encoding: 'utf8', flag: 'wx' });
   }
   const saved = await fs.readFile(outputPath);
   assert.ok(saved.subarray(0, 3).equals(Buffer.from([0xEF, 0xBB, 0xBF])));
   const imported = await Workbook.fromCSV(saved.toString('utf8').replace(/^\uFEFF/, ''), { sheetName: 'CSVCheck' });
-  const verified = imported.worksheets.getItemAt(0).getRange(`A1:H${last}`).values;
-  assert.deepEqual(verified[0], headers);
+  const verified = imported.worksheets.getItemAt(0).getRange(`A1:C${last}`).values;
+  assert.deepEqual(verified[0], outputHeaders);
   for (let index = 0; index < serialized.length; index++) {
     assert.deepEqual(verified[index + 1].map(value => isMissing(value) ? '' : String(value)), serialized[index].map(String), `Saved CSV differs from public JSON at ${doc.code} row ${index + 2}`);
   }

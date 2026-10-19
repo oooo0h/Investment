@@ -41,7 +41,8 @@ test('computed shares and fees respect the page privacy mode', () => {
   assert.equal((masked.match(/aria-label="已隐藏"/g) || []).length, 2);
   assert.doesNotMatch(masked, /12\.345678|1\.23/);
   const visible = renderTransactionPreview(result, { visible: true });
-  assert.match(visible, /12\.345678/);
+  assert.match(visible, /12\.35/);
+  assert.equal(result.preview.shares, 12.345678, 'display rounding never changes the calculation input');
   assert.match(visible, /1\.23/);
 });
 

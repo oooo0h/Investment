@@ -1,0 +1,292 @@
+{
+  "headers": [
+    "交易日期",
+    "成交净值",
+    "确认份额",
+    "交易类型",
+    "金额",
+    "手续费（元）"
+  ],
+  "sources": [
+    {
+      "path": "E:/WeixinDocument/xwechat_files/wxid_fs5n306ex72922_70f8/temp/RWTemp/2026-10/9e20f478899dc29eb19741386f9343c8/364d4c43f9ab9f0bf01b6ebf4ade1e7c.jpg",
+      "sha256": "04b51d17ac5fc01977908987117cf44311fe777f9d81fa7dc9e5ff85af9a3b39"
+    },
+    {
+      "path": "E:/WeixinDocument/xwechat_files/wxid_fs5n306ex72922_70f8/temp/RWTemp/2026-10/9e20f478899dc29eb19741386f9343c8/67c8c8c915a4592c69cb775a9b387b41.jpg",
+      "sha256": "f4e84c42f122a888366abe8119a26b1c7120b8c3b42b2590b9580d891900a1d5"
+    },
+    {
+      "path": "E:/WeixinDocument/xwechat_files/wxid_fs5n306ex72922_70f8/temp/RWTemp/2026-10/9e20f478899dc29eb19741386f9343c8/1884b74855be467c69cedeca72618496.jpg",
+      "sha256": "af239577f7fe79bbe0476c69a1876f02faf726e7d800761060d95bae5f5aebd8"
+    },
+    {
+      "path": "E:/WeixinDocument/xwechat_files/wxid_fs5n306ex72922_70f8/temp/RWTemp/2026-10/9e20f478899dc29eb19741386f9343c8/26d217c3e611fc4af63029258bcd3048.jpg",
+      "sha256": "53c5a5b28c1a9359ac033a72b2db3967319aba622aca4cf13554100df20b9a40"
+    },
+    {
+      "path": "E:/WeixinDocument/xwechat_files/wxid_fs5n306ex72922_70f8/temp/RWTemp/2026-10/9e20f478899dc29eb19741386f9343c8/2967f2b06cea45e86e3a992e99d83bea.jpg",
+      "sha256": "36cb5acb6fc32e99649b83c320a741f465c6be774f497b5a0e6e4687259cd859"
+    },
+    {
+      "path": "E:/WeixinDocument/xwechat_files/wxid_fs5n306ex72922_70f8/temp/RWTemp/2026-10/9e20f478899dc29eb19741386f9343c8/b5294998fcc781af4fed376852b67667.jpg",
+      "sha256": "9e8e30ea2082762f2f2c002b72d85bf678e3e6c1f9e191182920123a0434d296"
+    },
+    {
+      "path": "E:/WeixinDocument/xwechat_files/wxid_fs5n306ex72922_70f8/temp/RWTemp/2026-10/9e20f478899dc29eb19741386f9343c8/985fbf4e39a0e418825e0eed5ea74abb.jpg",
+      "sha256": "222176f5270c2a3adb8e3f52fab2d7789eb4daff5b5db155832ccb7ffd42602a"
+    },
+    {
+      "path": "E:/WeixinDocument/xwechat_files/wxid_fs5n306ex72922_70f8/temp/RWTemp/2026-10/9e20f478899dc29eb19741386f9343c8/1cfb96737717b722f22173b834764adc.jpg",
+      "sha256": "67501280acbded3031b0a318c9557f527651d5968a188beeb167423fbe556f1b"
+    }
+  ],
+  "funds": [
+    {
+      "code": "006485",
+      "rows": 17,
+      "output": "C:\\Users\\PC\\Documents\\AI 投研\\基金\\006485_广发中债1-3年国开行债券指数C\\006485_交易记录.xlsx",
+      "missing_columns": [],
+      "source_estimates_retained": false,
+      "row_provenance": [
+        {
+          "row": 2,
+          "status": "pending",
+          "source_status": "unverified",
+          "original_type": "buy",
+          "source_id": "006485-image-4-row-20",
+          "submitted_at": "2026-06-02 09:14:07",
+          "nav_date": null,
+          "amount_kind": "application"
+        },
+        {
+          "row": 3,
+          "status": "pending",
+          "source_status": "unverified",
+          "original_type": "buy",
+          "source_id": "006485-image-4-row-19",
+          "submitted_at": "2026-06-05 07:38:53",
+          "nav_date": null,
+          "amount_kind": "application"
+        },
+        {
+          "row": 4,
+          "status": "pending",
+          "source_status": "unverified",
+          "original_type": "buy",
+          "source_id": "006485-image-4-row-18",
+          "submitted_at": "2026-06-05 13:28:13",
+          "nav_date": null,
+          "amount_kind": "application"
+        },
+        {
+          "row": 5,
+          "status": "pending",
+          "source_status": "unverified",
+          "original_type": "buy",
+          "source_id": "006485-image-4-row-17",
+          "submitted_at": "2026-06-15 14:18:07",
+          "nav_date": null,
+          "amount_kind": "application"
+        },
+        {
+          "row": 6,
+          "status": "pending",
+          "source_status": "unverified",
+          "original_type": "transfer-in",
+          "source_id": "006485-image-4-row-16",
+          "submitted_at": "2026-06-15 22:49:58",
+          "nav_date": null,
+          "amount_kind": "application"
+        },
+        {
+          "row": 7,
+          "status": "pending",
+          "source_status": "unverified",
+          "original_type": "sell",
+          "source_id": "006485-image-4-row-15",
+          "submitted_at": "2026-06-25 07:23:08",
+          "nav_date": null,
+          "amount_kind": "application"
+        },
+        {
+          "row": 8,
+          "status": "confirmed",
+          "source_status": "confirmed",
+          "original_type": "transfer-out",
+          "source_id": "006485-image-4-row-14",
+          "submitted_at": "2026-06-26 21:05:21",
+          "nav_date": "2026-06-29",
+          "amount_kind": "confirmed"
+        },
+        {
+          "row": 9,
+          "status": "pending",
+          "source_status": "unverified",
+          "original_type": "buy",
+          "source_id": "006485-image-4-row-13",
+          "submitted_at": "2026-07-01 07:57:44",
+          "nav_date": null,
+          "amount_kind": "application"
+        },
+        {
+          "row": 10,
+          "status": "confirmed",
+          "source_status": "confirmed",
+          "original_type": "transfer-out",
+          "source_id": "006485-image-4-row-12",
+          "submitted_at": "2026-07-02 13:23:00",
+          "nav_date": "2026-07-02",
+          "amount_kind": "confirmed"
+        },
+        {
+          "row": 11,
+          "status": "confirmed",
+          "source_status": "confirmed",
+          "original_type": "transfer-out",
+          "source_id": "006485-image-4-row-11",
+          "submitted_at": "2026-07-02 13:26:14",
+          "nav_date": "2026-07-02",
+          "amount_kind": "confirmed"
+        },
+        {
+          "row": 12,
+          "status": "pending",
+          "source_status": "unverified",
+          "original_type": "sell",
+          "source_id": "006485-image-4-row-9",
+          "submitted_at": "2026-08-03 14:25:02",
+          "nav_date": null,
+          "amount_kind": "application"
+        },
+        {
+          "row": 13,
+          "status": "pending",
+          "source_status": "unverified",
+          "original_type": "buy",
+          "source_id": "006485-image-4-row-8",
+          "submitted_at": "2026-09-14 07:47:30",
+          "nav_date": null,
+          "amount_kind": "application"
+        },
+        {
+          "row": 14,
+          "status": "confirmed",
+          "source_status": "confirmed",
+          "original_type": "transfer-in",
+          "source_id": "006485-image-4-row-7",
+          "submitted_at": "2026-09-15 08:22:01",
+          "nav_date": "2026-09-15",
+          "amount_kind": "confirmed"
+        },
+        {
+          "row": 15,
+          "status": "confirmed",
+          "source_status": "confirmed",
+          "original_type": "transfer-in",
+          "source_id": "006485-image-4-row-6",
+          "submitted_at": "2026-10-02 17:33:18",
+          "nav_date": "2026-10-08",
+          "amount_kind": "confirmed"
+        },
+        {
+          "row": 16,
+          "status": "confirmed",
+          "source_status": "confirmed",
+          "original_type": "transfer-in",
+          "source_id": "006485-image-4-row-4",
+          "submitted_at": "2026-10-15 09:55:23",
+          "nav_date": "2026-10-15",
+          "amount_kind": "confirmed"
+        },
+        {
+          "row": 17,
+          "status": "pending",
+          "source_status": "unverified",
+          "original_type": "buy",
+          "source_id": "006485-image-4-row-3",
+          "submitted_at": "2026-10-15 10:03:16",
+          "nav_date": null,
+          "amount_kind": "application"
+        },
+        {
+          "row": 18,
+          "status": "pending",
+          "source_status": "unverified",
+          "original_type": "buy",
+          "source_id": "006485-image-4-row-2",
+          "submitted_at": "2026-10-15 10:45:22",
+          "nav_date": null,
+          "amount_kind": "application"
+        }
+      ],
+      "private_row_digest": "0c05f44f7f13b5ed686747d89d2a5fbca1ac7ccd35da550492a26d20db9c525f",
+      "processing_records": 1,
+      "cancelled_records": 2,
+      "workbook_sha256": "b9ae3b1680ba2df1a911349ab7d7c3d0a630b34ebc3a472e5f7c4a969266e8e2"
+    },
+    {
+      "code": "006663",
+      "rows": 5,
+      "output": "C:\\Users\\PC\\Documents\\AI 投研\\基金\\006663_易方达安悦超短债C\\006663_交易记录.xlsx",
+      "missing_columns": [],
+      "source_estimates_retained": false,
+      "row_provenance": [
+        {
+          "row": 2,
+          "status": "pending",
+          "source_status": "unverified",
+          "original_type": "buy",
+          "source_id": "006663-image-0-row-7",
+          "submitted_at": "2026-09-07 14:54:43",
+          "nav_date": null,
+          "amount_kind": "application"
+        },
+        {
+          "row": 3,
+          "status": "pending",
+          "source_status": "unverified",
+          "original_type": "sell",
+          "source_id": "006663-image-0-row-6",
+          "submitted_at": "2026-09-15 08:21:40",
+          "nav_date": null,
+          "amount_kind": "application"
+        },
+        {
+          "row": 4,
+          "status": "confirmed",
+          "source_status": "confirmed",
+          "original_type": "transfer-out",
+          "source_id": "006663-image-0-row-5",
+          "submitted_at": "2026-09-15 08:22:01",
+          "nav_date": "2026-09-15",
+          "amount_kind": "confirmed"
+        },
+        {
+          "row": 5,
+          "status": "confirmed",
+          "source_status": "confirmed",
+          "original_type": "transfer-out",
+          "source_id": "006663-image-0-row-4",
+          "submitted_at": "2026-10-02 17:33:18",
+          "nav_date": "2026-10-08",
+          "amount_kind": "confirmed"
+        },
+        {
+          "row": 6,
+          "status": "confirmed",
+          "source_status": "confirmed",
+          "original_type": "transfer-out",
+          "source_id": "006663-image-0-row-3",
+          "submitted_at": "2026-10-15 09:55:23",
+          "nav_date": "2026-10-15",
+          "amount_kind": "confirmed"
+        }
+      ],
+      "private_row_digest": "39d18cc247921639f8c789e7f77994990b71550a99508db74cab7e6d8d51ba45",
+      "processing_records": 1,
+      "cancelled_records": 1,
+      "workbook_sha256": "4a22d3c260db9aee079a064490599477d5b4f3a02574fc81ce19a7bf37e876d8"
+    }
+  ]
+}

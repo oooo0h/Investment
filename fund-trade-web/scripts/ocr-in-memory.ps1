@@ -21,9 +21,10 @@ try {
         return $task.Result
     }
     $stage = 'open-storage-file'
-    $file = Await-Operation ([Windows.Storage.StorageFile]::GetFileFromPathAsync($ImagePath)) ([Windows.Storage.StorageFile])
+    $imageBytes = [System.IO.File]::ReadAllBytes($ImagePath)
     $stage = 'open-stream'
-    $stream = Await-Operation ($file.OpenReadAsync()) ([Windows.Storage.Streams.IRandomAccessStreamWithContentType])
+    $memoryStream = New-Object System.IO.MemoryStream(,$imageBytes)
+    $stream = [System.IO.WindowsRuntimeStreamExtensions]::AsRandomAccessStream($memoryStream)
     $stage = 'create-decoder'
     $decoder = Await-Operation ([Windows.Graphics.Imaging.BitmapDecoder]::CreateAsync($stream)) ([Windows.Graphics.Imaging.BitmapDecoder])
     $stage = 'create-engine'

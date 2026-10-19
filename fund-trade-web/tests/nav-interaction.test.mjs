@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { setupNavChartInteractions } from '../src/nav-interaction.js';
+import { setupNavChartInteractions, measureNavChange } from '../src/nav-interaction.js';
 import { renderNavChart } from '../src/nav-chart.js';
 
 // Public synthetic NAVs only; this harness has no file access or account fixture.
@@ -34,11 +34,12 @@ function harness(raw = JSON.stringify(publicPoints), dimensions = {}, trades = [
   chart.getAttribute = name => name === 'data-nav-trades' ? chart.tradeRaw : name === 'data-nav-domain' ? chart.domainRaw : name === 'data-nav-points' ? chart.raw : null;
   const rect = { left: 100, top: 20, width: 300, height: 128, ...dimensions };
   chart.getBoundingClientRect = () => rect;
-  const elements = Object.fromEntries(['line', 'point', 'tooltip', 'date', 'status', 'value', 'change', 'trades'].map(name => [name, node(chart)]));
+  const elements = Object.fromEntries(['line', 'point', 'tooltip', 'date', 'status', 'value', 'change', 'trades', 'axis-date', 'left-days', 'right-days'].map(name => [name, node(chart)]));
+  const measurement = Object.fromEntries(['panel', 'result', 'dates', 'days', 'value', 'band', 'start', 'end', 'start-line', 'end-line'].map(name => [name, node(chart)]));
   elements.tooltip.getBoundingClientRect = () => ({ width: dimensions.tooltipWidth || 104, height: dimensions.tooltipHeight || 18 });
   const resting = [node(chart), node(chart)];
   resting.forEach((element, index) => { element.hidden = false; element.style = { left: '15%', top: '55%', ...(index === 0 ? { bottom: '0' } : {}) }; });
-  chart.querySelector = selector => elements[selector.replace('.nav-hover-', '')] || (selector === '.nav-chart-rest-line' ? resting[0] : selector === '.nav-chart-rest-point' ? resting[1] : null);
+  chart.querySelector = selector => selector.startsWith('.nav-measure-') ? measurement[selector.slice(13)] : elements[selector.replace('.nav-hover-', '')] || (selector === '.nav-chart-rest-line' ? resting[0] : selector === '.nav-chart-rest-point' ? resting[1] : null);
   chart.querySelectorAll = selector => selector.includes('nav-chart-rest') ? resting : [];
   const marker = node(chart);
   const markerDot = node(marker);
@@ -48,7 +49,7 @@ function harness(raw = JSON.stringify(publicPoints), dimensions = {}, trades = [
     return event;
   }
   const cleanup = setupNavChartInteractions(root);
-  return { root, chart, rect, elements, resting, marker, markerDot, emit, listeners, cleanup };
+  return { root, chart, rect, elements, measurement, resting, marker, markerDot, emit, listeners, cleanup };
 }
 
 function hiddenMetadata(h) {
@@ -80,6 +81,48 @@ function clearCaption(h, points) {
   }
 }
 
+test('first click anchors, hover updates returns and calendar days, second click clears and third restarts', () => {
+  const h = harness();
+  h.emit('click', { clientX: 115, isPrimary: false });
+  assert.equal(h.measurement.start.hidden, false);
+  assert.equal(h.measurement.result.hidden, true);
+  h.emit('pointermove', { clientX: 145 });
+  assert.equal(h.measurement.value.textContent, '+5.88%');
+  assert.equal(h.measurement.days.textContent, '1 天');
+  assert.match(h.measurement.dates.textContent, /2026-01-01 → 2026-01-02/);
+  h.emit('pointermove', { clientX: 385 });
+  assert.equal(h.measurement.value.textContent, '+23.53%');
+  assert.equal(h.measurement.days.textContent, '10 天');
+  h.emit('click', { clientX: 385 });
+  h.emit('pointermove', { clientX: 145 });
+  assert.equal(h.measurement.result.hidden, true);
+  assert.equal(h.measurement.start.hidden, true);
+  h.emit('click', { clientX: 145 });
+  assert.equal(h.measurement.result.hidden, true);
+  h.emit('pointermove', { clientX: 115 });
+  assert.equal(h.measurement.value.textContent, '-5.56%');
+  h.emit('keydown', { key: 'Escape' });
+  assert.equal(h.measurement.start.hidden, true);
+  assert.equal(h.measurement.result.hidden, true);
+  h.cleanup();
+});
+
+test('measurement uses public NAV ratios, handles identical points and ignores dates without NAV', () => {
+  assert.equal(measureNavChange(publicPoints[0], publicPoints[0]), 0);
+  assert.equal(measureNavChange(publicPoints[0], { date: '2026-01-03', nav: null }), null);
+  assert.equal(measureNavChange(publicPoints[0], { date: 'bad', nav: 2 }), null);
+  const h = harness();
+  h.emit('keydown', { key: 'Home' }); h.emit('keydown', { key: 'Enter' });
+  h.emit('keydown', { key: 'End' });
+  assert.equal(h.measurement.value.textContent, '+23.53%');
+  h.emit('keydown', { key: 'Enter' }); h.emit('keydown', { key: 'Home' });
+  assert.equal(h.measurement.result.hidden, true);
+  h.chart.raw = JSON.stringify([{ ...publicPoints[0], nav: 1.99 }]);
+  h.emit('pointermove', { clientX: 115 });
+  assert.equal(h.measurement.start.hidden, true, 'source replacement clears old anchors');
+  h.cleanup();
+});
+
 test('pointer inspection chooses the nearest actual date and displays only formatted public values', () => {
   const h = harness();
   h.emit('pointermove', { clientX: h.rect.left + h.rect.width * 0.6 });
@@ -97,6 +140,22 @@ test('pointer inspection chooses the nearest actual date and displays only forma
   assert.equal(h.elements.date.textContent, '2026-01-02', 'hovering a transaction marker still inspects public NAV');
   assert.equal(h.elements.change.textContent, '+2.00%');
   assert.match(h.elements.change.className, /positive/);
+  h.cleanup();
+});
+
+test('hover displays the point date and calendar distances centered between both chart boundaries', () => {
+  const h = harness(undefined, { width: 2000 });
+  h.emit('pointermove', { clientX: 400 });
+  assert.equal(h.elements['axis-date'].textContent, '2026-01-02');
+  assert.equal(h.elements['left-days'].textContent, '1 天');
+  assert.equal(h.elements['right-days'].textContent, '9 天');
+  for (const name of ['axis-date', 'left-days', 'right-days']) {
+    assert.equal(h.elements[name].hidden, false);
+    assert.ok(Number.isFinite(Number.parseFloat(h.elements[name].style.left)));
+  }
+  assert.ok(Number.parseFloat(h.elements['left-days'].style.left) < Number.parseFloat(h.elements['right-days'].style.left));
+  h.emit('pointerout', { relatedTarget: node() });
+  for (const name of ['axis-date', 'left-days', 'right-days']) assert.equal(h.elements[name].hidden, true);
   h.cleanup();
 });
 
@@ -227,7 +286,7 @@ test('delegation survives public-data replacement, repeated setup is idempotent,
   h.emit('pointermove', { clientX: 150 });
   assert.equal(h.elements.value.textContent, '1.9900');
   const secondCleanup = setupNavChartInteractions(h.root);
-  assert.equal(h.listeners.size, 5);
+  assert.equal(h.listeners.size, 6);
   h.emit('keydown', { key: 'Home' });
   assert.equal(h.elements.tooltip.hidden, false);
   secondCleanup();

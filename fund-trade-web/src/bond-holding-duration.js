@@ -52,11 +52,12 @@ function normalizeRecord(record) {
     || (record.basis !== undefined && !['reported', 'calculated'].includes(record.basis))) invalid();
   const lots = [];
   for (const lot of record.lots) {
-    if (!recordObject(lot) || Object.keys(lot).some(key => !['confirmedDate', 'remainingShares', 'status'].includes(key))) invalid();
+    if (!recordObject(lot) || Object.keys(lot).some(key => !['confirmedDate', 'orderDate', 'remainingShares', 'status'].includes(key))) invalid();
     if (IGNORED_STATUSES.has(lot.status)) continue;
-    if (lot.status !== 'confirmed' || utcDay(lot.confirmedDate) === null
+    const orderBased = record.basis === 'calculated' && !lot.confirmedDate && utcDay(lot.orderDate) !== null;
+    if (lot.status !== 'confirmed' || (!orderBased && utcDay(lot.confirmedDate) === null)
       || typeof lot.remainingShares !== 'number' || !Number.isFinite(lot.remainingShares) || lot.remainingShares < 0) invalid();
-    if (lot.remainingShares > 0) lots.push({ confirmedDate: lot.confirmedDate, remainingShares: lot.remainingShares, status: 'confirmed' });
+    if (lot.remainingShares > 0) lots.push({ ...(orderBased ? { orderDate: lot.orderDate } : { confirmedDate: lot.confirmedDate }), remainingShares: lot.remainingShares, status: 'confirmed' });
   }
   return { complete: record.complete, lots, ...(record.basis === undefined ? {} : { basis: record.basis }) };
 }
@@ -93,7 +94,7 @@ export function calculateBondHoldingDuration(record, { now = new Date() } = {}) 
     ? { ...unknown('empty'), status: 'empty', recentRatio: 0, matureRatio: 0, under7Ratio: 0, sevenTo29Ratio: 0, remainingDays: 0 }
     : unknown('no-provided-lots');
   const lots = normalized.lots.map(lot => ({
-    shares: lot.remainingShares, days: (today - utcDay(lot.confirmedDate)) / DAY_MS,
+    shares: lot.remainingShares, days: (today - utcDay(lot.confirmedDate || lot.orderDate)) / DAY_MS,
   }));
   if (lots.some(lot => lot.days < 0)) return unknown('future-confirmation');
   const scale = Math.max(...lots.map(lot => lot.shares));
@@ -109,6 +110,7 @@ export function calculateBondHoldingDuration(record, { now = new Date() } = {}) 
   const youngestDays = Math.min(...lots.map(lot => lot.days));
   return {
     status: normalized.basis === 'calculated' ? 'calculated' : 'known', reason: normalized.basis === 'calculated' ? 'provided-history' : 'complete-lots', recentRatio, matureRatio: 1 - recentRatio, under7Ratio, sevenTo29Ratio: recentRatio - under7Ratio, maturityDays: MATURITY_DAYS,
+    dateBasis: normalized.lots.some(lot => lot.orderDate) ? 'order' : 'confirmed',
     youngestDays, oldestDays: Math.max(...lots.map(lot => lot.days)),
     remainingDays: Math.max(0, MATURITY_DAYS - youngestDays), lotCount: lots.length,
   };

@@ -14,9 +14,9 @@ const sourceFiles = [
   'estimate-panel.js', 'funds.js', 'holding-duration.js', 'interface-motion.js',
   'nav-annualized.js', 'nav-chart.js', 'nav-display.js', 'nav-estimate-store.js',
   'nav-estimates.js', 'nav-interaction.js', 'nav-range.js', 'nav-slider.js',
-  'redesign.css', 'refresh-controller.js', 'region-data.js', 'request-json.js', 'styles.css',
+  'redesign.css', 'refresh-controller.js', 'region-data.js', 'styles.css',
   'transaction-date.js', 'transaction-model.js', 'transaction-performance.js', 'transaction-store.js', 'transaction-view.js',
-  'us-exposure.js', 'vault.js', 'viewport-anchor.js', 'visual-runtime.js',
+  'unlock-errors.js', 'us-exposure.js', 'portfolio-allocation.js', 'vault.js', 'viewport-anchor.js', 'visual-runtime.js',
 ];
 const vendorFiles = [
   'vendor/three/three.module.js', 'vendor/three/three.core.js', 'vendor/three/LICENSE.txt',

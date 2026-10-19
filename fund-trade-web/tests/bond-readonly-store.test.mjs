@@ -5,6 +5,17 @@ import { createBondStore, BOND_STORAGE_KEY, CASH_FLOW_STORAGE_KEY } from '../src
 import { normalizeBondTransactions } from '../src/bond-transactions.js';
 
 const initial = () => ({ funds: {}, bonds: [{ code: '006485', marketValue: 100, holdingProfit: 10 }, { code: '006663', marketValue: 200, holdingProfit: 20 }], freeCashFlow: null, updatedAt: '2026-10-19T01:00:00Z', holdingLots: { '006485': { complete: false, lots: [] } }, transactions: { '006485': [{ id: 'source-buy', date: '2026-10-01', type: 'buy', amount: 100, nav: null, shares: null, status: 'pending', sourceStatus: 'unverified' }] } });
+
+test('transaction-only sources retain absent balances and lots instead of filling them with zeros', async () => {
+  const source = { ...initial(), bonds: [], holdingLots: {} };
+  const session = { async encryptLocal() {}, async decryptLocal() {}, close() {}, async refresh() { return source; } };
+  const store = await createBondStore(session, source, { storage: { getItem() { return null; }, setItem() {} } });
+  const snapshot = store.getSnapshot();
+  assert.deepEqual(snapshot.bonds, []); assert.deepEqual(snapshot.holdingLots, {});
+  assert.equal(snapshot.transactions['006485'][0].nav, null);
+  assert.equal(snapshot.transactions['006485'][0].shares, null);
+  store.close();
+});
 async function fixture({ values = new Map(), storage, byte = 7 } = {}) {
   let source = initial(), closed = false, pause = null;
   const key = await crypto.subtle.importKey('raw', new Uint8Array(32).fill(byte), { name: 'AES-GCM' }, false, ['encrypt', 'decrypt']);

@@ -1,0 +1,1939 @@
+{
+  "headers": [
+    "交易日期",
+    "成交净值",
+    "确认份额",
+    "交易类型",
+    "金额",
+    "手续费（元）"
+  ],
+  "funds": [
+    {
+      "code": "009608",
+      "rows": 83,
+      "output": "C:\\Users\\PC\\Documents\\AI 投研\\基金\\009608_广发中证500指数增强A\\009608_交易记录.xlsx",
+      "source_estimates_retained": false,
+      "sources": {
+        "基金/009608_广发中证500指数增强A/009608_交易记录_截至2026-08-28.xlsx": "3c7a4d3b5b847c97dea1a0300f12f53d210b73c8381d27ca39bcb097ae58c800"
+      },
+      "missing_columns": [
+        1,
+        2,
+        5
+      ]
+    },
+    {
+      "code": "016701",
+      "rows": 2,
+      "output": "C:\\Users\\PC\\Documents\\AI 投研\\基金\\016701_银华海外数字经济量化选股混合发起_QDII_A\\016701_交易记录.xlsx",
+      "source_estimates_retained": false,
+      "missing_columns": [],
+      "sources": {
+        "fund-trade-web/data/ledger.enc.json": "3a8a56e99fb24754628d0e6cf8c74ce4b4399d12fb5d09774c2f42657767f0c8"
+      },
+      "row_provenance": [
+        {
+          "row": 2,
+          "status": "confirmed",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-10-15",
+          "source_id": "016701-row-7"
+        },
+        {
+          "row": 3,
+          "status": "confirmed",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-10-15",
+          "source_id": "016701-row-8"
+        }
+      ],
+      "legacy_pending_records": 0,
+      "prior_workbook_sha256": null,
+      "workbook_sha256": "e82ebc3c2eca712f0ed9ed0e66f591920526e76346290086764ebf670ed9e2fa"
+    },
+    {
+      "code": "006373",
+      "rows": 22,
+      "output": "C:\\Users\\PC\\Documents\\AI 投研\\基金\\006373_国富全球科技互联混合_QDII_人民币A\\006373_交易记录.xlsx",
+      "source_estimates_retained": true,
+      "missing_columns": [],
+      "sources": {
+        "fund-trade-web/data/ledger.enc.json": "3a8a56e99fb24754628d0e6cf8c74ce4b4399d12fb5d09774c2f42657767f0c8"
+      },
+      "row_provenance": [
+        {
+          "row": 2,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-27",
+          "source_id": "006373-row-7"
+        },
+        {
+          "row": 3,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-28",
+          "source_id": "006373-row-8"
+        },
+        {
+          "row": 4,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-29",
+          "source_id": "006373-row-9"
+        },
+        {
+          "row": 5,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-30",
+          "source_id": "006373-row-10"
+        },
+        {
+          "row": 6,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-31",
+          "source_id": "006373-row-11"
+        },
+        {
+          "row": 7,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-06",
+          "source_id": "006373-row-12"
+        },
+        {
+          "row": 8,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-07",
+          "source_id": "006373-row-13"
+        },
+        {
+          "row": 9,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-10",
+          "source_id": "006373-row-14"
+        },
+        {
+          "row": 10,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-11",
+          "source_id": "006373-row-15"
+        },
+        {
+          "row": 11,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-12",
+          "source_id": "006373-row-16"
+        },
+        {
+          "row": 12,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-13",
+          "source_id": "006373-row-17"
+        },
+        {
+          "row": 13,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-14",
+          "source_id": "006373-row-18"
+        },
+        {
+          "row": 14,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-17",
+          "source_id": "006373-row-19"
+        },
+        {
+          "row": 15,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-18",
+          "source_id": "006373-row-20"
+        },
+        {
+          "row": 16,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-09-28",
+          "source_id": "006373-row-21"
+        },
+        {
+          "row": 17,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-09-29",
+          "source_id": "006373-row-22"
+        },
+        {
+          "row": 18,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-09-30",
+          "source_id": "006373-row-23"
+        },
+        {
+          "row": 19,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-10-08",
+          "source_id": "006373-row-24"
+        },
+        {
+          "row": 20,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-10-09",
+          "source_id": "006373-row-25"
+        },
+        {
+          "row": 21,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-10-12",
+          "source_id": "006373-row-26"
+        },
+        {
+          "row": 22,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-10-13",
+          "source_id": "006373-row-27"
+        },
+        {
+          "row": 23,
+          "status": "confirmed",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-10-15",
+          "source_id": "006373-row-29"
+        }
+      ],
+      "legacy_pending_records": 3,
+      "prior_workbook_sha256": null,
+      "workbook_sha256": "97b859bb9c4c5851ec112ac024843396c8edbb8fa9ebbd53f0f34f0becc8dcff"
+    },
+    {
+      "code": "270023",
+      "rows": 129,
+      "output": "C:\\Users\\PC\\Documents\\AI 投研\\基金\\270023_广发全球精选股票_QDII_人民币A\\270023_交易记录.xlsx",
+      "source_estimates_retained": true,
+      "sources": {
+        "基金/270023_广发全球精选股票_QDII_人民币A/270023_交易记录_截至2026-08-05.xlsx": "81af3e22b8fdcfc089fcb7b79f52d33ac627b53fce9b75cdf03b93b66af11964",
+        "基金/270023_广发全球精选股票_QDII_人民币A/270023_单笔交易自动计算_双模式_模板2026-09-28.xlsx": "2a004675fed4c10eef60cd2fa8213e75d914b97f123d9888694dd8a7fa347970",
+        "fund-trade-web/data/ledger.enc.json": "3a8a56e99fb24754628d0e6cf8c74ce4b4399d12fb5d09774c2f42657767f0c8"
+      },
+      "missing_columns": [],
+      "row_provenance": [
+        {
+          "row": 2,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-12-18",
+          "source_id": "270023-row-7"
+        },
+        {
+          "row": 3,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-12-19",
+          "source_id": "270023-row-8"
+        },
+        {
+          "row": 4,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-12-22",
+          "source_id": "270023-row-9"
+        },
+        {
+          "row": 5,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-12-23",
+          "source_id": "270023-row-10"
+        },
+        {
+          "row": 6,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-12-24",
+          "source_id": "270023-row-11"
+        },
+        {
+          "row": 7,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-12-26",
+          "source_id": "270023-row-12"
+        },
+        {
+          "row": 8,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-12-29",
+          "source_id": "270023-row-13"
+        },
+        {
+          "row": 9,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-12-30",
+          "source_id": "270023-row-14"
+        },
+        {
+          "row": 10,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-12-31",
+          "source_id": "270023-row-15"
+        },
+        {
+          "row": 11,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-05",
+          "source_id": "270023-row-16"
+        },
+        {
+          "row": 12,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-06",
+          "source_id": "270023-row-17"
+        },
+        {
+          "row": 13,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-07",
+          "source_id": "270023-row-18"
+        },
+        {
+          "row": 14,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-08",
+          "source_id": "270023-row-19"
+        },
+        {
+          "row": 15,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-09",
+          "source_id": "270023-row-20"
+        },
+        {
+          "row": 16,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-12",
+          "source_id": "270023-row-21"
+        },
+        {
+          "row": 17,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-13",
+          "source_id": "270023-row-22"
+        },
+        {
+          "row": 18,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-14",
+          "source_id": "270023-row-23"
+        },
+        {
+          "row": 19,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-15",
+          "source_id": "270023-row-24"
+        },
+        {
+          "row": 20,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-16",
+          "source_id": "270023-row-25"
+        },
+        {
+          "row": 21,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-20",
+          "source_id": "270023-row-26"
+        },
+        {
+          "row": 22,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-21",
+          "source_id": "270023-row-27"
+        },
+        {
+          "row": 23,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-22",
+          "source_id": "270023-row-28"
+        },
+        {
+          "row": 24,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-23",
+          "source_id": "270023-row-29"
+        },
+        {
+          "row": 25,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-23",
+          "source_id": "270023-row-30"
+        },
+        {
+          "row": 26,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-23",
+          "source_id": "270023-row-31"
+        },
+        {
+          "row": 27,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-26",
+          "source_id": "270023-row-32"
+        },
+        {
+          "row": 28,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-27",
+          "source_id": "270023-row-33"
+        },
+        {
+          "row": 29,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-27",
+          "source_id": "270023-row-34"
+        },
+        {
+          "row": 30,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-28",
+          "source_id": "270023-row-35"
+        },
+        {
+          "row": 31,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-29",
+          "source_id": "270023-row-36"
+        },
+        {
+          "row": 32,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-01-30",
+          "source_id": "270023-row-37"
+        },
+        {
+          "row": 33,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-02",
+          "source_id": "270023-row-38"
+        },
+        {
+          "row": 34,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-02",
+          "source_id": "270023-row-39"
+        },
+        {
+          "row": 35,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-03",
+          "source_id": "270023-row-40"
+        },
+        {
+          "row": 36,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-04",
+          "source_id": "270023-row-41"
+        },
+        {
+          "row": 37,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-05",
+          "source_id": "270023-row-42"
+        },
+        {
+          "row": 38,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-06",
+          "source_id": "270023-row-43"
+        },
+        {
+          "row": 39,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-06",
+          "source_id": "270023-row-44"
+        },
+        {
+          "row": 40,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-09",
+          "source_id": "270023-row-45"
+        },
+        {
+          "row": 41,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-10",
+          "source_id": "270023-row-46"
+        },
+        {
+          "row": 42,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-11",
+          "source_id": "270023-row-47"
+        },
+        {
+          "row": 43,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-12",
+          "source_id": "270023-row-48"
+        },
+        {
+          "row": 44,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-13",
+          "source_id": "270023-row-49"
+        },
+        {
+          "row": 45,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-24",
+          "source_id": "270023-row-50"
+        },
+        {
+          "row": 46,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-25",
+          "source_id": "270023-row-51"
+        },
+        {
+          "row": 47,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-26",
+          "source_id": "270023-row-52"
+        },
+        {
+          "row": 48,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-27",
+          "source_id": "270023-row-53"
+        },
+        {
+          "row": 49,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-02",
+          "source_id": "270023-row-54"
+        },
+        {
+          "row": 50,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-12",
+          "source_id": "270023-row-55"
+        },
+        {
+          "row": 51,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-13",
+          "source_id": "270023-row-56"
+        },
+        {
+          "row": 52,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-16",
+          "source_id": "270023-row-57"
+        },
+        {
+          "row": 53,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-17",
+          "source_id": "270023-row-58"
+        },
+        {
+          "row": 54,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-18",
+          "source_id": "270023-row-59"
+        },
+        {
+          "row": 55,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-19",
+          "source_id": "270023-row-60"
+        },
+        {
+          "row": 56,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-20",
+          "source_id": "270023-row-61"
+        },
+        {
+          "row": 57,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-23",
+          "source_id": "270023-row-62"
+        },
+        {
+          "row": 58,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-24",
+          "source_id": "270023-row-63"
+        },
+        {
+          "row": 59,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-25",
+          "source_id": "270023-row-64"
+        },
+        {
+          "row": 60,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-26",
+          "source_id": "270023-row-65"
+        },
+        {
+          "row": 61,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-27",
+          "source_id": "270023-row-66"
+        },
+        {
+          "row": 62,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-30",
+          "source_id": "270023-row-67"
+        },
+        {
+          "row": 63,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-31",
+          "source_id": "270023-row-68"
+        },
+        {
+          "row": 64,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-01",
+          "source_id": "270023-row-69"
+        },
+        {
+          "row": 65,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-02",
+          "source_id": "270023-row-70"
+        },
+        {
+          "row": 66,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-07",
+          "source_id": "270023-row-71"
+        },
+        {
+          "row": 67,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-08",
+          "source_id": "270023-row-72"
+        },
+        {
+          "row": 68,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-09",
+          "source_id": "270023-row-73"
+        },
+        {
+          "row": 69,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-10",
+          "source_id": "270023-row-74"
+        },
+        {
+          "row": 70,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-13",
+          "source_id": "270023-row-75"
+        },
+        {
+          "row": 71,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-14",
+          "source_id": "270023-row-76"
+        },
+        {
+          "row": 72,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-15",
+          "source_id": "270023-row-77"
+        },
+        {
+          "row": 73,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-16",
+          "source_id": "270023-row-78"
+        },
+        {
+          "row": 74,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-17",
+          "source_id": "270023-row-79"
+        },
+        {
+          "row": 75,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-20",
+          "source_id": "270023-row-80"
+        },
+        {
+          "row": 76,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-21",
+          "source_id": "270023-row-81"
+        },
+        {
+          "row": 77,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-22",
+          "source_id": "270023-row-82"
+        },
+        {
+          "row": 78,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-23",
+          "source_id": "270023-row-83"
+        },
+        {
+          "row": 79,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-24",
+          "source_id": "270023-row-84"
+        },
+        {
+          "row": 80,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-27",
+          "source_id": "270023-row-85"
+        },
+        {
+          "row": 81,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-28",
+          "source_id": "270023-row-86"
+        },
+        {
+          "row": 82,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-29",
+          "source_id": "270023-row-87"
+        },
+        {
+          "row": 83,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-30",
+          "source_id": "270023-row-88"
+        },
+        {
+          "row": 84,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-06",
+          "source_id": "270023-row-89"
+        },
+        {
+          "row": 85,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-07",
+          "source_id": "270023-row-90"
+        },
+        {
+          "row": 86,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-08",
+          "source_id": "270023-row-91"
+        },
+        {
+          "row": 87,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-11",
+          "source_id": "270023-row-92"
+        },
+        {
+          "row": 88,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-12",
+          "source_id": "270023-row-93"
+        },
+        {
+          "row": 89,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-13",
+          "source_id": "270023-row-94"
+        },
+        {
+          "row": 90,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-14",
+          "source_id": "270023-row-95"
+        },
+        {
+          "row": 91,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-15",
+          "source_id": "270023-row-96"
+        },
+        {
+          "row": 92,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-18",
+          "source_id": "270023-row-97"
+        },
+        {
+          "row": 93,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-19",
+          "source_id": "270023-row-98"
+        },
+        {
+          "row": 94,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-20",
+          "source_id": "270023-row-99"
+        },
+        {
+          "row": 95,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-21",
+          "source_id": "270023-row-100"
+        },
+        {
+          "row": 96,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-22",
+          "source_id": "270023-row-101"
+        },
+        {
+          "row": 97,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-26",
+          "source_id": "270023-row-102"
+        },
+        {
+          "row": 98,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-27",
+          "source_id": "270023-row-103"
+        },
+        {
+          "row": 99,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-06-03",
+          "source_id": "270023-row-104"
+        },
+        {
+          "row": 100,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-06-08",
+          "source_id": "270023-row-105"
+        },
+        {
+          "row": 101,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-06-09",
+          "source_id": "270023-row-106"
+        },
+        {
+          "row": 102,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-06-10",
+          "source_id": "270023-row-107"
+        },
+        {
+          "row": 103,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-06-11",
+          "source_id": "270023-row-108"
+        },
+        {
+          "row": 104,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-06-12",
+          "source_id": "270023-row-109"
+        },
+        {
+          "row": 105,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-01",
+          "source_id": "270023-row-110"
+        },
+        {
+          "row": 106,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-02",
+          "source_id": "270023-row-111"
+        },
+        {
+          "row": 107,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-06",
+          "source_id": "270023-row-112"
+        },
+        {
+          "row": 108,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-07",
+          "source_id": "270023-row-113"
+        },
+        {
+          "row": 109,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-08",
+          "source_id": "270023-row-114"
+        },
+        {
+          "row": 110,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-09",
+          "source_id": "270023-row-115"
+        },
+        {
+          "row": 111,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-10",
+          "source_id": "270023-row-116"
+        },
+        {
+          "row": 112,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-13",
+          "source_id": "270023-row-117"
+        },
+        {
+          "row": 113,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-14",
+          "source_id": "270023-row-118"
+        },
+        {
+          "row": 114,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-15",
+          "source_id": "270023-row-119"
+        },
+        {
+          "row": 115,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-16",
+          "source_id": "270023-row-120"
+        },
+        {
+          "row": 116,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-17",
+          "source_id": "270023-row-121"
+        },
+        {
+          "row": 117,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-20",
+          "source_id": "270023-row-122"
+        },
+        {
+          "row": 118,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-21",
+          "source_id": "270023-row-123"
+        },
+        {
+          "row": 119,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-22",
+          "source_id": "270023-row-124"
+        },
+        {
+          "row": 120,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-23",
+          "source_id": "270023-row-125"
+        },
+        {
+          "row": 121,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-24",
+          "source_id": "270023-row-126"
+        },
+        {
+          "row": 122,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-27",
+          "source_id": "270023-row-127"
+        },
+        {
+          "row": 123,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-28",
+          "source_id": "270023-row-128"
+        },
+        {
+          "row": 124,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-29",
+          "source_id": "270023-row-129"
+        },
+        {
+          "row": 125,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-30",
+          "source_id": "270023-row-130"
+        },
+        {
+          "row": 126,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-31",
+          "source_id": "270023-row-131"
+        },
+        {
+          "row": 127,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-03",
+          "source_id": "270023-row-132"
+        },
+        {
+          "row": 128,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-04",
+          "source_id": "270023-row-133"
+        },
+        {
+          "row": 129,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-05",
+          "source_id": "270023-row-134"
+        },
+        {
+          "row": 130,
+          "status": "confirmed",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-10-15",
+          "source_id": "270023-row-135"
+        }
+      ],
+      "legacy_pending_records": 0,
+      "prior_workbook_sha256": "965c73cccafe060445ad3d862ceebd2cd27bf32f81fc702bdb31a1ba7cb4752f",
+      "workbook_sha256": "f5999ba99eef21778afa1c33c0ef23025f4a56c88569e98a1ee246001a345316"
+    },
+    {
+      "code": "005698",
+      "rows": 111,
+      "output": "C:\\Users\\PC\\Documents\\AI 投研\\基金\\005698_华夏全球科技先锋混合_QDII_A人民币\\005698_交易记录.xlsx",
+      "source_estimates_retained": true,
+      "sources": {
+        "基金/005698_华夏全球科技先锋混合_QDII_A人民币/005698_逐笔收益_FIFO_截至2026-09-02.xlsx": "e49ebc0986c2c90611f869a2a13c9bcdbcc62bd5653ea9a1ddbce56b800e1270",
+        "基金/005698_华夏全球科技先锋混合_QDII_A人民币/005698_单笔交易自动计算_双模式_模板2026-09-28.xlsx": "f1255a57e1628fd855248fdc332c0e419dbcfcd0c3bc1852e373f13e8b282fd6",
+        "fund-trade-web/data/ledger.enc.json": "3a8a56e99fb24754628d0e6cf8c74ce4b4399d12fb5d09774c2f42657767f0c8"
+      },
+      "missing_columns": [],
+      "row_provenance": [
+        {
+          "row": 2,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-08-01",
+          "source_id": "005698-row-7"
+        },
+        {
+          "row": 3,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-08-01",
+          "source_id": "005698-row-8"
+        },
+        {
+          "row": 4,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-08-04",
+          "source_id": "005698-row-9"
+        },
+        {
+          "row": 5,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-08-06",
+          "source_id": "005698-row-10"
+        },
+        {
+          "row": 6,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-08-06",
+          "source_id": "005698-row-11"
+        },
+        {
+          "row": 7,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-09-19",
+          "source_id": "005698-row-12"
+        },
+        {
+          "row": 8,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-10-10",
+          "source_id": "005698-row-13"
+        },
+        {
+          "row": 9,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-11-03",
+          "source_id": "005698-row-14"
+        },
+        {
+          "row": 10,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-11-04",
+          "source_id": "005698-row-15"
+        },
+        {
+          "row": 11,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-11-05",
+          "source_id": "005698-row-16"
+        },
+        {
+          "row": 12,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-12-12",
+          "source_id": "005698-row-17"
+        },
+        {
+          "row": 13,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-12-15",
+          "source_id": "005698-row-18"
+        },
+        {
+          "row": 14,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-12-16",
+          "source_id": "005698-row-19"
+        },
+        {
+          "row": 15,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2025-12-17",
+          "source_id": "005698-row-20"
+        },
+        {
+          "row": 16,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-04",
+          "source_id": "005698-row-21"
+        },
+        {
+          "row": 17,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-05",
+          "source_id": "005698-row-22"
+        },
+        {
+          "row": 18,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-06",
+          "source_id": "005698-row-23"
+        },
+        {
+          "row": 19,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-09",
+          "source_id": "005698-row-24"
+        },
+        {
+          "row": 20,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-10",
+          "source_id": "005698-row-25"
+        },
+        {
+          "row": 21,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-11",
+          "source_id": "005698-row-26"
+        },
+        {
+          "row": 22,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-12",
+          "source_id": "005698-row-27"
+        },
+        {
+          "row": 23,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-13",
+          "source_id": "005698-row-28"
+        },
+        {
+          "row": 24,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-24",
+          "source_id": "005698-row-29"
+        },
+        {
+          "row": 25,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-25",
+          "source_id": "005698-row-30"
+        },
+        {
+          "row": 26,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-26",
+          "source_id": "005698-row-31"
+        },
+        {
+          "row": 27,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-02-27",
+          "source_id": "005698-row-32"
+        },
+        {
+          "row": 28,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-02",
+          "source_id": "005698-row-33"
+        },
+        {
+          "row": 29,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-12",
+          "source_id": "005698-row-34"
+        },
+        {
+          "row": 30,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-13",
+          "source_id": "005698-row-35"
+        },
+        {
+          "row": 31,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-16",
+          "source_id": "005698-row-36"
+        },
+        {
+          "row": 32,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-17",
+          "source_id": "005698-row-37"
+        },
+        {
+          "row": 33,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-18",
+          "source_id": "005698-row-38"
+        },
+        {
+          "row": 34,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-19",
+          "source_id": "005698-row-39"
+        },
+        {
+          "row": 35,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-20",
+          "source_id": "005698-row-40"
+        },
+        {
+          "row": 36,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-23",
+          "source_id": "005698-row-41"
+        },
+        {
+          "row": 37,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-24",
+          "source_id": "005698-row-42"
+        },
+        {
+          "row": 38,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-25",
+          "source_id": "005698-row-43"
+        },
+        {
+          "row": 39,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-26",
+          "source_id": "005698-row-44"
+        },
+        {
+          "row": 40,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-27",
+          "source_id": "005698-row-45"
+        },
+        {
+          "row": 41,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-30",
+          "source_id": "005698-row-46"
+        },
+        {
+          "row": 42,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-03-31",
+          "source_id": "005698-row-47"
+        },
+        {
+          "row": 43,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-01",
+          "source_id": "005698-row-48"
+        },
+        {
+          "row": 44,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-02",
+          "source_id": "005698-row-49"
+        },
+        {
+          "row": 45,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-08",
+          "source_id": "005698-row-50"
+        },
+        {
+          "row": 46,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-09",
+          "source_id": "005698-row-51"
+        },
+        {
+          "row": 47,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-10",
+          "source_id": "005698-row-52"
+        },
+        {
+          "row": 48,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-13",
+          "source_id": "005698-row-53"
+        },
+        {
+          "row": 49,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-14",
+          "source_id": "005698-row-54"
+        },
+        {
+          "row": 50,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-15",
+          "source_id": "005698-row-55"
+        },
+        {
+          "row": 51,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-16",
+          "source_id": "005698-row-56"
+        },
+        {
+          "row": 52,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-17",
+          "source_id": "005698-row-57"
+        },
+        {
+          "row": 53,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-20",
+          "source_id": "005698-row-58"
+        },
+        {
+          "row": 54,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-21",
+          "source_id": "005698-row-59"
+        },
+        {
+          "row": 55,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-22",
+          "source_id": "005698-row-60"
+        },
+        {
+          "row": 56,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-23",
+          "source_id": "005698-row-61"
+        },
+        {
+          "row": 57,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-24",
+          "source_id": "005698-row-62"
+        },
+        {
+          "row": 58,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-27",
+          "source_id": "005698-row-63"
+        },
+        {
+          "row": 59,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-28",
+          "source_id": "005698-row-64"
+        },
+        {
+          "row": 60,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-29",
+          "source_id": "005698-row-65"
+        },
+        {
+          "row": 61,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-04-30",
+          "source_id": "005698-row-66"
+        },
+        {
+          "row": 62,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-06",
+          "source_id": "005698-row-67"
+        },
+        {
+          "row": 63,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-07",
+          "source_id": "005698-row-68"
+        },
+        {
+          "row": 64,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-08",
+          "source_id": "005698-row-69"
+        },
+        {
+          "row": 65,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-11",
+          "source_id": "005698-row-70"
+        },
+        {
+          "row": 66,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-12",
+          "source_id": "005698-row-71"
+        },
+        {
+          "row": 67,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-13",
+          "source_id": "005698-row-72"
+        },
+        {
+          "row": 68,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-14",
+          "source_id": "005698-row-73"
+        },
+        {
+          "row": 69,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-15",
+          "source_id": "005698-row-74"
+        },
+        {
+          "row": 70,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-18",
+          "source_id": "005698-row-75"
+        },
+        {
+          "row": 71,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-19",
+          "source_id": "005698-row-76"
+        },
+        {
+          "row": 72,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-20",
+          "source_id": "005698-row-77"
+        },
+        {
+          "row": 73,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-21",
+          "source_id": "005698-row-78"
+        },
+        {
+          "row": 74,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-22",
+          "source_id": "005698-row-79"
+        },
+        {
+          "row": 75,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-26",
+          "source_id": "005698-row-80"
+        },
+        {
+          "row": 76,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-05-27",
+          "source_id": "005698-row-81"
+        },
+        {
+          "row": 77,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-06-03",
+          "source_id": "005698-row-82",
+          "order_date_from_original_workbook": true
+        },
+        {
+          "row": 78,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-06-08",
+          "source_id": "005698-row-83"
+        },
+        {
+          "row": 79,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-06-09",
+          "source_id": "005698-row-84"
+        },
+        {
+          "row": 80,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-06-10",
+          "source_id": "005698-row-85"
+        },
+        {
+          "row": 81,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-06-11",
+          "source_id": "005698-row-86"
+        },
+        {
+          "row": 82,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-06-12",
+          "source_id": "005698-row-87"
+        },
+        {
+          "row": 83,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-06",
+          "source_id": "005698-row-88"
+        },
+        {
+          "row": 84,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-07",
+          "source_id": "005698-row-89"
+        },
+        {
+          "row": 85,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-08",
+          "source_id": "005698-row-90"
+        },
+        {
+          "row": 86,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-09",
+          "source_id": "005698-row-91"
+        },
+        {
+          "row": 87,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-10",
+          "source_id": "005698-row-92"
+        },
+        {
+          "row": 88,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-13",
+          "source_id": "005698-row-93"
+        },
+        {
+          "row": 89,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-14",
+          "source_id": "005698-row-94"
+        },
+        {
+          "row": 90,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-15",
+          "source_id": "005698-row-95"
+        },
+        {
+          "row": 91,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-16",
+          "source_id": "005698-row-96"
+        },
+        {
+          "row": 92,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-17",
+          "source_id": "005698-row-97"
+        },
+        {
+          "row": 93,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-20",
+          "source_id": "005698-row-98"
+        },
+        {
+          "row": 94,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-21",
+          "source_id": "005698-row-99"
+        },
+        {
+          "row": 95,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-22",
+          "source_id": "005698-row-100"
+        },
+        {
+          "row": 96,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-23",
+          "source_id": "005698-row-101"
+        },
+        {
+          "row": 97,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-24",
+          "source_id": "005698-row-102"
+        },
+        {
+          "row": 98,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-27",
+          "source_id": "005698-row-103"
+        },
+        {
+          "row": 99,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-28",
+          "source_id": "005698-row-104"
+        },
+        {
+          "row": 100,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-29",
+          "source_id": "005698-row-105"
+        },
+        {
+          "row": 101,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-30",
+          "source_id": "005698-row-106"
+        },
+        {
+          "row": 102,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-07-31",
+          "source_id": "005698-row-107"
+        },
+        {
+          "row": 103,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-03",
+          "source_id": "005698-row-108"
+        },
+        {
+          "row": 104,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-04",
+          "source_id": "005698-row-109"
+        },
+        {
+          "row": 105,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-05",
+          "source_id": "005698-row-110"
+        },
+        {
+          "row": 106,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-06",
+          "source_id": "005698-row-111"
+        },
+        {
+          "row": 107,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-07",
+          "source_id": "005698-row-112"
+        },
+        {
+          "row": 108,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-10",
+          "source_id": "005698-row-113"
+        },
+        {
+          "row": 109,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-11",
+          "source_id": "005698-row-114"
+        },
+        {
+          "row": 110,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-12",
+          "source_id": "005698-row-115"
+        },
+        {
+          "row": 111,
+          "status": "estimated",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-08-13",
+          "source_id": "005698-row-116"
+        },
+        {
+          "row": 112,
+          "status": "confirmed",
+          "source": "cloud-website-backup",
+          "nav_date": "2026-10-15",
+          "source_id": "005698-row-117"
+        }
+      ],
+      "legacy_pending_records": 0,
+      "prior_workbook_sha256": "5a4bb3ac25caf3e5bd2367bee687691412c35d59863ab092365ce9adda3e87f1",
+      "workbook_sha256": "7df73039a950177d0d89d8e630aea52db87eb5790b5ff1606a6138ed94f2c1a6"
+    }
+  ]
+}

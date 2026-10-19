@@ -8,11 +8,23 @@ const entries = () => [
   { code: '006663', marketValue: 220, holdingProfit: 20 },
 ];
 
+test('partial screenshot records render both ledgers without inventing account totals or returns', () => {
+  const transactions = { '006485': [{ id: 'synthetic-pending', date: '2024-01-02', type: 'buy', amount: 1,
+    shares: null, nav: null, fee: null, status: 'pending', sourceStatus: 'unverified' }], '006663': [] };
+  const html = renderBondsPage({ entries: [], transactions });
+  assert.equal((html.match(/class="panel bond-card"/g) || []).length, 2);
+  const overview = html.match(/<section[^>]*aria-label="债基合计"[\s\S]*?<\/section>/)[0];
+  assert.match(overview, /合计持仓金额（元）/);
+  assert.match(overview, /占所有基金持仓比例/);
+  assert.equal((overview.match(/待核验/g) || []).length, 2);
+  assert.doesNotMatch(html, /交易记录已接入|暂不展示账户汇总|class="bonds-summary-return|1\.00/);
+});
+
 test('bond cards and totals mask amounts by default while showing cost-based rates', () => {
   const html = renderBondsPage({ entries: entries() });
   assert.equal((html.match(/class="panel bond-card"/g) || []).length, 2);
-  assert.equal((html.match(/class="masked" aria-label="已隐藏"/g) || []).length, 6);
-  assert.equal((html.match(/\+10\.00%/g) || []).length, 3);
+  assert.equal((html.match(/class="masked" aria-label="已隐藏"/g) || []).length, 5);
+  assert.equal((html.match(/\+10\.00%/g) || []).length, 2);
   assert.match(html, /006485/);
   assert.match(html, /006663/);
   assert.doesNotMatch(html, /110\.00|220\.00|330\.00|data-(?:amount|shares|cost|market-value|holding-profit)=/);
@@ -30,7 +42,7 @@ test('the explicit visible mode reveals formatted amounts without enabling posit
 test('free cash flow masks by default, reveals a signed amount, and edits with the same privacy rule', () => {
   const hidden = renderBondsPage({ entries: entries(), freeCashFlow: 123.45 });
   assert.match(hidden, /自由现金流/);
-  assert.equal((hidden.match(/class="masked" aria-label="已隐藏"/g) || []).length, 7);
+  assert.equal((hidden.match(/class="masked" aria-label="已隐藏"/g) || []).length, 6);
   assert.doesNotMatch(hidden, /123\.45/);
   const visible = renderBondsPage({ entries: entries(), freeCashFlow: 123.45, visible: true });
   assert.match(visible, /\+123\.45/);
@@ -50,7 +62,7 @@ test('free cash flow masks by default, reveals a signed amount, and edits with t
 
 test('the overview shows only a rounded current portfolio share even while amounts are hidden', () => {
   const html = renderBondsPage({ entries: entries(), reserve: { status: 'met', ratio: 0.28456 } });
-  assert.match(html, /占总持仓/);
+  assert.match(html, /占所有基金持仓比例/);
   assert.match(html, /data-bond-reserve-share>28%/);
   assert.doesNotMatch(html, /330\.00|110\.00|220\.00|28\.456/);
   assert.match(renderBondsPage({ entries: entries(), reserve: { status: 'unknown', ratio: null } }), /data-bond-reserve-share>待核验/);
@@ -125,7 +137,7 @@ test('bond cards expand a compact read-only ledger with known facts, pending hin
   assert.doesNotMatch(html, /bond-cancelled|id="bond-edit-form"|data-action="bond-(?:edit|close|cancel)"|累计盈亏|已实现盈亏|<img/);
   assert.doesNotMatch(html, /12\.00|10\.000000|3\.000000/);
   const visible = renderBondsPage({ entries: entries(), transactions, visible: true });
-  assert.match(visible, /12\.00/); assert.match(visible, /3\.000000/); assert.match(visible, /&lt;img src=x&gt;/);
+  assert.match(visible, /12\.00/); assert.match(visible, /3\.00/); assert.match(visible, /&lt;img src=x&gt;/);
 });
 
 test('calculated transaction labels keep inferred confirmations distinct and leave pending records pending', () => {
@@ -143,7 +155,7 @@ test('calculated transaction labels keep inferred confirmations distinct and lea
   for (const label of ['推算净值', '推算份额', '推算净值日', '推算确认日']) assert.ok(calculated.includes(label));
   assert.doesNotMatch(calculated, /确认资料|已确认|确认净值|确认份额|10\.000000/);
   const pending = articles.find(article => article.includes('data-id="bond-pending-estimated"'));
-  assert.match(pending, /row-status[^>]*>待核验/);
+  assert.match(pending, /row-status[^>]*>待补全/);
   assert.match(pending, /待补确认信息 · 按流水推算/);
   assert.doesNotMatch(pending, /已确认/);
   const reported = articles.find(article => article.includes('data-id="bond-reported"'));
