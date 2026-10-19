@@ -1,0 +1,102 @@
+{
+  "train_start": "2010-08-18",
+  "train_end": "2024-12-31",
+  "test_start": "2025-01-02",
+  "test_end": "2025-12-31",
+  "train_hold": {
+    "rule": null,
+    "schedule": "annual",
+    "initial_only": false,
+    "twr_annualized_pct": 11.122860733559259,
+    "max_drawdown_pct": 50.602640686489075,
+    "calmar": 0.21980791086519458,
+    "regular_contributed_norm": 14.416666666666668,
+    "extra_contributed_norm": 0.0,
+    "extra_over_regular_pct": 0.0,
+    "peak_extra_over_regular_pct": 0.0,
+    "end_total_norm": 41.078931924109845,
+    "end_fund_weight_pct": 93.63741665955388,
+    "average_fund_weight_pct": 92.1148562006652,
+    "scheduled_buy_count": 29,
+    "tactical_buy_count": 0,
+    "tactical_sell_count": 0,
+    "cancelled_pending": 0,
+    "path_signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transaction_fees_norm": 0.0230298189563376,
+    "dividends_norm": 2.61368127903662,
+    "lag": 2,
+    "pending_order": null,
+    "pending_scheduled_order": null,
+    "pending_tactical_order": null,
+    "daily_buy_cap_norm": 0.5,
+    "redemption_settlement_workdays": 0,
+    "tactical_buy_signal_count": 0,
+    "completed_tactical_buy_order_count": 0,
+    "partial_tactical_buy_fill_count": 0,
+    "cancelled_tactical_buy_budget_norm": 0.0
+  },
+  "return_floor_pct": 11.122860733559259,
+  "eligible_count": 617,
+  "selected": {
+    "rule": [
+      0.6,
+      0.2,
+      0.5,
+      0.3
+    ],
+    "schedule": "annual",
+    "initial_only": false,
+    "twr_annualized_pct": 11.631997082183032,
+    "max_drawdown_pct": 37.405172640049244,
+    "calmar": 0.3109729553748617,
+    "regular_contributed_norm": 14.416666666666668,
+    "extra_contributed_norm": 1.4691292965522775,
+    "extra_over_regular_pct": 10.190492230420421,
+    "peak_extra_over_regular_pct": 30.40262591573327,
+    "end_total_norm": 48.549926242892084,
+    "end_fund_weight_pct": 53.26551205214729,
+    "average_fund_weight_pct": 85.86909954737311,
+    "scheduled_buy_count": 29,
+    "tactical_buy_count": 33,
+    "tactical_sell_count": 2,
+    "cancelled_pending": 0,
+    "path_signature": "20806886dc705503f4561589dcb12837f0ca944c98c2296674af7af92ba0fb60",
+    "transaction_fees_norm": 0.05069983057446113,
+    "dividends_norm": 2.8502438787195645,
+    "lag": 2,
+    "pending_order": null,
+    "pending_scheduled_order": null,
+    "pending_tactical_order": null,
+    "daily_buy_cap_norm": 0.5,
+    "redemption_settlement_workdays": 0,
+    "tactical_buy_signal_count": 4,
+    "completed_tactical_buy_order_count": 4,
+    "partial_tactical_buy_fill_count": 29,
+    "cancelled_tactical_buy_budget_norm": 0.0
+  },
+  "score_ties": {
+    "primary_count": 1,
+    "primary_rules": [
+      [
+        0.6,
+        0.2,
+        0.5,
+        0.3
+      ]
+    ],
+    "primary_path_count": 1,
+    "minimum_drawdown_count": 1,
+    "minimum_drawdown_rules": [
+      [
+        0.6,
+        0.2,
+        0.5,
+        0.3
+      ]
+    ],
+    "minimum_drawdown_path_count": 1
+  },
+  "no_candidate_fallback": "annual_buy_and_hold",
+  "test_not_evaluated_before_lock": true,
+  "full_grid_not_evaluated_before_lock": true
+}

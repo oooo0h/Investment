@@ -1,0 +1,100 @@
+{
+  "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006373&pageIndex=96&pageSize=20&startDate=&endDate=2026-10-15&_=1792300991736",
+  "captured_at": "2026-10-18T05:23:11.763Z",
+  "response": {
+    "Data": {
+      "LSJZList": [
+        {
+          "FSRQ": "2018-12-14",
+          "DWJZ": "1.0003",
+          "LJJZ": "1.0003",
+          "SDATE": null,
+          "ACTUALSYI": "",
+          "NAVTYPE": "1",
+          "JZZZL": "",
+          "SGZT": "封闭期",
+          "SHZT": "封闭期",
+          "FHFCZ": "",
+          "FHFCZ10": null,
+          "FHFCBZ": "",
+          "DTYPE": null,
+          "FHSP": ""
+        },
+        {
+          "FSRQ": "2018-12-07",
+          "DWJZ": "1.0002",
+          "LJJZ": "1.0002",
+          "SDATE": null,
+          "ACTUALSYI": "",
+          "NAVTYPE": "1",
+          "JZZZL": "",
+          "SGZT": "封闭期",
+          "SHZT": "封闭期",
+          "FHFCZ": "",
+          "FHFCZ10": null,
+          "FHFCBZ": "",
+          "DTYPE": null,
+          "FHSP": ""
+        },
+        {
+          "FSRQ": "2018-11-30",
+          "DWJZ": "1.0003",
+          "LJJZ": "1.0003",
+          "SDATE": null,
+          "ACTUALSYI": "",
+          "NAVTYPE": "1",
+          "JZZZL": "",
+          "SGZT": "封闭期",
+          "SHZT": "封闭期",
+          "FHFCZ": "",
+          "FHFCZ10": null,
+          "FHFCBZ": "",
+          "DTYPE": null,
+          "FHSP": ""
+        },
+        {
+          "FSRQ": "2018-11-23",
+          "DWJZ": "1.0001",
+          "LJJZ": "1.0001",
+          "SDATE": null,
+          "ACTUALSYI": "",
+          "NAVTYPE": "1",
+          "JZZZL": "",
+          "SGZT": "封闭期",
+          "SHZT": "封闭期",
+          "FHFCZ": "",
+          "FHFCZ10": null,
+          "FHFCBZ": "",
+          "DTYPE": null,
+          "FHSP": ""
+        },
+        {
+          "FSRQ": "2018-11-20",
+          "DWJZ": "1.0000",
+          "LJJZ": "1.0000",
+          "SDATE": null,
+          "ACTUALSYI": "",
+          "NAVTYPE": "1",
+          "JZZZL": "",
+          "SGZT": "封闭期",
+          "SHZT": "封闭期",
+          "FHFCZ": "",
+          "FHFCZ10": null,
+          "FHFCBZ": "",
+          "DTYPE": null,
+          "FHSP": ""
+        }
+      ],
+      "FundType": "007",
+      "SYType": null,
+      "isNewType": false,
+      "Feature": "311,320"
+    },
+    "ErrCode": 0,
+    "ErrMsg": null,
+    "TotalCount": 1905,
+    "Expansion": null,
+    "PageSize": 20,
+    "PageIndex": 96
+  }
+}

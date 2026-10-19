@@ -1,0 +1,19 @@
+{
+  "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=022459&pageIndex=25&pageSize=20&startDate=&endDate=2026-10-16&_=1792300994496",
+  "captured_at": "2026-10-18T05:23:14.519Z",
+  "response": {
+    "Data": {
+      "LSJZList": [],
+      "FundType": "001",
+      "SYType": null,
+      "isNewType": false,
+      "Feature": "030,031,050,051,053"
+    },
+    "ErrCode": 0,
+    "ErrMsg": null,
+    "TotalCount": 465,
+    "Expansion": null,
+    "PageSize": 20,
+    "PageIndex": 25
+  }
+}

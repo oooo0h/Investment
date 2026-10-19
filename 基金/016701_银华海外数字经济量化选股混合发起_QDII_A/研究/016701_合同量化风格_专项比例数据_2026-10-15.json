@@ -1,0 +1,287 @@
+{
+  "verified_on": "2026-10-15",
+  "snapshots": [
+    {
+      "date": "2024-12-31",
+      "nav_growth_vs_previous_yearend_pct": 2818.24,
+      "total_shares_growth_vs_previous_yearend_pct": 2241.53,
+      "stock_count": 42,
+      "top10_pct_nav": 59.56,
+      "mega7_pct_nav": 47.1,
+      "top10": [
+        {
+          "rank": 1,
+          "name": "苹果",
+          "code": "AAPLUS",
+          "weight_pct_nav": 7.88,
+          "issuer": "AAPL"
+        },
+        {
+          "rank": 2,
+          "name": "亚马逊",
+          "code": "AMZNUS",
+          "weight_pct_nav": 7.86,
+          "issuer": "AMZN"
+        },
+        {
+          "rank": 3,
+          "name": "Meta公司",
+          "code": "METAUS",
+          "weight_pct_nav": 7.83,
+          "issuer": "META"
+        },
+        {
+          "rank": 4,
+          "name": "微软公司",
+          "code": "MSFTUS",
+          "weight_pct_nav": 7.63,
+          "issuer": "MSFT"
+        },
+        {
+          "rank": 5,
+          "name": "英伟达",
+          "code": "NVDAUS",
+          "weight_pct_nav": 7.62,
+          "issuer": "NVDA"
+        },
+        {
+          "rank": 6,
+          "name": "谷歌",
+          "code": "GOOGLUS",
+          "weight_pct_nav": 4.98,
+          "issuer": "GOOGL"
+        },
+        {
+          "rank": 7,
+          "name": "博通公司",
+          "code": "AVGOUS",
+          "weight_pct_nav": 4.26,
+          "issuer": "AVGO"
+        },
+        {
+          "rank": 8,
+          "name": "ARISTA网络公司",
+          "code": "ANETUS",
+          "weight_pct_nav": 4.19,
+          "issuer": "ANET"
+        },
+        {
+          "rank": 9,
+          "name": "台积电",
+          "code": "TSMUS",
+          "weight_pct_nav": 4.01,
+          "issuer": "TSM"
+        },
+        {
+          "rank": 10,
+          "name": "特斯拉",
+          "code": "TSLAUS",
+          "weight_pct_nav": 3.3,
+          "issuer": "TSLA"
+        }
+      ],
+      "report_stock_table_start_page": 52,
+      "report_stock_table_end_page": 55,
+      "buy_pct_start_nav": 3258.77,
+      "sell_pct_start_nav": 1224.84,
+      "trade_summary_page": 58,
+      "region_pct_nav": {
+        "US": 75.4,
+        "HK": 3.8,
+        "equity_total": 79.2
+      }
+    },
+    {
+      "date": "2025-12-31",
+      "nav_growth_vs_previous_yearend_pct": 936.65,
+      "total_shares_growth_vs_previous_yearend_pct": 737.17,
+      "stock_count": 44,
+      "top10_pct_nav": 63.62,
+      "mega7_pct_nav": 52.46,
+      "top10": [
+        {
+          "rank": 1,
+          "name": "英伟达",
+          "code": "NVDAUS",
+          "weight_pct_nav": 9.43,
+          "issuer": "NVDA"
+        },
+        {
+          "rank": 2,
+          "name": "谷歌",
+          "code": "GOOGLUS",
+          "weight_pct_nav": 9.16,
+          "issuer": "GOOGL"
+        },
+        {
+          "rank": 3,
+          "name": "微软公司",
+          "code": "MSFTUS",
+          "weight_pct_nav": 8.84,
+          "issuer": "MSFT"
+        },
+        {
+          "rank": 4,
+          "name": "苹果",
+          "code": "AAPLUS",
+          "weight_pct_nav": 8.5,
+          "issuer": "AAPL"
+        },
+        {
+          "rank": 5,
+          "name": "亚马逊",
+          "code": "AMZNUS",
+          "weight_pct_nav": 6.75,
+          "issuer": "AMZN"
+        },
+        {
+          "rank": 6,
+          "name": "Meta公司",
+          "code": "METAUS",
+          "weight_pct_nav": 5.79,
+          "issuer": "META"
+        },
+        {
+          "rank": 7,
+          "name": "博通公司",
+          "code": "AVGOUS",
+          "weight_pct_nav": 4.85,
+          "issuer": "AVGO"
+        },
+        {
+          "rank": 8,
+          "name": "特斯拉",
+          "code": "TSLAUS",
+          "weight_pct_nav": 3.99,
+          "issuer": "TSLA"
+        },
+        {
+          "rank": 9,
+          "name": "美光科技公司",
+          "code": "MUUS",
+          "weight_pct_nav": 3.32,
+          "issuer": "MU"
+        },
+        {
+          "rank": 10,
+          "name": "超威半导体",
+          "code": "AMDUS",
+          "weight_pct_nav": 2.99,
+          "issuer": "AMD"
+        }
+      ],
+      "report_stock_table_start_page": 53,
+      "report_stock_table_end_page": 56,
+      "buy_pct_start_nav": 1122.12,
+      "sell_pct_start_nav": 336.3,
+      "trade_summary_page": 60,
+      "region_pct_nav": {
+        "US": 90.61,
+        "HK": 0.0,
+        "equity_total": 90.61
+      }
+    },
+    {
+      "date": "2026-06-30",
+      "nav_growth_vs_previous_yearend_pct": 58.4,
+      "total_shares_growth_vs_previous_yearend_pct": 25.35,
+      "stock_count": 47,
+      "top10_pct_nav": 54.96,
+      "mega7_pct_nav": 36.61,
+      "top10": [
+        {
+          "rank": 1,
+          "name": "英伟达",
+          "code": "NVDAUS",
+          "weight_pct_nav": 8.16,
+          "issuer": "NVDA"
+        },
+        {
+          "rank": 2,
+          "name": "谷歌",
+          "code": "GOOGLUS",
+          "weight_pct_nav": 7.42,
+          "issuer": "GOOGL"
+        },
+        {
+          "rank": 3,
+          "name": "苹果",
+          "code": "AAPLUS",
+          "weight_pct_nav": 6.27,
+          "issuer": "AAPL"
+        },
+        {
+          "rank": 4,
+          "name": "美光科技公司",
+          "code": "MUUS",
+          "weight_pct_nav": 6.14,
+          "issuer": "MU"
+        },
+        {
+          "rank": 5,
+          "name": "超威半导体",
+          "code": "AMDUS",
+          "weight_pct_nav": 5.43,
+          "issuer": "AMD"
+        },
+        {
+          "rank": 6,
+          "name": "英特尔",
+          "code": "INTCUS",
+          "weight_pct_nav": 5.41,
+          "issuer": "INTC"
+        },
+        {
+          "rank": 7,
+          "name": "亚马逊",
+          "code": "AMZNUS",
+          "weight_pct_nav": 4.45,
+          "issuer": "AMZN"
+        },
+        {
+          "rank": 8,
+          "name": "微软公司",
+          "code": "MSFTUS",
+          "weight_pct_nav": 4.31,
+          "issuer": "MSFT"
+        },
+        {
+          "rank": 9,
+          "name": "博通公司",
+          "code": "AVGOUS",
+          "weight_pct_nav": 4.06,
+          "issuer": "AVGO"
+        },
+        {
+          "rank": 10,
+          "name": "台积电",
+          "code": "TSMUS",
+          "weight_pct_nav": 3.31,
+          "issuer": "TSM"
+        }
+      ],
+      "report_stock_table_start_page": 42,
+      "report_stock_table_end_page": 46,
+      "buy_pct_start_nav": 66.27,
+      "sell_pct_start_nav": 37.55,
+      "trade_summary_page": 48,
+      "region_pct_nav": {
+        "US": 87.89,
+        "HK": 2.55,
+        "equity_total": 90.45
+      }
+    }
+  ],
+  "notes": [
+    "All ratios are public fund data. No account amounts.",
+    "Trade amount divided by beginning NAV is not a standard turnover rate; asset growth and net flows affect the ratio.",
+    "Industry classifications differ between annual and interim reports; do not infer sector changes by subtracting IT weights."
+  ],
+  "current_institutional_holder_fraction_pct_shares": 11.24,
+  "current_personal_holder_fraction_pct_shares": 88.76,
+  "current_A_institutional_holder_fraction_pct_shares": 19.05,
+  "current_A_personal_holder_fraction_pct_shares": 80.95,
+  "current_period_single_holder_at_least20pct": false,
+  "three_year_anniversary": "2026-03-15",
+  "asof20260630_nav_multiple_of_3yr_survival_threshold_approx": 35
+}

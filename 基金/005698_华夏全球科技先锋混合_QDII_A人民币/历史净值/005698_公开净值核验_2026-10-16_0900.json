@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-10-16T09:03:49+08:00",
+  "publication_time": null,
+  "source_note": "Exact release time unavailable. Data checked after 09:00; no claim of pre-09:00 availability.",
+  "data": {
+    "code": "005698",
+    "share_class": "A人民币",
+    "latest_nav_date": "2026-10-14",
+    "unit_nav": 2.3689,
+    "accumulated_nav": 2.3689,
+    "source_status": "official_website",
+    "sources": [
+      "https://www.chinaamc.com/fund/005698/index.shtml"
+    ],
+    "operation_day": "2026-10-15",
+    "transaction_nav_date_status": "pending_verification",
+    "since_operation_return_pct": null,
+    "return_status": "wait_for_baseline_NAV_and_actual_transaction_date"
+  }
+}

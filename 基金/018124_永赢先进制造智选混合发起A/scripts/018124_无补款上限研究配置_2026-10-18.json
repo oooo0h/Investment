@@ -1,0 +1,27 @@
+{
+  "code": "018124",
+  "name": "永赢先进制造智选混合发起A",
+  "cutoff": "2026-10-16",
+  "buy_fee": 0.0015,
+  "standard_buy_fee": 0.015,
+  "redemption_tiers": [
+    [
+      7,
+      0.015
+    ],
+    [
+      30,
+      0.0075
+    ],
+    [
+      180,
+      0.005
+    ]
+  ],
+  "fees_verified": true,
+  "subscription_open_date": "2023-05-22",
+  "funding_cap": null,
+  "redemption_settlement_workdays": 7,
+  "fee_evidence": "018124_量化数据与费率核验_2026-10-18.md",
+  "user_authorization": "2026-10-18 无补款上限设置"
+}

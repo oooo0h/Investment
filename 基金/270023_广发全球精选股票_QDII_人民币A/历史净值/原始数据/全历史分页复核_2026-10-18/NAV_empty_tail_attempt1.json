@@ -1,0 +1,10 @@
+{
+  "label": "NAV empty tail",
+  "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=196",
+  "attempt": 1,
+  "fetched_at": "2026-10-18T13:24:13.198+08:00",
+  "http_status": 200,
+  "server_date": "Sun, 18 Oct 2026 05:24:13 GMT",
+  "content_type": "application/json;charset=UTF-8",
+  "raw_text": "{\"errorno\":\"20000\",\"errormsg\":\"Success!\",\"data\":\"\",\"pagelines\":\"20\",\"curpage\":\"196\",\"totalrows\":\"0\",\"totalpages\":\"0\",\"memtime\":\"2026-10-18 13:24:13\",\"_cachetime\":\"2026-10-18T05:24:13.389Z\",\"_filtertime\":\"2026-10-18T05:24:13.389Z\",\"_lastfilter\":\"set-cache-time.js,override-nav-by-wcm.js\"}"
+}

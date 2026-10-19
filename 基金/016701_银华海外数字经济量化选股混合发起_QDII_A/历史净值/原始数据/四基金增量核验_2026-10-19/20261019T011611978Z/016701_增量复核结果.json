@@ -1,0 +1,55 @@
+{
+  "code": "016701",
+  "name": "银华海外数字经济量化选股混合发起_QDII_A",
+  "status": "unchanged",
+  "checked_at": "2026-10-19T01:16:12.418Z",
+  "execution_date": "2026-10-19",
+  "source": "东方财富/天天基金 f10/lsjz，沿用第三方主档；非管理人官网独立核验",
+  "source_total_count": 779,
+  "source_pages_fetched": 3,
+  "previous_last_date": "2026-10-15",
+  "latest_source_date": "2026-10-15",
+  "checked_dates": [
+    "2026-10-09",
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15"
+  ],
+  "window_first_date": "2026-09-10",
+  "window_records": 20,
+  "added_dates": [],
+  "revisions": [],
+  "conflicts": [],
+  "records": 779,
+  "first_date": "2023-03-15",
+  "last_date": "2026-10-15",
+  "json_path": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/016701_全部历史净值_截至2026-10-15.json",
+  "csv_path": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/016701_全部历史净值_截至2026-10-15.csv",
+  "json_sha256": "21f96f18f11dfbc834aae7d48cf45c0e81e1e2a5963f2f4e63346f46b3636311",
+  "csv_sha256": "4639d7f9eade9376c916de366a5a605142036089c4e941693753b244a4a75588",
+  "old_json_path": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/016701_全部历史净值_截至2026-10-15.json",
+  "old_csv_path": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/016701_全部历史净值_截至2026-10-15.csv",
+  "old_json_sha256": "21f96f18f11dfbc834aae7d48cf45c0e81e1e2a5963f2f4e63346f46b3636311",
+  "old_csv_sha256": "4639d7f9eade9376c916de366a5a605142036089c4e941693753b244a4a75588",
+  "missing_accumulated_nav_dates": [],
+  "raw_evidence": [
+    {
+      "path": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/原始数据/四基金增量核验_2026-10-19/20261019T011611978Z/016701_latest_page1_1792372572345.json",
+      "sha256": "1819fcea27f718236479ae1b7c2f331e8e87248d6154e6e58554fe67c3f9a235",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=1&pageSize=20&startDate=&endDate=&_=1792372572319"
+    },
+    {
+      "path": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/原始数据/四基金增量核验_2026-10-19/20261019T011611978Z/016701_2026-10-15_page1_1792372572383.json",
+      "sha256": "854acd5ca95f119ea5b3f97ae452f3f16805a101ca065acdefc1456583c8829b",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-15&_=1792372572347"
+    },
+    {
+      "path": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/原始数据/四基金增量核验_2026-10-19/20261019T011611978Z/016701_2026-10-15_page1_1792372572415.json",
+      "sha256": "a6b3d054aaeabb83f7424f038fed7d408ca4b80881cd84ab6fe794e2e9f5afd9",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-15&_=1792372572384"
+    }
+  ],
+  "previous_full_archive_evidence": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/016701_全历史分页复核结果.json",
+  "frozen_originals_unchanged": true
+}

@@ -1,0 +1,429 @@
+{
+  "as_of": "2026-06-30",
+  "verified_at": "2026-10-15",
+  "method": "Sum of minimum published NAV weights for matching direct-equity issuers. Alphabet GOOG and GOOGL share classes are consolidated at issuer level. No ETF look-through. Weights rounded to two decimals in public source PDFs.",
+  "funds": [
+    "017144",
+    "006373"
+  ],
+  "holdings_counts": {
+    "017144": 31,
+    "006373": 42
+  },
+  "holdings_rounded_weight_sums_nav_pct": {
+    "017144": 94.18,
+    "006373": 85.27
+  },
+  "common_issuers_count": 6,
+  "overlap_nav_pct": 10.78,
+  "common_issuers_weight_in_each_fund_nav_pct": {
+    "017144": 25.53,
+    "006373": 17.19
+  },
+  "shared_issuers": [
+    {
+      "issuer_key": "MRVL",
+      "name": "美满电子",
+      "017144_code": "MRVL",
+      "017144_weight_nav_pct": 9.83,
+      "006373_code": "MRVL",
+      "006373_weight_nav_pct": 1.58,
+      "minimum_weight_nav_pct": 1.58
+    },
+    {
+      "issuer_key": "AMD",
+      "name": "AMD",
+      "017144_code": "AMD",
+      "017144_weight_nav_pct": 6.3,
+      "006373_code": "AMD",
+      "006373_weight_nav_pct": 1.36,
+      "minimum_weight_nav_pct": 1.36
+    },
+    {
+      "issuer_key": "MU",
+      "name": "美光",
+      "017144_code": "MU",
+      "017144_weight_nav_pct": 5.99,
+      "006373_code": "MU",
+      "006373_weight_nav_pct": 8.42,
+      "minimum_weight_nav_pct": 5.99
+    },
+    {
+      "issuer_key": "NVDA",
+      "name": "英伟达",
+      "017144_code": "NVDA",
+      "017144_weight_nav_pct": 3.27,
+      "006373_code": "NVDA",
+      "006373_weight_nav_pct": 1.71,
+      "minimum_weight_nav_pct": 1.71
+    },
+    {
+      "issuer_key": "ALPHABET",
+      "name": "Alphabet",
+      "017144_code": "GOOGL",
+      "017144_weight_nav_pct": 0.09,
+      "006373_code": "GOOG",
+      "006373_weight_nav_pct": 3.21,
+      "minimum_weight_nav_pct": 0.09
+    },
+    {
+      "issuer_key": "TXN",
+      "name": "德州仪器",
+      "017144_code": "TXN",
+      "017144_weight_nav_pct": 0.05,
+      "006373_code": "TXN",
+      "006373_weight_nav_pct": 0.91,
+      "minimum_weight_nav_pct": 0.05
+    }
+  ],
+  "017144_full_direct_equity_weights": [
+    {
+      "code": "MRVL",
+      "name": "美满电子",
+      "weight_nav_pct": 9.83
+    },
+    {
+      "code": "TSLA",
+      "name": "特斯拉",
+      "weight_nav_pct": 9.61
+    },
+    {
+      "code": "NIO",
+      "name": "蔚来",
+      "weight_nav_pct": 9.17
+    },
+    {
+      "code": "RIVN",
+      "name": "Rivian",
+      "weight_nav_pct": 8.94
+    },
+    {
+      "code": "RACE",
+      "name": "法拉利",
+      "weight_nav_pct": 8.44
+    },
+    {
+      "code": "PONY",
+      "name": "小马智行",
+      "weight_nav_pct": 7.34
+    },
+    {
+      "code": "AMD",
+      "name": "AMD",
+      "weight_nav_pct": 6.3
+    },
+    {
+      "code": "MU",
+      "name": "美光",
+      "weight_nav_pct": 5.99
+    },
+    {
+      "code": "03750.HK",
+      "name": "宁德时代",
+      "weight_nav_pct": 5.61
+    },
+    {
+      "code": "AVGO",
+      "name": "博通",
+      "weight_nav_pct": 4.91
+    },
+    {
+      "code": "QCOM",
+      "name": "高通",
+      "weight_nav_pct": 3.85
+    },
+    {
+      "code": "ON",
+      "name": "安森美",
+      "weight_nav_pct": 3.77
+    },
+    {
+      "code": "CVNA",
+      "name": "Carvana",
+      "weight_nav_pct": 3.62
+    },
+    {
+      "code": "NVDA",
+      "name": "英伟达",
+      "weight_nav_pct": 3.27
+    },
+    {
+      "code": "STM",
+      "name": "意法半导体",
+      "weight_nav_pct": 2.08
+    },
+    {
+      "code": "UBER",
+      "name": "优步",
+      "weight_nav_pct": 0.33
+    },
+    {
+      "code": "NXPI",
+      "name": "恩智浦",
+      "weight_nav_pct": 0.29
+    },
+    {
+      "code": "ADI",
+      "name": "亚德诺",
+      "weight_nav_pct": 0.24
+    },
+    {
+      "code": "META",
+      "name": "Meta",
+      "weight_nav_pct": 0.1
+    },
+    {
+      "code": "GOOGL",
+      "name": "Alphabet",
+      "weight_nav_pct": 0.09
+    },
+    {
+      "code": "SWKS",
+      "name": "思佳讯",
+      "weight_nav_pct": 0.09
+    },
+    {
+      "code": "MSFT",
+      "name": "微软",
+      "weight_nav_pct": 0.08
+    },
+    {
+      "code": "GNTX",
+      "name": "镜泰",
+      "weight_nav_pct": 0.06
+    },
+    {
+      "code": "WRD",
+      "name": "文远知行",
+      "weight_nav_pct": 0.05
+    },
+    {
+      "code": "TXN",
+      "name": "德州仪器",
+      "weight_nav_pct": 0.05
+    },
+    {
+      "code": "XPEV",
+      "name": "小鹏",
+      "weight_nav_pct": 0.03
+    },
+    {
+      "code": "FWONK",
+      "name": "Liberty Formula One",
+      "weight_nav_pct": 0.02
+    },
+    {
+      "code": "LI",
+      "name": "理想",
+      "weight_nav_pct": 0.01
+    },
+    {
+      "code": "HSAI",
+      "name": "禾赛",
+      "weight_nav_pct": 0.01
+    },
+    {
+      "code": "LEA",
+      "name": "Lear",
+      "weight_nav_pct": 0.0
+    },
+    {
+      "code": "CHTR",
+      "name": "特许通讯",
+      "weight_nav_pct": 0.0
+    }
+  ],
+  "006373_full_direct_equity_weights": [
+    {
+      "code": "MU",
+      "weight_nav_pct": 8.42
+    },
+    {
+      "code": "MKSI",
+      "weight_nav_pct": 7.47
+    },
+    {
+      "code": "TSM",
+      "weight_nav_pct": 7.47
+    },
+    {
+      "code": "INTC",
+      "weight_nav_pct": 7.17
+    },
+    {
+      "code": "GLW",
+      "weight_nav_pct": 5.37
+    },
+    {
+      "code": "SNDK",
+      "weight_nav_pct": 4.38
+    },
+    {
+      "code": "LRCX",
+      "weight_nav_pct": 3.68
+    },
+    {
+      "code": "GOOG",
+      "weight_nav_pct": 3.21
+    },
+    {
+      "code": "6857.JP",
+      "weight_nav_pct": 2.75
+    },
+    {
+      "code": "NOK",
+      "weight_nav_pct": 2.66
+    },
+    {
+      "code": "TSEM",
+      "weight_nav_pct": 2.62
+    },
+    {
+      "code": "WOLF",
+      "weight_nav_pct": 2.33
+    },
+    {
+      "code": "KEYS",
+      "weight_nav_pct": 2.31
+    },
+    {
+      "code": "ASML",
+      "weight_nav_pct": 2.29
+    },
+    {
+      "code": "285A.JP",
+      "weight_nav_pct": 2.06
+    },
+    {
+      "code": "LITE",
+      "weight_nav_pct": 1.86
+    },
+    {
+      "code": "6525.JP",
+      "weight_nav_pct": 1.79
+    },
+    {
+      "code": "NVDA",
+      "weight_nav_pct": 1.71
+    },
+    {
+      "code": "6871.JP",
+      "weight_nav_pct": 1.65
+    },
+    {
+      "code": "FORM",
+      "weight_nav_pct": 1.61
+    },
+    {
+      "code": "MRVL",
+      "weight_nav_pct": 1.58
+    },
+    {
+      "code": "VSH",
+      "weight_nav_pct": 1.57
+    },
+    {
+      "code": "AMD",
+      "weight_nav_pct": 1.36
+    },
+    {
+      "code": "01651.HK",
+      "weight_nav_pct": 1.32
+    },
+    {
+      "code": "00668.HK",
+      "weight_nav_pct": 1.25
+    },
+    {
+      "code": "688347",
+      "weight_nav_pct": 1.13
+    },
+    {
+      "code": "SMTC",
+      "weight_nav_pct": 1.05
+    },
+    {
+      "code": "ETN",
+      "weight_nav_pct": 0.91
+    },
+    {
+      "code": "TXN",
+      "weight_nav_pct": 0.91
+    },
+    {
+      "code": "00522.HK",
+      "weight_nav_pct": 0.69
+    },
+    {
+      "code": "6368.JP",
+      "weight_nav_pct": 0.49
+    },
+    {
+      "code": "01415.HK",
+      "weight_nav_pct": 0.17
+    },
+    {
+      "code": "03393.HK",
+      "weight_nav_pct": 0.03
+    },
+    {
+      "code": "688820",
+      "weight_nav_pct": 0.0
+    },
+    {
+      "code": "688808",
+      "weight_nav_pct": 0.0
+    },
+    {
+      "code": "688797",
+      "weight_nav_pct": 0.0
+    },
+    {
+      "code": "688635",
+      "weight_nav_pct": 0.0
+    },
+    {
+      "code": "603459",
+      "weight_nav_pct": 0.0
+    },
+    {
+      "code": "688811",
+      "weight_nav_pct": 0.0
+    },
+    {
+      "code": "603407",
+      "weight_nav_pct": 0.0
+    },
+    {
+      "code": "603435",
+      "weight_nav_pct": 0.0
+    },
+    {
+      "code": "920189",
+      "weight_nav_pct": 0.0
+    }
+  ],
+  "sources": [
+    {
+      "fund": "017144",
+      "pdf": "D:/wd/数据分析/基金/017144_华宝海外新能源汽车股票发起式QDIIA/定期报告/2026/2026-08-31_华宝海外新能源汽车_2026年中期报告.pdf",
+      "pdf_pages": [
+        41,
+        42,
+        43,
+        44,
+        46
+      ]
+    },
+    {
+      "fund": "006373",
+      "pdf": "D:/wd/数据分析/基金/006373_国富全球科技互联混合_QDII_人民币A/定期报告/2026/2026-08-31_国富全球科技互联_2026年中期报告_AN202608311828779589.pdf",
+      "pdf_pages": [
+        46,
+        47,
+        48,
+        49
+      ]
+    }
+  ]
+}

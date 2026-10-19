@@ -1,0 +1,44 @@
+			<table class="table2">
+					<thead>
+						<tr class="bg-e3edf7">
+						<th>分红年度</th>
+						<th>权益登记日</th>
+						<th>除息日</th>
+						<th>红利发放日</th>
+						<th>每10份分红金额</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr><td colspan="5" style="">暂无数据</td></tr>
+					</tbody>
+				</table>
+				 <div class="pageBox ovh" style="margin-top: 20px;">
+					<div class="fr">
+						<ul class="pageList">
+							<li>当前第<span class="c-76a9d8"> 1 </span>页 /共0页</li>
+							<li>跳转至<input class="input" value="" id="navpagefh" onblur="showStyle();"  onkeypress="if(event.keyCode==13){goNavPagefh($('#navpagefh').val());}"/>页</li>
+							<li class="btn confirm"><a href="javascript:goNavPagefh($('#navpagefh').val());">确定</a></li>
+							<li class="btn prePage disabled"><a href="javascript:goNavPagefh('0');">上一页</a></li>
+							<li class="btn nextPage"><a href="javascript:goNavPagefh('2');">下一页</a></li>
+						</ul>
+					</div>
+				</div>
+		<script>
+			function showStyle(){
+				var pagefh=$('#navpagefh').val();
+				if(pagefh!=null||pagefh!=''){
+					 $("#navpagefh").attr("class","input");
+				}
+			};
+			function goNavPagefh(p){
+				var max = "0"; 
+				if(Number(p)>Number(max)){
+					return;
+				}
+				if(Number(p)<Number(1)){
+					return;  
+				}
+				getfundMeloncuttingList("006373",p,'5');
+			}
+			</script> 
+		

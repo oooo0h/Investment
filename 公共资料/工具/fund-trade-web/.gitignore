@@ -1,0 +1,7 @@
+dist/
+tmp/
+*.log
+ledger-source.local.json
+__pycache__/
+scripts/update-data.local.py
+*.pyc

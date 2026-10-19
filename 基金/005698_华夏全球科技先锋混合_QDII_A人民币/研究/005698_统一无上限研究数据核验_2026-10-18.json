@@ -1,0 +1,71 @@
+{
+  "schema": "unlimited-research-preflight-v1",
+  "fund_code": "005698",
+  "checked_at": "2026-10-18T14:09:02+08:00",
+  "private_account_data_read": false,
+  "source_path": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/005698_全部历史净值_截至2026-10-15.json",
+  "source_sha256": "1dde575b0d3275264d43290ad025cd69542d9de4f4ac316ba86b7eae5214aa8d",
+  "source_unchanged_from_previous_fee_audit": true,
+  "count": 1979,
+  "first_date": "2018-04-17",
+  "last_date": "2026-10-15",
+  "dates_unique_sorted": true,
+  "positive_finite_unit_nav": true,
+  "all_accumulated_nav_equal_unit_nav": true,
+  "all_source_events_empty": true,
+  "dividend_events": [],
+  "dividend_scope": "Empty manager dividend table, previous official annual-report review, and all local accumulated NAV equal unit NAV; no separate all-history split register",
+  "weekend_dates": [
+    "2018-06-30",
+    "2019-06-30",
+    "2022-12-31",
+    "2023-12-31",
+    "2024-06-30"
+  ],
+  "pre_open_observation_count": 9,
+  "ordinary_subscription_open_date": "2018-06-11",
+  "fee_model": {
+    "buy_fee": 0.0015,
+    "buy_fee_scope": "Uniform project static assumption, not historical actual discounts",
+    "standard_buy_fee": 0.015,
+    "redemption_tiers": [
+      [
+        7,
+        0.015
+      ],
+      [
+        30,
+        0.0075
+      ],
+      [
+        365,
+        0.005
+      ]
+    ],
+    "redemption_settlement_workdays": 10,
+    "settlement_scope": "Conservative statutory ordinary maximum T+10 common-market workdays proxy; actual shared-market calendar and exceptional extensions not reconstructed"
+  },
+  "prior_official_fee_evidence": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/研究/005698_年度策略数据与费率核验_2026-10-16.json",
+  "prior_official_fee_evidence_sha256": "8cc38b6d7aba4ff1a752f28a7dc8495ff87fdca0d79a5e87ffe342d2ff488544",
+  "live_official_review": {
+    "date": "2026-10-18",
+    "product_url": "https://www.chinaamc.com/fund/005698/index.shtml",
+    "prospectus_url": "https://www.chinaamc.com/upload/resources/file/2026/05/29/928e507e97ae4998986f27e068688a4f.pdf",
+    "prospectus_date": "2026-05-29",
+    "printed_pages": {
+      "opening_date_and_fifo": 74,
+      "standard_subscription_and_settlement": 76,
+      "redemption_tiers": 77
+    },
+    "opening_date_and_fee_values_match_prior_evidence": true,
+    "dividend_table_url": "https://www.chinaamc.com/product/fundLishifenhong.do?fundcode=005698",
+    "dividend_table_no_rows": true
+  },
+  "model_limitations": [
+    "Inception-date record is third-party-only in previous official full-pagination audit; ordinary subscriptions started later",
+    "Five weekend accounting NAV dates are not proven trade-opening dates",
+    "Unlimited hypothetical outside contributions do not assert the fund actually permits unlimited subscriptions",
+    "Historical subscription limits, suspensions, daily publication times and confirmation dates not fully reconstructed",
+    "No actual investor account amounts or transactions read or saved"
+  ]
+}

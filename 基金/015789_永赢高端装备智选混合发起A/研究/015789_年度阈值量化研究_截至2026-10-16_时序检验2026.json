@@ -1,0 +1,383 @@
+{
+  "lock_sha256": "309b7b45e5999c33000219204ebf2a988448487932eea702fbe3d1d7c18f4c31",
+  "lock": {
+    "train_start": "2022-07-15",
+    "train_end": "2025-12-31",
+    "test_start": "2026-01-05",
+    "test_end": "2026-10-16",
+    "train_hold": {
+      "rule": null,
+      "schedule": "annual",
+      "initial_only": false,
+      "twr_annualized_pct": 11.053201278667203,
+      "max_drawdown_pct": 51.61055682761819,
+      "calmar": 0.21416551105204001,
+      "regular_contributed_norm": 3.5,
+      "extra_contributed_norm": 0.0,
+      "extra_over_regular_pct": 0.0,
+      "peak_extra_over_regular_pct": 0.0,
+      "end_total_norm": 6.177203470700874,
+      "end_fund_weight_pct": 100.0,
+      "average_fund_weight_pct": 100.0,
+      "scheduled_buy_count": 4,
+      "tactical_buy_count": 0,
+      "tactical_sell_count": 0,
+      "cancelled_pending": 0,
+      "path_signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transaction_fees_norm": 0.0052421367948081166,
+      "dividends_norm": 0.0,
+      "lag": 2,
+      "pending_order": null
+    },
+    "return_floor_pct": 11.053201278667203,
+    "eligible_count": 19,
+    "selected": {
+      "rule": [
+        0.4,
+        0.4,
+        0.0,
+        0.3
+      ],
+      "schedule": "annual",
+      "initial_only": false,
+      "twr_annualized_pct": 11.053201278667203,
+      "max_drawdown_pct": 51.61055682761819,
+      "calmar": 0.21416551105204001,
+      "regular_contributed_norm": 3.5,
+      "extra_contributed_norm": 0.0,
+      "extra_over_regular_pct": 0.0,
+      "peak_extra_over_regular_pct": 0.0,
+      "end_total_norm": 6.177203470700874,
+      "end_fund_weight_pct": 100.0,
+      "average_fund_weight_pct": 100.0,
+      "scheduled_buy_count": 4,
+      "tactical_buy_count": 0,
+      "tactical_sell_count": 0,
+      "cancelled_pending": 0,
+      "path_signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "transaction_fees_norm": 0.0052421367948081166,
+      "dividends_norm": 0.0,
+      "lag": 2,
+      "pending_order": null
+    },
+    "score_ties": {
+      "primary_count": 19,
+      "primary_rules": [
+        [
+          0.4,
+          0.4,
+          0.0,
+          0.3
+        ],
+        [
+          0.4,
+          0.4,
+          0.0,
+          0.2
+        ],
+        [
+          0.4,
+          0.5,
+          0.0,
+          0.3
+        ],
+        [
+          0.4,
+          0.4,
+          0.0,
+          0.15
+        ],
+        [
+          0.4,
+          0.3,
+          0.0,
+          0.0
+        ],
+        [
+          0.4,
+          0.4,
+          0.0,
+          0.1
+        ],
+        [
+          0.4,
+          0.4,
+          0.0,
+          0.5
+        ],
+        [
+          0.4,
+          0.5,
+          0.0,
+          0.2
+        ],
+        [
+          0.4,
+          0.6,
+          0.0,
+          0.3
+        ],
+        [
+          0.4,
+          0.4,
+          0.0,
+          0.05
+        ],
+        [
+          0.4,
+          0.5,
+          0.0,
+          0.15
+        ],
+        [
+          0.4,
+          0.5,
+          0.0,
+          0.1
+        ],
+        [
+          0.4,
+          0.6,
+          0.0,
+          0.2
+        ],
+        [
+          0.4,
+          0.5,
+          0.0,
+          0.5
+        ],
+        [
+          0.4,
+          0.5,
+          0.0,
+          0.05
+        ],
+        [
+          0.4,
+          0.6,
+          0.0,
+          0.15
+        ],
+        [
+          0.4,
+          0.6,
+          0.0,
+          0.1
+        ],
+        [
+          0.4,
+          0.6,
+          0.0,
+          0.5
+        ],
+        [
+          0.4,
+          0.6,
+          0.0,
+          0.05
+        ]
+      ],
+      "primary_path_count": 1,
+      "minimum_drawdown_count": 19,
+      "minimum_drawdown_rules": [
+        [
+          0.4,
+          0.4,
+          0.0,
+          0.3
+        ],
+        [
+          0.4,
+          0.4,
+          0.0,
+          0.2
+        ],
+        [
+          0.4,
+          0.5,
+          0.0,
+          0.3
+        ],
+        [
+          0.4,
+          0.4,
+          0.0,
+          0.15
+        ],
+        [
+          0.4,
+          0.3,
+          0.0,
+          0.0
+        ],
+        [
+          0.4,
+          0.4,
+          0.0,
+          0.1
+        ],
+        [
+          0.4,
+          0.4,
+          0.0,
+          0.5
+        ],
+        [
+          0.4,
+          0.5,
+          0.0,
+          0.2
+        ],
+        [
+          0.4,
+          0.6,
+          0.0,
+          0.3
+        ],
+        [
+          0.4,
+          0.4,
+          0.0,
+          0.05
+        ],
+        [
+          0.4,
+          0.5,
+          0.0,
+          0.15
+        ],
+        [
+          0.4,
+          0.5,
+          0.0,
+          0.1
+        ],
+        [
+          0.4,
+          0.6,
+          0.0,
+          0.2
+        ],
+        [
+          0.4,
+          0.5,
+          0.0,
+          0.5
+        ],
+        [
+          0.4,
+          0.5,
+          0.0,
+          0.05
+        ],
+        [
+          0.4,
+          0.6,
+          0.0,
+          0.15
+        ],
+        [
+          0.4,
+          0.6,
+          0.0,
+          0.1
+        ],
+        [
+          0.4,
+          0.6,
+          0.0,
+          0.5
+        ],
+        [
+          0.4,
+          0.6,
+          0.0,
+          0.05
+        ]
+      ],
+      "minimum_drawdown_path_count": 1
+    },
+    "no_candidate_fallback": "annual_buy_and_hold",
+    "test_not_evaluated_before_lock": true,
+    "full_grid_not_evaluated_before_lock": true
+  },
+  "standalone_test": {
+    "rule": [
+      0.4,
+      0.4,
+      0.0,
+      0.3
+    ],
+    "schedule": "annual",
+    "initial_only": false,
+    "twr_annualized_pct": -45.82790231599228,
+    "max_drawdown_pct": 50.869346452731,
+    "calmar": -0.9008942617058517,
+    "regular_contributed_norm": 1.0,
+    "extra_contributed_norm": 0.0,
+    "extra_over_regular_pct": 0.0,
+    "peak_extra_over_regular_pct": 0.0,
+    "end_total_norm": 0.6208591821864895,
+    "end_fund_weight_pct": 100.0,
+    "average_fund_weight_pct": 100.0,
+    "scheduled_buy_count": 1,
+    "tactical_buy_count": 0,
+    "tactical_sell_count": 0,
+    "cancelled_pending": 0,
+    "path_signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transaction_fees_norm": 0.0014977533699451762,
+    "dividends_norm": 0.0,
+    "lag": 2,
+    "pending_order": null,
+    "xirr_pct": -45.80584981094206
+  },
+  "standalone_hold": {
+    "rule": null,
+    "schedule": "annual",
+    "initial_only": false,
+    "twr_annualized_pct": -45.82790231599228,
+    "max_drawdown_pct": 50.869346452731,
+    "calmar": -0.9008942617058517,
+    "regular_contributed_norm": 1.0,
+    "extra_contributed_norm": 0.0,
+    "extra_over_regular_pct": 0.0,
+    "peak_extra_over_regular_pct": 0.0,
+    "end_total_norm": 0.6208591821864895,
+    "end_fund_weight_pct": 100.0,
+    "average_fund_weight_pct": 100.0,
+    "scheduled_buy_count": 1,
+    "tactical_buy_count": 0,
+    "tactical_sell_count": 0,
+    "cancelled_pending": 0,
+    "path_signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transaction_fees_norm": 0.0014977533699451762,
+    "dividends_norm": 0.0,
+    "lag": 2,
+    "pending_order": null,
+    "xirr_pct": -45.80584981094206
+  },
+  "continuous_test": {
+    "start": "2026-01-05",
+    "end": "2026-10-16",
+    "twr_return_pct": -37.25226898455721,
+    "twr_annualized_pct": -44.5117058197466,
+    "max_drawdown_pct": 50.869346452731115,
+    "end_fund_weight_pct": 100.0,
+    "tactical_trades": 0,
+    "holding_and_cash_carried_from_training": true
+  },
+  "continuous_hold": {
+    "start": "2026-01-05",
+    "end": "2026-10-16",
+    "twr_return_pct": -37.25226898455721,
+    "twr_annualized_pct": -44.5117058197466,
+    "max_drawdown_pct": 50.869346452731115,
+    "end_fund_weight_pct": 100.0,
+    "tactical_trades": 0,
+    "holding_and_cash_carried_from_training": true
+  },
+  "continuous_peak_extra_over_regular_pct": 0.0,
+  "funding_cap_breached_after_lock": false,
+  "deployable_rule_claim": false
+}

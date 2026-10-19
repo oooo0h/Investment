@@ -1,0 +1,221 @@
+{
+  "schema": "public-nav-full-pagination-verification-v1",
+  "code": "019454",
+  "verified_at": "2026-10-18",
+  "source": "天天基金/东方财富 f10/lsjz；第三方单一供应商，非管理人官网全量独立核验",
+  "latest_source_date": "2026-10-16",
+  "pinned_end_date": "2026-10-16",
+  "source_total_count": 734,
+  "source_page_size": 20,
+  "source_page_count": 37,
+  "source_unique_dates": 734,
+  "all_pages_archived": true,
+  "all_page_counts_match": true,
+  "empty_tail_verified": true,
+  "first_page_stable": true,
+  "first_date": "2023-09-22",
+  "previous_last_date": "2026-10-15",
+  "previous_count": 733,
+  "previous_json_path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/019454_全部历史净值_截至2026-10-15.json",
+  "previous_json_sha256": "936c7fe74372d98b1b95864339cd1ee0450109fdc0b76d92c4bd067e6afb2975",
+  "previous_csv_sha256": "265b365bf46c00615fe437493faac25546242a55b3a461b1d45e4cf7923a5b21",
+  "missing_prior_dates": [],
+  "unit_nav_mismatch_dates": [],
+  "accumulated_nav_mismatch_dates": [],
+  "accumulated_nav_filled_dates": [],
+  "added_dates": [
+    "2026-10-16"
+  ],
+  "missing_accumulated_nav_dates": [],
+  "raw_pages": [
+    {
+      "page": 1,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page001.json",
+      "sha256": "857194a94f0087cc2e183555d7c0d520b1dab4f53648a9cf91453f128e9bd184"
+    },
+    {
+      "page": 2,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page002.json",
+      "sha256": "9d61710b62dd25656d79fede9bc13f30b0ab66877cdfe2bc1ffe1001e832de0b"
+    },
+    {
+      "page": 3,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page003.json",
+      "sha256": "4677cefc0d95772e4b1d1c8309fca7a5d79f047e4678ebb1004b78807ad56a72"
+    },
+    {
+      "page": 4,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page004.json",
+      "sha256": "d9b6dff630466cdfb90026bfa8c1ad167319fb804349e1666587c7fdc817993f"
+    },
+    {
+      "page": 5,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page005.json",
+      "sha256": "383656d600e0949400d12bb5e9899a0bd2d9d4bed07b08da778714ddeddd10db"
+    },
+    {
+      "page": 6,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page006.json",
+      "sha256": "e76f3bea72bc18f996dc17b53e700a14978254353969f4a0a2ccee63b921c700"
+    },
+    {
+      "page": 7,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page007.json",
+      "sha256": "dd66b8c886b4c0abc72b2dca4d0566a09ec95d7c75b8cc3772e9f598e072646b"
+    },
+    {
+      "page": 8,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page008.json",
+      "sha256": "2869c8acc6be9c9b9225da5c4b9ba14a9c3a0f212e52feae90667e14b7a8fd35"
+    },
+    {
+      "page": 9,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page009.json",
+      "sha256": "39e21aa191d271f2d76e39f994b8a30bd34bb94c403210be39964f44702c167e"
+    },
+    {
+      "page": 10,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page010.json",
+      "sha256": "a666b8c2a8d2321a6f5d16816c6fda7cdf423797af7f473addf9c8f5d511f8bb"
+    },
+    {
+      "page": 11,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page011.json",
+      "sha256": "3f314b9c0bc84fcd9638bf4a35a4bb1470500bf4126c4fb27d873ba909e9b84e"
+    },
+    {
+      "page": 12,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page012.json",
+      "sha256": "1e7b3c8c67341aaf805a21371279e7e5aa8a75ea373d4089588a4335321716d6"
+    },
+    {
+      "page": 13,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page013.json",
+      "sha256": "226671402f0f31a9af2cc3e1deb5e43f1cad1ea086abcfd7264266d2b69ca494"
+    },
+    {
+      "page": 14,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page014.json",
+      "sha256": "2d69216831d64471d5da0452f6860dad9687bf269c783adbe1f55c4606c6b825"
+    },
+    {
+      "page": 15,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page015.json",
+      "sha256": "f42bb8aeaffec8505444f470750d8451334827fcacfade161a8bcdc548d16d72"
+    },
+    {
+      "page": 16,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page016.json",
+      "sha256": "ea2f5c1dbae3c62f1bd14a0d9eec956bf2ef7d09848f97058b9afa317c71123a"
+    },
+    {
+      "page": 17,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page017.json",
+      "sha256": "8f57cbb3226d969114ac0e28ba174cba0e979199d6e8d686a90e1b5c96528184"
+    },
+    {
+      "page": 18,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page018.json",
+      "sha256": "08c89420876811df5a081a568dceb82bf5961b28361fab9fa1e0f6932c3f4190"
+    },
+    {
+      "page": 19,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page019.json",
+      "sha256": "4bf33327ac27f7b9703561227588bf95ce6c9f6c536b8b1d97e2c64a144249f2"
+    },
+    {
+      "page": 20,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page020.json",
+      "sha256": "a9839e48bf1cefbc728e6585de4cdb0fe0ec6135d8f2f250defad2f1b01cf7c6"
+    },
+    {
+      "page": 21,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page021.json",
+      "sha256": "88422665940e91a935b4a6d146533ee1e30a641b3da7eeaba685bb461914543d"
+    },
+    {
+      "page": 22,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page022.json",
+      "sha256": "6ee410fa1f05645472da23bcc124e041548d52532eaaf0346c8b7f1724e32279"
+    },
+    {
+      "page": 23,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page023.json",
+      "sha256": "977eb2a33bdeb2fae9f05877bc74bd104480aa99cd6e799d2902d6a4a69bad47"
+    },
+    {
+      "page": 24,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page024.json",
+      "sha256": "5d520a9d759eee7118b5323f85dece8b01b36921906abc9a36ef9f0cf050494a"
+    },
+    {
+      "page": 25,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page025.json",
+      "sha256": "f74a41b91fd687abad5ecb1c71169a6d84b4dc12040feb656484236a824b39e0"
+    },
+    {
+      "page": 26,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page026.json",
+      "sha256": "0aa368800b13f68a8621e33667f05d442421a66492a919c2eb9735f5629b8f55"
+    },
+    {
+      "page": 27,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page027.json",
+      "sha256": "0ca44ef5ba7cb2b5cebf8d7fbee74ba4d83b2fbf2373ea140cead696a8dc9418"
+    },
+    {
+      "page": 28,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page028.json",
+      "sha256": "7cb7d9ad78957810ae323da2891f765f661ef965f94bc765cbaa48e2c7698885"
+    },
+    {
+      "page": 29,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page029.json",
+      "sha256": "dd064bce23463261b919a5dfbc7ee0a3fb6ed11b6fe0b98b180f7bba929cd605"
+    },
+    {
+      "page": 30,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page030.json",
+      "sha256": "f6a8bddcbf0061d23ef5228ca15d596f5ea7b3f211936f17ef9f5a98c6c28101"
+    },
+    {
+      "page": 31,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page031.json",
+      "sha256": "e843c25c1166059da809dfec3c116f883698b2223da8dd531a2eb21eb808eb14"
+    },
+    {
+      "page": 32,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page032.json",
+      "sha256": "87d6a3f23acc3b9e2a8143c5553958bca1a0e09af6b3d22512bee5cc5bd445db"
+    },
+    {
+      "page": 33,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page033.json",
+      "sha256": "73b55ad1433223dd2c0750e77cebe90771cc5f11a0f69248abb5cd71271b301f"
+    },
+    {
+      "page": 34,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page034.json",
+      "sha256": "f1e969457293972ab9d80ea3e26284517fd12c6084d3af2b064efa96fba056f2"
+    },
+    {
+      "page": 35,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page035.json",
+      "sha256": "9d1e3f653694ceddb77a92beb9487600b3c1827d79d9132fccafe967befc0482"
+    },
+    {
+      "page": 36,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page036.json",
+      "sha256": "5b92aadd2f9e77e6263efbd428bc0b1beb303f562d933fa360902643734fafb2"
+    },
+    {
+      "page": 37,
+      "path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_lsjz_page037.json",
+      "sha256": "ebddee6c9aed84c47ea2a0d17de769ca02b79b06c49af6096ad9e90165f6730d"
+    }
+  ],
+  "json_path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/019454_全部历史净值_截至2026-10-16.json",
+  "csv_path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/019454_全部历史净值_截至2026-10-16.csv",
+  "new_dataset": true,
+  "records": 734
+}

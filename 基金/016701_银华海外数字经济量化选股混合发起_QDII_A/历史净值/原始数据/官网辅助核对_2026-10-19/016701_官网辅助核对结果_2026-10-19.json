@@ -1,0 +1,15 @@
+{
+  "schema": "public-nav-official-auxiliary-check-v1",
+  "code": "016701",
+  "name": "银华海外数字经济量化选股混合发起(QDII)A",
+  "recorded_at": "2026-10-19T01:17:44.365Z",
+  "url": "https://www.yhfund.com.cn/main/home/index.shtml",
+  "status": "auxiliary_source_unavailable",
+  "observed_http_status": 521,
+  "attempts_in_this_run": 2,
+  "reason": "官网首页的HTML跳转目标两次返回HTTP521；有限重试后停止。未取得可核验官网净值。",
+  "latest_official_nav_date": null,
+  "comparison_scope": "官网辅助核对未完成；不得将此失败当作主档更新失败或尚未披露的证明",
+  "source_relationship": "管理人官网，独立于既有东方财富/天天基金主档供应商",
+  "main_dataset_modified": false
+}

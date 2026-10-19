@@ -1,0 +1,723 @@
+{
+  "holdings_date": "2026-06-30",
+  "method": "Same issuer; Alphabet GOOG and GOOGL combined; sum of minimum NAV weights; published rounded two-decimal weights; direct stocks and ADRs only, no ETF look-through, bonds or cash.",
+  "source_paths": {
+    "161620": "D:\\wd\\数据分析\\基金\\161620_融通核心价值混合QDIIA\\定期报告\\2026\\2026-08-28_融通核心价值混合QDII_2026年中期报告.pdf",
+    "006373": "D:\\wd\\数据分析\\基金\\006373_国富全球科技互联混合_QDII_人民币A\\定期报告\\2026\\2026-08-31_国富全球科技互联_2026年中期报告_AN202608311828779589.pdf"
+  },
+  "stock_counts": {
+    "161620": 43,
+    "006373": 42
+  },
+  "direct_weight_sums_pct": {
+    "161620": 80.26,
+    "006373": 85.27
+  },
+  "common_issuer_count": 11,
+  "overlap_pct_of_nav": 17.85,
+  "common_holdings": [
+    {
+      "issuer": "ALPHABET",
+      "name": "ALPHABET公司",
+      "codes": {
+        "161620": [
+          "GOOGL US"
+        ],
+        "006373": [
+          "GOOG US"
+        ]
+      },
+      "weight_pct": {
+        "161620": 2.81,
+        "006373": 3.21
+      },
+      "minimum_weight_pct": 2.81
+    },
+    {
+      "issuer": "INTC US",
+      "name": "英特尔公司",
+      "codes": {
+        "161620": [
+          "INTC US"
+        ],
+        "006373": [
+          "INTC US"
+        ]
+      },
+      "weight_pct": {
+        "161620": 2.42,
+        "006373": 7.17
+      },
+      "minimum_weight_pct": 2.42
+    },
+    {
+      "issuer": "LRCX US",
+      "name": "泛林集团",
+      "codes": {
+        "161620": [
+          "LRCX US"
+        ],
+        "006373": [
+          "LRCX US"
+        ]
+      },
+      "weight_pct": {
+        "161620": 2.39,
+        "006373": 3.68
+      },
+      "minimum_weight_pct": 2.39
+    },
+    {
+      "issuer": "ASML US",
+      "name": "阿斯麦控股公司",
+      "codes": {
+        "161620": [
+          "ASML US"
+        ],
+        "006373": [
+          "ASML US"
+        ]
+      },
+      "weight_pct": {
+        "161620": 3.08,
+        "006373": 2.29
+      },
+      "minimum_weight_pct": 2.29
+    },
+    {
+      "issuer": "NVDA US",
+      "name": "英伟达",
+      "codes": {
+        "161620": [
+          "NVDA US"
+        ],
+        "006373": [
+          "NVDA US"
+        ]
+      },
+      "weight_pct": {
+        "161620": 2.75,
+        "006373": 1.71
+      },
+      "minimum_weight_pct": 1.71
+    },
+    {
+      "issuer": "MU US",
+      "name": "美光科技股份有限公司",
+      "codes": {
+        "161620": [
+          "MU US"
+        ],
+        "006373": [
+          "MU US"
+        ]
+      },
+      "weight_pct": {
+        "161620": 1.68,
+        "006373": 8.42
+      },
+      "minimum_weight_pct": 1.68
+    },
+    {
+      "issuer": "AMD US",
+      "name": "AMD公司",
+      "codes": {
+        "161620": [
+          "AMD US"
+        ],
+        "006373": [
+          "AMD US"
+        ]
+      },
+      "weight_pct": {
+        "161620": 2.02,
+        "006373": 1.36
+      },
+      "minimum_weight_pct": 1.36
+    },
+    {
+      "issuer": "SNDK US",
+      "name": "闪迪公司/特拉华州",
+      "codes": {
+        "161620": [
+          "SNDK US"
+        ],
+        "006373": [
+          "SNDK US"
+        ]
+      },
+      "weight_pct": {
+        "161620": 1.3,
+        "006373": 4.38
+      },
+      "minimum_weight_pct": 1.3
+    },
+    {
+      "issuer": "TXN US",
+      "name": "德州仪器公司",
+      "codes": {
+        "161620": [
+          "TXN US"
+        ],
+        "006373": [
+          "TXN US"
+        ]
+      },
+      "weight_pct": {
+        "161620": 3.07,
+        "006373": 0.91
+      },
+      "minimum_weight_pct": 0.91
+    },
+    {
+      "issuer": "MRVL US",
+      "name": "美满电子",
+      "codes": {
+        "161620": [
+          "MRVL US"
+        ],
+        "006373": [
+          "MRVL US"
+        ]
+      },
+      "weight_pct": {
+        "161620": 0.51,
+        "006373": 1.58
+      },
+      "minimum_weight_pct": 0.51
+    },
+    {
+      "issuer": "LITE US",
+      "name": "Lumentum控股股份有限公司",
+      "codes": {
+        "161620": [
+          "LITE US"
+        ],
+        "006373": [
+          "LITE US"
+        ]
+      },
+      "weight_pct": {
+        "161620": 0.47,
+        "006373": 1.86
+      },
+      "minimum_weight_pct": 0.47
+    }
+  ],
+  "all_direct_holdings": {
+    "161620": [
+      {
+        "issuer": "ASML US",
+        "code": "ASML US",
+        "name": "阿斯麦控股公司",
+        "weight_pct": 3.08
+      },
+      {
+        "issuer": "TXN US",
+        "code": "TXN US",
+        "name": "德州仪器公司",
+        "weight_pct": 3.07
+      },
+      {
+        "issuer": "MCHP US",
+        "code": "MCHP US",
+        "name": "微芯科技股份有限公司",
+        "weight_pct": 3.04
+      },
+      {
+        "issuer": "ADI US",
+        "code": "ADI US",
+        "name": "亚德诺半导体公司",
+        "weight_pct": 3.01
+      },
+      {
+        "issuer": "TER US",
+        "code": "TER US",
+        "name": "泰瑞达",
+        "weight_pct": 3.0
+      },
+      {
+        "issuer": "NXPI US",
+        "code": "NXPI US",
+        "name": "恩智浦半导体公司",
+        "weight_pct": 2.99
+      },
+      {
+        "issuer": "AMAT US",
+        "code": "AMAT US",
+        "name": "应用材料公司",
+        "weight_pct": 2.98
+      },
+      {
+        "issuer": "WDC US",
+        "code": "WDC US",
+        "name": "西部数据公司",
+        "weight_pct": 2.9
+      },
+      {
+        "issuer": "STX US",
+        "code": "STX US",
+        "name": "SeagateTechnology控股公共有限公司",
+        "weight_pct": 2.85
+      },
+      {
+        "issuer": "ALPHABET",
+        "code": "GOOGL US",
+        "name": "ALPHABET公司",
+        "weight_pct": 2.81
+      },
+      {
+        "issuer": "MPWR US",
+        "code": "MPWR US",
+        "name": "芯源系统有限公司",
+        "weight_pct": 2.76
+      },
+      {
+        "issuer": "QCOM US",
+        "code": "QCOM US",
+        "name": "高通公司",
+        "weight_pct": 2.76
+      },
+      {
+        "issuer": "NVDA US",
+        "code": "NVDA US",
+        "name": "英伟达",
+        "weight_pct": 2.75
+      },
+      {
+        "issuer": "AVGO US",
+        "code": "AVGO US",
+        "name": "博通股份",
+        "weight_pct": 2.69
+      },
+      {
+        "issuer": "AMZN US",
+        "code": "AMZN US",
+        "name": "亚马逊公司",
+        "weight_pct": 2.69
+      },
+      {
+        "issuer": "CSCO US",
+        "code": "CSCO US",
+        "name": "思科公司",
+        "weight_pct": 2.66
+      },
+      {
+        "issuer": "BKR US",
+        "code": "BKR US",
+        "name": "贝克休斯公司",
+        "weight_pct": 2.61
+      },
+      {
+        "issuer": "KLAC US",
+        "code": "KLAC US",
+        "name": "科磊公司",
+        "weight_pct": 2.54
+      },
+      {
+        "issuer": "SNPS US",
+        "code": "SNPS US",
+        "name": "新思科技公司",
+        "weight_pct": 2.52
+      },
+      {
+        "issuer": "INTC US",
+        "code": "INTC US",
+        "name": "英特尔公司",
+        "weight_pct": 2.42
+      },
+      {
+        "issuer": "LRCX US",
+        "code": "LRCX US",
+        "name": "泛林集团",
+        "weight_pct": 2.39
+      },
+      {
+        "issuer": "CDNS US",
+        "code": "CDNS US",
+        "name": "铿腾电子科技有限公司",
+        "weight_pct": 2.28
+      },
+      {
+        "issuer": "AMD US",
+        "code": "AMD US",
+        "name": "AMD公司",
+        "weight_pct": 2.02
+      },
+      {
+        "issuer": "MU US",
+        "code": "MU US",
+        "name": "美光科技股份有限公司",
+        "weight_pct": 1.68
+      },
+      {
+        "issuer": "FTNT US",
+        "code": "FTNT US",
+        "name": "飞塔信息",
+        "weight_pct": 1.38
+      },
+      {
+        "issuer": "MSFT US",
+        "code": "MSFT US",
+        "name": "微软公司",
+        "weight_pct": 1.32
+      },
+      {
+        "issuer": "SNDK US",
+        "code": "SNDK US",
+        "name": "闪迪公司/特拉华州",
+        "weight_pct": 1.3
+      },
+      {
+        "issuer": "CRWV US",
+        "code": "CRWV US",
+        "name": "CoreWeave股份有限公司",
+        "weight_pct": 1.29
+      },
+      {
+        "issuer": "FAST US",
+        "code": "FAST US",
+        "name": "法思诺公司",
+        "weight_pct": 1.18
+      },
+      {
+        "issuer": "PCAR US",
+        "code": "PCAR US",
+        "name": "帕卡公司",
+        "weight_pct": 0.91
+      },
+      {
+        "issuer": "META US",
+        "code": "META US",
+        "name": "Meta平台股份有限公司",
+        "weight_pct": 0.88
+      },
+      {
+        "issuer": "LIN US",
+        "code": "LIN US",
+        "name": "林德公司",
+        "weight_pct": 0.87
+      },
+      {
+        "issuer": "AMGN US",
+        "code": "AMGN US",
+        "name": "安进公司",
+        "weight_pct": 0.84
+      },
+      {
+        "issuer": "GILD US",
+        "code": "GILD US",
+        "name": "吉利德科学公司",
+        "weight_pct": 0.82
+      },
+      {
+        "issuer": "NBIS US",
+        "code": "NBIS US",
+        "name": "Nebius集团股份有限公司",
+        "weight_pct": 0.79
+      },
+      {
+        "issuer": "PANW US",
+        "code": "PANW US",
+        "name": "派拓网络公司",
+        "weight_pct": 0.63
+      },
+      {
+        "issuer": "DDOG US",
+        "code": "DDOG US",
+        "name": "数据狗",
+        "weight_pct": 0.59
+      },
+      {
+        "issuer": "CRWD US",
+        "code": "CRWD US",
+        "name": "CrowdStrike控",
+        "weight_pct": 0.55
+      },
+      {
+        "issuer": "ALAB US",
+        "code": "ALAB US",
+        "name": "AsteraLabs股份有限公司",
+        "weight_pct": 0.54
+      },
+      {
+        "issuer": "MRVL US",
+        "code": "MRVL US",
+        "name": "美满电子",
+        "weight_pct": 0.51
+      },
+      {
+        "issuer": "LITE US",
+        "code": "LITE US",
+        "name": "Lumentum控股股份有限公司",
+        "weight_pct": 0.47
+      },
+      {
+        "issuer": "AAPL US",
+        "code": "AAPL US",
+        "name": "苹果公司",
+        "weight_pct": 0.45
+      },
+      {
+        "issuer": "ARM US",
+        "code": "ARM US",
+        "name": "ARM控股公共有限公司",
+        "weight_pct": 0.44
+      }
+    ],
+    "006373": [
+      {
+        "issuer": "MU US",
+        "code": "MU US",
+        "name": "美光科技股份有限公司",
+        "weight_pct": 8.42
+      },
+      {
+        "issuer": "MKSI US",
+        "code": "MKSI US",
+        "name": "MKS股份有限公司",
+        "weight_pct": 7.47
+      },
+      {
+        "issuer": "TSM UN",
+        "code": "TSM UN",
+        "name": "台湾积体电路制造股份有限公司",
+        "weight_pct": 7.47
+      },
+      {
+        "issuer": "INTC US",
+        "code": "INTC US",
+        "name": "英特尔公司",
+        "weight_pct": 7.17
+      },
+      {
+        "issuer": "GLW US",
+        "code": "GLW US",
+        "name": "康宁公司",
+        "weight_pct": 5.37
+      },
+      {
+        "issuer": "SNDK US",
+        "code": "SNDK US",
+        "name": "闪迪公司/特拉华州",
+        "weight_pct": 4.38
+      },
+      {
+        "issuer": "LRCX US",
+        "code": "LRCX US",
+        "name": "泛林集团",
+        "weight_pct": 3.68
+      },
+      {
+        "issuer": "ALPHABET",
+        "code": "GOOG US",
+        "name": "Alphabet股份有限公司",
+        "weight_pct": 3.21
+      },
+      {
+        "issuer": "6857 JP",
+        "code": "6857 JP",
+        "name": "爱德万测试",
+        "weight_pct": 2.75
+      },
+      {
+        "issuer": "NOK US",
+        "code": "NOK US",
+        "name": "诺基亚",
+        "weight_pct": 2.66
+      },
+      {
+        "issuer": "TSEM US",
+        "code": "TSEM US",
+        "name": "塔尔半导体有限公司",
+        "weight_pct": 2.62
+      },
+      {
+        "issuer": "WOLF US",
+        "code": "WOLF US",
+        "name": "Wolfspeed股份有限公司",
+        "weight_pct": 2.33
+      },
+      {
+        "issuer": "KEYS US",
+        "code": "KEYS US",
+        "name": "是德科技",
+        "weight_pct": 2.31
+      },
+      {
+        "issuer": "ASML US",
+        "code": "ASML US",
+        "name": "阿斯麦控股公司",
+        "weight_pct": 2.29
+      },
+      {
+        "issuer": "285A JP",
+        "code": "285A JP",
+        "name": "铠侠控股株式会社",
+        "weight_pct": 2.06
+      },
+      {
+        "issuer": "LITE US",
+        "code": "LITE US",
+        "name": "Lumentum控股股份有限公司",
+        "weight_pct": 1.86
+      },
+      {
+        "issuer": "6525 JT",
+        "code": "6525 JT",
+        "name": "国际电气株式会社",
+        "weight_pct": 1.79
+      },
+      {
+        "issuer": "NVDA US",
+        "code": "NVDA US",
+        "name": "英伟达公司",
+        "weight_pct": 1.71
+      },
+      {
+        "issuer": "6871 JP",
+        "code": "6871 JP",
+        "name": "Micronics日本有限公司",
+        "weight_pct": 1.65
+      },
+      {
+        "issuer": "FORM US",
+        "code": "FORM US",
+        "name": "Formfactor股份有限公司",
+        "weight_pct": 1.61
+      },
+      {
+        "issuer": "MRVL US",
+        "code": "MRVL US",
+        "name": "美满电子科技公司",
+        "weight_pct": 1.58
+      },
+      {
+        "issuer": "VSH US",
+        "code": "VSH US",
+        "name": "威世公司",
+        "weight_pct": 1.57
+      },
+      {
+        "issuer": "AMD US",
+        "code": "AMD US",
+        "name": "AMD公司",
+        "weight_pct": 1.36
+      },
+      {
+        "issuer": "1651 HK",
+        "code": "1651 HK",
+        "name": "津上精密机床(中国)有限公司",
+        "weight_pct": 1.32
+      },
+      {
+        "issuer": "668 HK",
+        "code": "668 HK",
+        "name": "安克创新科技股份有限公司",
+        "weight_pct": 1.25
+      },
+      {
+        "issuer": "688347",
+        "code": "688347",
+        "name": "华虹宏力半导体有限公司",
+        "weight_pct": 1.13
+      },
+      {
+        "issuer": "SMTC US",
+        "code": "SMTC US",
+        "name": "Semtech公司",
+        "weight_pct": 1.05
+      },
+      {
+        "issuer": "ETN US",
+        "code": "ETN US",
+        "name": "伊顿公共有限公司",
+        "weight_pct": 0.91
+      },
+      {
+        "issuer": "TXN US",
+        "code": "TXN US",
+        "name": "德州仪器公司",
+        "weight_pct": 0.91
+      },
+      {
+        "issuer": "522 HK",
+        "code": "522 HK",
+        "name": "ASMPT公司",
+        "weight_pct": 0.69
+      },
+      {
+        "issuer": "6368 JP",
+        "code": "6368 JP",
+        "name": "奥加诺株式会社",
+        "weight_pct": 0.49
+      },
+      {
+        "issuer": "1415 HK",
+        "code": "1415 HK",
+        "name": "高伟电子控股有限公司",
+        "weight_pct": 0.17
+      },
+      {
+        "issuer": "3393 HK",
+        "code": "3393 HK",
+        "name": "威胜控股有限公司",
+        "weight_pct": 0.03
+      },
+      {
+        "issuer": "688820",
+        "code": "688820",
+        "name": "盛合晶微半导体有限公司",
+        "weight_pct": 0.0
+      },
+      {
+        "issuer": "688808",
+        "code": "688808",
+        "name": "苏州联讯仪器股份有限公司",
+        "weight_pct": 0.0
+      },
+      {
+        "issuer": "688797",
+        "code": "688797",
+        "name": "重庆臻宝科技股份有限公司",
+        "weight_pct": 0.0
+      },
+      {
+        "issuer": "688635",
+        "code": "688635",
+        "name": "武汉长进光子技术股份有限公司",
+        "weight_pct": 0.0
+      },
+      {
+        "issuer": "603459",
+        "code": "603459",
+        "name": "江西红板科技股份有限公司",
+        "weight_pct": 0.0
+      },
+      {
+        "issuer": "688811",
+        "code": "688811",
+        "name": "有研金属复合材料（北京）股份公司",
+        "weight_pct": 0.0
+      },
+      {
+        "issuer": "603407",
+        "code": "603407",
+        "name": "长裕控股集团股份有限公司",
+        "weight_pct": 0.0
+      },
+      {
+        "issuer": "603435",
+        "code": "603435",
+        "name": "泉州嘉德利电子材料股份公司",
+        "weight_pct": 0.0
+      },
+      {
+        "issuer": "920189",
+        "code": "920189",
+        "name": "北京康美特科技股份有限公司",
+        "weight_pct": 0.0
+      }
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "schema": "public-nav-official-auxiliary-check-v1",
+  "code": "005698",
+  "name": "华夏全球科技先锋混合(QDII)A(人民币)",
+  "checked_at": "2026-10-19T01:17:43.373Z",
+  "url": "https://accountquery.chinaamc.com/product/fundLishijingzhi.do?fundcode=005698",
+  "http_status": 200,
+  "evidence_type": "管理人官网直接HTTP响应HTML",
+  "raw_evidence": {
+    "path": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/原始数据/官网辅助核对_2026-10-19/005698_官网近期历史净值_2026-10-19.html",
+    "sha256": "65b78ab83f92bd2d1920cbfea7610cafa05457d2b07d004f21ffea700e048323",
+    "bytes": 15113
+  },
+  "latest_official_nav_date": "2026-10-15",
+  "recent5": [
+    {
+      "date": "2026-10-15",
+      "nav": "2.2954",
+      "accumulated_nav": "2.2954"
+    },
+    {
+      "date": "2026-10-14",
+      "nav": "2.3689",
+      "accumulated_nav": "2.3689"
+    },
+    {
+      "date": "2026-10-13",
+      "nav": "2.4754",
+      "accumulated_nav": "2.4754"
+    },
+    {
+      "date": "2026-10-12",
+      "nav": "2.4704",
+      "accumulated_nav": "2.4704"
+    },
+    {
+      "date": "2026-10-09",
+      "nav": "2.5740",
+      "accumulated_nav": "2.5740"
+    }
+  ],
+  "comparison_scope": "仅最近5个已披露净值归属日的单位和累计净值；不作为全历史官网核验",
+  "compared_main_path": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/005698_全部历史净值_截至2026-10-15.json",
+  "conflict_dates": [],
+  "disclosure_time": null,
+  "source_relationship": "管理人官网，独立于既有东方财富/天天基金主档供应商",
+  "main_dataset_modified": false
+}

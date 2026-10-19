@@ -1,0 +1,26 @@
+{
+  "code": "015789",
+  "name": "永赢高端装备智选混合发起A",
+  "cutoff": "2026-10-16",
+  "buy_fee": 0.0015,
+  "standard_buy_fee": 0.01,
+  "redemption_tiers": [
+    [
+      7,
+      0.015
+    ],
+    [
+      30,
+      0.0075
+    ],
+    [
+      180,
+      0.005
+    ]
+  ],
+  "fees_verified": true,
+  "subscription_open_date": "2022-09-08",
+  "funding_cap": 0.5,
+  "redemption_settlement_workdays": 7,
+  "fee_evidence": "015789_量化数据与费率核验_2026-10-18.md"
+}

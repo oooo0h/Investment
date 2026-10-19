@@ -1,0 +1,1422 @@
+{
+  "code": "270023",
+  "name": "广发全球精选股票（QDII）人民币A",
+  "checked_at": "2026-10-18T13:24:13.340+08:00",
+  "source_type": "fund_manager_official_public_API",
+  "query_start_date": "2010-08-18",
+  "query_end_date": "2026-10-18",
+  "first_date": "2010-08-18",
+  "last_date": "2026-10-15",
+  "count": 3893,
+  "validation": {
+    "passed": true,
+    "issues": [],
+    "official_total_rows": 3893,
+    "official_total_pages": 195,
+    "reported_page_size": 20,
+    "merged_row_count": 3893,
+    "unique_date_count": 3893,
+    "all_page_row_counts_match": true,
+    "tail_page": 196,
+    "tail_row_count": 0,
+    "first_page_stable_during_capture": true,
+    "all_rows_match_code_and_share_class": true,
+    "historical_release_timestamps_available": false
+  },
+  "comparison": {
+    "previous_path": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\270023_全部历史净值_截至2026-10-14.json",
+    "previous_count": 3892,
+    "previous_first_date": "2010-08-18",
+    "previous_last_date": "2026-10-14",
+    "added_dates": [
+      "2026-10-15"
+    ],
+    "added_count": 1,
+    "removed_dates": [],
+    "changed_count": 0,
+    "changed_rows": []
+  },
+  "attempt_count": 197,
+  "raw_directory": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18",
+  "requests": [
+    {
+      "label": "NAV page 1",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_1_attempt1.json"
+    },
+    {
+      "label": "NAV page 2",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=2",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_2_attempt1.json"
+    },
+    {
+      "label": "NAV page 3",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=3",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_3_attempt1.json"
+    },
+    {
+      "label": "NAV page 5",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=5",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_5_attempt1.json"
+    },
+    {
+      "label": "NAV page 4",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=4",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_4_attempt1.json"
+    },
+    {
+      "label": "NAV page 6",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=6",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_6_attempt1.json"
+    },
+    {
+      "label": "NAV page 7",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=7",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_7_attempt1.json"
+    },
+    {
+      "label": "NAV page 8",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=8",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_8_attempt1.json"
+    },
+    {
+      "label": "NAV page 9",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=9",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_9_attempt1.json"
+    },
+    {
+      "label": "NAV page 10",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=10",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_10_attempt1.json"
+    },
+    {
+      "label": "NAV page 11",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=11",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_11_attempt1.json"
+    },
+    {
+      "label": "NAV page 12",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=12",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_12_attempt1.json"
+    },
+    {
+      "label": "NAV page 13",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=13",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_13_attempt1.json"
+    },
+    {
+      "label": "NAV page 14",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=14",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_14_attempt1.json"
+    },
+    {
+      "label": "NAV page 15",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=15",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_15_attempt1.json"
+    },
+    {
+      "label": "NAV page 16",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=16",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_16_attempt1.json"
+    },
+    {
+      "label": "NAV page 17",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=17",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_17_attempt1.json"
+    },
+    {
+      "label": "NAV page 18",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=18",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_18_attempt1.json"
+    },
+    {
+      "label": "NAV page 19",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=19",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_19_attempt1.json"
+    },
+    {
+      "label": "NAV page 20",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=20",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_20_attempt1.json"
+    },
+    {
+      "label": "NAV page 21",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=21",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_21_attempt1.json"
+    },
+    {
+      "label": "NAV page 22",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=22",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_22_attempt1.json"
+    },
+    {
+      "label": "NAV page 23",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=23",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_23_attempt1.json"
+    },
+    {
+      "label": "NAV page 24",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=24",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_24_attempt1.json"
+    },
+    {
+      "label": "NAV page 25",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=25",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_25_attempt1.json"
+    },
+    {
+      "label": "NAV page 26",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=26",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_26_attempt1.json"
+    },
+    {
+      "label": "NAV page 27",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=27",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_27_attempt1.json"
+    },
+    {
+      "label": "NAV page 28",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=28",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_28_attempt1.json"
+    },
+    {
+      "label": "NAV page 29",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=29",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_29_attempt1.json"
+    },
+    {
+      "label": "NAV page 30",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=30",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_30_attempt1.json"
+    },
+    {
+      "label": "NAV page 31",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=31",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_31_attempt1.json"
+    },
+    {
+      "label": "NAV page 32",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=32",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_32_attempt1.json"
+    },
+    {
+      "label": "NAV page 33",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=33",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_33_attempt1.json"
+    },
+    {
+      "label": "NAV page 34",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=34",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_34_attempt1.json"
+    },
+    {
+      "label": "NAV page 35",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=35",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_35_attempt1.json"
+    },
+    {
+      "label": "NAV page 36",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=36",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_36_attempt1.json"
+    },
+    {
+      "label": "NAV page 37",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=37",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_37_attempt1.json"
+    },
+    {
+      "label": "NAV page 38",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=38",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_38_attempt1.json"
+    },
+    {
+      "label": "NAV page 39",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=39",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_39_attempt1.json"
+    },
+    {
+      "label": "NAV page 40",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=40",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_40_attempt1.json"
+    },
+    {
+      "label": "NAV page 41",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=41",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_41_attempt1.json"
+    },
+    {
+      "label": "NAV page 42",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=42",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_42_attempt1.json"
+    },
+    {
+      "label": "NAV page 43",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=43",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_43_attempt1.json"
+    },
+    {
+      "label": "NAV page 44",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=44",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_44_attempt1.json"
+    },
+    {
+      "label": "NAV page 45",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=45",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_45_attempt1.json"
+    },
+    {
+      "label": "NAV page 47",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=47",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_47_attempt1.json"
+    },
+    {
+      "label": "NAV page 46",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=46",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_46_attempt1.json"
+    },
+    {
+      "label": "NAV page 48",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=48",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_48_attempt1.json"
+    },
+    {
+      "label": "NAV page 49",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=49",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_49_attempt1.json"
+    },
+    {
+      "label": "NAV page 51",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=51",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_51_attempt1.json"
+    },
+    {
+      "label": "NAV page 50",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=50",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_50_attempt1.json"
+    },
+    {
+      "label": "NAV page 52",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=52",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_52_attempt1.json"
+    },
+    {
+      "label": "NAV page 53",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=53",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_53_attempt1.json"
+    },
+    {
+      "label": "NAV page 54",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=54",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_54_attempt1.json"
+    },
+    {
+      "label": "NAV page 55",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=55",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_55_attempt1.json"
+    },
+    {
+      "label": "NAV page 56",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=56",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_56_attempt1.json"
+    },
+    {
+      "label": "NAV page 57",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=57",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_57_attempt1.json"
+    },
+    {
+      "label": "NAV page 58",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=58",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_58_attempt1.json"
+    },
+    {
+      "label": "NAV page 59",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=59",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_59_attempt1.json"
+    },
+    {
+      "label": "NAV page 60",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=60",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_60_attempt1.json"
+    },
+    {
+      "label": "NAV page 61",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=61",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_61_attempt1.json"
+    },
+    {
+      "label": "NAV page 62",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=62",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_62_attempt1.json"
+    },
+    {
+      "label": "NAV page 63",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=63",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_63_attempt1.json"
+    },
+    {
+      "label": "NAV page 64",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=64",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_64_attempt1.json"
+    },
+    {
+      "label": "NAV page 65",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=65",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_65_attempt1.json"
+    },
+    {
+      "label": "NAV page 66",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=66",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_66_attempt1.json"
+    },
+    {
+      "label": "NAV page 67",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=67",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_67_attempt1.json"
+    },
+    {
+      "label": "NAV page 68",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=68",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_68_attempt1.json"
+    },
+    {
+      "label": "NAV page 69",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=69",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_69_attempt1.json"
+    },
+    {
+      "label": "NAV page 70",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=70",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_70_attempt1.json"
+    },
+    {
+      "label": "NAV page 71",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=71",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_71_attempt1.json"
+    },
+    {
+      "label": "NAV page 72",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=72",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_72_attempt1.json"
+    },
+    {
+      "label": "NAV page 73",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=73",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_73_attempt1.json"
+    },
+    {
+      "label": "NAV page 74",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=74",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_74_attempt1.json"
+    },
+    {
+      "label": "NAV page 75",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=75",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_75_attempt1.json"
+    },
+    {
+      "label": "NAV page 76",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=76",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_76_attempt1.json"
+    },
+    {
+      "label": "NAV page 77",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=77",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_77_attempt1.json"
+    },
+    {
+      "label": "NAV page 78",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=78",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_78_attempt1.json"
+    },
+    {
+      "label": "NAV page 80",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=80",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_80_attempt1.json"
+    },
+    {
+      "label": "NAV page 79",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=79",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_79_attempt1.json"
+    },
+    {
+      "label": "NAV page 81",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=81",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_81_attempt1.json"
+    },
+    {
+      "label": "NAV page 82",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=82",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_82_attempt1.json"
+    },
+    {
+      "label": "NAV page 84",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=84",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_84_attempt1.json"
+    },
+    {
+      "label": "NAV page 83",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=83",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_83_attempt1.json"
+    },
+    {
+      "label": "NAV page 85",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=85",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_85_attempt1.json"
+    },
+    {
+      "label": "NAV page 86",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=86",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_86_attempt1.json"
+    },
+    {
+      "label": "NAV page 87",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=87",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_87_attempt1.json"
+    },
+    {
+      "label": "NAV page 88",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=88",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_88_attempt1.json"
+    },
+    {
+      "label": "NAV page 89",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=89",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_89_attempt1.json"
+    },
+    {
+      "label": "NAV page 90",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=90",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_90_attempt1.json"
+    },
+    {
+      "label": "NAV page 91",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=91",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_91_attempt1.json"
+    },
+    {
+      "label": "NAV page 92",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=92",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_92_attempt1.json"
+    },
+    {
+      "label": "NAV page 93",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=93",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_93_attempt1.json"
+    },
+    {
+      "label": "NAV page 94",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=94",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_94_attempt1.json"
+    },
+    {
+      "label": "NAV page 95",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=95",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_95_attempt1.json"
+    },
+    {
+      "label": "NAV page 96",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=96",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_96_attempt1.json"
+    },
+    {
+      "label": "NAV page 97",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=97",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_97_attempt1.json"
+    },
+    {
+      "label": "NAV page 98",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=98",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_98_attempt1.json"
+    },
+    {
+      "label": "NAV page 99",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=99",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_99_attempt1.json"
+    },
+    {
+      "label": "NAV page 100",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=100",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_100_attempt1.json"
+    },
+    {
+      "label": "NAV page 101",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=101",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_101_attempt1.json"
+    },
+    {
+      "label": "NAV page 102",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=102",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_102_attempt1.json"
+    },
+    {
+      "label": "NAV page 103",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=103",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_103_attempt1.json"
+    },
+    {
+      "label": "NAV page 104",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=104",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_104_attempt1.json"
+    },
+    {
+      "label": "NAV page 105",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=105",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_105_attempt1.json"
+    },
+    {
+      "label": "NAV page 106",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=106",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_106_attempt1.json"
+    },
+    {
+      "label": "NAV page 107",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=107",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_107_attempt1.json"
+    },
+    {
+      "label": "NAV page 108",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=108",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_108_attempt1.json"
+    },
+    {
+      "label": "NAV page 109",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=109",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_109_attempt1.json"
+    },
+    {
+      "label": "NAV page 110",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=110",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_110_attempt1.json"
+    },
+    {
+      "label": "NAV page 111",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=111",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_111_attempt1.json"
+    },
+    {
+      "label": "NAV page 112",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=112",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_112_attempt1.json"
+    },
+    {
+      "label": "NAV page 113",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=113",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_113_attempt1.json"
+    },
+    {
+      "label": "NAV page 114",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=114",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_114_attempt1.json"
+    },
+    {
+      "label": "NAV page 115",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=115",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_115_attempt1.json"
+    },
+    {
+      "label": "NAV page 116",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=116",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_116_attempt1.json"
+    },
+    {
+      "label": "NAV page 117",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=117",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_117_attempt1.json"
+    },
+    {
+      "label": "NAV page 118",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=118",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_118_attempt1.json"
+    },
+    {
+      "label": "NAV page 119",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=119",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_119_attempt1.json"
+    },
+    {
+      "label": "NAV page 120",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=120",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_120_attempt1.json"
+    },
+    {
+      "label": "NAV page 121",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=121",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_121_attempt1.json"
+    },
+    {
+      "label": "NAV page 122",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=122",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_122_attempt1.json"
+    },
+    {
+      "label": "NAV page 123",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=123",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_123_attempt1.json"
+    },
+    {
+      "label": "NAV page 124",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=124",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_124_attempt1.json"
+    },
+    {
+      "label": "NAV page 125",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=125",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_125_attempt1.json"
+    },
+    {
+      "label": "NAV page 126",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=126",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_126_attempt1.json"
+    },
+    {
+      "label": "NAV page 127",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=127",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_127_attempt1.json"
+    },
+    {
+      "label": "NAV page 129",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=129",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_129_attempt1.json"
+    },
+    {
+      "label": "NAV page 128",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=128",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_128_attempt1.json"
+    },
+    {
+      "label": "NAV page 130",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=130",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_130_attempt1.json"
+    },
+    {
+      "label": "NAV page 131",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=131",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_131_attempt1.json"
+    },
+    {
+      "label": "NAV page 132",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=132",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_132_attempt1.json"
+    },
+    {
+      "label": "NAV page 133",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=133",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_133_attempt1.json"
+    },
+    {
+      "label": "NAV page 134",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=134",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_134_attempt1.json"
+    },
+    {
+      "label": "NAV page 135",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=135",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_135_attempt1.json"
+    },
+    {
+      "label": "NAV page 136",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=136",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_136_attempt1.json"
+    },
+    {
+      "label": "NAV page 137",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=137",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_137_attempt1.json"
+    },
+    {
+      "label": "NAV page 138",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=138",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_138_attempt1.json"
+    },
+    {
+      "label": "NAV page 139",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=139",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_139_attempt1.json"
+    },
+    {
+      "label": "NAV page 140",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=140",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_140_attempt1.json"
+    },
+    {
+      "label": "NAV page 141",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=141",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_141_attempt1.json"
+    },
+    {
+      "label": "NAV page 142",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=142",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_142_attempt1.json"
+    },
+    {
+      "label": "NAV page 143",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=143",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_143_attempt1.json"
+    },
+    {
+      "label": "NAV page 144",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=144",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_144_attempt1.json"
+    },
+    {
+      "label": "NAV page 145",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=145",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_145_attempt1.json"
+    },
+    {
+      "label": "NAV page 146",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=146",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_146_attempt1.json"
+    },
+    {
+      "label": "NAV page 147",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=147",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_147_attempt1.json"
+    },
+    {
+      "label": "NAV page 148",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=148",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_148_attempt1.json"
+    },
+    {
+      "label": "NAV page 149",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=149",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_149_attempt1.json"
+    },
+    {
+      "label": "NAV page 150",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=150",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_150_attempt1.json"
+    },
+    {
+      "label": "NAV page 151",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=151",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_151_attempt1.json"
+    },
+    {
+      "label": "NAV page 152",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=152",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_152_attempt1.json"
+    },
+    {
+      "label": "NAV page 153",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=153",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_153_attempt1.json"
+    },
+    {
+      "label": "NAV page 154",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=154",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_154_attempt1.json"
+    },
+    {
+      "label": "NAV page 155",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=155",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_155_attempt1.json"
+    },
+    {
+      "label": "NAV page 156",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=156",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_156_attempt1.json"
+    },
+    {
+      "label": "NAV page 157",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=157",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_157_attempt1.json"
+    },
+    {
+      "label": "NAV page 158",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=158",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_158_attempt1.json"
+    },
+    {
+      "label": "NAV page 159",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=159",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_159_attempt1.json"
+    },
+    {
+      "label": "NAV page 160",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=160",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_160_attempt1.json"
+    },
+    {
+      "label": "NAV page 161",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=161",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_161_attempt1.json"
+    },
+    {
+      "label": "NAV page 162",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=162",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_162_attempt1.json"
+    },
+    {
+      "label": "NAV page 163",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=163",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_163_attempt1.json"
+    },
+    {
+      "label": "NAV page 164",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=164",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_164_attempt1.json"
+    },
+    {
+      "label": "NAV page 165",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=165",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_165_attempt1.json"
+    },
+    {
+      "label": "NAV page 166",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=166",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_166_attempt1.json"
+    },
+    {
+      "label": "NAV page 167",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=167",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_167_attempt1.json"
+    },
+    {
+      "label": "NAV page 168",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=168",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_168_attempt1.json"
+    },
+    {
+      "label": "NAV page 169",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=169",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_169_attempt1.json"
+    },
+    {
+      "label": "NAV page 170",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=170",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_170_attempt1.json"
+    },
+    {
+      "label": "NAV page 171",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=171",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_171_attempt1.json"
+    },
+    {
+      "label": "NAV page 172",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=172",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_172_attempt1.json"
+    },
+    {
+      "label": "NAV page 173",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=173",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_173_attempt1.json"
+    },
+    {
+      "label": "NAV page 174",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=174",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_174_attempt1.json"
+    },
+    {
+      "label": "NAV page 175",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=175",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_175_attempt1.json"
+    },
+    {
+      "label": "NAV page 176",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=176",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_176_attempt1.json"
+    },
+    {
+      "label": "NAV page 177",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=177",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_177_attempt1.json"
+    },
+    {
+      "label": "NAV page 178",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=178",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_178_attempt1.json"
+    },
+    {
+      "label": "NAV page 179",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=179",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_179_attempt1.json"
+    },
+    {
+      "label": "NAV page 180",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=180",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_180_attempt1.json"
+    },
+    {
+      "label": "NAV page 181",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=181",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_181_attempt1.json"
+    },
+    {
+      "label": "NAV page 182",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=182",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_182_attempt1.json"
+    },
+    {
+      "label": "NAV page 183",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=183",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_183_attempt1.json"
+    },
+    {
+      "label": "NAV page 184",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=184",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_184_attempt1.json"
+    },
+    {
+      "label": "NAV page 186",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=186",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_186_attempt1.json"
+    },
+    {
+      "label": "NAV page 185",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=185",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_185_attempt1.json"
+    },
+    {
+      "label": "NAV page 187",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=187",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_187_attempt1.json"
+    },
+    {
+      "label": "NAV page 188",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=188",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_188_attempt1.json"
+    },
+    {
+      "label": "NAV page 189",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=189",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_189_attempt1.json"
+    },
+    {
+      "label": "NAV page 190",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=190",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_190_attempt1.json"
+    },
+    {
+      "label": "NAV page 191",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=191",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_191_attempt1.json"
+    },
+    {
+      "label": "NAV page 192",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=192",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_192_attempt1.json"
+    },
+    {
+      "label": "NAV page 193",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=193",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_193_attempt1.json"
+    },
+    {
+      "label": "NAV page 194",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=194",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_194_attempt1.json"
+    },
+    {
+      "label": "NAV page 195",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=195",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_195_attempt1.json"
+    },
+    {
+      "label": "NAV empty tail",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=196",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_empty_tail_attempt1.json"
+    },
+    {
+      "label": "NAV page 1 final consistency check",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20100818&enddate=20261018&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "attempt": 1,
+      "http_status": 200,
+      "raw_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\原始数据\\全历史分页复核_2026-10-18\\NAV_page_1_final_consistency_check_attempt1.json"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "code": "005698",
+  "name": "华夏全球科技先锋混合(QDII)A(人民币)",
+  "status": "unchanged",
+  "checked_at": "2026-10-19T01:16:12.210Z",
+  "execution_date": "2026-10-19",
+  "source": "东方财富/天天基金 f10/lsjz，沿用第三方主档；非管理人官网独立核验",
+  "source_total_count": 1979,
+  "source_pages_fetched": 3,
+  "previous_last_date": "2026-10-15",
+  "latest_source_date": "2026-10-15",
+  "checked_dates": [
+    "2026-10-09",
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15"
+  ],
+  "window_first_date": "2026-09-10",
+  "window_records": 20,
+  "added_dates": [],
+  "revisions": [],
+  "conflicts": [],
+  "records": 1979,
+  "first_date": "2018-04-17",
+  "last_date": "2026-10-15",
+  "json_path": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/005698_全部历史净值_截至2026-10-15.json",
+  "csv_path": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/005698_全部历史净值_截至2026-10-15.csv",
+  "json_sha256": "1dde575b0d3275264d43290ad025cd69542d9de4f4ac316ba86b7eae5214aa8d",
+  "csv_sha256": "c96400e4b1e1b556eb9529340e056ad60366fc43fdac86f7f0b795d314a28051",
+  "old_json_path": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/005698_全部历史净值_截至2026-10-15.json",
+  "old_csv_path": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/005698_全部历史净值_截至2026-10-15.csv",
+  "old_json_sha256": "1dde575b0d3275264d43290ad025cd69542d9de4f4ac316ba86b7eae5214aa8d",
+  "old_csv_sha256": "c96400e4b1e1b556eb9529340e056ad60366fc43fdac86f7f0b795d314a28051",
+  "missing_accumulated_nav_dates": [],
+  "raw_evidence": [
+    {
+      "path": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/原始数据/四基金增量核验_2026-10-19/20261019T011611978Z/005698_latest_page1_1792372572117.json",
+      "sha256": "bf60b9bdda495fcbf3739af4d746de48c617ba2e81a81f175641f0c9ef3d891e",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=005698&pageIndex=1&pageSize=20&startDate=&endDate=&_=1792372571997"
+    },
+    {
+      "path": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/原始数据/四基金增量核验_2026-10-19/20261019T011611978Z/005698_2026-10-15_page1_1792372572166.json",
+      "sha256": "b34684b87015060c830b26dabbdd25e1d7c64a02c53fe87771f3ccc3b9fb7f98",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=005698&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-15&_=1792372572118"
+    },
+    {
+      "path": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/原始数据/四基金增量核验_2026-10-19/20261019T011611978Z/005698_2026-10-15_page1_1792372572200.json",
+      "sha256": "7079b66d145c3d6b4501f9107e7bdfac41d86676a04a21f608821ecf498eb875",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=005698&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-15&_=1792372572167"
+    }
+  ],
+  "previous_full_archive_evidence": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/原始数据/全历史分页复核_2026-10-18/005698_全历史分页复核结果.json",
+  "frozen_originals_unchanged": true
+}

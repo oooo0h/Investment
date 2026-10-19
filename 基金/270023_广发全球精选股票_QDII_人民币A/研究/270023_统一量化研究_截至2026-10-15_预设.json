@@ -1,0 +1,146 @@
+{
+  "schema": "unified-public-nav-quant-v1",
+  "fund_code": "270023",
+  "fund_name": "广发全球精选股票(QDII)人民币A",
+  "created_at": "2026-10-18T14:16:23+08:00",
+  "source_path": "基金/270023_广发全球精选股票_QDII_人民币A/历史净值/270023_全部历史净值_截至2026-10-15.json",
+  "source_sha256": "78c9072c610293d5bf65dc477bb1155a7c94adb39b90cbd0945a5f65dfa06ccf",
+  "source_start": "2010-08-18",
+  "source_end": "2026-10-15",
+  "source_rows": 3893,
+  "analysis_rows": 3886,
+  "source_scope": "fund_manager_official_public_API",
+  "source_validation": {
+    "passed": true,
+    "issues": [],
+    "official_total_rows": 3893,
+    "official_total_pages": 195,
+    "reported_page_size": 20,
+    "merged_row_count": 3893,
+    "unique_date_count": 3893,
+    "all_page_row_counts_match": true,
+    "tail_page": 196,
+    "tail_row_count": 0,
+    "first_page_stable_during_capture": true,
+    "all_rows_match_code_and_share_class": true,
+    "historical_release_timestamps_available": false
+  },
+  "config_path": "基金/270023_广发全球精选股票_QDII_人民币A/scripts/270023_统一量化研究配置_2026-10-18.json",
+  "config_sha256": "8c43eec7280d0c18d97a4a457094fe48fe7c9dce4641f80183d5d0c04b542132",
+  "engine_sha256": "ed424cc5f7da2befd3e39ae35e59b39576e88a8c84e56c3b1fa99e635122fd33",
+  "daily_cap_engine_sha256": "9f637144050bfaf179be09df823cd0bbe2a62ee2d9cfa65795080644ecadc1a8",
+  "settlement_engine_sha256": "b2b7c6b370efa6f26dfb4257bd5b2df13c04aa5b9b7d59c146b798479180d25a",
+  "grid_library_sha256": "00eb9df75ae97a85f95a6509fa213ab6a776813586a8bf466d5a0ba8c2df9091",
+  "research_tool_sha256": "2989e52ef1a538d1616ff49efaeb4aa532ca76373f98567b0cf2ec0c52bb4594",
+  "dividend_events": [
+    {
+      "exdate": "2014-01-15",
+      "paydate": "2014-01-21",
+      "per_unit": 0.03
+    },
+    {
+      "exdate": "2015-02-10",
+      "paydate": "2015-02-16",
+      "per_unit": 0.045
+    },
+    {
+      "exdate": "2016-02-22",
+      "paydate": "2016-02-26",
+      "per_unit": 0.025
+    },
+    {
+      "exdate": "2016-09-26",
+      "paydate": "2016-09-30",
+      "per_unit": 0.1
+    },
+    {
+      "exdate": "2017-06-29",
+      "paydate": "2017-07-05",
+      "per_unit": 0.187
+    },
+    {
+      "exdate": "2018-05-23",
+      "paydate": "2018-05-29",
+      "per_unit": 0.052
+    }
+  ],
+  "dividend_events_file": "基金/270023_广发全球精选股票_QDII_人民币A/研究/270023_官方现金分红事件_核验2026-10-18.json",
+  "dividend_events_sha256": "e17112d69a55c603c1576e811e7da1b5dbc17cc19069df3b75dae6eceed09488",
+  "weekdays_only_main": true,
+  "weekend_observations": [
+    "2011-12-31",
+    "2016-12-31",
+    "2017-12-31",
+    "2019-06-30",
+    "2022-12-31",
+    "2023-12-31",
+    "2024-06-30"
+  ],
+  "normalization": "User-specified hypothetical annual budget=1, not actual investor amounts. Startup year=(13-start_month)/12; every later year full budget including partial final year.",
+  "funding_cap": null,
+  "daily_buy_cap_norm": 0.5,
+  "user_authorization": "2026-10-18 user explicitly: no cumulative topup cap; daily subscription cap is half of hypothetical annual budget for270023/005698/016701/006373; no daily cap for018124/015789.",
+  "daily_cap_execution": "Per-fund all purchases per observed date combined. Unfilled planned/tactical budgets queued to later dates. Annual budget credited first; annual buy takes priority, cancels old tactical remainder. No new signals during queue. Actual fills reset anchors; outstanding tactical gross budget fixed at signal.",
+  "outside_funding": "No cumulative limit. Only cash shortage for each actual fill supplied externally; future unfilled orders are not prefunded. No borrowing. External inflows excluded from returns.",
+  "fee_assumptions": {
+    "subscription": 0.0016,
+    "redemption_FIFO": [
+      [
+        7,
+        0.015
+      ],
+      [
+        365,
+        0.005
+      ],
+      [
+        730,
+        0.003
+      ]
+    ],
+    "standard_subscription_stress": 0.016,
+    "evidence": "270023_申购赎回费率与办理规则_核验2026-10-16.md"
+  },
+  "lag_NAV_observations": 2,
+  "cash": "Zero interest; base sale proceeds immediately available; separate delayed-settlement stress. Cash dividends receivable on exdate, available on paydate.",
+  "rule_order": [
+    "up_threshold",
+    "down_threshold",
+    "sell_fraction",
+    "buy_fraction"
+  ],
+  "canonical_grid_count": 3025,
+  "threshold_grid_pct": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    40,
+    50,
+    60
+  ],
+  "trade_fraction_grid_pct": [
+    0,
+    5,
+    10,
+    15,
+    20,
+    30,
+    50
+  ],
+  "objective": "Maximum Calmar=CAGR/MDD, positive CAGR and CAGR>=max(0,same-period annual-hold CAGR with identical daily cap). No cumulative funding constraint.",
+  "tie_break": "Calmar rounded12 decimals, fewer tactical fills, lower normalized external contribution, distance to40/30, lexicographic",
+  "chronology": "Each expanding annual training has>=730calendar days; save lock before following-year test; all tests before full-history hindsight grid. Main train<=2025, test2026.",
+  "validation_scope": "Retrospective chronological diagnostics, not prospective independent validation;2026partialyear",
+  "robustness": "Fixed selections only:lag1/2/3/5, zero fee, standard subscription, fullaccountingdates, ordinaryopeningstart, delayedredemption, axialneighbors",
+  "limitations": "NAV observations proxy dealing/announcement/confirmation days; holidays/pauses/actual platform restrictions not fully reconstructed. Inception buy idealized; sensitivity starts ordinary opening. Fund-specific fees/distributions retained.",
+  "previous_rule": [
+    0.4,
+    0.3,
+    0.2,
+    0.3
+  ],
+  "previous_rule_source": "基金/270023_广发全球精选股票_QDII_人民币A/研究/270023_量化规则_截至2026-10-14.md"
+}

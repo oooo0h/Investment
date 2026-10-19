@@ -1,0 +1,86 @@
+{
+  "train_start": "2018-11-20",
+  "train_end": "2025-12-31",
+  "test_start": "2026-01-05",
+  "test_end": "2026-10-15",
+  "train_hold": {
+    "rule": null,
+    "schedule": "annual",
+    "initial_only": false,
+    "twr_annualized_pct": 23.189210662248815,
+    "max_drawdown_pct": 34.54727063441789,
+    "calmar": 0.6712313371333725,
+    "regular_contributed_norm": 7.166666666666667,
+    "extra_contributed_norm": 0.0,
+    "extra_over_regular_pct": 0.0,
+    "peak_extra_over_regular_pct": 0.0,
+    "end_total_norm": 17.420583550773383,
+    "end_fund_weight_pct": 100.0,
+    "average_fund_weight_pct": 100.0,
+    "scheduled_buy_count": 8,
+    "tactical_buy_count": 0,
+    "tactical_sell_count": 0,
+    "cancelled_pending": 0,
+    "path_signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transaction_fees_norm": 0.010733899151273762,
+    "dividends_norm": 0.0,
+    "lag": 2,
+    "pending_order": null
+  },
+  "return_floor_pct": 23.189210662248815,
+  "eligible_count": 205,
+  "selected": {
+    "rule": [
+      0.5,
+      0.3,
+      0.5,
+      0.5
+    ],
+    "schedule": "annual",
+    "initial_only": false,
+    "twr_annualized_pct": 24.026702343856154,
+    "max_drawdown_pct": 24.96724899567323,
+    "calmar": 0.9623287831198355,
+    "regular_contributed_norm": 7.166666666666667,
+    "extra_contributed_norm": 0.2944890926824093,
+    "extra_over_regular_pct": 4.109150130452223,
+    "peak_extra_over_regular_pct": 7.067738224377823,
+    "end_total_norm": 18.9544336608913,
+    "end_fund_weight_pct": 100.0,
+    "average_fund_weight_pct": 90.34199626725528,
+    "scheduled_buy_count": 8,
+    "tactical_buy_count": 1,
+    "tactical_sell_count": 1,
+    "cancelled_pending": 0,
+    "path_signature": "9c4c492d6d1dfefe0734d338ae9fc20ee016db5fee5431592f8b695d5edd9937",
+    "transaction_fees_norm": 0.014069851757358753,
+    "dividends_norm": 0.0,
+    "lag": 2,
+    "pending_order": null
+  },
+  "score_ties": {
+    "primary_count": 1,
+    "primary_rules": [
+      [
+        0.5,
+        0.3,
+        0.5,
+        0.5
+      ]
+    ],
+    "primary_path_count": 1,
+    "minimum_drawdown_count": 1,
+    "minimum_drawdown_rules": [
+      [
+        0.5,
+        0.3,
+        0.5,
+        0.5
+      ]
+    ],
+    "minimum_drawdown_path_count": 1
+  },
+  "no_candidate_fallback": "annual_buy_and_hold",
+  "test_not_evaluated_before_lock": true,
+  "full_grid_not_evaluated_before_lock": true
+}

@@ -1,0 +1,64 @@
+{
+  "research_date": "2026-10-18",
+  "code": "270023",
+  "source_path": "基金/270023_广发全球精选股票_QDII_人民币A/历史净值/270023_全部历史净值_截至2026-10-15.json",
+  "source_sha256": "78c9072c610293d5bf65dc477bb1155a7c94adb39b90cbd0945a5f65dfa06ccf",
+  "first_date": "2010-08-18",
+  "last_date": "2026-10-15",
+  "count": 3893,
+  "weekend_accounting_rows": 7,
+  "unit_nav_missing": 0,
+  "accumulated_nav_missing": 0,
+  "historical_release_timestamps_available": false,
+  "official_validation": {
+    "passed": true,
+    "issues": [],
+    "official_total_rows": 3893,
+    "official_total_pages": 195,
+    "reported_page_size": 20,
+    "merged_row_count": 3893,
+    "unique_date_count": 3893,
+    "all_page_row_counts_match": true,
+    "tail_page": 196,
+    "tail_row_count": 0,
+    "first_page_stable_during_capture": true,
+    "all_rows_match_code_and_share_class": true,
+    "historical_release_timestamps_available": false
+  },
+  "dividend_events_file": "基金/270023_广发全球精选股票_QDII_人民币A/研究/270023_官方现金分红事件_核验2026-10-18.json",
+  "dividend_events_file_sha256": "e17112d69a55c603c1576e811e7da1b5dbc17cc19069df3b75dae6eceed09488",
+  "official_dividend_count_live": 6,
+  "live_dividend_matches_archive": true,
+  "all_six_accumulated_minus_unit_gap_changes_match_dividend_exdate_and_per_unit": true,
+  "cash_dividend_total_per_unit": 0.439,
+  "third_party_difference_path": "基金/270023_广发全球精选股票_QDII_人民币A/历史净值/270023_官网与既有公开净值差异_核验2026-10-16.json",
+  "third_party_difference_sha256": "391aba7b6082ffae182ded246a9a4d6c666617fd1cd59d23fbe9f392f496f573",
+  "third_party_only_count": 10,
+  "third_party_dates_not_merged": true,
+  "config_path": "基金/270023_广发全球精选股票_QDII_人民币A/scripts/270023_统一无上限研究配置_2026-10-18.json",
+  "funding_cap": null,
+  "buy_fee": 0.0016,
+  "standard_buy_fee": 0.016,
+  "subscription_open_date": "2010-09-29",
+  "redemption_settlement_workdays": 10,
+  "regime_change_date": "2014-06-09",
+  "sources": {
+    "official_dividends": "https://www.gffunds.com.cn/apistore/JsonService?service=Equity&method=Dividend&op=queryDividendByFundcode&fundcode=270023",
+    "opening_announcement": "https://www.gffunds.com.cn/jjgg/zdsj/201009/t20100927_14214.shtml",
+    "2026_prospectus": "https://www.gffunds.com.cn/jjgg/flwj/202606/P020260605334112485983.pdf",
+    "2026_product_key_information": "https://www.gffunds.com.cn/jjgg/flwj/202606/P020260605334109953356.pdf",
+    "2014_mandate_change_primary_report": "https://static.cninfo.com.cn/finalpage/2014-08-29/1200201347.PDF"
+  },
+  "raw_sources": [
+    {
+      "path": "基金/270023_广发全球精选股票_QDII_人民币A/研究/原始资料/统一无上限输入核验_2026-10-18/270023_初始申购开放公告.html",
+      "sha256": "db23d73c3dbbe8b510a69baaa43c05d84525762baa0c6f25a8a447909e5aecd7",
+      "bytes": 35738
+    },
+    {
+      "path": "基金/270023_广发全球精选股票_QDII_人民币A/研究/原始资料/统一无上限输入核验_2026-10-18/270023_官方分红接口.json",
+      "sha256": "0356a631f6d3d949e63d431fc39e606ec9896c043615ba72e13a26eb25e807a4",
+      "bytes": 1155
+    }
+  ]
+}

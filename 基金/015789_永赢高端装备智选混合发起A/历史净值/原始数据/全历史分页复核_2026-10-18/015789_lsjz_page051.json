@@ -1,0 +1,68 @@
+{
+  "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=015789&pageIndex=51&pageSize=20&startDate=&endDate=2026-10-16&_=1792300993894",
+  "captured_at": "2026-10-18T05:23:13.920Z",
+  "response": {
+    "Data": {
+      "LSJZList": [
+        {
+          "FSRQ": "2022-07-29",
+          "DWJZ": "0.9979",
+          "LJJZ": "0.9979",
+          "SDATE": null,
+          "ACTUALSYI": "",
+          "NAVTYPE": "1",
+          "JZZZL": "",
+          "SGZT": "封闭期",
+          "SHZT": "封闭期",
+          "FHFCZ": "",
+          "FHFCZ10": null,
+          "FHFCBZ": "",
+          "DTYPE": null,
+          "FHSP": ""
+        },
+        {
+          "FSRQ": "2022-07-22",
+          "DWJZ": "0.9999",
+          "LJJZ": "0.9999",
+          "SDATE": null,
+          "ACTUALSYI": "",
+          "NAVTYPE": "1",
+          "JZZZL": "",
+          "SGZT": "封闭期",
+          "SHZT": "封闭期",
+          "FHFCZ": "",
+          "FHFCZ10": null,
+          "FHFCBZ": "",
+          "DTYPE": null,
+          "FHSP": ""
+        },
+        {
+          "FSRQ": "2022-07-15",
+          "DWJZ": "1.0000",
+          "LJJZ": "1.0000",
+          "SDATE": null,
+          "ACTUALSYI": "",
+          "NAVTYPE": "1",
+          "JZZZL": "",
+          "SGZT": "封闭期",
+          "SHZT": "封闭期",
+          "FHFCZ": "",
+          "FHFCZ10": null,
+          "FHFCBZ": "",
+          "DTYPE": null,
+          "FHSP": ""
+        }
+      ],
+      "FundType": "002",
+      "SYType": null,
+      "isNewType": false,
+      "Feature": "080,211,701"
+    },
+    "ErrCode": 0,
+    "ErrMsg": null,
+    "TotalCount": 1003,
+    "Expansion": null,
+    "PageSize": 20,
+    "PageIndex": 51
+  }
+}

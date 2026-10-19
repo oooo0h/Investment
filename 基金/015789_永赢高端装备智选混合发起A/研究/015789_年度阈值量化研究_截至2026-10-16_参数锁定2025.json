@@ -1,0 +1,91 @@
+{
+  "train_start": "2022-07-15",
+  "train_end": "2024-12-31",
+  "test_start": "2025-01-02",
+  "test_end": "2025-12-31",
+  "train_hold": {
+    "rule": null,
+    "schedule": "annual",
+    "initial_only": false,
+    "twr_annualized_pct": -11.544759629616298,
+    "max_drawdown_pct": 51.61055682761819,
+    "calmar": -0.22368988709376583,
+    "regular_contributed_norm": 2.5,
+    "extra_contributed_norm": 0.0,
+    "extra_over_regular_pct": 0.0,
+    "peak_extra_over_regular_pct": 0.0,
+    "end_total_norm": 2.1446785424786214,
+    "end_fund_weight_pct": 100.0,
+    "average_fund_weight_pct": 100.0,
+    "scheduled_buy_count": 3,
+    "tactical_buy_count": 0,
+    "tactical_sell_count": 0,
+    "cancelled_pending": 0,
+    "path_signature": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transaction_fees_norm": 0.0037443834248629404,
+    "dividends_norm": 0.0,
+    "lag": 2,
+    "pending_order": null
+  },
+  "return_floor_pct": 0.0,
+  "eligible_count": 1,
+  "selected": {
+    "rule": [
+      0.1,
+      0.05,
+      0.5,
+      0.15
+    ],
+    "schedule": "annual",
+    "initial_only": false,
+    "twr_annualized_pct": 0.36352607838616713,
+    "max_drawdown_pct": 39.19541916458,
+    "calmar": 0.00927470827291668,
+    "regular_contributed_norm": 2.5,
+    "extra_contributed_norm": 0.7145892269533581,
+    "extra_over_regular_pct": 28.583569078134325,
+    "peak_extra_over_regular_pct": 40.678829588200685,
+    "end_total_norm": 3.63119519422237,
+    "end_fund_weight_pct": 16.01420768199412,
+    "average_fund_weight_pct": 71.76912036274645,
+    "scheduled_buy_count": 3,
+    "tactical_buy_count": 21,
+    "tactical_sell_count": 7,
+    "cancelled_pending": 0,
+    "path_signature": "c3fb3dadfb5fdcaab9a07fe13ddb3a8da81ad2bff0e7fe5b6fa7f4f18852bc57",
+    "transaction_fees_norm": 0.02297697596570279,
+    "dividends_norm": 0.0,
+    "lag": 2,
+    "pending_order": [
+      570,
+      "buy",
+      0.09354305007194798,
+      "2024-12-31"
+    ]
+  },
+  "score_ties": {
+    "primary_count": 1,
+    "primary_rules": [
+      [
+        0.1,
+        0.05,
+        0.5,
+        0.15
+      ]
+    ],
+    "primary_path_count": 1,
+    "minimum_drawdown_count": 1,
+    "minimum_drawdown_rules": [
+      [
+        0.1,
+        0.05,
+        0.5,
+        0.15
+      ]
+    ],
+    "minimum_drawdown_path_count": 1
+  },
+  "no_candidate_fallback": "annual_buy_and_hold",
+  "test_not_evaluated_before_lock": true,
+  "full_grid_not_evaluated_before_lock": true
+}

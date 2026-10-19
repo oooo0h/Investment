@@ -1,0 +1,734 @@
+{
+  "as_of": "2026-06-30",
+  "method": "sum min issuer weights as pct of NAV; Alphabet GOOG and GOOGL merged; US and UN listing code suffix normalized; no ETF lookthrough; rounded disclosed weights",
+  "016701_count": 47,
+  "006373_count": 42,
+  "016701_disclosed_stock_weight_sum": 90.43,
+  "006373_disclosed_stock_weight_sum": 85.27,
+  "common_issuers_count": 10,
+  "overlap_pct_nav": 28.22,
+  "common_issuers": [
+    {
+      "issuer": "ALPHABET",
+      "name": "谷歌",
+      "016701_security_code": "GOOGLUS",
+      "006373_security_code": "GOOGUS",
+      "016701_weight_pct_nav": 7.42,
+      "006373_weight_pct_nav": 3.21,
+      "overlap_pct_nav": 3.21
+    },
+    {
+      "issuer": "AMD",
+      "name": "超威半导体",
+      "016701_security_code": "AMDUS",
+      "006373_security_code": "AMDUS",
+      "016701_weight_pct_nav": 5.43,
+      "006373_weight_pct_nav": 1.36,
+      "overlap_pct_nav": 1.36
+    },
+    {
+      "issuer": "ASML",
+      "name": "阿斯麦",
+      "016701_security_code": "ASMLUS",
+      "006373_security_code": "ASMLUS",
+      "016701_weight_pct_nav": 1.57,
+      "006373_weight_pct_nav": 2.29,
+      "overlap_pct_nav": 1.57
+    },
+    {
+      "issuer": "INTC",
+      "name": "英特尔",
+      "016701_security_code": "INTCUS",
+      "006373_security_code": "INTCUS",
+      "016701_weight_pct_nav": 5.41,
+      "006373_weight_pct_nav": 7.17,
+      "overlap_pct_nav": 5.41
+    },
+    {
+      "issuer": "LITE",
+      "name": "LumentumHoldings公司",
+      "016701_security_code": "LITEUS",
+      "006373_security_code": "LITEUS",
+      "016701_weight_pct_nav": 1.07,
+      "006373_weight_pct_nav": 1.86,
+      "overlap_pct_nav": 1.07
+    },
+    {
+      "issuer": "MRVL",
+      "name": "迈威尔科技",
+      "016701_security_code": "MRVLUS",
+      "006373_security_code": "MRVLUS",
+      "016701_weight_pct_nav": 2.22,
+      "006373_weight_pct_nav": 1.58,
+      "overlap_pct_nav": 1.58
+    },
+    {
+      "issuer": "MU",
+      "name": "美光科技公司",
+      "016701_security_code": "MUUS",
+      "006373_security_code": "MUUS",
+      "016701_weight_pct_nav": 6.14,
+      "006373_weight_pct_nav": 8.42,
+      "overlap_pct_nav": 6.14
+    },
+    {
+      "issuer": "NVDA",
+      "name": "英伟达",
+      "016701_security_code": "NVDAUS",
+      "006373_security_code": "NVDAUS",
+      "016701_weight_pct_nav": 8.16,
+      "006373_weight_pct_nav": 1.71,
+      "overlap_pct_nav": 1.71
+    },
+    {
+      "issuer": "SNDK",
+      "name": "闪迪",
+      "016701_security_code": "SNDKUS",
+      "006373_security_code": "SNDKUS",
+      "016701_weight_pct_nav": 2.86,
+      "006373_weight_pct_nav": 4.38,
+      "overlap_pct_nav": 2.86
+    },
+    {
+      "issuer": "TSM",
+      "name": "台积电",
+      "016701_security_code": "TSMUS",
+      "006373_security_code": "TSMUN",
+      "016701_weight_pct_nav": 3.31,
+      "006373_weight_pct_nav": 7.47,
+      "overlap_pct_nav": 3.31
+    }
+  ],
+  "016701_stock_holdings": [
+    {
+      "rank": 1,
+      "name": "英伟达",
+      "security_code": "NVDAUS",
+      "issuer": "NVDA",
+      "weight_pct_nav": 8.16
+    },
+    {
+      "rank": 2,
+      "name": "谷歌",
+      "security_code": "GOOGLUS",
+      "issuer": "ALPHABET",
+      "weight_pct_nav": 7.42
+    },
+    {
+      "rank": 3,
+      "name": "苹果",
+      "security_code": "AAPLUS",
+      "issuer": "AAPL",
+      "weight_pct_nav": 6.27
+    },
+    {
+      "rank": 4,
+      "name": "美光科技公司",
+      "security_code": "MUUS",
+      "issuer": "MU",
+      "weight_pct_nav": 6.14
+    },
+    {
+      "rank": 5,
+      "name": "超威半导体",
+      "security_code": "AMDUS",
+      "issuer": "AMD",
+      "weight_pct_nav": 5.43
+    },
+    {
+      "rank": 6,
+      "name": "英特尔",
+      "security_code": "INTCUS",
+      "issuer": "INTC",
+      "weight_pct_nav": 5.41
+    },
+    {
+      "rank": 7,
+      "name": "亚马逊",
+      "security_code": "AMZNUS",
+      "issuer": "AMZN",
+      "weight_pct_nav": 4.45
+    },
+    {
+      "rank": 8,
+      "name": "微软公司",
+      "security_code": "MSFTUS",
+      "issuer": "MSFT",
+      "weight_pct_nav": 4.31
+    },
+    {
+      "rank": 9,
+      "name": "博通公司",
+      "security_code": "AVGOUS",
+      "issuer": "AVGO",
+      "weight_pct_nav": 4.06
+    },
+    {
+      "rank": 10,
+      "name": "台积电",
+      "security_code": "TSMUS",
+      "issuer": "TSM",
+      "weight_pct_nav": 3.31
+    },
+    {
+      "rank": 11,
+      "name": "特斯拉",
+      "security_code": "TSLAUS",
+      "issuer": "TSLA",
+      "weight_pct_nav": 3.19
+    },
+    {
+      "rank": 12,
+      "name": "闪迪",
+      "security_code": "SNDKUS",
+      "issuer": "SNDK",
+      "weight_pct_nav": 2.86
+    },
+    {
+      "rank": 13,
+      "name": "Meta公司",
+      "security_code": "METAUS",
+      "issuer": "META",
+      "weight_pct_nav": 2.81
+    },
+    {
+      "rank": 14,
+      "name": "迈威尔科技",
+      "security_code": "MRVLUS",
+      "issuer": "MRVL",
+      "weight_pct_nav": 2.22
+    },
+    {
+      "rank": 15,
+      "name": "应用材料",
+      "security_code": "AMATUS",
+      "issuer": "AMAT",
+      "weight_pct_nav": 1.97
+    },
+    {
+      "rank": 16,
+      "name": "科天半导体",
+      "security_code": "KLACUS",
+      "issuer": "KLAC",
+      "weight_pct_nav": 1.87
+    },
+    {
+      "rank": 17,
+      "name": "ARM公司",
+      "security_code": "ARMUS",
+      "issuer": "ARM",
+      "weight_pct_nav": 1.78
+    },
+    {
+      "rank": 18,
+      "name": "阿斯麦",
+      "security_code": "ASMLUS",
+      "issuer": "ASML",
+      "weight_pct_nav": 1.57
+    },
+    {
+      "rank": 19,
+      "name": "高通",
+      "security_code": "QCOMUS",
+      "issuer": "QCOM",
+      "weight_pct_nav": 1.45
+    },
+    {
+      "rank": 20,
+      "name": "西部数据",
+      "security_code": "WDCUS",
+      "issuer": "WDC",
+      "weight_pct_nav": 1.43
+    },
+    {
+      "rank": 21,
+      "name": "AsteraLabs公司",
+      "security_code": "ALABUS",
+      "issuer": "ALAB",
+      "weight_pct_nav": 1.37
+    },
+    {
+      "rank": 22,
+      "name": "LumentumHoldings公司",
+      "security_code": "LITEUS",
+      "issuer": "LITE",
+      "weight_pct_nav": 1.07
+    },
+    {
+      "rank": 23,
+      "name": "思科",
+      "security_code": "CSCOUS",
+      "issuer": "CSCO",
+      "weight_pct_nav": 1.06
+    },
+    {
+      "rank": 24,
+      "name": "Coherent公司",
+      "security_code": "COHRUS",
+      "issuer": "COHR",
+      "weight_pct_nav": 1.01
+    },
+    {
+      "rank": 25,
+      "name": "戴尔科技",
+      "security_code": "DELLUS",
+      "issuer": "DELL",
+      "weight_pct_nav": 0.89
+    },
+    {
+      "rank": 26,
+      "name": "ARISTA网络公司",
+      "security_code": "ANETUS",
+      "issuer": "ANET",
+      "weight_pct_nav": 0.87
+    },
+    {
+      "rank": 27,
+      "name": "天弘科技",
+      "security_code": "CLSUS",
+      "issuer": "CLS",
+      "weight_pct_nav": 0.83
+    },
+    {
+      "rank": 28,
+      "name": "阿里巴巴-SW",
+      "security_code": "9988HK",
+      "issuer": "9988",
+      "weight_pct_nav": 0.76
+    },
+    {
+      "rank": 29,
+      "name": "联想集团",
+      "security_code": "992HK",
+      "issuer": "992",
+      "weight_pct_nav": 0.7
+    },
+    {
+      "rank": 30,
+      "name": "安费诺公司",
+      "security_code": "APHUS",
+      "issuer": "APH",
+      "weight_pct_nav": 0.66
+    },
+    {
+      "rank": 31,
+      "name": "CoreWeave公司",
+      "security_code": "CRWVUS",
+      "issuer": "CRWV",
+      "weight_pct_nav": 0.65
+    },
+    {
+      "rank": 32,
+      "name": "NebiusGroup公司",
+      "security_code": "NBISUS",
+      "issuer": "NBIS",
+      "weight_pct_nav": 0.48
+    },
+    {
+      "rank": 33,
+      "name": "Palo",
+      "security_code": "PANWUS",
+      "issuer": "PANW",
+      "weight_pct_nav": 0.47
+    },
+    {
+      "rank": 34,
+      "name": "CRWD公司",
+      "security_code": "CRWDUS",
+      "issuer": "CRWD",
+      "weight_pct_nav": 0.44
+    },
+    {
+      "rank": 35,
+      "name": "腾讯控股",
+      "security_code": "700HK",
+      "issuer": "700",
+      "weight_pct_nav": 0.38
+    },
+    {
+      "rank": 36,
+      "name": "Palantir公司",
+      "security_code": "PLTRUS",
+      "issuer": "PLTR",
+      "weight_pct_nav": 0.37
+    },
+    {
+      "rank": 37,
+      "name": "百度集团",
+      "security_code": "BIDUUS",
+      "issuer": "BIDU",
+      "weight_pct_nav": 0.33
+    },
+    {
+      "rank": 38,
+      "name": "中芯国际",
+      "security_code": "981HK",
+      "issuer": "981",
+      "weight_pct_nav": 0.31
+    },
+    {
+      "rank": 39,
+      "name": "AppLovin公司",
+      "security_code": "APPUS",
+      "issuer": "APP",
+      "weight_pct_nav": 0.31
+    },
+    {
+      "rank": 40,
+      "name": "Snowflake公司",
+      "security_code": "SNOWUS",
+      "issuer": "SNOW",
+      "weight_pct_nav": 0.28
+    },
+    {
+      "rank": 41,
+      "name": "甲骨文",
+      "security_code": "ORCLUS",
+      "issuer": "ORCL",
+      "weight_pct_nav": 0.24
+    },
+    {
+      "rank": 42,
+      "name": "Shopify公司",
+      "security_code": "SHOPUS",
+      "issuer": "SHOP",
+      "weight_pct_nav": 0.21
+    },
+    {
+      "rank": 43,
+      "name": "商汤-W",
+      "security_code": "20HK",
+      "issuer": "20",
+      "weight_pct_nav": 0.14
+    },
+    {
+      "rank": 44,
+      "name": "铿腾电子",
+      "security_code": "CDNSUS",
+      "issuer": "CDNS",
+      "weight_pct_nav": 0.14
+    },
+    {
+      "rank": 45,
+      "name": "快手-W",
+      "security_code": "1024HK",
+      "issuer": "1024",
+      "weight_pct_nav": 0.13
+    },
+    {
+      "rank": 46,
+      "name": "哔哩哔哩",
+      "security_code": "9626HK",
+      "issuer": "9626",
+      "weight_pct_nav": 0.13
+    },
+    {
+      "rank": 47,
+      "name": "财捷公司",
+      "security_code": "INTUUS",
+      "issuer": "INTU",
+      "weight_pct_nav": 0.09
+    }
+  ],
+  "006373_stock_holdings": [
+    {
+      "rank": 1,
+      "name": "美光科技股份有限公司",
+      "security_code": "MUUS",
+      "issuer": "MU",
+      "weight_pct_nav": 8.42
+    },
+    {
+      "rank": 2,
+      "name": "MKS股份有限公司",
+      "security_code": "MKSIUS",
+      "issuer": "MKSI",
+      "weight_pct_nav": 7.47
+    },
+    {
+      "rank": 3,
+      "name": "台湾积体电路制造股份有限公司",
+      "security_code": "TSMUN",
+      "issuer": "TSM",
+      "weight_pct_nav": 7.47
+    },
+    {
+      "rank": 4,
+      "name": "英特尔公司",
+      "security_code": "INTCUS",
+      "issuer": "INTC",
+      "weight_pct_nav": 7.17
+    },
+    {
+      "rank": 5,
+      "name": "康宁公司",
+      "security_code": "GLWUS",
+      "issuer": "GLW",
+      "weight_pct_nav": 5.37
+    },
+    {
+      "rank": 6,
+      "name": "闪迪公司/特拉华州",
+      "security_code": "SNDKUS",
+      "issuer": "SNDK",
+      "weight_pct_nav": 4.38
+    },
+    {
+      "rank": 7,
+      "name": "泛林集团",
+      "security_code": "LRCXUS",
+      "issuer": "LRCX",
+      "weight_pct_nav": 3.68
+    },
+    {
+      "rank": 8,
+      "name": "Alphabet股份有限公司",
+      "security_code": "GOOGUS",
+      "issuer": "ALPHABET",
+      "weight_pct_nav": 3.21
+    },
+    {
+      "rank": 9,
+      "name": "爱德万测试",
+      "security_code": "6857JP",
+      "issuer": "6857",
+      "weight_pct_nav": 2.75
+    },
+    {
+      "rank": 10,
+      "name": "诺基亚",
+      "security_code": "NOKUS",
+      "issuer": "NOK",
+      "weight_pct_nav": 2.66
+    },
+    {
+      "rank": 11,
+      "name": "塔尔半导体有限公司",
+      "security_code": "TSEMUS",
+      "issuer": "TSEM",
+      "weight_pct_nav": 2.62
+    },
+    {
+      "rank": 12,
+      "name": "Wolfspeed股份有限公司",
+      "security_code": "WOLFUS",
+      "issuer": "WOLF",
+      "weight_pct_nav": 2.33
+    },
+    {
+      "rank": 13,
+      "name": "是德科技",
+      "security_code": "KEYS",
+      "issuer": "KEYS",
+      "weight_pct_nav": 2.31
+    },
+    {
+      "rank": 14,
+      "name": "阿斯麦控股公司",
+      "security_code": "ASMLUS",
+      "issuer": "ASML",
+      "weight_pct_nav": 2.29
+    },
+    {
+      "rank": 15,
+      "name": "铠侠控股株式会社",
+      "security_code": "285AJP",
+      "issuer": "285A",
+      "weight_pct_nav": 2.06
+    },
+    {
+      "rank": 16,
+      "name": "Lumentum控股股份有限公司",
+      "security_code": "LITEUS",
+      "issuer": "LITE",
+      "weight_pct_nav": 1.86
+    },
+    {
+      "rank": 17,
+      "name": "国际电气株式会社",
+      "security_code": "6525JT",
+      "issuer": "6525",
+      "weight_pct_nav": 1.79
+    },
+    {
+      "rank": 18,
+      "name": "英伟达公司",
+      "security_code": "NVDAUS",
+      "issuer": "NVDA",
+      "weight_pct_nav": 1.71
+    },
+    {
+      "rank": 19,
+      "name": "Micronics日本有限公司",
+      "security_code": "6871JP",
+      "issuer": "6871",
+      "weight_pct_nav": 1.65
+    },
+    {
+      "rank": 20,
+      "name": "Formfactor股份有限公司",
+      "security_code": "FORMUS",
+      "issuer": "FORM",
+      "weight_pct_nav": 1.61
+    },
+    {
+      "rank": 21,
+      "name": "美满电子科技公司",
+      "security_code": "MRVLUS",
+      "issuer": "MRVL",
+      "weight_pct_nav": 1.58
+    },
+    {
+      "rank": 22,
+      "name": "威世公司",
+      "security_code": "VSHUS",
+      "issuer": "VSH",
+      "weight_pct_nav": 1.57
+    },
+    {
+      "rank": 23,
+      "name": "AMD公司",
+      "security_code": "AMDUS",
+      "issuer": "AMD",
+      "weight_pct_nav": 1.36
+    },
+    {
+      "rank": 24,
+      "name": "津上精密机床(中国)有限公司",
+      "security_code": "1651HK",
+      "issuer": "1651",
+      "weight_pct_nav": 1.32
+    },
+    {
+      "rank": 25,
+      "name": "安克创新科技股份有限公司",
+      "security_code": "668HK",
+      "issuer": "668",
+      "weight_pct_nav": 1.25
+    },
+    {
+      "rank": 26,
+      "name": "华虹宏力半导体有限公司",
+      "security_code": "688347",
+      "issuer": "688347",
+      "weight_pct_nav": 1.13
+    },
+    {
+      "rank": 27,
+      "name": "Semtech公司",
+      "security_code": "SMTCUS",
+      "issuer": "SMTC",
+      "weight_pct_nav": 1.05
+    },
+    {
+      "rank": 28,
+      "name": "伊顿公共有限公司",
+      "security_code": "ETNUS",
+      "issuer": "ETN",
+      "weight_pct_nav": 0.91
+    },
+    {
+      "rank": 29,
+      "name": "德州仪器公司",
+      "security_code": "TXNUS",
+      "issuer": "TXN",
+      "weight_pct_nav": 0.91
+    },
+    {
+      "rank": 30,
+      "name": "ASMPT公司",
+      "security_code": "522HK",
+      "issuer": "522",
+      "weight_pct_nav": 0.69
+    },
+    {
+      "rank": 31,
+      "name": "奥加诺株式会社",
+      "security_code": "6368JP",
+      "issuer": "6368",
+      "weight_pct_nav": 0.49
+    },
+    {
+      "rank": 32,
+      "name": "高伟电子控股有限公司",
+      "security_code": "1415HK",
+      "issuer": "1415",
+      "weight_pct_nav": 0.17
+    },
+    {
+      "rank": 33,
+      "name": "威胜控股有限公司",
+      "security_code": "3393HK",
+      "issuer": "3393",
+      "weight_pct_nav": 0.03
+    },
+    {
+      "rank": 34,
+      "name": "盛合晶微半导体有限公司",
+      "security_code": "688820",
+      "issuer": "688820",
+      "weight_pct_nav": 0.0
+    },
+    {
+      "rank": 35,
+      "name": "苏州联讯仪器股份有限公司",
+      "security_code": "688808",
+      "issuer": "688808",
+      "weight_pct_nav": 0.0
+    },
+    {
+      "rank": 36,
+      "name": "重庆臻宝科技股份有限公司",
+      "security_code": "688797",
+      "issuer": "688797",
+      "weight_pct_nav": 0.0
+    },
+    {
+      "rank": 37,
+      "name": "武汉长进光子技术股份有限公司",
+      "security_code": "688635",
+      "issuer": "688635",
+      "weight_pct_nav": 0.0
+    },
+    {
+      "rank": 38,
+      "name": "江西红板科技股份有限公司",
+      "security_code": "603459",
+      "issuer": "603459",
+      "weight_pct_nav": 0.0
+    },
+    {
+      "rank": 39,
+      "name": "有研金属复合材料（北京）股份公司",
+      "security_code": "688811",
+      "issuer": "688811",
+      "weight_pct_nav": 0.0
+    },
+    {
+      "rank": 40,
+      "name": "长裕控股集团股份有限公司",
+      "security_code": "603407",
+      "issuer": "603407",
+      "weight_pct_nav": 0.0
+    },
+    {
+      "rank": 41,
+      "name": "泉州嘉德利电子材料股份公司",
+      "security_code": "603435",
+      "issuer": "603435",
+      "weight_pct_nav": 0.0
+    },
+    {
+      "rank": 42,
+      "name": "北京康美特科技股份有限公司",
+      "security_code": "920189",
+      "issuer": "920189",
+      "weight_pct_nav": 0.0
+    }
+  ],
+  "sources": [
+    "D:\\wd\\数据分析\\基金\\016701_银华海外数字经济量化选股混合发起_QDII_A\\定期报告\\2026\\2026-08-29_银华海外数字经济_2026年中期报告_AN202608291828680755.pdf",
+    "D:\\wd\\数据分析\\基金\\006373_国富全球科技互联混合_QDII_人民币A\\定期报告\\2026\\2026-08-31_国富全球科技互联_2026年中期报告_AN202608311828779589.pdf"
+  ],
+  "weight_rounding_note": "Individual disclosed weights sum to 90.43% and 85.27%, vs report total 90.45% and 85.29%; the 0.02pp differences are within rounding."
+}

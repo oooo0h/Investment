@@ -1,0 +1,36 @@
+{
+  "checked_at": "2026-10-16T09:03:49+08:00",
+  "publication_time": null,
+  "source_note": "Exact release time unavailable. Data checked after 09:00; no claim of pre-09:00 availability.",
+  "data": {
+    "code": "006373",
+    "share_class": "人民币A",
+    "account_identity_status": "research_candidate_only_not_confirmed_account_holding",
+    "latest_nav_date": "2026-10-14",
+    "unit_nav": 6.692,
+    "accumulated_nav": 6.692,
+    "source_status": "third_party_published_NAV_cross_checked_not_estimate",
+    "sources": [
+      "https://stock.finance.sina.com.cn/fundInfo/view/FundInfo_LSJZ.php?symbol=006373",
+      "https://fund.stockstar.com/funds/006373.shtml"
+    ],
+    "official_source_status": "Latest official NAV not confirmed. Official homepage extract shows 6.9267 without date, matching 10/13 in third-party history; official detail page renders no NAV fields.",
+    "official_sources_attempted": [
+      "https://www.ftsfund.com/",
+      "https://www.ftsfund.com/qxjj/jjxq/006373"
+    ],
+    "operation_day": null,
+    "reference_metric": "MTD_public_unit_NAV_change",
+    "base_nav_date": "2026-09-30",
+    "base_unit_nav": 7.1598,
+    "base_accumulated_nav": 7.1598,
+    "mtd_reference_pct": -6.533702058716717,
+    "formula": "(6.6920 / 7.1598 - 1) * 100",
+    "distribution_split_evidence": {
+      "source": "https://fundf10.eastmoney.com/fhsp_006373.html",
+      "statement": "2026 no distribution; no distribution history; no split history. Cache crawled two days earlier and NAV header lagged at 10/12.",
+      "additional_evidence": "Sina visible observations 9/30 to 10/14 have unit NAV equal to accumulated NAV; Stockstar lists zero historical distributions.",
+      "limitation": "Primary-source interval corporate actions and total return not independently confirmed. Use monthly unit-NAV reference change, not personal return or verified total return."
+    }
+  }
+}

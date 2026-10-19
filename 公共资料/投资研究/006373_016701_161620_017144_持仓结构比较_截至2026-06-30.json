@@ -1,0 +1,59 @@
+{
+  "holdings_as_of": "2026-06-30",
+  "verified_at": "2026-10-15",
+  "profiles": {
+    "006373": {
+      "role": "设备、存储、材料等全球科技供应链",
+      "us_direct": 71.95,
+      "china_direct": 1.14,
+      "japan_direct": 8.74,
+      "top10": 52.58,
+      "it": 79.35,
+      "etf": 0,
+      "overlap": null,
+      "common_issuers": null,
+      "manager": "狄星华；2026-09-19徐成离任，原共同管理人继续",
+      "annual_A_management_custody": 1.4
+    },
+    "016701": {
+      "role": "主动量化选股，科技巨头和平台权重更高",
+      "us_direct": 87.89,
+      "china_direct": 0,
+      "japan_direct": 0,
+      "top10": 54.96,
+      "it": 70.7,
+      "etf": 0,
+      "overlap": 28.22,
+      "common_issuers": 10,
+      "manager": "马君，自2023-03-15成立起",
+      "annual_A_management_custody": 1.4
+    },
+    "161620": {
+      "role": "当前美股科技硬件＋普通ETF；历史有港股阶段",
+      "us_direct": 80.24,
+      "china_direct": 0,
+      "japan_direct": 0,
+      "top10": 29.73,
+      "it": 66.65,
+      "etf": 10.05,
+      "overlap": 17.85,
+      "common_issuers": 11,
+      "manager": "何博2023-10-14起、程越楷2025-01-10起",
+      "annual_A_management_custody": 1.4
+    },
+    "017144": {
+      "role": "汽车、自动驾驶、RoboTaxi＋芯片主题",
+      "us_direct": 88.57,
+      "china_direct": 0,
+      "japan_direct": 0,
+      "top10": 76.14,
+      "it": 40.73,
+      "etf": 0,
+      "overlap": 10.78,
+      "common_issuers": 6,
+      "manager": "周晶2023-05-23起、赵启元2023-08-05起",
+      "annual_A_management_custody": 1.4
+    }
+  },
+  "overlap_method": "sum(min(direct issuer weights as percent NAV)); Alphabet share classes and ADR suffixes normalized; ETF not looked through; weights rounded in reports; no account data"
+}

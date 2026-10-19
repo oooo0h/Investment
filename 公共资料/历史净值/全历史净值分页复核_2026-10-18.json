@@ -1,0 +1,169 @@
+{
+  "schema": "selected-nav-pagination-verification-v1",
+  "verified_at": "2026-10-18",
+  "source_scope": "所用供应商内的全量历史分页；不等同管理人官网独立逐日核验",
+  "results": [
+    {
+      "code": "005698",
+      "name": "华夏全球科技先锋混合(QDII)A(人民币)",
+      "records": 1979,
+      "first_date": "2018-04-17",
+      "last_date": "2026-10-15",
+      "pages": 99,
+      "json_path": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/005698_全部历史净值_截至2026-10-15.json",
+      "csv_path": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/005698_全部历史净值_截至2026-10-15.csv",
+      "verification_path": "基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/原始数据/全历史分页复核_2026-10-18/005698_全历史分页复核结果.json",
+      "added_dates": [],
+      "accumulated_nav_missing_dates": [],
+      "new_dataset": false,
+      "old_files_unchanged": true,
+      "json_sha256": "1dde575b0d3275264d43290ad025cd69542d9de4f4ac316ba86b7eae5214aa8d"
+    },
+    {
+      "code": "006373",
+      "name": "国富全球科技互联混合(QDII)人民币A",
+      "records": 1905,
+      "first_date": "2018-11-20",
+      "last_date": "2026-10-15",
+      "pages": 96,
+      "json_path": "基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/006373_全部历史净值_截至2026-10-15.json",
+      "csv_path": "基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/006373_全部历史净值_截至2026-10-15.csv",
+      "verification_path": "基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/原始数据/全历史分页复核_2026-10-18/006373_全历史分页复核结果.json",
+      "added_dates": [
+        "2026-10-15"
+      ],
+      "accumulated_nav_missing_dates": [
+        "2020-12-31",
+        "2021-02-10"
+      ],
+      "new_dataset": true,
+      "old_files_unchanged": true,
+      "json_sha256": "aef04c97316167cc804d7c08d0d4fa60866f988330265e189d2bf7b0111eafae"
+    },
+    {
+      "code": "000216",
+      "name": "华安黄金ETF联接A",
+      "records": 3194,
+      "first_date": "2013-08-22",
+      "last_date": "2026-10-16",
+      "pages": 160,
+      "json_path": "基金/000216_华安黄金ETF联接A/历史净值/000216_全部历史净值_截至2026-10-16.json",
+      "csv_path": "基金/000216_华安黄金ETF联接A/历史净值/000216_全部历史净值_截至2026-10-16.csv",
+      "verification_path": "基金/000216_华安黄金ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/000216_全历史分页复核结果.json",
+      "added_dates": [
+        "2026-10-16"
+      ],
+      "accumulated_nav_missing_dates": [],
+      "new_dataset": true,
+      "old_files_unchanged": true,
+      "json_sha256": "bd31165916125b7a1c2438e565b4814879938a3beae595f749188bac90267700"
+    },
+    {
+      "code": "009608",
+      "name": "广发中证500指数增强A",
+      "records": 1443,
+      "first_date": "2020-10-15",
+      "last_date": "2026-10-16",
+      "pages": 73,
+      "json_path": "基金/009608_广发中证500指数增强A/历史净值/009608_全部历史净值_截至2026-10-16.json",
+      "csv_path": "基金/009608_广发中证500指数增强A/历史净值/009608_全部历史净值_截至2026-10-16.csv",
+      "verification_path": "基金/009608_广发中证500指数增强A/历史净值/原始数据/全历史分页复核_2026-10-18/009608_全历史分页复核结果.json",
+      "added_dates": [
+        "2026-10-16"
+      ],
+      "accumulated_nav_missing_dates": [],
+      "new_dataset": true,
+      "old_files_unchanged": true,
+      "json_sha256": "2dd5b4718f82a413daaadc85845c6f068b556c6c9517f4920756291ddc27579b"
+    },
+    {
+      "code": "018124",
+      "name": "永赢先进制造智选混合发起A",
+      "records": 831,
+      "first_date": "2023-05-04",
+      "last_date": "2026-10-16",
+      "pages": 42,
+      "json_path": "基金/018124_永赢先进制造智选混合发起A/历史净值/018124_全部历史净值_截至2026-10-16.json",
+      "csv_path": "基金/018124_永赢先进制造智选混合发起A/历史净值/018124_全部历史净值_截至2026-10-16.csv",
+      "verification_path": "基金/018124_永赢先进制造智选混合发起A/历史净值/原始数据/全历史分页复核_2026-10-18/018124_全历史分页复核结果.json",
+      "added_dates": [
+        "2026-10-16"
+      ],
+      "accumulated_nav_missing_dates": [],
+      "new_dataset": true,
+      "old_files_unchanged": true,
+      "json_sha256": "8d3764ed6a3870d3a79f636f46ebf850c9cc19517ddf2ecc27213e169b08b83b"
+    },
+    {
+      "code": "015789",
+      "name": "永赢高端装备智选混合发起A",
+      "records": 1003,
+      "first_date": "2022-07-15",
+      "last_date": "2026-10-16",
+      "pages": 51,
+      "json_path": "基金/015789_永赢高端装备智选混合发起A/历史净值/015789_全部历史净值_截至2026-10-16.json",
+      "csv_path": "基金/015789_永赢高端装备智选混合发起A/历史净值/015789_全部历史净值_截至2026-10-16.csv",
+      "verification_path": "基金/015789_永赢高端装备智选混合发起A/历史净值/原始数据/全历史分页复核_2026-10-18/015789_全历史分页复核结果.json",
+      "added_dates": [
+        "2026-10-16"
+      ],
+      "accumulated_nav_missing_dates": [],
+      "new_dataset": true,
+      "old_files_unchanged": true,
+      "json_sha256": "eac125bb851700551f1bacbcfc041064fc66cb6ff538d47b1cbdca1cfd28242c"
+    },
+    {
+      "code": "019454",
+      "name": "华泰柏瑞中韩半导体ETF发起式联接(QDII)A",
+      "records": 734,
+      "first_date": "2023-09-22",
+      "last_date": "2026-10-16",
+      "pages": 37,
+      "json_path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/019454_全部历史净值_截至2026-10-16.json",
+      "csv_path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/019454_全部历史净值_截至2026-10-16.csv",
+      "verification_path": "基金/019454_华泰柏瑞中韩半导体ETF发起式联接_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/019454_全历史分页复核结果.json",
+      "added_dates": [
+        "2026-10-16"
+      ],
+      "accumulated_nav_missing_dates": [],
+      "new_dataset": true,
+      "old_files_unchanged": true,
+      "json_sha256": "02ab8c32e8cab2ae572bdd9059f7486cc8f7770be1cdf3dbafee00989c1d2e99"
+    },
+    {
+      "code": "022459",
+      "name": "易方达中证A500ETF联接A",
+      "records": 465,
+      "first_date": "2024-11-11",
+      "last_date": "2026-10-16",
+      "pages": 24,
+      "json_path": "基金/022459_易方达中证A500ETF联接A/历史净值/022459_全部历史净值_截至2026-10-16.json",
+      "csv_path": "基金/022459_易方达中证A500ETF联接A/历史净值/022459_全部历史净值_截至2026-10-16.csv",
+      "verification_path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_全历史分页复核结果.json",
+      "added_dates": [
+        "2026-10-16"
+      ],
+      "accumulated_nav_missing_dates": [],
+      "new_dataset": true,
+      "old_files_unchanged": true,
+      "json_sha256": "8de1fa59a1ed79a06b1106224d9e6a4fec40aa39d3cf2f77e7337fcc45ec6b94"
+    },
+    {
+      "code": "016701",
+      "name": "银华海外数字经济量化选股混合发起_QDII_A",
+      "records": 779,
+      "first_date": "2023-03-15",
+      "last_date": "2026-10-15",
+      "pages": 39,
+      "json_path": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/016701_全部历史净值_截至2026-10-15.json",
+      "csv_path": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/016701_全部历史净值_截至2026-10-15.csv",
+      "verification_path": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/原始数据/全历史分页复核_2026-10-18/016701_全历史分页复核结果.json",
+      "added_dates": [],
+      "accumulated_nav_missing_dates": [],
+      "new_dataset": false,
+      "old_files_unchanged": true,
+      "json_sha256": "21f96f18f11dfbc834aae7d48cf45c0e81e1e2a5963f2f4e63346f46b3636311"
+    }
+  ],
+  "failures": []
+}

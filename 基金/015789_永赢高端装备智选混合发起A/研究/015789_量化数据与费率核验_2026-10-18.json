@@ -1,0 +1,71 @@
+{
+  "research_date": "2026-10-18",
+  "code": "015789",
+  "name": "永赢高端装备智选混合发起A",
+  "scope": "public NAV and public fees only; no account data read",
+  "nav_path": "基金\\015789_永赢高端装备智选混合发起A\\历史净值\\015789_全部历史净值_截至2026-10-16.json",
+  "nav_sha256": "eac125bb851700551f1bacbcfc041064fc66cb6ff538d47b1cbdca1cfd28242c",
+  "nav_count": 1003,
+  "nav_first_date": "2022-07-15",
+  "nav_last_date": "2026-10-16",
+  "missing_accumulated_nav_dates": [],
+  "nav_accumulated_differences": [],
+  "local_event_dates": [],
+  "growth_mismatch_tolerance_percentage_points": 0.03,
+  "growth_mismatches": [],
+  "ordinary_subscription_open_date": "2022-09-08",
+  "standard_small_subscription_fee": 0.01,
+  "redemption_calendar_day_fee_tiers": [
+    {
+      "min_inclusive": 0,
+      "max_exclusive": 7,
+      "rate": 0.015
+    },
+    {
+      "min_inclusive": 7,
+      "max_exclusive": 30,
+      "rate": 0.0075
+    },
+    {
+      "min_inclusive": 30,
+      "max_exclusive": 180,
+      "rate": 0.005
+    },
+    {
+      "min_inclusive": 180,
+      "max_exclusive": null,
+      "rate": 0
+    }
+  ],
+  "fee_history_scope": "current public snapshot only; historical changes and platform discounts not exhaustively reconstructed",
+  "raw_sources": [
+    {
+      "kind": "招募说明书",
+      "url": "https://pdf.dfcfw.com/pdf/H2_AN202605301823072369_1.pdf",
+      "path": "基金\\015789_永赢高端装备智选混合发起A\\研究\\原始资料\\量化费率核验_2026-10-18\\015789_招募说明书.pdf",
+      "sha256": "3df588d16f6a676b8b37b754663cc908d03318560db390a874e58b2b4bb3a14e",
+      "bytes": 1501514
+    },
+    {
+      "kind": "分红记录",
+      "url": "https://owa.maxwealthfund.com/gateway/aresoft-product/product/queryFundBonusByCode?fundCode=015789&page=0",
+      "path": "基金\\015789_永赢高端装备智选混合发起A\\研究\\原始资料\\量化费率核验_2026-10-18\\015789_分红记录.json",
+      "sha256": "35b8ccce21179db8718c1f21f84c8fcb563ec46d1d2ece7236e8d9fd5e1ce739",
+      "bytes": 48
+    },
+    {
+      "kind": "官网费率",
+      "url": "https://owa.maxwealthfund.com/gateway/aresoft-product/product/queryFundRate?fundCode=015789",
+      "path": "基金\\015789_永赢高端装备智选混合发起A\\研究\\原始资料\\量化费率核验_2026-10-18\\015789_官网费率.json",
+      "sha256": "2b30dbd726ad17bfb3f0b3b17f30bcc4ecb480cd0307161b47bc0537741e8345",
+      "bytes": 4784
+    }
+  ],
+  "sources": {
+    "prospectus": "https://pdf.dfcfw.com/pdf/H2_AN202605301823072369_1.pdf",
+    "opened_source": "https://pdf.dfcfw.com/pdf/H2_AN202209071578099965_1.pdf",
+    "bonus": "https://owa.maxwealthfund.com/gateway/aresoft-product/product/queryFundBonusByCode?fundCode=015789&page=0",
+    "fees_api": "https://owa.maxwealthfund.com/gateway/aresoft-product/product/queryFundRate?fundCode=015789"
+  },
+  "nav_adjustment_conclusion": "No split/distribution event detected in local records; all available accumulated NAV equals unit NAV and official dividend query empty. Unit NAV ratio suitable for this local sample conditional on these sources; absence of an exhaustive official split-announcement audit must not be called independent full-history certification."
+}

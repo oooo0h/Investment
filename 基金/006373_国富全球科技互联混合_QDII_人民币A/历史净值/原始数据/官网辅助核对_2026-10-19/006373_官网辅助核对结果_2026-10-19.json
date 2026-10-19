@@ -1,0 +1,23 @@
+{
+  "schema": "public-nav-official-auxiliary-check-v1",
+  "code": "006373",
+  "name": "国富全球科技互联混合(QDII)人民币A",
+  "checked_at": "2026-10-19T01:17:44.341Z",
+  "url": "https://www.ftsfund.com/qxjj/jjxq/006373",
+  "evidence_type": "web工具成功读取的网页提取原文；不是原始HTML响应",
+  "raw_evidence": {
+    "path": "基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/原始数据/官网辅助核对_2026-10-19/006373_官网页面_web提取原文_2026-10-19.txt",
+    "sha256": "95e1d3276656e18e024da6fc2ea8ae0f2fd0aca3019ae96bffac7e93f0666a71",
+    "bytes": 12668
+  },
+  "confirmed_public_values": {
+    "nav": "6.5899",
+    "accumulated_nav": "6.5899",
+    "daily_growth_pct": "-1.53"
+  },
+  "confirmed_nav_date": null,
+  "comparison_scope": "页面公开值与既有主档2026-10-15的值相符；页面未显示可确认净值日期，不能用于最新日期验证或最近5日验证",
+  "direct_http_failure": "Node直接请求重定向循环；redirect manual观察到HTTP302转http://www.ftsfund.com/，不当作成功HTML",
+  "source_relationship": "管理人官网，独立于既有东方财富/天天基金主档供应商",
+  "main_dataset_modified": false
+}

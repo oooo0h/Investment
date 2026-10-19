@@ -1,0 +1,100 @@
+{
+  "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=022459&pageIndex=24&pageSize=20&startDate=&endDate=2026-10-16&_=1792300994469",
+  "captured_at": "2026-10-18T05:23:14.490Z",
+  "response": {
+    "Data": {
+      "LSJZList": [
+        {
+          "FSRQ": "2024-11-20",
+          "DWJZ": "1.0009",
+          "LJJZ": "1.0009",
+          "SDATE": null,
+          "ACTUALSYI": "",
+          "NAVTYPE": "1",
+          "JZZZL": "0.13",
+          "SGZT": "开放申购",
+          "SHZT": "开放赎回",
+          "FHFCZ": "",
+          "FHFCZ10": null,
+          "FHFCBZ": "",
+          "DTYPE": null,
+          "FHSP": ""
+        },
+        {
+          "FSRQ": "2024-11-19",
+          "DWJZ": "0.9996",
+          "LJJZ": "0.9996",
+          "SDATE": null,
+          "ACTUALSYI": "",
+          "NAVTYPE": "1",
+          "JZZZL": "0.26",
+          "SGZT": "开放申购",
+          "SHZT": "开放赎回",
+          "FHFCZ": "",
+          "FHFCZ10": null,
+          "FHFCBZ": "",
+          "DTYPE": null,
+          "FHSP": ""
+        },
+        {
+          "FSRQ": "2024-11-18",
+          "DWJZ": "0.9970",
+          "LJJZ": "0.9970",
+          "SDATE": null,
+          "ACTUALSYI": "",
+          "NAVTYPE": "1",
+          "JZZZL": "-0.07",
+          "SGZT": "开放申购",
+          "SHZT": "开放赎回",
+          "FHFCZ": "",
+          "FHFCZ10": null,
+          "FHFCBZ": "",
+          "DTYPE": null,
+          "FHSP": ""
+        },
+        {
+          "FSRQ": "2024-11-15",
+          "DWJZ": "0.9977",
+          "LJJZ": "0.9977",
+          "SDATE": null,
+          "ACTUALSYI": "",
+          "NAVTYPE": "1",
+          "JZZZL": "",
+          "SGZT": "封闭期",
+          "SHZT": "封闭期",
+          "FHFCZ": "",
+          "FHFCZ10": null,
+          "FHFCBZ": "",
+          "DTYPE": null,
+          "FHSP": ""
+        },
+        {
+          "FSRQ": "2024-11-11",
+          "DWJZ": "1.0000",
+          "LJJZ": "1.0000",
+          "SDATE": null,
+          "ACTUALSYI": "",
+          "NAVTYPE": "1",
+          "JZZZL": "",
+          "SGZT": "封闭期",
+          "SHZT": "封闭期",
+          "FHFCZ": "",
+          "FHFCZ10": null,
+          "FHFCBZ": "",
+          "DTYPE": null,
+          "FHSP": ""
+        }
+      ],
+      "FundType": "001",
+      "SYType": null,
+      "isNewType": false,
+      "Feature": "030,031,050,051,053"
+    },
+    "ErrCode": 0,
+    "ErrMsg": null,
+    "TotalCount": 465,
+    "Expansion": null,
+    "PageSize": 20,
+    "PageIndex": 24
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "verified_at": "2026-10-15",
+  "funds": [
+    "016701",
+    "016702"
+  ],
+  "model": "For equal starting outlay and identical underlying before-class-fee returns, A/C net proceeds ratio approximately exp(0.004 * holding_days / 365) / (1 + A_subscription_fee) * (1-redemption_A)/(1-redemption_C). Continuous fee approximation; assumes published redemption schedules and 0.4 percentage point annual service fee differential remain constant. No personal account data.",
+  "scenarios": [
+    {
+      "A_subscription_fee_pct": 0.15,
+      "service_fee_differential_per_year_pct": 0.4,
+      "no_redemption_fee_break_even_days": 136.77244629090012,
+      "first_break_even_considering_redemption_schedule_days_approx": 180,
+      "comparison_rows": [
+        {
+          "holding_days": 30,
+          "redemption_A_pct": 0.5,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": -0.616358
+        },
+        {
+          "holding_days": 90,
+          "redemption_A_pct": 0.5,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": -0.550988
+        },
+        {
+          "holding_days": 137,
+          "redemption_A_pct": 0.5,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": -0.499752
+        },
+        {
+          "holding_days": 179,
+          "redemption_A_pct": 0.5,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": -0.453944
+        },
+        {
+          "holding_days": 180,
+          "redemption_A_pct": 0,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": 0.047384
+        },
+        {
+          "holding_days": 365,
+          "redemption_A_pct": 0,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": 0.250425
+        },
+        {
+          "holding_days": 1095,
+          "redemption_A_pct": 0,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": 1.055645
+        },
+        {
+          "holding_days": 1460,
+          "redemption_A_pct": 0,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": 1.460678
+        }
+      ]
+    },
+    {
+      "A_subscription_fee_pct": 1.5,
+      "service_fee_differential_per_year_pct": 0.4,
+      "no_redemption_fee_break_even_days": 1358.585890054747,
+      "first_break_even_considering_redemption_schedule_days_approx": 1358.585890054747,
+      "comparison_rows": [
+        {
+          "holding_days": 30,
+          "redemption_A_pct": 0.5,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": -1.938209
+        },
+        {
+          "holding_days": 90,
+          "redemption_A_pct": 0.5,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": -1.873709
+        },
+        {
+          "holding_days": 137,
+          "redemption_A_pct": 0.5,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": -1.823154
+        },
+        {
+          "holding_days": 179,
+          "redemption_A_pct": 0.5,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": -1.777956
+        },
+        {
+          "holding_days": 180,
+          "redemption_A_pct": 0,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": -1.283296
+        },
+        {
+          "holding_days": 365,
+          "redemption_A_pct": 0,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": -1.082955
+        },
+        {
+          "holding_days": 1095,
+          "redemption_A_pct": 0,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": -0.288444
+        },
+        {
+          "holding_days": 1460,
+          "redemption_A_pct": 0,
+          "redemption_C_pct": 0,
+          "A_relative_to_C_net_proceeds_pct": 0.111201
+        }
+      ]
+    }
+  ]
+}

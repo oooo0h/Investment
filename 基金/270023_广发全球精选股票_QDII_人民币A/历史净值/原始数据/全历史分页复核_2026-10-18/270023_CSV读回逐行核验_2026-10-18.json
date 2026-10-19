@@ -1,0 +1,15 @@
+{
+  "code": "270023",
+  "count": 3893,
+  "first_date": "2010-08-18",
+  "last_date": "2026-10-15",
+  "csv_file": "D:\\wd\\数据分析\\基金\\270023_广发全球精选股票_QDII_人民币A\\历史净值\\270023_全部历史净值_截至2026-10-15.csv",
+  "json_sha256": "78c9072c610293d5bf65dc477bb1155a7c94adb39b90cbd0945a5f65dfa06ccf",
+  "csv_sha256": "bbbe6b4a64c212673a1b5cddbcf2f681e7f7dee993a5bfa7e9e0597e114cfc9d",
+  "all_rows_fields_roundtrip_verified": true,
+  "utf8_bom": true,
+  "existing_schema_preserved": true,
+  "preview_file": "D:\\wd\\数据分析\\公共资料\\工具\\tmp\\nav_csv_2026-10-18\\public_nav_csv_preview_270023_2026-10-15.png",
+  "inspection": "{\"kind\":\"table\",\"sheet\":\"270023\",\"address\":\"A1:F4\",\"rows\":4,\"cols\":6,\"values\":[[\"净值日期\",\"单位净值\",\"累计净值\",\"官网单位净值日增长率（%）\",\"基金代码\",\"份额类别\"],[\"2010-08-18\",1,1,0,\"270023\",\"人民币A\"],[\"2010-08-19\",1,1,0,\"270023\",\"人民币A\"],[\"2010-08-20\",1,1,0,\"270023\",\"人民币A\"]]}",
+  "formula_error_scan": "{\"kind\":\"notice\",\"message\":\"Cell search matched 0 entries.\"}"
+}

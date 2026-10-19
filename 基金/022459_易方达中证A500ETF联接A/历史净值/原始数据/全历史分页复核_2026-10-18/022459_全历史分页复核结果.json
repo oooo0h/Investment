@@ -1,0 +1,156 @@
+{
+  "schema": "public-nav-full-pagination-verification-v1",
+  "code": "022459",
+  "verified_at": "2026-10-18",
+  "source": "天天基金/东方财富 f10/lsjz；第三方单一供应商，非管理人官网全量独立核验",
+  "latest_source_date": "2026-10-16",
+  "pinned_end_date": "2026-10-16",
+  "source_total_count": 465,
+  "source_page_size": 20,
+  "source_page_count": 24,
+  "source_unique_dates": 465,
+  "all_pages_archived": true,
+  "all_page_counts_match": true,
+  "empty_tail_verified": true,
+  "first_page_stable": true,
+  "first_date": "2024-11-11",
+  "previous_last_date": "2026-10-15",
+  "previous_count": 464,
+  "previous_json_path": "基金/022459_易方达中证A500ETF联接A/历史净值/022459_全部历史净值_截至2026-10-15.json",
+  "previous_json_sha256": "b8f157489af629c7f3d677e5d69b445760e537754137c6bf6c64f70d6339792d",
+  "previous_csv_sha256": "4c9f6c040b271f3619373e9811975d67016d8d9d3e66d408141aee0f40c8aa1e",
+  "missing_prior_dates": [],
+  "unit_nav_mismatch_dates": [],
+  "accumulated_nav_mismatch_dates": [],
+  "accumulated_nav_filled_dates": [],
+  "added_dates": [
+    "2026-10-16"
+  ],
+  "missing_accumulated_nav_dates": [],
+  "raw_pages": [
+    {
+      "page": 1,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page001.json",
+      "sha256": "26334f7bf91d5fc5a611e173ed7a6a9b64b37362033296f734ca9333caf8b1e2"
+    },
+    {
+      "page": 2,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page002.json",
+      "sha256": "2fd59e6117cde2370953848ff9d0c59aeae88cddbda924c5f1db915196e6bfb2"
+    },
+    {
+      "page": 3,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page003.json",
+      "sha256": "62b5bc5ba576bed70b65c110305231af79fbff7a43db4ac5f9a71bced2c025be"
+    },
+    {
+      "page": 4,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page004.json",
+      "sha256": "5927304dd25066dedcf815a27defe69162f4b0311634f29f9c1adb76613a7e98"
+    },
+    {
+      "page": 5,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page005.json",
+      "sha256": "a262615cb644d423f7fb31befcfaa63e47670ab159a6d40a65c6ba4b7971b783"
+    },
+    {
+      "page": 6,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page006.json",
+      "sha256": "bd85f1ff19fc9b9def55a5a236da613eb77c0918cabf46b81173fd730801feb5"
+    },
+    {
+      "page": 7,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page007.json",
+      "sha256": "e96110e52d4b26e3811cb81e11de8977f42f182cb30a8781002fe23ff592d05a"
+    },
+    {
+      "page": 8,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page008.json",
+      "sha256": "bdbbdfd9f33b5ba5715a76566e92e56e51b4ff6061718598db858d59b1edc920"
+    },
+    {
+      "page": 9,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page009.json",
+      "sha256": "35ef3204973c1ba042d541f50f54bb78c32db166e19cb38cffbdaa0eea67f632"
+    },
+    {
+      "page": 10,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page010.json",
+      "sha256": "c1321de8fdcdc29dd0208c8ce2d81841a9e3cb6e08733dacbc2e89f04acad001"
+    },
+    {
+      "page": 11,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page011.json",
+      "sha256": "ebbec0623f5d2ddb45a10baf4fbb940c714050d0cfd92394c8a7f1bb63ca4ee6"
+    },
+    {
+      "page": 12,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page012.json",
+      "sha256": "8559425281ef6b6dab04d37d26609a66352068e1a4dad59cc1ef6a6c3c86ef9f"
+    },
+    {
+      "page": 13,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page013.json",
+      "sha256": "0c4b44a48f23d4d537716b3b6cdf7d720758aea198be5a2b9884aa6ef9e52cc7"
+    },
+    {
+      "page": 14,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page014.json",
+      "sha256": "e082679912292abea34a1c8e46aa82648810dcf2ad7855c70e6e032d3307a49a"
+    },
+    {
+      "page": 15,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page015.json",
+      "sha256": "64ad0f8191568452b1da1aa0b5468b3129a2d8641c26c7ab712e8ea2194af0cb"
+    },
+    {
+      "page": 16,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page016.json",
+      "sha256": "c369d662300d4461c10a4824ec1a8116c7d51e4d5bfa2ac8ce30c7530b08d03c"
+    },
+    {
+      "page": 17,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page017.json",
+      "sha256": "33e3cf1d3af6c134c692c0503179ed9e931ac32d777451f86242fbe79f79473d"
+    },
+    {
+      "page": 18,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page018.json",
+      "sha256": "41764a7953c1d43a271e01a84714d169f28edb2aceb43074b5320f57f47c8a25"
+    },
+    {
+      "page": 19,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page019.json",
+      "sha256": "d59301c54b0074adc9f20ba5dc0201bad3ed9114b2cb78d3e472f8492c5fff19"
+    },
+    {
+      "page": 20,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page020.json",
+      "sha256": "1f4755cdee3e5e93c1b9182dcb348fe1156bc40cc3d054f45e37cd50f00785ec"
+    },
+    {
+      "page": 21,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page021.json",
+      "sha256": "5d970d075855b276b8255a6098a9f7616be84a5af7c5e26946088c6736499905"
+    },
+    {
+      "page": 22,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page022.json",
+      "sha256": "4f4b7712831895bdbf0d3a0cf983b946f4cf38f8e62954de115a1716d22345e0"
+    },
+    {
+      "page": 23,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page023.json",
+      "sha256": "48025216fc307907e235425e0a39b8e77b514ebe29efd47ca4ecd27c59bfb7a9"
+    },
+    {
+      "page": 24,
+      "path": "基金/022459_易方达中证A500ETF联接A/历史净值/原始数据/全历史分页复核_2026-10-18/022459_lsjz_page024.json",
+      "sha256": "51b86f59632353d5dbb2932821d3b74c5d10df25a4cb18b4a89e98f2d1ef85ce"
+    }
+  ],
+  "json_path": "基金/022459_易方达中证A500ETF联接A/历史净值/022459_全部历史净值_截至2026-10-16.json",
+  "csv_path": "基金/022459_易方达中证A500ETF联接A/历史净值/022459_全部历史净值_截至2026-10-16.csv",
+  "new_dataset": true,
+  "records": 465
+}

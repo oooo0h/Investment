@@ -1,0 +1,257 @@
+{
+  "schema_version": 2,
+  "timezone": "Asia/Shanghai",
+  "schedule_label": "每周一至周六09:00，周日不运行",
+  "automation_id": "automation",
+  "run_started_at": "2026-10-16T09:00:14+08:00",
+  "account_amounts_stored": false,
+  "holdings_as_of": "2026-06-30",
+  "holdings_data_status": "2026-10-15_verified_reports_reused_2026-10-16_accessible_official_sources_rechecked_coverage_incomplete",
+  "confirmed_preferences": {
+    "sell_fraction_basis": "current_remaining_position_value_at_actual_reduction",
+    "buy_fraction_basis": "post_last_confirmed_trade_position_value_before_current_decline",
+    "discipline_anchor_policy": "latest_confirmed_effective_trade_nav_date",
+    "operation_return_anchor_policy": "latest_confirmed_effective_trade_nav_date",
+    "unknown_operation_return_fallback": "calendar_month_to_date_reference_only",
+    "legacy_screenshot_rules_status": "fully_replaced_by_rule2_plus_minus15",
+    "opposing_signal_policy": "present_both_user_decides_case_by_case",
+    "same_direction_signals_policy": "show_both_reasons_do_not_automatically_stack_fractions"
+  },
+  "pending_parameters": [
+    "006373_and_016701_account_share_class_and_currency",
+    "effective_nav_dates_for_2026-10-15_operations",
+    "006373_actual_last_effective_operation_day",
+    "pre_decline_post_last_trade_position_basis_verification_in_memory_if_needed",
+    "below40_specific_reduction_fraction_user_decides"
+  ],
+  "funds": [
+    {
+      "label": "广发",
+      "candidate_code": "270023",
+      "identity_status": "matched_prior_local_record",
+      "user_reported_last_operation_date": "2026-10-15",
+      "effective_operation_nav_date": null,
+      "operation_return_percent": null,
+      "operation_return_status": "latest_observed_NAV_precedes_reported_operation_day_and_effective_trade_date_unconfirmed",
+      "trigger_states": [],
+      "us_direct_equity_percent_nav": 46.65,
+      "us_exposure_alert": {
+        "status": "below_50",
+        "holdings_as_of": "2026-06-30",
+        "report_published_at": "2026-08-31",
+        "first_monitor_observation_at": "2026-10-16T09:00:00+08:00",
+        "change_since_prior_monitor_run": "no_prior_run_for_comparison"
+      },
+      "exposure_sources": [
+        "https://www.gffunds.com.cn/jjgg/dqgg/202608/P020260831322788141588.pdf"
+      ],
+      "additional_public_exposure": {
+        "us_equity_index_futures_notional_pct_nav": 5.58,
+        "arithmetic_direct_plus_futures_notional_pct_nav": 52.23,
+        "note": "期货名义敞口不混入主口径；不是实时Delta。ETF未在本次重新逐项复核。"
+      },
+      "latest_observed_nav_date": "2026-10-14",
+      "nav_source_status": "official_website",
+      "nav_sources": [
+        "https://gfwx.gffunds.com.cn/funds/"
+      ],
+      "exact_nav_publication_time": null,
+      "active_rule_version": 2,
+      "price_trigger_status": "awaiting_confirmed_effective_operation_NAV",
+      "add_basis_verification_status": "no_exact_account_value_stored_verify_in_memory_if_needed",
+      "below40_reduction_reminder": {
+        "condition_met_in_reported_holdings": false,
+        "holdings_as_of": "2026-06-30",
+        "specific_reduction_fraction": null,
+        "execution_status": "no_execution_confirmation",
+        "data_scope": "historical_disclosed_holdings_not_realtime"
+      }
+    },
+    {
+      "label": "华夏",
+      "candidate_code": "005698",
+      "identity_status": "matched_prior_local_record",
+      "user_reported_last_operation_date": "2026-10-15",
+      "effective_operation_nav_date": null,
+      "operation_return_percent": null,
+      "operation_return_status": "latest_observed_NAV_precedes_reported_operation_day_and_effective_trade_date_unconfirmed",
+      "trigger_states": [],
+      "us_direct_equity_percent_nav": 16.66,
+      "us_exposure_alert": {
+        "status": "below_50",
+        "holdings_as_of": "2026-06-30",
+        "report_published_at": "2026-08-31",
+        "first_monitor_observation_at": "2026-10-16T09:00:00+08:00",
+        "change_since_prior_monitor_run": "no_prior_run_for_comparison"
+      },
+      "exposure_sources": [
+        "https://fund.chinaamc.com/upload/resources/file/2026/08/31/010b766eb4fd4326b232f0aa4377a483.pdf"
+      ],
+      "additional_public_exposure": {
+        "soxl_capital_pct_nav": 8.57,
+        "direct_plus_soxl_capital_pct_nav": 25.23,
+        "direct_plus_soxl_3x_daily_target_pct_nav": 42.37,
+        "korea_sk_hynix_daily_2x_product_capital_pct_nav": 1.01,
+        "note": "3倍仅为SOXL单日目标敞口示意，不是整只基金三倍杠杆或多日收益预测；海力士产品为韩国相关敞口，另列。"
+      },
+      "latest_observed_nav_date": "2026-10-14",
+      "nav_source_status": "official_website",
+      "nav_sources": [
+        "https://www.chinaamc.com/fund/005698/index.shtml"
+      ],
+      "exact_nav_publication_time": null,
+      "active_rule_version": 2,
+      "price_trigger_status": "awaiting_confirmed_effective_operation_NAV",
+      "add_basis_verification_status": "no_exact_account_value_stored_verify_in_memory_if_needed",
+      "below40_reduction_reminder": {
+        "condition_met_in_reported_holdings": true,
+        "holdings_as_of": "2026-06-30",
+        "specific_reduction_fraction": null,
+        "execution_status": "no_execution_confirmation",
+        "data_scope": "historical_disclosed_holdings_not_realtime"
+      }
+    },
+    {
+      "label": "国富",
+      "candidate_code": "006373",
+      "identity_status": "candidate_share_class_unconfirmed",
+      "user_reported_last_operation_date": null,
+      "effective_operation_nav_date": null,
+      "operation_return_percent": null,
+      "operation_return_status": "no_operation_date_monthly_unit_nav_reference_only",
+      "trigger_states": [],
+      "us_direct_equity_percent_nav": 71.95,
+      "us_exposure_alert": {
+        "status": "not_below_50",
+        "holdings_as_of": "2026-06-30",
+        "report_published_at": "2026-08-31",
+        "first_monitor_observation_at": "2026-10-16T09:00:00+08:00",
+        "change_since_prior_monitor_run": "no_prior_run_for_comparison"
+      },
+      "exposure_sources": [
+        "https://pdf.dfcfw.com/pdf/H2_AN202608311828779589_1.pdf",
+        "https://www.ftsfund.com/qxjj/jjxq/006373"
+      ],
+      "additional_public_exposure": {
+        "etf_pct_nav": 0,
+        "note": "ETF为昨日中报核验结果；未在本次重新复核金融衍生品章节，不新增衍生品数值。"
+      },
+      "latest_observed_nav_date": "2026-10-14",
+      "nav_source_status": "third_party_published_NAV_cross_checked_not_estimate",
+      "nav_sources": [
+        "https://stock.finance.sina.com.cn/fundInfo/view/FundInfo_LSJZ.php?symbol=006373",
+        "https://fund.stockstar.com/funds/006373.shtml"
+      ],
+      "exact_nav_publication_time": null,
+      "monthly_reference": {
+        "metric": "calendar_mtd_unit_nav_change",
+        "base_nav_date": "2026-09-30",
+        "latest_nav_date": "2026-10-14",
+        "return_percent_approx": -6.53,
+        "total_return_status": "primary_source_corporate_actions_not_independently_confirmed"
+      },
+      "active_rule_version": 2,
+      "price_trigger_status": "monthly_reference_only_actual_operation_date_and_share_class_unconfirmed",
+      "add_basis_verification_status": "no_exact_account_value_stored_verify_in_memory_if_needed",
+      "below40_reduction_reminder": {
+        "condition_met_in_reported_holdings": false,
+        "holdings_as_of": "2026-06-30",
+        "specific_reduction_fraction": null,
+        "execution_status": "no_execution_confirmation",
+        "data_scope": "historical_disclosed_holdings_not_realtime"
+      }
+    },
+    {
+      "label": "银华",
+      "candidate_code": "016701",
+      "identity_status": "candidate_share_class_unconfirmed",
+      "user_reported_last_operation_date": "2026-10-15",
+      "effective_operation_nav_date": null,
+      "operation_return_percent": null,
+      "operation_return_status": "latest_observed_NAV_precedes_reported_operation_day_and_effective_trade_date_unconfirmed",
+      "trigger_states": [],
+      "us_direct_equity_percent_nav": 87.89,
+      "us_exposure_alert": {
+        "status": "not_below_50",
+        "holdings_as_of": "2026-06-30",
+        "report_published_at": "2026-08-29",
+        "first_monitor_observation_at": "2026-10-16T09:00:00+08:00",
+        "change_since_prior_monitor_run": "no_prior_run_for_comparison"
+      },
+      "exposure_sources": [
+        "https://pdf.dfcfw.com/pdf/H2_AN202608291828680755_1.pdf"
+      ],
+      "additional_public_exposure": {
+        "etf_pct_nav": 0,
+        "derivatives_pct_nav": 0,
+        "note": "昨日中报已核验期末未持有基金/ETF及金融衍生品；不是未来永久限制。"
+      },
+      "latest_observed_nav_date": "2026-10-14",
+      "nav_source_status": "third_party_published_NAV_cross_checked_not_estimate",
+      "nav_sources": [
+        "https://stock.finance.sina.com.cn/fundInfo/view/FundInfo_LSJZ.php?symbol=016701",
+        "https://fund.stockstar.com/funds/016701.shtml"
+      ],
+      "exact_nav_publication_time": null,
+      "active_rule_version": 2,
+      "price_trigger_status": "awaiting_confirmed_effective_operation_NAV",
+      "add_basis_verification_status": "no_exact_account_value_stored_verify_in_memory_if_needed",
+      "below40_reduction_reminder": {
+        "condition_met_in_reported_holdings": false,
+        "holdings_as_of": "2026-06-30",
+        "specific_reduction_fraction": null,
+        "execution_status": "no_execution_confirmation",
+        "data_scope": "historical_disclosed_holdings_not_realtime"
+      }
+    }
+  ],
+  "nav_checked_at": "2026-10-16T09:03:49+08:00",
+  "holdings_disclosure_check_limit": "本次可访问页面未检得更新2026年第三季度报告。无法保证已覆盖所有后续披露；未检得不等于没有更新。",
+  "last_report": "270023_005698_006373_016701_基金监测_净值截至2026-10-14_执行2026-10-16_0900.md",
+  "last_run_completed_at": "2026-10-16T09:08:19.000+08:00",
+  "active_rule_version": 2,
+  "rules_updated_at": "2026-10-16T10:04:32+08:00",
+  "report_opening": "⚠️ 请严格按纪律操作！不要因短期情绪临时改变规则；出现加减仓冲突时，先由你决定。",
+  "superseded_rule_metadata": {
+    "version": 1,
+    "replaced_at": "2026-10-16T10:04:32+08:00",
+    "description": "原截图十档与固定纪律起点已整体停用，历史报告按原版本保留。"
+  },
+  "active_triggers": [
+    {
+      "id": "gain15",
+      "metric": "since_latest_confirmed_operation_total_return_pct",
+      "comparison": "gte",
+      "threshold_pct": 15,
+      "action": "remind_reduce",
+      "fraction_pct": 10,
+      "basis": "current_remaining_position_value"
+    },
+    {
+      "id": "loss15",
+      "metric": "since_latest_confirmed_operation_total_return_pct",
+      "comparison": "lte",
+      "threshold_pct": -15,
+      "action": "remind_add",
+      "fraction_pct": 15,
+      "basis": "post_last_trade_pre_decline_position_value"
+    },
+    {
+      "id": "us_below50",
+      "metric": "us_direct_equity_pct_nav",
+      "comparison": "lt",
+      "threshold_pct": 50,
+      "action": "highlight"
+    },
+    {
+      "id": "us_below40",
+      "metric": "us_direct_equity_pct_nav",
+      "comparison": "lt",
+      "threshold_pct": 40,
+      "action": "remind_reduce_exposure",
+      "fraction_pct": null,
+      "basis": "user_decides"
+    }
+  ],
+  "last_report_rule_version": 1
+}

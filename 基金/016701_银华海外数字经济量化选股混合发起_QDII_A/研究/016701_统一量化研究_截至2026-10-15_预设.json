@@ -1,0 +1,115 @@
+{
+  "schema": "unified-public-nav-quant-v1",
+  "fund_code": "016701",
+  "fund_name": "银华海外数字经济量化选股混合发起(QDII)A",
+  "created_at": "2026-10-18T14:16:23+08:00",
+  "source_path": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/016701_全部历史净值_截至2026-10-15.json",
+  "source_sha256": "21f96f18f11dfbc834aae7d48cf45c0e81e1e2a5963f2f4e63346f46b3636311",
+  "source_start": "2023-03-15",
+  "source_end": "2026-10-15",
+  "source_rows": 779,
+  "analysis_rows": 777,
+  "source_scope": "天天基金 f10/lsjz 全页公开历史净值；pingzhongdata 同供应商交叉检查",
+  "source_validation": {
+    "api_total_count": 779,
+    "pages": 39,
+    "unique_date_count": 779,
+    "duplicate_dates": [],
+    "all_pages_pinned_end_date": "2026-10-15",
+    "chart_same_vendor_only": true,
+    "chart_count": 779,
+    "chart_missing_dates": [],
+    "chart_only_dates": [],
+    "chart_nav_mismatches": [],
+    "chart_accumulated_nav_mismatches": [],
+    "nav_vs_accumulated_gap_dates": [],
+    "nonempty_event_count": 0,
+    "weekend_accounting_nav_dates": [
+      "2023-12-31",
+      "2024-06-30"
+    ],
+    "official_independent_full_validation": "待核验；不冒称已完成双源全量比对"
+  },
+  "config_path": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/scripts/016701_统一量化研究配置_2026-10-18.json",
+  "config_sha256": "4aef703622552133a81b1ca409a822f82e6210d27d5d1492b7d5b090712d5db5",
+  "engine_sha256": "ed424cc5f7da2befd3e39ae35e59b39576e88a8c84e56c3b1fa99e635122fd33",
+  "daily_cap_engine_sha256": "9f637144050bfaf179be09df823cd0bbe2a62ee2d9cfa65795080644ecadc1a8",
+  "settlement_engine_sha256": "b2b7c6b370efa6f26dfb4257bd5b2df13c04aa5b9b7d59c146b798479180d25a",
+  "grid_library_sha256": "00eb9df75ae97a85f95a6509fa213ab6a776813586a8bf466d5a0ba8c2df9091",
+  "research_tool_sha256": "2989e52ef1a538d1616ff49efaeb4aa532ca76373f98567b0cf2ec0c52bb4594",
+  "dividend_events": [],
+  "dividend_events_file": null,
+  "dividend_events_sha256": null,
+  "weekdays_only_main": true,
+  "weekend_observations": [
+    "2023-12-31",
+    "2024-06-30"
+  ],
+  "normalization": "User-specified hypothetical annual budget=1, not actual investor amounts. Startup year=(13-start_month)/12; every later year full budget including partial final year.",
+  "funding_cap": null,
+  "daily_buy_cap_norm": 0.5,
+  "user_authorization": "2026-10-18 user explicitly: no cumulative topup cap; daily subscription cap is half of hypothetical annual budget for270023/005698/016701/006373; no daily cap for018124/015789.",
+  "daily_cap_execution": "Per-fund all purchases per observed date combined. Unfilled planned/tactical budgets queued to later dates. Annual budget credited first; annual buy takes priority, cancels old tactical remainder. No new signals during queue. Actual fills reset anchors; outstanding tactical gross budget fixed at signal.",
+  "outside_funding": "No cumulative limit. Only cash shortage for each actual fill supplied externally; future unfilled orders are not prefunded. No borrowing. External inflows excluded from returns.",
+  "fee_assumptions": {
+    "subscription": 0.0015,
+    "redemption_FIFO": [
+      [
+        7,
+        0.015
+      ],
+      [
+        30,
+        0.0075
+      ],
+      [
+        180,
+        0.005
+      ]
+    ],
+    "standard_subscription_stress": 0.015,
+    "evidence": "016701_年度策略数据与费率核验_2026-10-16.md"
+  },
+  "lag_NAV_observations": 2,
+  "cash": "Zero interest; base sale proceeds immediately available; separate delayed-settlement stress. Cash dividends receivable on exdate, available on paydate.",
+  "rule_order": [
+    "up_threshold",
+    "down_threshold",
+    "sell_fraction",
+    "buy_fraction"
+  ],
+  "canonical_grid_count": 3025,
+  "threshold_grid_pct": [
+    5,
+    10,
+    15,
+    20,
+    25,
+    30,
+    40,
+    50,
+    60
+  ],
+  "trade_fraction_grid_pct": [
+    0,
+    5,
+    10,
+    15,
+    20,
+    30,
+    50
+  ],
+  "objective": "Maximum Calmar=CAGR/MDD, positive CAGR and CAGR>=max(0,same-period annual-hold CAGR with identical daily cap). No cumulative funding constraint.",
+  "tie_break": "Calmar rounded12 decimals, fewer tactical fills, lower normalized external contribution, distance to40/30, lexicographic",
+  "chronology": "Each expanding annual training has>=730calendar days; save lock before following-year test; all tests before full-history hindsight grid. Main train<=2025, test2026.",
+  "validation_scope": "Retrospective chronological diagnostics, not prospective independent validation;2026partialyear",
+  "robustness": "Fixed selections only:lag1/2/3/5, zero fee, standard subscription, fullaccountingdates, ordinaryopeningstart, delayedredemption, axialneighbors",
+  "limitations": "NAV observations proxy dealing/announcement/confirmation days; holidays/pauses/actual platform restrictions not fully reconstructed. Inception buy idealized; sensitivity starts ordinary opening. Fund-specific fees/distributions retained.",
+  "previous_rule": [
+    0.25,
+    0.1,
+    0.5,
+    0.5
+  ],
+  "previous_rule_source": "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/研究/016701_量化规则_截至2026-10-15.md"
+}
