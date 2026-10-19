@@ -25,6 +25,8 @@ Thumbs.db
 **/*用户平台*规则*.png
 *.private.json
 *.localpaths.json
+**/*_单笔交易自动计算_双模式_模板*.xlsx
+**/*_债基交易账本.xlsx
 .env
 .env.*
 
