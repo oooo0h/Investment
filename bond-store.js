@@ -1,141 +1,84 @@
 import { unlockVault } from './vault.js';
-import { normalizeBondEntries, normalizeFreeCashFlow } from './bond-model.js?v=20261019-free-cash-flow';
+import { normalizeBondEntries, normalizeFreeCashFlow } from './bond-model.js';
+import { normalizeBondHoldingLots } from './bond-holding-duration.js?v=20261019-bond-calculated-lots';
+import { normalizeBondTransactions } from './bond-transactions.js?v=20261019-bond-calculated-lots';
 
+// Legacy financial edits remain recoverable but are never read or modified.
 export const BOND_STORAGE_KEY = 'fund-ledger:bonds:local:v1';
-
-function failure(code, message) {
-  const error = new Error(message);
-  error.code = code;
-  return error;
+export const CASH_FLOW_STORAGE_KEY = 'fund-ledger:cash-flow:local:v1';
+const fail = (code, message) => Object.assign(new Error(message), { code });
+const object = value => value && typeof value === 'object' && !Array.isArray(value);
+function sourceSnapshot(value) {
+  if (!object(value) || Object.keys(value).some(key => !['funds', 'bonds', 'freeCashFlow', 'holdingLots', 'transactions', 'updatedAt'].includes(key))
+    || (value.funds !== undefined && (!object(value.funds) || Object.keys(value.funds).length))
+    || typeof value.updatedAt !== 'string' || !Number.isFinite(Date.parse(value.updatedAt))) throw new Error('Invalid bond source.');
+  return { bonds: normalizeBondEntries(value.bonds), freeCashFlow: normalizeFreeCashFlow(value.freeCashFlow),
+    holdingLots: normalizeBondHoldingLots(value.holdingLots) || {}, transactions: normalizeBondTransactions(value.transactions), updatedAt: value.updatedAt };
 }
-
-function snapshot(value) {
-  if (!value || typeof value !== 'object' || Array.isArray(value) ||
-      Object.keys(value).some(key => !['funds', 'bonds', 'freeCashFlow', 'updatedAt'].includes(key)) ||
-      (value.funds !== undefined && (!value.funds || typeof value.funds !== 'object' || Array.isArray(value.funds) || Object.keys(value.funds).length)) ||
-      typeof value.updatedAt !== 'string' || !value.updatedAt || !Number.isFinite(Date.parse(value.updatedAt))) throw new Error('Invalid bond record.');
-  let freeCashFlow;
-  try { freeCashFlow = normalizeFreeCashFlow(value.freeCashFlow); }
-  catch { throw new Error('Invalid bond record.'); }
-  return { bonds: normalizeBondEntries(value.bonds), freeCashFlow, updatedAt: value.updatedAt };
+function cashRecord(value) {
+  if (!object(value) || Object.keys(value).sort().join(',') !== 'freeCashFlow,updatedAt' || typeof value.updatedAt !== 'string' || !Number.isFinite(Date.parse(value.updatedAt))) throw new Error('Invalid cash flow record.');
+  return { freeCashFlow: normalizeFreeCashFlow(value.freeCashFlow), updatedAt: value.updatedAt };
 }
-
-function encryptedRecord(value) {
-  if (!value || typeof value !== 'object' || Array.isArray(value) || Object.keys(value).sort().join(',') !== 'ciphertext,iv,version' ||
-      value.version !== 1 || typeof value.iv !== 'string' || !value.iv || typeof value.ciphertext !== 'string' || !value.ciphertext || value.ciphertext.length > 1048576) throw new Error('Invalid encrypted local record.');
-  return { version: 1, iv: value.iv, ciphertext: value.ciphertext };
+function encrypted(value) {
+  if (!object(value) || Object.keys(value).sort().join(',') !== 'ciphertext,iv,version' || value.version !== 1 || typeof value.iv !== 'string' || !value.iv || typeof value.ciphertext !== 'string' || !value.ciphertext || value.ciphertext.length > 1048576) throw new Error('Invalid encrypted record.');
+  return value;
 }
-
 export async function createBondStore(session, initial, options = {}) {
-  let current = null;
-  let closed = false;
-  let queue = Promise.resolve();
-  let storage;
+  let source, cash = null, storage = null, cashError = null, closed = false, queue = Promise.resolve();
   const now = options.now || (() => new Date());
-  function requireOpen() {
-    if (closed || session?.closed === true) throw failure('bond-closed', '债基记录已锁定，请重新解锁。');
-  }
-  function getSnapshot() {
+  const requireOpen = () => { if (closed || session?.closed) throw fail('bond-closed', '债基记录已锁定，请重新解锁。'); };
+  const close = () => { closed = true; source = null; cash = null; session?.close?.(); };
+  const getSnapshot = () => {
     requireOpen();
-    return { bonds: current.bonds.map(entry => ({ ...entry })), freeCashFlow: current.freeCashFlow, updatedAt: current.updatedAt };
-  }
-  function close() {
-    closed = true;
-    current = null;
-    session?.close?.();
-  }
+    return structuredClone({ ...source, freeCashFlow: cashError ? null : cash ? cash.freeCashFlow : source.freeCashFlow, cashFlowUnavailable: Boolean(cashError) });
+  };
   try {
-    if (typeof session?.encryptLocal !== 'function' || typeof session?.decryptLocal !== 'function' || typeof session?.close !== 'function') throw failure('bond-unavailable', '债基记录暂不可用。');
+    if (typeof session?.encryptLocal !== 'function' || typeof session?.decryptLocal !== 'function' || typeof session?.close !== 'function') throw fail('bond-unavailable', '债基资料暂不可用。');
     requireOpen();
+    try { source = sourceSnapshot(initial); } catch { throw fail('bond-unavailable', '债基资料暂不可用。'); }
     let saved;
     try {
       storage = Object.hasOwn(options, 'storage') ? options.storage : globalThis.localStorage;
       if (typeof storage?.getItem !== 'function' || typeof storage?.setItem !== 'function') throw new Error();
-      saved = storage.getItem(BOND_STORAGE_KEY);
-    } catch { throw failure('bond-storage-unavailable', '本机存储不可用，债基记录未更改。'); }
+      saved = storage.getItem(CASH_FLOW_STORAGE_KEY);
+    } catch { cashError = 'bond-storage-unavailable'; }
     if (saved !== null && saved !== undefined) {
-      try {
-        const record = encryptedRecord(JSON.parse(saved));
-        current = snapshot(await session.decryptLocal(record));
-        requireOpen();
-      } catch (error) {
-        if (closed || session.closed === true || error?.code === 'SESSION_CLOSED') throw failure('bond-closed', '债基记录已锁定，请重新解锁。');
-        throw failure('bond-storage-invalid', '本机债基记录无法读取，原记录已保留。');
-      }
-    } else {
-      try { current = snapshot(initial); }
-      catch { throw failure('bond-unavailable', '债基记录暂不可用。'); }
+      try { cash = cashRecord(await session.decryptLocal(encrypted(JSON.parse(saved)))); requireOpen(); }
+      catch { requireOpen(); cashError = 'bond-storage-invalid'; }
     }
     requireOpen();
-  } catch (error) {
-    close();
-    throw error;
-  }
-
-  function save(entries) {
-    let bonds;
-    try { requireOpen(); bonds = normalizeBondEntries(entries); }
-    catch (error) { return Promise.reject(error?.code === 'bond-closed' ? error : failure('bond-invalid', '请检查债基记录后重试。')); }
-    const pending = queue.then(async () => {
-      requireOpen();
-      let next, record;
-      try {
-        next = { bonds, freeCashFlow: current.freeCashFlow, updatedAt: new Date(now()).toISOString() };
-        record = encryptedRecord(await session.encryptLocal(next));
-      } catch (error) {
-        if (closed || session.closed === true || error?.code === 'SESSION_CLOSED') throw failure('bond-closed', '债基记录已锁定，请重新解锁。');
-        throw failure('bond-save-failed', '债基记录未保存，请重试。');
-      }
-      requireOpen();
-      try { storage.setItem(BOND_STORAGE_KEY, JSON.stringify(record)); }
-      catch { throw failure('bond-storage-unavailable', '本机存储不可用，债基记录未更改。'); }
-      requireOpen();
-      current = next;
-      return getSnapshot();
-    });
-    queue = pending.catch(() => {});
-    return pending;
-  }
-
+  } catch (error) { close(); throw error; }
   function saveFreeCashFlow(value) {
-    let freeCashFlow;
-    try { requireOpen(); freeCashFlow = normalizeFreeCashFlow(value); }
-    catch (error) { return Promise.reject(error?.code === 'bond-closed' ? error : failure('bond-invalid', '请输入有效的自由现金流金额。')); }
+    let normalized;
+    try { requireOpen(); if (cashError) throw fail(cashError, '本机现金流暂不可用，原记录已保留。'); normalized = normalizeFreeCashFlow(value); }
+    catch (error) { return Promise.reject(error.code ? error : fail('bond-invalid', '请输入有效的自由现金流金额。')); }
     const pending = queue.then(async () => {
       requireOpen();
-      let next, record;
-      try {
-        next = { bonds: current.bonds, freeCashFlow, updatedAt: new Date(now()).toISOString() };
-        record = encryptedRecord(await session.encryptLocal(next));
-      } catch (error) {
-        if (closed || session.closed === true || error?.code === 'SESSION_CLOSED') throw failure('bond-closed', '债基记录已锁定，请重新解锁。');
-        throw failure('bond-save-failed', '自由现金流未保存，请重试。');
-      }
+      const next = { freeCashFlow: normalized, updatedAt: new Date(now()).toISOString() };
+      let record;
+      try { record = encrypted(await session.encryptLocal(next)); }
+      catch { requireOpen(); throw fail('bond-save-failed', '自由现金流未保存，请重试。'); }
       requireOpen();
-      try { storage.setItem(BOND_STORAGE_KEY, JSON.stringify(record)); }
-      catch { throw failure('bond-storage-unavailable', '本机存储不可用，自由现金流未更改。'); }
-      requireOpen();
-      current = next;
-      return getSnapshot();
+      try { storage.setItem(CASH_FLOW_STORAGE_KEY, JSON.stringify(record)); }
+      catch { throw fail('bond-storage-unavailable', '本机存储不可用，自由现金流未更改。'); }
+      requireOpen(); cash = next; return getSnapshot();
     });
-    queue = pending.catch(() => {});
-    return pending;
+    queue = pending.catch(() => {}); return pending;
   }
-  return { getSnapshot, save, saveFreeCashFlow, close };
+  async function refresh() {
+    requireOpen();
+    let next;
+    try { next = sourceSnapshot(await session.refresh()); }
+    catch (error) { requireOpen(); if (error?.name === 'OperationError') throw error; throw fail('bond-unavailable', '债基资料更新未完成。'); }
+    requireOpen(); source = next; return getSnapshot();
+  }
+  return { getSnapshot, saveFreeCashFlow, refresh, close };
 }
-
 export async function openBondStore(password, options = {}) {
   let session = null;
   try {
-    const initial = await unlockVault(password, {
-      url: './data/bonds.enc.json', fetchFn: options.fetchFn,
-      onSession: opened => { session = opened; },
-    });
-    password = '';
-    return await createBondStore(session, initial, options);
-  } catch (error) {
-    session?.close();
-    if (typeof error?.code === 'string' && error.code.startsWith('bond-')) throw error;
-    throw failure('bond-unavailable', '债基记录暂不可用。');
-  } finally { password = ''; }
+    const initial = await unlockVault(password, { url: './data/bonds.enc.json', fetchFn: options.fetchFn, onSession: opened => { session = opened; } });
+    password = ''; return await createBondStore(session, initial, options);
+  } catch (error) { session?.close(); if (error?.code?.startsWith('bond-')) throw error; throw fail('bond-unavailable', '债基资料暂不可用。'); }
+  finally { password = ''; }
 }

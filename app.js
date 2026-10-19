@@ -3,37 +3,33 @@ import { estimateApplications, GUOFU_TRADING_DATES } from './application-estimat
 import { createRefreshController } from './refresh-controller.js';
 import { NAV_PERIODS, resolveNavRange, moveNavBoundary, resolveNavSliderDomain } from './nav-range.js';
 import { renderNavChart } from './nav-chart.js?v=20261019-transactions';
-import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap } from './nav-annualized.js?v=20261019-discipline-gap';
+import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap } from './nav-annualized.js?v=20261019-sheet-discipline';
 import { setupNavChartInteractions } from './nav-interaction.js?v=20261019-gap-scroll-markers';
 import { setupNavSliderInteractions } from './nav-slider.js';
 import { calculateTransactionPerformance } from './transaction-performance.js';
 import { FUNDS, FUND_CODES } from './funds.js?v=20261019-collapsible-panels';
-import { DISCIPLINE_ENTRIES } from './discipline.js?v=20261019-discipline-first';
+import { DISCIPLINE_ENTRIES } from './discipline.js?v=20261019-sheet-discipline';
 import { createDisciplineSync } from './discipline-sync.js';
 import { REGION_DATA } from './region-data.js';
 import { evaluateUsExposure } from './us-exposure.js';
 import { calculateHoldingDuration, createHoldingDurationScale } from './holding-duration.js';
-import { openBondStore } from './bond-store.js?v=20261019-free-cash-flow';
+import { openBondStore } from './bond-store.js?v=20261019-bond-calculated-lots';
 import { calculateBondSummary } from './bond-model.js';
 import { evaluateBondReserve } from './bond-reserve.js';
-import { renderBondsPage } from './bonds-view.js?v=20261019-free-cash-flow';
+import { calculateBondHoldingDuration } from './bond-holding-duration.js?v=20261019-bond-calculated-lots';
+import { renderBondsPage } from './bonds-view.js?v=20261019-bond-calculated-lots';
 import { getEstimateDates, parseEstimatePercent, buildEstimatedNav } from './nav-estimates.js';
 import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js';
 import { renderEstimatePanel } from './estimate-panel.js?v=20261019-collapsible-panels';
-import { getDisciplineActions, adjustDisciplineRule } from './discipline-actions.js';
+import { getDisciplineActions, adjustDisciplineRule } from './discipline-actions.js?v=20261019-sheet-discipline';
 import { getNavChartDisplay } from './nav-display.js';
-import { createFundViewportKeeper } from './viewport-anchor.js?v=20261019-semantic-scroll';
-import { createTransactionStore } from './transaction-store.js?v=20261019-transactions-2';
-import { deriveTransactionDraft, validateTransactionMutation } from './transaction-model.js?v=20261019-transaction-fields';
-import { renderTransactionEditor, renderTransactionDelete, renderTransactionPreview, transactionAmountLabel } from './transaction-view.js?v=20261019-transaction-fields';
-import { parseTransactionDate } from './transaction-date.js?v=20261019-transaction-fields';
+import { createFundViewportKeeper } from './viewport-anchor.js?v=20261019-flow-header';
 const TYPE_NAMES = { buy: '买入', sip: '定投', sell: '卖出', reinvest: '红利再投', dividend: '现金分红', 'transfer-in': '转换转入' };
 const STATUS_NAMES = { confirmed: '已确认', estimated: '历史估算', pending: '待确认', cancelled: '撤单', failed: '交易失败', closed: '交易关闭' };
-const state = { unlocked: false, visible: false, funds: {}, nav: {}, disciplines: DISCIPLINE_ENTRIES, bonds: [], freeCashFlow: null, cashEditing: false, cashDraft: null, cashBusy: false, cashError: '', bondEditing: null, bondDraft: null, bondBusy: false, bondError: '', bondUnavailable: true, bondUpdatedAt: null, navPreset: null, navCycles: { months: '1m', years: '1y' }, navRanges: {}, navDomains: {}, navVisuals: {}, expandedPanels: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null, deadline: 0, dayDeadline: 0, sessionDay: null };
+const state = { unlocked: false, visible: false, funds: {}, nav: {}, disciplines: DISCIPLINE_ENTRIES, bonds: [], freeCashFlow: null, cashEditing: false, cashDraft: null, cashBusy: false, cashError: '', bondUnavailable: true, bondUpdatedAt: null, navPreset: null, navCycles: { months: '1m', years: '1y' }, navRanges: {}, navDomains: {}, navVisuals: {}, expandedPanels: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null, deadline: 0, dayDeadline: 0, sessionDay: null };
 const app = document.querySelector('#app');
 const fundViewport = createFundViewportKeeper({ root: app, view: window });
 Object.assign(state, { navEstimateEntries: [], estimateDrafts: {}, estimateDirections: {}, estimateErrors: {}, estimateStorageAvailable: true, estimateDate: null, estimateLoaded: false });
-Object.assign(state, { transactionEditor: null, transactionDelete: null, transactionBusy: false, transactionError: '', transactionStoreUnavailable: true, transactionStoreError: '', transactionFeeRates: {}, transactionAmountVisible: false });
 const icons = {
   book: '<path d="M6 3h13v18H6zM3 6h5M3 12h5M3 18h5M11 8h5M11 12h5M11 16h3"/>',
   eye: '<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
@@ -76,8 +72,6 @@ let dailyCodeReader = null;
 let unlockGeneration = 0;
 let vaultSession = null;
 let bondStore = null;
-let transactionStore = null;
-const TRANSACTION_FEE_KEY = 'fund-ledger:transaction-fees:v1';
 let dataVersionBaseline = null;
 let navSliders = null;
 let locatedRoute = null;
@@ -87,6 +81,7 @@ if (typeof history !== 'undefined' && 'scrollRestoration' in history) {
   try { history.scrollRestoration = 'manual'; } catch { /* Older browsers keep their default restoration. */ }
 }
 const estimateSaveTimers = new Map();
+Object.assign(state, { bondHoldingLots: {}, bondTransactions: {}, bondExpanded: {}, cashUnavailable: false });
 const holdingFractions = new Map();
 const dataRefresh = createRefreshController({
   readVersion: async () => {
@@ -205,7 +200,6 @@ async function unlock(event) {
   let password = input.value;
   let openedSession = null;
   let openedBonds = null;
-  let openedTransactions = null;
   let bondSnapshot = null;
   input.value = '';
   try {
@@ -222,18 +216,14 @@ async function unlock(event) {
     } catch { openedBonds?.close(); openedBonds = null; }
     password = '';
     if (!isCurrent()) { openedSession?.close(); openedBonds?.close(); return; }
-    const initial = await readInitialSnapshot(vault, openedSession, baseline);
+    const initial = await readInitialSnapshot(vault, openedSession, baseline, openedBonds, bondSnapshot);
     if (!isCurrent()) { openedSession?.close(); openedBonds?.close(); return; }
     vault = initial.vault;
-    let transactionError = '';
-    try { openedTransactions = await createTransactionStore(openedSession, vault.funds); }
-    catch { transactionError = '本机交易记录暂不可用，请检查浏览器存储后重新解锁。'; }
-    if (!isCurrent()) { openedSession?.close(); openedBonds?.close(); openedTransactions?.close(); return; }
+    bondSnapshot = initial.bondSnapshot;
     if (getDailyCode() !== sessionDay) throw new Error('day-changed');
     if (!vault || typeof vault.funds !== 'object') throw new Error('invalid');
-    const mergedFunds = openedTransactions ? openedTransactions.getFunds() : vault.funds;
     for (const fund of FUNDS) {
-      const entry = mergedFunds[fund.code] || {};
+      const entry = vault.funds[fund.code] || {};
       const book = getBook(fund.code);
       book.transactions = (Array.isArray(entry.transactions) ? entry.transactions : []).map((tx, index) => ({ ...tx, id: tx.id || `${fund.code}-${index}` }));
       book.mode = entry.mode === 'principal-first' ? 'principal-first' : 'profit-first';
@@ -241,16 +231,15 @@ async function unlock(event) {
       book.sourceNote = typeof entry.sourceNote === 'string' ? entry.sourceNote : '';
     }
     state.createdAt = vault.createdAt;
-    clearTransactionSession();
-    transactionStore = openedTransactions;
-    state.transactionStoreUnavailable = !transactionStore;
-    state.transactionStoreError = transactionError;
-    state.transactionFeeRates = readTransactionFeeRates();
     vaultSession?.close();
     vaultSession = openedSession;
     bondStore?.close();
     bondStore = openedBonds;
     state.bonds = bondSnapshot?.bonds || [];
+    state.bondHoldingLots = bondSnapshot?.holdingLots || {};
+    state.bondTransactions = bondSnapshot?.transactions || {};
+    state.cashUnavailable = bondSnapshot?.cashFlowUnavailable === true;
+    state.bondExpanded = {};
     state.freeCashFlow = Number.isFinite(bondSnapshot?.freeCashFlow) ? bondSnapshot.freeCashFlow : null;
     state.cashEditing = false;
     state.cashDraft = null;
@@ -258,10 +247,6 @@ async function unlock(event) {
     state.cashError = '';
     state.bondUpdatedAt = bondSnapshot?.updatedAt || null;
     state.bondUnavailable = !bondStore;
-    state.bondEditing = null;
-    state.bondDraft = null;
-    state.bondBusy = false;
-    state.bondError = '';
     dataVersionBaseline = initial.version || { revision: '__initial_unverified__' };
     state.nav = initial.nav;
     state.visible = false;
@@ -274,14 +259,12 @@ async function unlock(event) {
     password = '';
     openedSession?.close();
     openedBonds?.close();
-    openedTransactions?.close();
     if (!isCurrent()) return;
     dataRefresh.stop();
     disciplineSync.stop();
     vaultSession?.close();
     vaultSession = null;
     clearBondSession();
-    clearTransactionSession();
     dataVersionBaseline = null;
     stopSessionTimers();
     state.unlocked = false;
@@ -314,7 +297,6 @@ function lock(reason = 'manual') {
   vaultSession?.close();
   vaultSession = null;
   clearBondSession();
-  clearTransactionSession();
   dataVersionBaseline = null;
   activeTransition?.skipTransition();
   stopSessionTimers();
@@ -343,303 +325,22 @@ function clearBondSession() {
   bondStore?.close();
   bondStore = null;
   state.bonds = [];
+  state.bondHoldingLots = {};
+  state.bondTransactions = {};
+  state.bondExpanded = {};
+  state.cashUnavailable = true;
   state.freeCashFlow = null;
   state.cashEditing = false;
   state.cashDraft = null;
   state.cashBusy = false;
   state.cashError = '';
-  state.bondEditing = null;
-  state.bondDraft = null;
-  state.bondBusy = false;
-  state.bondError = '';
   state.bondUnavailable = true;
   state.bondUpdatedAt = null;
 }
 
-function clearTransactionSession() {
-  transactionStore?.close();
-  transactionStore = null;
-  state.transactionEditor = null;
-  state.transactionDelete = null;
-  state.transactionBusy = false;
-  state.transactionError = '';
-  state.transactionStoreUnavailable = true;
-  state.transactionStoreError = '';
-  state.transactionFeeRates = {};
-  state.transactionAmountVisible = false;
-}
-
-function readTransactionFeeRates() {
-  try {
-    const saved = JSON.parse(localStorage.getItem(TRANSACTION_FEE_KEY) || '{}');
-    if (!saved || typeof saved !== 'object' || Array.isArray(saved)) return {};
-    return Object.fromEntries(Object.entries(saved).filter(([key, value]) => {
-      const [code, type] = key.split(':');
-      return FUND_CODES.includes(code) && Object.hasOwn(TYPE_NAMES, type) && Number.isFinite(value) && value >= 0 && value < 100;
-    }));
-  } catch { return {}; }
-}
-
-function rememberTransactionFee(code, draft, result) {
-  if (result?.preview?.feeMode === 'amount' || String(draft.feeAmount ?? '').trim()) return;
-  if (!['buy', 'sip', 'sell', 'transfer-in'].includes(draft.type) || !String(draft.feeRate).trim()) return;
-  const value = Number(draft.feeRate);
-  if (!Number.isFinite(value) || value < 0 || value >= 100) return;
-  state.transactionFeeRates[`${code}:${draft.type}`] = value;
-  try { localStorage.setItem(TRANSACTION_FEE_KEY, JSON.stringify(state.transactionFeeRates)); } catch { /* A ratio preference never changes a saved transaction. */ }
-}
-
-function transactionFeeDraft(code, type, original = null) {
-  if (['dividend', 'reinvest'].includes(type)) return '0';
-  if (original?.type === type) {
-    if (original.feeMode === 'amount') {
-      const remembered = state.transactionFeeRates[`${code}:${type}`];
-      return Number.isFinite(remembered) ? String(remembered) : '';
-    }
-    if (Number.isFinite(original.feeRate) && original.feeRate >= 0) return String(original.feeRate);
-    if (Number.isFinite(original.fee) && original.fee >= 0 && Number.isFinite(original.nav) && original.nav > 0 && Number.isFinite(original.shares) && original.shares > 0) return String(Number((original.fee / (original.nav * original.shares) * 100).toPrecision(12)));
-  }
-  const saved = state.transactionFeeRates[`${code}:${type}`];
-  return Number.isFinite(saved) ? String(saved) : '';
-}
-
-function transactionDraft(original, code) {
-  const type = Object.hasOwn(TYPE_NAMES, original?.type) ? original.type : 'buy';
-  const amount = type === 'reinvest' ? original?.status === 'pending' ? original.amount : original?.shares * original?.nav : original?.amount ?? original?.cost ?? (Number.isFinite(original?.shares) && Number.isFinite(original?.nav) ? original.shares * original.nav + (type === 'sell' ? -1 : 1) * (original.fee || 0) : null);
-  return {
-    date: original?.date || String(original?.submittedAt || '').slice(0, 10) || getEstimateDates(new Date()).today,
-    type, amount: Number.isFinite(amount) ? String(amount) : '', nav: Number.isFinite(original?.nav) && original.nav > 0 ? String(original.nav) : '',
-    shares: Number.isFinite(original?.shares) && original.shares >= 0 ? String(original.shares) : '',
-    feeAmount: original?.feeMode === 'amount' && Number.isFinite(original.feeAmount ?? original.fee) ? String(original.feeAmount ?? original.fee) : '',
-    basis: ['amount', 'nav'],
-    feeRate: transactionFeeDraft(code, type, original), status: Number.isFinite(original?.nav) && original.nav > 0 ? 'confirmed' : 'pending',
-  };
-}
-
-function transactionDraftResult() {
-  const editor = state.transactionEditor;
-  if (!editor) return null;
-  const today = getEstimateDates(new Date()).today;
-  const date = parseTransactionDate(editor.dateText ?? editor.draft.date, { today });
-  if (!date.date || date.error) return { transaction: null, preview: null, error: date.error || '请填写有效交易日期。' };
-  return deriveTransactionDraft({ ...editor.draft, date: date.date }, { original: editor.original, defaultFeeRate: null, today, id: editor.recordId });
-}
-
-function transactionDialog() {
-  const code = selectedCode();
-  if (state.transactionEditor?.code === code) return renderTransactionEditor({ editor: state.transactionEditor, result: transactionDraftResult(), visible: state.visible, amountVisible: state.transactionAmountVisible, busy: state.transactionBusy, error: state.transactionError, today: getEstimateDates(new Date()).today });
-  if (state.transactionDelete?.code === code) return renderTransactionDelete({ removal: state.transactionDelete, busy: state.transactionBusy, error: state.transactionError });
-  return '';
-}
-
-function openTransactionEditor(id = null) {
-  const code = selectedCode();
-  if (!code || !transactionStore || state.transactionBusy) return;
-  const original = id ? getBook(code).transactions.find(tx => tx.id === id) : null;
-  if (id && !original) return;
-  const draft = transactionDraft(original, code);
-  state.transactionEditor = { code, id, recordId: id || `local-${crypto.randomUUID()}`, original: original ? structuredClone(original) : null, draft, dateText: String(draft.date).replaceAll('-', '/'), manualFields: ['amount', 'nav'] };
-  state.transactionDelete = null;
-  state.transactionError = '';
-  state.transactionAmountVisible = state.visible;
-  render();
-  app.querySelector?.('.transaction-dialog [name="amount"]')?.focus?.({ preventScroll: true });
-}
-
-function cancelTransactionDialog() {
-  if (state.transactionBusy) return;
-  const previous = state.transactionEditor || state.transactionDelete;
-  const editing = Boolean(state.transactionEditor?.id), deleting = Boolean(state.transactionDelete);
-  state.transactionEditor = null;
-  state.transactionDelete = null;
-  state.transactionError = '';
-  state.transactionAmountVisible = false;
-  render();
-  const opener = previous?.id && (editing || deleting)
-    ? [...app.querySelectorAll('[data-action]')].find(button => button.dataset.action === `transaction-${deleting ? 'delete' : 'edit'}` && button.dataset.id === previous.id)
-    : app.querySelector?.('[data-action="transaction-new"]');
-  opener?.focus?.({ preventScroll: true });
-}
-
-function setTransactionType(type) {
-  const editor = state.transactionEditor;
-  if (!editor || state.transactionBusy || !Object.hasOwn(TYPE_NAMES, type)) return;
-  const previousType = editor.draft.type;
-  editor.draft.type = type;
-  editor.draft.feeRate = transactionFeeDraft(editor.code, type, editor.original);
-  const select = app.querySelector?.('#transaction-form [name="type"]');
-  if (select) select.value = type;
-  const control = app.querySelector?.('.transaction-sip-control');
-  if (control) control.hidden = !['buy', 'sip'].includes(type);
-  const toggle = app.querySelector?.('[data-action="transaction-sip-toggle"]');
-  toggle?.setAttribute?.('aria-checked', String(type === 'sip'));
-  const fee = app.querySelector?.('#transaction-form [name="feeRate"]');
-  const noFee = ['reinvest', 'dividend'].includes(type);
-  if (fee) { fee.value = editor.draft.feeRate; fee.disabled = noFee; }
-  const actualFee = app.querySelector?.('#transaction-form [name="feeAmount"]');
-  if (noFee) editor.draft.feeAmount = '0';
-  else if (['dividend', 'reinvest'].includes(previousType)) editor.draft.feeAmount = '';
-  if (actualFee) { actualFee.value = editor.draft.feeAmount; actualFee.disabled = noFee; }
-  const shares = app.querySelector?.('#transaction-form [name="shares"]');
-  if (type === 'dividend') editor.draft.shares = '0';
-  if (shares) { shares.disabled = type === 'dividend'; if (type === 'dividend') shares.value = '0'; }
-  state.transactionError = '';
-  updateTransactionPreview();
-}
-
-function updateTransactionPreview({ activeField = null } = {}) {
-  const editor = state.transactionEditor;
-  if (!editor) return;
-  const result = transactionDraftResult();
-  const derived = result?.preview?.derivedField || ['amount', 'nav', 'shares'].find(key => !editor.draft.basis?.includes(key));
-  if (derived && derived !== activeField && editor.draft.type !== 'dividend') {
-    const value = result?.preview?.[derived];
-    const text = Number.isFinite(value) ? String(value) : '';
-    editor.draft[derived] = text;
-    const input = app.querySelector?.(`#transaction-form [name="${derived}"]`);
-    if (input) input.value = text;
-  }
-  for (const key of ['amount', 'nav', 'shares']) {
-    const input = app.querySelector?.(`#transaction-form [name="${key}"]`);
-    if (input?.dataset) input.dataset.derived = String(key === derived);
-  }
-  const navText = String(editor.draft.nav).trim();
-  const status = result?.preview?.status || (/^(?:\d+(?:\.\d*)?|\.\d+)$/.test(navText) && Number(navText) > 0 && Number(navText) <= 1e9 ? 'confirmed' : 'pending');
-  editor.draft.status = status;
-  const field = app.querySelector?.('#transaction-form [name="status"]');
-  if (field) field.value = status;
-  const hint = app.querySelector?.('[data-transaction-status]');
-  if (hint) hint.innerHTML = `<span>${status === 'confirmed' ? '已确认' : '进行中'}</span><small>${status === 'confirmed' ? '保存后计入持仓' : '补全后自动确认'}</small>`;
-  const label = app.querySelector?.('#transaction-amount-label');
-  if (label) label.textContent = transactionAmountLabel(editor.draft.type);
-  const preview = app.querySelector?.('.transaction-preview');
-  if (preview) preview.innerHTML = renderTransactionPreview(result, { visible: state.visible });
-  const error = app.querySelector?.('#transaction-error');
-  if (error) error.textContent = state.transactionError;
-}
-
-function readTransactionForm(form) {
-  if (!state.transactionEditor || !form?.elements) return;
-  if (form.elements.date) state.transactionEditor.dateText = String(form.elements.date.value ?? '');
-  for (const key of ['type', 'amount', 'nav', 'shares', 'feeRate', 'feeAmount']) if (form.elements[key]) state.transactionEditor.draft[key] = String(form.elements[key].value ?? '');
-}
-
-function commitTransactionDate(input = null) {
-  const editor = state.transactionEditor;
-  if (!editor) return false;
-  const parsed = parseTransactionDate(editor.dateText ?? editor.draft.date, { today: getEstimateDates(new Date()).today });
-  if (!parsed.date || parsed.error) { state.transactionError = parsed.error || '请填写有效交易日期。'; return false; }
-  editor.draft.date = parsed.date;
-  editor.dateText = parsed.display;
-  const field = input || app.querySelector?.('#transaction-form [name="date"]');
-  if (field) field.value = parsed.display;
-  return true;
-}
-
-function updateTransactionInput(input, { commit = false } = {}) {
-  const editor = state.transactionEditor;
-  if (!editor || state.transactionBusy) return;
-  const key = input.name;
-  state.transactionError = '';
-  if (key === 'date') {
-    editor.dateText = String(input.value);
-    if (commit) commitTransactionDate(input);
-  } else if (['amount', 'nav', 'shares', 'feeRate', 'feeAmount'].includes(key)) {
-    editor.draft[key] = String(input.value);
-    if (['amount', 'nav', 'shares'].includes(key)) {
-      editor.manualFields = [...(editor.manualFields || ['amount', 'nav']).filter(field => field !== key), key].slice(-2);
-      editor.draft.basis = [...editor.manualFields];
-    }
-  } else if (key === 'type') { setTransactionType(input.value); return; }
-  updateTransactionPreview({ activeField: key });
-}
-
-function transactionValidationOptions(code) {
-  const book = getBook(code);
-  const history = officialNav(code);
-  return {
-    mode: book.mode,
-    // Prepare the complete before/after series: estimation also orders same-day
-    // records by submittedAt, which must match ledger() after a saved mutation.
-    prepareTransactions: book.incomplete && code === '006373'
-      ? rows => estimateApplications(rows, history, { rate: 0.0015, tradingDates: GUOFU_TRADING_DATES })
-      : rows => rows,
-  };
-}
-
-function applyTransactionFunds(funds) {
-  for (const fund of FUNDS) {
-    const entry = funds?.[fund.code];
-    if (!entry || !Array.isArray(entry.transactions)) continue;
-    const book = getBook(fund.code);
-    book.transactions = entry.transactions.map((tx, index) => ({ ...tx, id: tx.id || `${fund.code}-${index}` }));
-    book.incomplete = entry.incomplete === true;
-    book.sourceNote = typeof entry.sourceNote === 'string' ? entry.sourceNote : '';
-  }
-}
-
-async function saveTransactionEdits(event) {
-  event.preventDefault();
-  if (!state.unlocked || !checkSession() || state.transactionBusy || !transactionStore || !state.transactionEditor) return;
-  readTransactionForm(event.target);
-  if (!commitTransactionDate()) { updateTransactionPreview(); return; }
-  const editor = state.transactionEditor, result = transactionDraftResult();
-  state.transactionError = result?.error || '';
-  if (!result?.transaction || state.transactionError) { updateTransactionPreview(); return; }
-  const mutation = { type: editor.id ? 'update' : 'add', transaction: result.transaction, id: result.transaction.id, mode: getBook(editor.code).mode };
-  const check = validateTransactionMutation(getBook(editor.code).transactions, { ...mutation, ...transactionValidationOptions(editor.code) });
-  if (!check.valid) { state.transactionError = check.error; updateTransactionPreview(); return; }
-  const store = transactionStore, generation = unlockGeneration;
-  state.transactionBusy = true;
-  render();
-  try {
-    const funds = editor.id ? await store.update(editor.code, editor.id, result.transaction) : await store.add(editor.code, result.transaction);
-    if (generation !== unlockGeneration || store !== transactionStore || !checkSession()) return;
-    applyTransactionFunds(funds);
-    rememberTransactionFee(editor.code, editor.draft, result);
-    state.transactionEditor = null;
-    state.transactionDelete = null;
-    state.transactionError = '';
-      state.transactionAmountVisible = false;
-    state.transactionBusy = false;
-    render();
-    toast(editor.id ? '交易已修改' : result.transaction.status === 'pending' ? '已登记进行中交易' : '交易已登记');
-  } catch {
-    if (generation !== unlockGeneration || store !== transactionStore || !checkSession()) return;
-    state.transactionError = '本机加密保存失败，原记录未更改，请重试。';
-  } finally {
-    if (generation === unlockGeneration && store === transactionStore) { state.transactionBusy = false; if (state.transactionEditor || state.transactionDelete) render(); }
-  }
-}
-
-async function confirmTransactionDelete() {
-  const removal = state.transactionDelete;
-  if (!state.unlocked || !checkSession() || state.transactionBusy || !transactionStore || !removal) return;
-  const check = validateTransactionMutation(getBook(removal.code).transactions, { type: 'remove', id: removal.id, ...transactionValidationOptions(removal.code) });
-  if (!check.valid) { state.transactionError = check.error; render(); return; }
-  const store = transactionStore, generation = unlockGeneration;
-  state.transactionBusy = true;
-  render();
-  try {
-    const funds = await store.remove(removal.code, removal.id);
-    if (generation !== unlockGeneration || store !== transactionStore || !checkSession()) return;
-    applyTransactionFunds(funds);
-    state.transactionDelete = null;
-    state.transactionError = '';
-    state.transactionBusy = false;
-    render();
-    toast('交易已删除');
-  } catch {
-    if (generation !== unlockGeneration || store !== transactionStore || !checkSession()) return;
-    state.transactionError = '本机加密删除失败，原记录未更改，请重试。';
-  } finally {
-    if (generation === unlockGeneration && store === transactionStore) { state.transactionBusy = false; if (state.transactionDelete) render(); }
-  }
-}
-
 async function saveCashFlow(event) {
   event.preventDefault();
-  if (!state.unlocked || !checkSession() || state.cashBusy || !bondStore) return;
+  if (!state.unlocked || !checkSession() || state.cashBusy || state.cashUnavailable || !bondStore) return;
   const raw = String(event.target.elements.freeCashFlow?.value ?? '').trim();
   state.cashDraft = raw;
   state.cashError = '';
@@ -678,43 +379,6 @@ async function saveCashFlow(event) {
   }
 }
 
-async function saveBondEdits(event) {
-  event.preventDefault();
-  if (!state.unlocked || !checkSession() || state.bondBusy || !bondStore) return;
-  const form = event.target;
-  const code = form.elements.code.value;
-  if (code !== state.bondEditing || !state.bonds.some(entry => entry.code === code)) return;
-  const draft = { code, marketValue: form.elements.marketValue.value.trim(), holdingProfit: form.elements.holdingProfit.value.trim() };
-  state.bondDraft = draft;
-  if (!/^\d+(?:\.\d{1,2})?$/.test(draft.marketValue) || !/^-?\d+(?:\.\d{1,2})?$/.test(draft.holdingProfit)) {
-    state.bondError = '请填写有效金额，最多两位小数。';
-    render();
-    return;
-  }
-  const store = bondStore, generation = unlockGeneration;
-  state.bondBusy = true;
-  state.bondError = '';
-  render();
-  try {
-    const entries = state.bonds.map(entry => entry.code === code ? { code, marketValue: Number(draft.marketValue), holdingProfit: Number(draft.holdingProfit) } : entry);
-    const saved = await store.save(entries);
-    if (generation !== unlockGeneration || store !== bondStore || !checkSession()) return;
-    state.bonds = saved.bonds;
-    if ('freeCashFlow' in saved) state.freeCashFlow = saved.freeCashFlow;
-    state.bondUpdatedAt = saved.updatedAt;
-    state.bondEditing = null;
-    state.bondDraft = null;
-    toast('债基记录已保存');
-  } catch {
-    if (generation === unlockGeneration && store === bondStore && checkSession()) state.bondError = '保存未成功，请检查输入后重试。';
-  } finally {
-    if (generation === unlockGeneration && store === bondStore && state.unlocked && checkSession()) {
-      state.bondBusy = false;
-      render();
-    }
-  }
-}
-
 async function fetchDataVersion() {
   try {
     const response = await fetch('./data/version.json', { cache: 'no-store' });
@@ -733,9 +397,10 @@ async function readPublicNav(code) {
   return result;
 }
 
-async function readInitialSnapshot(vault, session, initialVersion) {
+async function readInitialSnapshot(vault, session, initialVersion, initialBondStore = null, initialBonds = null) {
   let before = initialVersion;
   let currentVault = vault;
+  let currentBonds = initialBonds;
   for (let attempt = 0; attempt < 3; attempt += 1) {
     const quotes = await Promise.all(FUNDS.map(async ({ code }) => {
       try { return [code, await readPublicNav(code)]; }
@@ -743,11 +408,12 @@ async function readInitialSnapshot(vault, session, initialVersion) {
     }));
     const after = await fetchDataVersion();
     if ((!before && !after) || (before && after && before.revision === after.revision)) {
-      return { vault: currentVault, nav: Object.fromEntries(quotes), version: after };
+      return { vault: currentVault, nav: Object.fromEntries(quotes), version: after, bondSnapshot: currentBonds };
     }
     if (!after || !session) throw new Error('snapshot-unavailable');
     before = after;
-    currentVault = await session.refresh();
+    const refreshed = await Promise.all([session.refresh(), typeof initialBondStore?.refresh === 'function' ? initialBondStore.refresh() : currentBonds]);
+    [currentVault, currentBonds] = refreshed;
   }
   throw new Error('snapshot-changing');
 }
@@ -758,8 +424,10 @@ async function refreshCurrentData(version) {
   if (!session || !state.unlocked || !checkSession()) return;
   let vault;
   let quotes;
+  let bondSnapshot = null;
+  const bondSession = bondStore;
   try {
-    [vault, quotes] = await Promise.all([session.refresh(), Promise.all(FUNDS.map(fund => readPublicNav(fund.code)))]);
+    [vault, quotes, bondSnapshot] = await Promise.all([session.refresh(), Promise.all(FUNDS.map(fund => readPublicNav(fund.code))), typeof bondSession?.refresh === 'function' ? bondSession.refresh() : null]);
   } catch (error) {
     if (generation === unlockGeneration && error?.name === 'OperationError') lock('data-change');
     throw error;
@@ -768,13 +436,20 @@ async function refreshCurrentData(version) {
   if (!latest || latest.revision !== version.revision) throw new Error('snapshot-changed');
   if (generation !== unlockGeneration || session !== vaultSession || !checkSession()) return;
   if (!vault?.funds || typeof vault.funds !== 'object') throw new Error('invalid');
-  const mergedFunds = transactionStore ? transactionStore.replaceBase(vault.funds) : vault.funds;
   const updatedBooks = FUNDS.map(fund => {
-    const entry = mergedFunds[fund.code];
+    const entry = vault.funds[fund.code];
     if (!entry || !Array.isArray(entry.transactions)) throw new Error('invalid');
     return { code: fund.code, transactions: entry.transactions.map((tx, index) => ({ ...tx, id: tx.id || `${fund.code}-${index}` })), incomplete: entry.incomplete === true, sourceNote: typeof entry.sourceNote === 'string' ? entry.sourceNote : '' };
   });
   for (const { code, ...book } of updatedBooks) Object.assign(getBook(code), book);
+  if (bondSnapshot && bondSession === bondStore) {
+    state.bonds = bondSnapshot.bonds;
+    state.bondHoldingLots = bondSnapshot.holdingLots || {};
+    state.bondTransactions = bondSnapshot.transactions || {};
+    state.freeCashFlow = Number.isFinite(bondSnapshot.freeCashFlow) ? bondSnapshot.freeCashFlow : null;
+    state.cashUnavailable = bondSnapshot.cashFlowUnavailable === true;
+    state.bondUpdatedAt = bondSnapshot.updatedAt;
+  }
   state.nav = Object.fromEntries(quotes.map(quote => [quote.code, quote]));
   state.createdAt = vault.createdAt;
   const position = scrollY;
@@ -988,6 +663,10 @@ function bondReserveCheck() {
   return { ...check, message };
 }
 
+function bondHoldingPeriods() {
+  return Object.fromEntries(state.bonds.map(entry => [entry.code, calculateBondHoldingDuration(state.bondHoldingLots?.[entry.code], { now: new Date() })]));
+}
+
 function bondNavMarkup(active, check, mobile = false) {
   const below = check?.status === 'below', unknown = check?.status === 'unknown';
   const label = below ? '债基，配置未达标' : unknown ? '债基，配置待核验' : '债基';
@@ -1050,15 +729,8 @@ function render() {
   if (locate && fund && section === 'us-exposure') state.expandedPanels['fund-basics'] = true;
   const bonds = selectedBonds();
   const reserve = bondReserveCheck();
-  const activeField = document.activeElement;
-  const transactionFocus = activeField?.closest?.('#transaction-form') ? { name: activeField.name, start: activeField.selectionStart, end: activeField.selectionEnd } : null;
   document.title = fund ? `${fund.short}账本 · 基金账本` : bonds ? '债基 · 基金账本' : '交易纪律 · 基金账本';
-  app.innerHTML = `${header(fund?.code, reserve)}${fund ? fundPage(fund) : bonds ? renderBondsPage({ entries: state.bonds, visible: state.visible, editing: state.bondEditing, draft: state.bondDraft, error: state.bondError, busy: state.bondBusy, unavailable: state.bondUnavailable, reserve, locateReserve: section === 'bond-reserve', freeCashFlow: state.freeCashFlow, cashEditing: state.cashEditing, cashDraft: state.cashDraft, cashError: state.cashError, cashBusy: state.cashBusy }) : homePage(reserve)}${bottomNav(fund?.code, reserve)}${transactionDialog()}`;
-  if (transactionFocus) {
-    const field = app.querySelector?.(`#transaction-form [name="${transactionFocus.name}"]`);
-    field?.focus?.({ preventScroll: true });
-    if (typeof field?.setSelectionRange === 'function' && typeof transactionFocus.start === 'number') { try { field.setSelectionRange(transactionFocus.start, transactionFocus.end); } catch {} }
-  }
+  app.innerHTML = `${header(fund?.code, reserve)}${fund ? fundPage(fund) : bonds ? renderBondsPage({ entries: state.bonds, visible: state.visible, transactions: state.bondTransactions, expandedByCode: state.bondExpanded, holdingByCode: bondHoldingPeriods(), unavailable: state.bondUnavailable, reserve, locateReserve: section === 'bond-reserve', freeCashFlow: state.freeCashFlow, cashEditing: state.cashEditing, cashDraft: state.cashDraft, cashError: state.cashError, cashBusy: state.cashBusy, cashUnavailable: state.cashUnavailable }) : homePage(reserve)}${bottomNav(fund?.code, reserve)}`;
   app.querySelectorAll('.nav-periods').forEach(periods => { periods.scrollLeft = 0; });
   // Reveal a horizontally clipped tab without scrollIntoView moving the document.
   app.querySelectorAll('.desktop-nav, .bottom-nav').forEach(nav => {
@@ -1085,7 +757,7 @@ function render() {
 }
 
 function disciplineCopy(value, linkFunds = false) {
-  let copy = esc(value).replace(/【([^】]+)】|(?:大幅|适当)止盈|进行一次加仓|\d+(?:\.\d+)?%|\d+(?:\.\d+)?倍|1\/[36]/g, (match, emphasis) => {
+  let copy = esc(value).replace(/(\d+(?:\.\d+)?)\s*[wW]\s*元/g, '$1万元').replace(/【([^】]+)】|(?:大幅|适当)止盈|进行一次加仓|\d+(?:\.\d+)?%|\d+(?:\.\d+)?倍|\d+(?:\.\d+)?万元|1\/[36]/g, (match, emphasis) => {
     const text = emphasis || match;
     return `<strong class="discipline-emphasis${/^(\d+(?:\.\d+)?%|\d+(?:\.\d+)?倍|1\/[36](?:～1\/[36])?|[15]万元)$/.test(text) ? ' discipline-number' : ''}">${text}</strong>`;
   });
@@ -1171,9 +843,9 @@ function homePage(reserve) {
 function homeRules(reserve) {
   const labels = { 'us-exposure': '美股含量', 'long-term': '长期持有', 'bond-reserve': '债基配置', 'equity-scope': '基金精简', 'annual-profit': '年度止盈', 'add-discipline': '加仓纪律' };
   const headingNumbers = { 'us-exposure': '1', 'long-term': '2', 'bond-reserve': '3', 'equity-scope': '4', 'annual-profit': '6', 'add-discipline': '7' };
-  const groups = ['annual-profit', 'add-discipline'].filter(id => state.disciplines.some(entry => entry.id === id));
+  const groups = ['us-exposure', 'annual-profit', 'add-discipline'].filter(id => state.disciplines.some(entry => entry.id === id));
   const entries = state.disciplines.filter(entry => !groups.some(id => entry.id.startsWith(`${id}-`)));
-  const clauseLabels = { 'annual-profit-100': '6.1', 'annual-profit-multiple': '6.2', 'add-discipline-decline': '7.1' };
+  const clauseLabels = { 'us-exposure-adjustment': '1.1', 'annual-profit-100': '6.1', 'annual-profit-multiple': '6.2', 'add-discipline-decline': '7.1' };
   return `<section class="discipline-sheet" aria-label="持有与交易纪律">${entries.map(entry => {
       const children = groups.includes(entry.id) ? state.disciplines.filter(child => child.id.startsWith(`${entry.id}-`)) : [];
       const punctuation = entry.detail.match(/^[。！？]+/)?.[0] || '';
@@ -1444,8 +1116,7 @@ function ledgerPanel(result, book, code) {
   const filtered = visibleRows.filter(row => (state.filter === 'all' || row.type === state.filter) && (state.statusFilter === 'all' || row.status === state.statusFilter || (state.statusFilter === 'error' && row.status === 'blocked')));
   const shown = filtered.slice().reverse().slice(0, state.limit);
   const statusOptions = [['all', '全部状态'], ['included', '已确认'], ['pending', '进行中'], ['error', '待修正']];
-  return `<details class="panel ledger-panel panel-disclosure" data-panel="transactions" data-fund="${code}" ${state.expandedPanels.transactions ? 'open' : ''}><summary class="panel-toggle"><h2>逐笔交易</h2><span class="ledger-panel-actions"><span class="fund-code">${visibleRows.length} 笔</span><button class="button transaction-register" type="button" data-action="transaction-new" ${state.transactionStoreUnavailable || state.transactionBusy ? 'disabled' : ''}>登记交易</button></span></summary><div class="panel-content">
-    ${state.transactionStoreError ? `<p class="helper transaction-storage-notice" role="status">${esc(state.transactionStoreError)}</p>` : ''}
+  return `<details class="panel ledger-panel panel-disclosure" data-panel="transactions" data-fund="${code}" ${state.expandedPanels.transactions ? 'open' : ''}><summary class="panel-toggle"><h2>逐笔交易</h2><span class="fund-code">${visibleRows.length} 笔</span></summary><div class="panel-content">
     <div class="ledger-toolbar"><select id="type-filter" aria-label="筛选交易类型"><option value="all">全部类型</option>${Object.entries(TYPE_NAMES).map(([key, label]) => `<option value="${key}" ${state.filter === key ? 'selected' : ''}>${label}</option>`).join('')}</select><select id="status-filter" aria-label="筛选记录状态">${statusOptions.map(([key, label]) => `<option value="${key}" ${state.statusFilter === key ? 'selected' : ''}>${label}</option>`).join('')}</select></div>
     <div class="transaction-list">${shown.length ? shown.map(row => transactionCard(row, book, performance.get(row.id))).join('') : `<div class="empty-state"><h3>${visibleRows.length ? '没有符合条件的交易' : '尚无交易记录'}</h3>${visibleRows.length ? '<button class="button" data-action="reset-filter">清除筛选</button>' : ''}</div>`}</div>${filtered.length > shown.length ? `<button class="button more-button" data-action="more">再显示 25 笔 · 还有 ${filtered.length - shown.length} 笔</button>` : ''}</div></details>`;
 }
@@ -1474,17 +1145,18 @@ function transactionCard(row, book, performance = {}) {
     ...(performance.kind === 'lot' ? [metric('本笔剩余份额', performance.remainingShares, 6), metric('本笔剩余成本', performance.remainingCost), metric('本笔卖出回款', performance.proceeds), metric('本笔分红', performance.cashDividends), metric('本笔已实现盈亏', performance.realizedProfit, 2, signClass(performance.realizedProfit)), metric('本笔未实现盈亏', performance.unrealizedProfit, 2, signClass(performance.unrealizedProfit))] : []),
   ];
   const profitLabel = performance.kind === 'sell' ? performance.estimated ? '本笔已实现盈亏（估算）' : '本笔已实现盈亏' : performance.kind === 'dividend' ? '本笔分红收益' : performance.estimated ? '本笔累计盈亏（估算）' : '本笔累计盈亏';
-  const pendingHint = Number.isFinite(tx.nav) && tx.nav > 0 ? '待补全资料' : '待补净值 · 补全后自动确认';
+  const pendingHint = Number.isFinite(tx.nav) && tx.nav > 0 ? '表格资料待补全' : '表格净值待补全';
   const profitSummary = pending
     ? `<span class="transaction-pending-hint">${pendingHint}</span>`
     : `<span class="transaction-profit-summary"><span class="transaction-profit-label">${profitLabel}</span><span class="transaction-profit-values"><strong class="transaction-profit-value num ${signClass(performance.profit)}">${sensitive(performance.profit)}</strong>${performance.kind === 'dividend' ? '' : `<span class="transaction-profit-rate num ${signClass(performance.returnRate)}">${percent(performance.returnRate)}</span>`}</span></span>`;
   const estimateExtras = performance.kind === 'lot' ? `<p class="helper detail-date-note">估值净值日期 ${esc(performance.valuationDate || '待更新')}${performance.estimated ? ' · 含估算交易' : ''}</p>` : '';
-  return `<article class="transaction${pending ? ' transaction-pending' : ''}"><div class="transaction-top"><div class="transaction-label"><span class="transaction-type-icon ${out ? 'out' : ''}">${icon(out ? 'up' : row.type === 'reinvest' ? 'coins' : 'down')}</span><div><p class="transaction-title">${esc(TYPE_NAMES[row.type] || '未知类型')}<span class="row-status${pending ? ' row-status-pending' : ''}">${esc(label)}</span></p><p class="transaction-date">${displayDate} · 第 ${row.index} 笔</p></div></div><div class="transaction-top-right"><p class="transaction-amount num">${included && row.type === 'reinvest' ? sensitive(values.shares, 6) : sensitive(row.amount ?? tx.amount ?? tx.cost)}<small>${!included ? '记录金额 · 元' : row.type === 'reinvest' ? '增加份额 · 份' : estimated ? '估算支出 · 元' : out ? '实际到账 · 元' : '确认支出 · 元'}</small></p><div class="transaction-actions"><button class="transaction-edit" type="button" data-action="transaction-edit" data-id="${esc(row.id)}" aria-label="${pending ? '补全' : '编辑'}${esc(TYPE_NAMES[row.type] || '交易')}" ${state.transactionStoreUnavailable || state.transactionBusy ? 'disabled' : ''}>${pending ? '补全' : '编辑'}</button><button class="transaction-delete" type="button" data-action="transaction-delete" data-id="${esc(row.id)}" aria-label="删除${esc(TYPE_NAMES[row.type] || '交易')}" ${state.transactionStoreUnavailable || state.transactionBusy ? 'disabled' : ''}>×</button></div></div></div>
+  return `<article class="transaction${pending ? ' transaction-pending' : ''}"><div class="transaction-top"><div class="transaction-label"><span class="transaction-type-icon ${out ? 'out' : ''}">${icon(out ? 'up' : row.type === 'reinvest' ? 'coins' : 'down')}</span><div><p class="transaction-title">${esc(TYPE_NAMES[row.type] || '未知类型')}<span class="row-status${pending ? ' row-status-pending' : ''}">${esc(label)}</span></p><p class="transaction-date">${displayDate} · 第 ${row.index} 笔</p></div></div><div class="transaction-top-right"><p class="transaction-amount num">${included && row.type === 'reinvest' ? sensitive(values.shares, 6) : sensitive(row.amount ?? tx.amount ?? tx.cost)}<small>${!included ? '记录金额 · 元' : row.type === 'reinvest' ? '增加份额 · 份' : estimated ? '估算支出 · 元' : out ? '实际到账 · 元' : '确认支出 · 元'}</small></p></div></div>
     ${row.error ? `<p class="row-error">${esc(row.error)}</p>` : ''}
     <details class="transaction-detail" data-id="${esc(row.id)}"><summary class="transaction-profit-row">${profitSummary}<span class="transaction-detail-toggle">详细信息<span class="transaction-detail-chevron" aria-hidden="true">⌄</span></span></summary><div class="detail-inner"><dl class="transaction-stats transaction-detail-metrics">${detailMetrics.join('')}</dl><p class="helper detail-date-note">${dateNote}</p>${row.estimateReason ? `<p class="helper detail-date-note">${esc(row.estimateReason)}</p>` : ''}${estimateExtras}${hasNote && state.visible ? `<p class="transaction-note">备注：${esc(tx.note)}</p>` : ''}</div></details></article>`;
 }
 app.addEventListener('toggle', event => {
   const panel = event.target;
+  if (panel.matches('details[data-bond-ledger]') && state.unlocked && checkSession()) { state.bondExpanded[panel.dataset.bondLedger] = panel.open; return; }
   if (!panel.matches('details[data-panel]') || !app.contains(panel) || !state.unlocked || !checkSession()) return;
   state.expandedPanels[panel.dataset.panel] = panel.open;
   if (panel.dataset.panel === 'discipline-long-term' && panel.classList) {
@@ -1502,16 +1174,10 @@ app.addEventListener('submit', event => {
     for (const code of new Set([...Object.keys(state.estimateDrafts), ...Object.keys(state.estimateDirections)])) queueEstimateSave(code, 0);
     return;
   }
-  if (event.target.id === 'bond-edit-form') return saveBondEdits(event);
   if (event.target.id === 'cash-flow-form') return saveCashFlow(event);
-  if (event.target.id === 'transaction-form') return saveTransactionEdits(event);
 });
 app.addEventListener('change', event => {
   if (!state.unlocked || !checkSession()) return;
-  if (event.target.closest?.('#transaction-form') && state.transactionEditor && !state.transactionBusy) {
-    updateTransactionInput(event.target, { commit: true });
-    return;
-  }
   if (event.target.closest?.('#nav-estimate-form') && /^estimate-\d{6}$/.test(event.target.name)) { queueEstimateSave(event.target.name.slice(9), 0); return; }
   if (event.target.matches?.('[data-nav-boundary]')) {
     const input = event.target;
@@ -1543,10 +1209,6 @@ function setEstimateDirection(code, direction, source = null) {
 
 app.addEventListener('input', event => {
   const input = event.target;
-  if (input.closest?.('#transaction-form')) {
-    if (state.unlocked && checkSession() && state.transactionEditor && !state.transactionBusy) updateTransactionInput(input);
-    return;
-  }
   if (input.closest?.('#nav-estimate-form')) {
     if (state.unlocked && checkSession() && /^estimate-\d{6}$/.test(input.name)) {
       const code = input.name.slice(9);
@@ -1562,26 +1224,10 @@ app.addEventListener('input', event => {
     }
     return;
   }
-  if (input.closest?.('#bond-edit-form')) {
-    if (state.unlocked && checkSession() && state.bondDraft && ['marketValue', 'holdingProfit'].includes(input.name)) state.bondDraft[input.name] = input.value;
-    return;
-  }
   if (!input.matches('[data-nav-boundary]') || !state.unlocked || !checkSession()) return;
   const code = input.dataset.fund;
   const history = state.nav[code]?.history || [];
   updateNavRange(code, moveNavBoundary(history, navSelection(code), input.dataset.navBoundary, input.value, navContext(code)));
-});
-document.addEventListener('keydown', event => {
-  if ((!state.transactionEditor && !state.transactionDelete) || !state.unlocked || !checkSession()) return;
-  if (event.key === 'Escape') { event.preventDefault(); cancelTransactionDialog(); return; }
-  if (event.key === 'Tab') {
-    const dialog = app.querySelector?.('.transaction-dialog');
-    if (!dialog) return;
-    const fields = [...dialog.querySelectorAll('button:not(:disabled):not([tabindex="-1"]), input:not(:disabled):not([type="hidden"]), select:not(:disabled), [tabindex="0"]')].filter(field => field.getClientRects().length);
-    if (!fields.length) { event.preventDefault(); dialog.focus({ preventScroll: true }); return; }
-    if (event.shiftKey && (document.activeElement === fields[0] || document.activeElement === dialog)) { event.preventDefault(); fields.at(-1).focus(); }
-    else if (!event.shiftKey && (document.activeElement === fields.at(-1) || !dialog.contains(document.activeElement))) { event.preventDefault(); fields[0].focus(); }
-  }
 });
 function actionClick(event) {
   if (state.unlocked && !checkSession()) { event.preventDefault(); return; }
@@ -1604,65 +1250,15 @@ function actionClick(event) {
     return;
   }
   if (!state.unlocked) return;
-  if (action.startsWith('transaction-')) {
-    event.preventDefault();
-    if (action === 'transaction-new') openTransactionEditor();
-    if (action === 'transaction-edit') openTransactionEditor(target.dataset.id);
-    if (action === 'transaction-cancel') cancelTransactionDialog();
-    if (action === 'transaction-delete' && !state.transactionBusy && transactionStore) {
-      const code = selectedCode(), tx = code && getBook(code).transactions.find(item => item.id === target.dataset.id);
-      if (tx) {
-        state.transactionEditor = null;
-        state.transactionDelete = { code, id: tx.id, date: tx.date || String(tx.submittedAt || '').slice(0, 10), type: tx.type };
-        state.transactionError = '';
-        render();
-        app.querySelector?.('.transaction-delete-confirmation [data-action="transaction-cancel"]')?.focus?.({ preventScroll: true });
-      }
-    }
-    if (action === 'transaction-delete-confirm') return confirmTransactionDelete();
-    if (action === 'transaction-sip-toggle' && ['buy', 'sip'].includes(state.transactionEditor?.draft.type)) setTransactionType(state.transactionEditor.draft.type === 'sip' ? 'buy' : 'sip');
-    if (action === 'transaction-amount-visibility' && state.transactionEditor) {
-      state.transactionAmountVisible = !state.transactionAmountVisible;
-      for (const name of ['amount', 'shares', 'feeAmount']) {
-        const input = app.querySelector?.(`#transaction-form [name="${name}"]`);
-        if (input) input.type = state.transactionAmountVisible ? 'text' : 'password';
-      }
-      target.setAttribute?.('aria-label', state.transactionAmountVisible ? '隐藏输入金额与份额' : '显示输入金额与份额');
-      target.setAttribute?.('aria-pressed', String(state.transactionAmountVisible));
-      target.innerHTML = icon(state.transactionAmountVisible ? 'eye' : 'eye-off');
-    }
-    return;
-  }
   if (action === 'estimate-direction' && FUND_CODES.includes(target.dataset.code)) {
     setEstimateDirection(target.dataset.code, target.dataset.direction === 'down' ? 'up' : 'down', target);
     queueEstimateSave(target.dataset.code);
     return;
   }
-  if (action === 'bond-edit' && selectedBonds() && !state.bondBusy && !state.cashBusy && bondStore) {
-    const entry = state.bonds.find(item => item.code === target.dataset.code);
-    if (entry) {
-      state.bondEditing = entry.code;
-      state.bondDraft = { code: entry.code, marketValue: entry.marketValue.toFixed(2), holdingProfit: entry.holdingProfit.toFixed(2) };
-      state.bondError = '';
-      state.cashEditing = false;
-      state.cashDraft = null;
-      state.cashError = '';
-      render();
-    }
-  }
-  if (action === 'bond-cancel' && !state.bondBusy) {
-    state.bondEditing = null;
-    state.bondDraft = null;
-    state.bondError = '';
-    render();
-  }
-  if (action === 'cash-edit' && selectedBonds() && !state.cashBusy && !state.bondBusy && bondStore) {
+  if (action === 'cash-edit' && selectedBonds() && !state.cashBusy && !state.cashUnavailable && bondStore) {
     state.cashEditing = true;
     state.cashDraft = Number.isFinite(state.freeCashFlow) ? String(state.freeCashFlow) : '';
     state.cashError = '';
-    state.bondEditing = null;
-    state.bondDraft = null;
-    state.bondError = '';
     render();
   }
   if (action === 'cash-cancel' && !state.cashBusy) {

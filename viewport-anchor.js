@@ -24,13 +24,12 @@ export function captureFundViewport(root, view = globalThis.window) {
   if (!root?.querySelector('.fund-page')) return null;
   const scroll = view.scrollY || 0;
   if (scroll <= 1) return { scroll: 0 };
-  const header = root.querySelector('.site-header')?.getBoundingClientRect();
-  const readingLine = scroll + Math.max(0, header?.bottom || 0) + 16;
+  const readingLine = scroll + 16;
   const candidates = ANCHORS.flatMap(selector => {
     const element = root.querySelector(selector), box = layoutBox(element);
     return box ? [{ selector, element, ...box }] : [];
   });
-  // A tiny tail of the preceding panel can remain below a sticky header.
+  // A tiny tail of the preceding panel can remain at the viewport's top.
   // Keep a substantive panel at the reading line, or the main visible panel.
   const visibleHeight = box => Math.max(0, Math.min(box.bottom, scroll + view.innerHeight) - Math.max(box.top, readingLine));
   const panels = candidates.filter(box => box.element.dataset?.panel);

@@ -7,6 +7,11 @@ export const DISCIPLINE_ENTRIES = Object.freeze([
     detail: '如果美股含量低于40%，则【立刻】降低该基金持仓。',
   },
   {
+    id: 'us-exposure-adjustment',
+    title: '美股含量不达标的基金，加仓金额/比例【减半】，卖出金额/比例【翻倍】。',
+    detail: '',
+  },
+  {
     id: 'long-term',
     title: '一定要坚定长期持有。',
     detail: '这是收益最大化的途径，但同时也是回撤最大的，一定要坚持下来。',
@@ -38,18 +43,19 @@ export const DISCIPLINE_ENTRIES = Object.freeze([
   },
   {
     id: 'add-discipline',
-    title: '加仓纪律， 加仓一定要是【少频次，高金额】的，单次加仓金额【1万元】。',
-    detail: '美股含量不达标的基金，加仓金额/比例【减半】，卖出金额/比例【翻倍】。',
+    title: '加仓纪律， 加仓一定要是【少频次，高金额】的。',
+    detail: '',
   },
   {
     id: 'add-discipline-decline',
-    title: '自上次交易节点后，跌幅超过了 平均年化收益率 的2倍，进行一次加仓',
+    title: '自上次交易节点后，跌幅超过了 平均年化收益率 的2倍，进行一次加仓（1w元）',
     detail: '',
   },
 ].map(entry => Object.freeze(entry)));
 
 const IDS = {
   '1': 'us-exposure',
+  '1.1': 'us-exposure-adjustment',
   '2': 'long-term',
   '3': 'bond-reserve',
   '4': 'equity-scope',
@@ -102,9 +108,10 @@ export function parseDisciplineMarkdown(markdown) {
       continue;
     }
     // Dotted subrules are independent entries, rather than continuations of
-    // their parent. Accept both "6.1 text" and "6.1. text" markdown styles.
-    const numbered = /^\s*(\d+\.\d+(?:\.\d+)*)(?:\.)?\s+(.*)$/.exec(line)
-      || /^\s*(\d+)\.\s+(.*)$/.exec(line);
+    // their parent. Handwritten Chinese lists may omit the space after a
+    // marker, as in "1.1美股含量". A bare numeric marker is still incomplete.
+    const numbered = /^\s*(\d+\.\d+(?:\.\d+)*)(?:\.)?(?:\s+|(?=[^\d.\s]))(.*)$/.exec(line)
+      || /^\s*(\d+)\.(?:\s+|(?=[^\d.\s]))(.*)$/.exec(line);
     if (numbered) {
       finish();
       const levels = numbered[1].split('.').map(Number);
@@ -125,7 +132,7 @@ export function parseDisciplineMarkdown(markdown) {
   if (!paragraphs.length || paragraphs.length > 100) invalid();
   const seen = new Set(), ids = new Set(), genericOccurrences = new Map();
   const entries = paragraphs.map(({ number, text }) => {
-    if ((number !== null && seen.has(number)) || (text.match(/\*\*/g)?.length || 0) % 2) invalid();
+    if (number !== null && seen.has(number)) invalid();
     if (number !== null) seen.add(number);
     const strong = /^\s*\*\*([\s\S]*?)\*\*/.exec(text);
     const title = clean(strong ? strong[1] : text);
