@@ -1,0 +1,57 @@
+{
+  "code": "006373",
+  "name": "国富全球科技互联混合(QDII)人民币A",
+  "status": "unchanged",
+  "checked_at": "2026-10-20T01:11:32.596Z",
+  "execution_date": "2026-10-20",
+  "source": "东方财富/天天基金 f10/lsjz，沿用第三方主档；非管理人官网独立核验",
+  "source_total_count": 1906,
+  "source_pages_fetched": 3,
+  "previous_last_date": "2026-10-16",
+  "latest_source_date": "2026-10-16",
+  "checked_dates": [
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16"
+  ],
+  "window_first_date": "2026-09-11",
+  "window_records": 20,
+  "added_dates": [],
+  "revisions": [],
+  "conflicts": [],
+  "records": 1906,
+  "first_date": "2018-11-20",
+  "last_date": "2026-10-16",
+  "json_path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/006373_全部历史净值.json",
+  "csv_path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/006373_全部历史净值.csv",
+  "json_sha256": "c8939c133edf3af673abef4d1b378f360918276ea6aa46950173b2977286e6a9",
+  "csv_sha256": "1b5f7bc47ae289437c25fc09ee59905d9294298e4337212e140b94acd09f19a9",
+  "old_json_path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/006373_全部历史净值.json",
+  "old_csv_path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/006373_全部历史净值.csv",
+  "old_json_sha256": "c8939c133edf3af673abef4d1b378f360918276ea6aa46950173b2977286e6a9",
+  "old_csv_sha256": "1b5f7bc47ae289437c25fc09ee59905d9294298e4337212e140b94acd09f19a9",
+  "missing_accumulated_nav_dates": [
+    "2020-12-31",
+    "2021-02-10"
+  ],
+  "raw_evidence": [
+    {
+      "path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006373_latest_page1_1792458692493.json",
+      "sha256": "2e865682ae7b7d6dd88236144171581be965632670abb0ee8f4c31c4c4b147ce",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006373&pageIndex=1&pageSize=20&startDate=&endDate=&_=1792458692472"
+    },
+    {
+      "path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006373_2026-10-16_page1_1792458692537.json",
+      "sha256": "50032b957d1315b04800befc43248e995dfb5df85d1bf4a2e56b84142fe9f9aa",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006373&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-16&_=1792458692494"
+    },
+    {
+      "path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006373_2026-10-16_page1_1792458692577.json",
+      "sha256": "fff129648a109245709945e4a96629ba5fceab7d5b26e3ac21948fcef3431869",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006373&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-16&_=1792458692546"
+    }
+  ],
+  "frozen_originals_unchanged": true
+}

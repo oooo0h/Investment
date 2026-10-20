@@ -1,0 +1,54 @@
+{
+  "code": "006485",
+  "name": "广发中债1-3年国开债指数C",
+  "status": "unchanged",
+  "checked_at": "2026-10-20T01:11:32.852Z",
+  "execution_date": "2026-10-20",
+  "source": "东方财富/天天基金 f10/lsjz，沿用第三方主档；非管理人官网独立核验",
+  "source_total_count": 1924,
+  "source_pages_fetched": 3,
+  "previous_last_date": "2026-10-19",
+  "latest_source_date": "2026-10-19",
+  "checked_dates": [
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16",
+    "2026-10-19"
+  ],
+  "window_first_date": "2026-09-14",
+  "window_records": 20,
+  "added_dates": [],
+  "revisions": [],
+  "conflicts": [],
+  "records": 1924,
+  "first_date": "2018-11-14",
+  "last_date": "2026-10-19",
+  "json_path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/历史净值/006485_全部历史净值.json",
+  "csv_path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/历史净值/006485_全部历史净值.csv",
+  "json_sha256": "7c96e11e69ea3c7ee79a1b8261387e09430cbd3a1895b926739b0795411077ca",
+  "csv_sha256": "68a522c83788086291b1042b903d08f736385aaa0665fd34383d766f9d8645bd",
+  "old_json_path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/历史净值/006485_全部历史净值.json",
+  "old_csv_path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/历史净值/006485_全部历史净值.csv",
+  "old_json_sha256": "7c96e11e69ea3c7ee79a1b8261387e09430cbd3a1895b926739b0795411077ca",
+  "old_csv_sha256": "68a522c83788086291b1042b903d08f736385aaa0665fd34383d766f9d8645bd",
+  "missing_accumulated_nav_dates": [],
+  "raw_evidence": [
+    {
+      "path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006485_latest_page1_1792458692778.json",
+      "sha256": "f21000819264d06e6df918ce3ff90be83dd755522357776f98e3fb800a63516f",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006485&pageIndex=1&pageSize=20&startDate=&endDate=&_=1792458692748"
+    },
+    {
+      "path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006485_2026-10-19_page1_1792458692815.json",
+      "sha256": "442290e39fdf86a15a2f54087d9d3355bfbdac2a4e80f966fd0afe7c55e71c69",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006485&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-19&_=1792458692778"
+    },
+    {
+      "path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006485_2026-10-19_page1_1792458692847.json",
+      "sha256": "4860e8531cca0ad43ad125a98a6cfbbdb6bd65791a66851f042185eab5884ade",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006485&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-19&_=1792458692816"
+    }
+  ],
+  "frozen_originals_unchanged": true
+}

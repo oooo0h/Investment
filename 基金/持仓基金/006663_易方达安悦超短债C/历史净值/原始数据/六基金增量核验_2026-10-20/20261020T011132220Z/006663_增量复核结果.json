@@ -1,0 +1,54 @@
+{
+  "code": "006663",
+  "name": "易方达安悦超短债C",
+  "status": "unchanged",
+  "checked_at": "2026-10-20T01:11:32.956Z",
+  "execution_date": "2026-10-20",
+  "source": "东方财富/天天基金 f10/lsjz，沿用第三方主档；非管理人官网独立核验",
+  "source_total_count": 1898,
+  "source_pages_fetched": 3,
+  "previous_last_date": "2026-10-19",
+  "latest_source_date": "2026-10-19",
+  "checked_dates": [
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15",
+    "2026-10-16",
+    "2026-10-19"
+  ],
+  "window_first_date": "2026-09-14",
+  "window_records": 20,
+  "added_dates": [],
+  "revisions": [],
+  "conflicts": [],
+  "records": 1898,
+  "first_date": "2018-12-05",
+  "last_date": "2026-10-19",
+  "json_path": "基金/持仓基金/006663_易方达安悦超短债C/历史净值/006663_全部历史净值.json",
+  "csv_path": "基金/持仓基金/006663_易方达安悦超短债C/历史净值/006663_全部历史净值.csv",
+  "json_sha256": "f826d0a5a64a9ca141bd49878833c569594d1b288e53f0e52305e93c1fba4bc9",
+  "csv_sha256": "99d4f1f9f0c4b20363c4e018d16d5a763f1a33e4456b722487a1143f0173717b",
+  "old_json_path": "基金/持仓基金/006663_易方达安悦超短债C/历史净值/006663_全部历史净值.json",
+  "old_csv_path": "基金/持仓基金/006663_易方达安悦超短债C/历史净值/006663_全部历史净值.csv",
+  "old_json_sha256": "f826d0a5a64a9ca141bd49878833c569594d1b288e53f0e52305e93c1fba4bc9",
+  "old_csv_sha256": "99d4f1f9f0c4b20363c4e018d16d5a763f1a33e4456b722487a1143f0173717b",
+  "missing_accumulated_nav_dates": [],
+  "raw_evidence": [
+    {
+      "path": "基金/持仓基金/006663_易方达安悦超短债C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006663_latest_page1_1792458692893.json",
+      "sha256": "f08f84e3fd5ad9fab33dace283cb6dae30b4a7c2c1649583edde2fe112e37dd6",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006663&pageIndex=1&pageSize=20&startDate=&endDate=&_=1792458692857"
+    },
+    {
+      "path": "基金/持仓基金/006663_易方达安悦超短债C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006663_2026-10-19_page1_1792458692923.json",
+      "sha256": "4db0fe3421a27b894236429072f27a8353aed334b9fa98560336374eddade93c",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006663&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-19&_=1792458692894"
+    },
+    {
+      "path": "基金/持仓基金/006663_易方达安悦超短债C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006663_2026-10-19_page1_1792458692949.json",
+      "sha256": "7876a0b8c4cba37d7e6f616fe6894c05b2a88338ebc4adfe33ef273f997bb2e5",
+      "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006663&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-19&_=1792458692924"
+    }
+  ],
+  "frozen_originals_unchanged": true
+}

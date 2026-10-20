@@ -1,0 +1,48 @@
+{
+  "code": "270023",
+  "name": "广发全球精选股票（QDII）人民币A",
+  "share_class": "人民币A",
+  "checked_at": "2026-10-20T09:12:11.085+08:00",
+  "execution_date": "2026-10-20",
+  "query_start_date": "2026-10-12",
+  "query_end_date": "2026-10-20",
+  "homepage": "https://www.gffunds.com.cn/funds/?fundcode=270023",
+  "previous_json_path": "基金/持仓基金/270023_广发全球精选股票_QDII_人民币A/历史净值/270023_全部历史净值.json",
+  "previous_json_sha256": "162b4764579320f2633c30de90e082e9c8e6b395e3d59ef6b85d15e205373dce",
+  "request_count": 3,
+  "capture_status": "complete",
+  "failure": null,
+  "replay_source_path": null,
+  "requests": [
+    {
+      "label": "NAV window page 1",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20261012&enddate=20261020&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "attempt": 1,
+      "fetched_at": "2026-10-20T09:12:10.749+08:00",
+      "http_status": 200,
+      "content_type": "application/json;charset=UTF-8",
+      "server_date": "Tue, 20 Oct 2026 01:12:10 GMT",
+      "raw_text": "{\"errorno\":\"20000\",\"errormsg\":\"Success!\",\"data\":[{\"FUNDNAME\":\"广发全球精选股票（QDII）人民币A\",\"PRENAVUNIT\":\"5.9330\",\"NAVUNIT\":\"5.8224\",\"UNITYIELD\":\"0.0000\",\"FUNDID\":\"35\",\"FUNDCODE\":\"270023\",\"NAVACCUMULATED\":\"6.2614\",\"PRENAVACCUMULATED\":\"6.3720\",\"DAYINCREMENTRATE\":\"-1.86\",\"YEARLYROE7\":\"0.0000\",\"NAVDATE\":\"20261016\",\"PRENAVEDATE\":\"20261015\"},{\"FUNDNAME\":\"广发全球精选股票（QDII）人民币A\",\"PRENAVUNIT\":\"6.0497\",\"NAVUNIT\":\"5.9330\",\"UNITYIELD\":\"0.0000\",\"FUNDID\":\"35\",\"FUNDCODE\":\"270023\",\"NAVACCUMULATED\":\"6.3720\",\"PRENAVACCUMULATED\":\"6.4887\",\"DAYINCREMENTRATE\":\"-1.93\",\"YEARLYROE7\":\"0.0000\",\"NAVDATE\":\"20261015\",\"PRENAVEDATE\":\"20261014\"},{\"FUNDNAME\":\"广发全球精选股票（QDII）人民币A\",\"PRENAVUNIT\":\"6.2013\",\"NAVUNIT\":\"6.0497\",\"UNITYIELD\":\"0.0000\",\"FUNDID\":\"35\",\"FUNDCODE\":\"270023\",\"NAVACCUMULATED\":\"6.4887\",\"PRENAVACCUMULATED\":\"6.6403\",\"DAYINCREMENTRATE\":\"-2.44\",\"YEARLYROE7\":\"0.0000\",\"NAVDATE\":\"20261014\",\"PRENAVEDATE\":\"20261013\"},{\"FUNDNAME\":\"广发全球精选股票（QDII）人民币A\",\"PRENAVUNIT\":\"6.2734\",\"NAVUNIT\":\"6.2013\",\"UNITYIELD\":\"0.0000\",\"FUNDID\":\"35\",\"FUNDCODE\":\"270023\",\"NAVACCUMULATED\":\"6.6403\",\"PRENAVACCUMULATED\":\"6.7124\",\"DAYINCREMENTRATE\":\"-1.15\",\"YEARLYROE7\":\"0.0000\",\"NAVDATE\":\"20261013\",\"PRENAVEDATE\":\"20261012\"},{\"FUNDNAME\":\"广发全球精选股票（QDII）人民币A\",\"PRENAVUNIT\":\"6.3671\",\"NAVUNIT\":\"6.2734\",\"UNITYIELD\":\"0.0000\",\"FUNDID\":\"35\",\"FUNDCODE\":\"270023\",\"NAVACCUMULATED\":\"6.7124\",\"PRENAVACCUMULATED\":\"6.8061\",\"DAYINCREMENTRATE\":\"-1.47\",\"YEARLYROE7\":\"0.0000\",\"NAVDATE\":\"20261012\",\"PRENAVEDATE\":\"20261009\"}],\"pagelines\":\"20\",\"curpage\":\"1\",\"totalrows\":\"5\",\"totalpages\":\"1\",\"memtime\":\"2026-10-20 09:12:10\",\"_cachetime\":\"2026-10-20T01:12:10.920Z\",\"_filtertime\":\"2026-10-20T01:12:10.921Z\",\"_lastfilter\":\"set-cache-time.js,override-nav-by-wcm.js\"}"
+    },
+    {
+      "label": "NAV window empty tail",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20261012&enddate=20261020&orderby=NAVDATE_DESC&pagelines=20&curpage=2",
+      "attempt": 1,
+      "fetched_at": "2026-10-20T09:12:10.947+08:00",
+      "http_status": 200,
+      "content_type": "application/json;charset=UTF-8",
+      "server_date": "Tue, 20 Oct 2026 01:12:11 GMT",
+      "raw_text": "{\"errorno\":\"20000\",\"errormsg\":\"Success!\",\"data\":\"\",\"pagelines\":\"20\",\"curpage\":\"2\",\"totalrows\":\"0\",\"totalpages\":\"0\",\"memtime\":\"2026-10-20 09:12:11\",\"_cachetime\":\"2026-10-20T01:12:11.012Z\",\"_filtertime\":\"2026-10-20T01:12:11.013Z\",\"_lastfilter\":\"set-cache-time.js,override-nav-by-wcm.js\"}"
+    },
+    {
+      "label": "NAV window first-page stability",
+      "url": "https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=270023&startdate=20261012&enddate=20261020&orderby=NAVDATE_DESC&pagelines=20&curpage=1",
+      "attempt": 1,
+      "fetched_at": "2026-10-20T09:12:11.031+08:00",
+      "http_status": 200,
+      "content_type": "application/json;charset=UTF-8",
+      "server_date": "Tue, 20 Oct 2026 01:12:11 GMT",
+      "raw_text": "{\"errorno\":\"20000\",\"errormsg\":\"Success!\",\"data\":[{\"FUNDNAME\":\"广发全球精选股票（QDII）人民币A\",\"PRENAVUNIT\":\"5.9330\",\"NAVUNIT\":\"5.8224\",\"UNITYIELD\":\"0.0000\",\"FUNDID\":\"35\",\"FUNDCODE\":\"270023\",\"NAVACCUMULATED\":\"6.2614\",\"PRENAVACCUMULATED\":\"6.3720\",\"DAYINCREMENTRATE\":\"-1.86\",\"YEARLYROE7\":\"0.0000\",\"NAVDATE\":\"20261016\",\"PRENAVEDATE\":\"20261015\"},{\"FUNDNAME\":\"广发全球精选股票（QDII）人民币A\",\"PRENAVUNIT\":\"6.0497\",\"NAVUNIT\":\"5.9330\",\"UNITYIELD\":\"0.0000\",\"FUNDID\":\"35\",\"FUNDCODE\":\"270023\",\"NAVACCUMULATED\":\"6.3720\",\"PRENAVACCUMULATED\":\"6.4887\",\"DAYINCREMENTRATE\":\"-1.93\",\"YEARLYROE7\":\"0.0000\",\"NAVDATE\":\"20261015\",\"PRENAVEDATE\":\"20261014\"},{\"FUNDNAME\":\"广发全球精选股票（QDII）人民币A\",\"PRENAVUNIT\":\"6.2013\",\"NAVUNIT\":\"6.0497\",\"UNITYIELD\":\"0.0000\",\"FUNDID\":\"35\",\"FUNDCODE\":\"270023\",\"NAVACCUMULATED\":\"6.4887\",\"PRENAVACCUMULATED\":\"6.6403\",\"DAYINCREMENTRATE\":\"-2.44\",\"YEARLYROE7\":\"0.0000\",\"NAVDATE\":\"20261014\",\"PRENAVEDATE\":\"20261013\"},{\"FUNDNAME\":\"广发全球精选股票（QDII）人民币A\",\"PRENAVUNIT\":\"6.2734\",\"NAVUNIT\":\"6.2013\",\"UNITYIELD\":\"0.0000\",\"FUNDID\":\"35\",\"FUNDCODE\":\"270023\",\"NAVACCUMULATED\":\"6.6403\",\"PRENAVACCUMULATED\":\"6.7124\",\"DAYINCREMENTRATE\":\"-1.15\",\"YEARLYROE7\":\"0.0000\",\"NAVDATE\":\"20261013\",\"PRENAVEDATE\":\"20261012\"},{\"FUNDNAME\":\"广发全球精选股票（QDII）人民币A\",\"PRENAVUNIT\":\"6.3671\",\"NAVUNIT\":\"6.2734\",\"UNITYIELD\":\"0.0000\",\"FUNDID\":\"35\",\"FUNDCODE\":\"270023\",\"NAVACCUMULATED\":\"6.7124\",\"PRENAVACCUMULATED\":\"6.8061\",\"DAYINCREMENTRATE\":\"-1.47\",\"YEARLYROE7\":\"0.0000\",\"NAVDATE\":\"20261012\",\"PRENAVEDATE\":\"20261009\"}],\"pagelines\":\"20\",\"curpage\":\"1\",\"totalrows\":\"5\",\"totalpages\":\"1\",\"memtime\":\"2026-10-20 09:12:10\",\"_cachetime\":\"2026-10-20T01:12:10.920Z\",\"_filtertime\":\"2026-10-20T01:12:10.921Z\",\"_lastfilter\":\"set-cache-time.js,override-nav-by-wcm.js\"}"
+    }
+  ]
+}
