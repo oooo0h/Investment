@@ -65,6 +65,15 @@ export function normalizeFreeCashFlow(value) {
   return money(amount);
 }
 
+/** Allocation total includes signed free cash flow; fund profits stay separate. */
+export function calculateBondHoldingValue(entries, freeCashFlow = null) {
+  try {
+    const rows = normalized(entries);
+    const cash = normalizeFreeCashFlow(freeCashFlow);
+    return money(rows.reduce((sum, row) => sum + row.marketValue, 0n) + (cash === null ? 0n : cents(cash)));
+  } catch { invalid(); }
+}
+
 /** returnRate is a ratio: 0.01 means 1%, using cost = marketValue - profit. */
 export function calculateBondSummary(entries) {
   try {

@@ -1,13 +1,14 @@
 // Values are consumed in memory. The result contains proportions only.
-export function calculatePortfolioAllocation(positions, codes) {
+export function calculatePortfolioAllocation(positions, codes, freeCashFlow = null) {
   const unavailable = () => ({ status: 'unavailable', shares: {} });
+  if (freeCashFlow !== null && (typeof freeCashFlow !== 'number' || !Number.isFinite(freeCashFlow))) return unavailable();
   if (!Array.isArray(positions) || !Array.isArray(codes) || !codes.length || new Set(codes).size !== codes.length || positions.length !== codes.length) return unavailable();
   const values = new Map();
   for (const row of positions) {
     if (!row || !codes.includes(row.code) || values.has(row.code) || !Number.isFinite(row.marketValue) || row.marketValue < 0) return unavailable();
     values.set(row.code, row.marketValue);
   }
-  const total = [...values.values()].reduce((sum, value) => sum + value, 0);
+  const total = [...values.values()].reduce((sum, value) => sum + value, 0) + (freeCashFlow ?? 0);
   if (!Number.isFinite(total) || total <= 0) return unavailable();
   return { status: 'available', shares: Object.fromEntries(codes.map(code => [code, values.get(code) / total])) };
 }

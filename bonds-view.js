@@ -1,4 +1,4 @@
-import { calculateBondSummary, BOND_FUNDS } from './bond-model.js?v=20261019-free-cash-flow';
+import { calculateBondSummary, calculateBondHoldingValue, BOND_FUNDS } from './bond-model.js?v=20261020-cash-in-holdings';
 import { BOND_FEE_RULES } from './bond-holding-duration.js?v=20261019-bond-calculated-lots';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
@@ -95,7 +95,7 @@ function bondCard(entry, options) {
 
 function reserveNote(reserve) {
   if (!reserve || !['below', 'unknown'].includes(reserve.status)) return '';
-  const title = reserve.status === 'below' ? '债基配置未达标' : '债基配置待核验';
+  const title = reserve.status === 'below' ? `债基配置未达标 · ${reserve.reason === 'share-high' ? '比例偏高' : '比例偏低'}` : '债基配置待核验';
   return `<div class="bond-reserve-note"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7v1"/></svg><p><strong>${title}</strong>：${escapeHtml(reserve.message)}<a href="#/?section=bond-reserve">查看首页规则与原因</a></p></div>`;
 }
 
@@ -111,7 +111,7 @@ function cashFlowForm({ visible, draft, error, busy }) {
   const disabled = busy ? ' disabled' : '';
   return `<form id="cash-flow-form" class="cash-flow-form" autocomplete="off" novalidate aria-busy="${Boolean(busy)}">
     <label for="free-cash-flow">自由现金流（元）<input id="free-cash-flow" name="freeCashFlow" type="${visible ? 'text' : 'password'}" inputmode="decimal" autocomplete="off" spellcheck="false" maxlength="32" value="${escapeHtml(value)}" placeholder="未填写"${invalid}${disabled}></label>
-    <p id="cash-flow-hint" class="helper cash-flow-hint">可为负数，留空表示未填写；不计入债基合计或配置比例。</p>
+    <p id="cash-flow-hint" class="helper cash-flow-hint">可为负数，留空表示未填写；计入债基总持仓和配置比例，负数相应扣减。</p>
     ${error ? `<p id="cash-flow-error" class="bond-form-error" role="alert">${escapeHtml(error)}</p>` : ''}
     <div class="bond-form-actions"><button type="button" class="button quiet" data-action="cash-cancel"${disabled}>取消</button><button type="submit" class="button primary"${disabled}>${busy ? '保存中…' : '保存'}</button></div>
   </form>`;
@@ -121,7 +121,7 @@ function cashFlowPanel({ freeCashFlow = null, visible = false, editing = false, 
   const hasValue = Number.isFinite(freeCashFlow);
   return `<section class="panel free-cash-flow-panel" aria-labelledby="free-cash-flow-title">
     <div class="cash-flow-heading"><div><p class="bond-code">CASH FLOW</p><h2 id="free-cash-flow-title">自由现金流</h2></div>${editing ? '<span class="bond-editing-state">编辑中</span>' : `<button type="button" class="button bond-edit-button" data-action="cash-edit"${busy || unavailable ? ' disabled' : ''}>${hasValue ? '编辑' : '填写'}</button>`}</div>
-    ${editing ? cashFlowForm({ visible, draft, error, busy }) : `<p class="cash-flow-value">${unavailable ? '<span class="cash-flow-empty">本机现金流暂不可用</span>' : cashFlowValue(freeCashFlow, visible)}</p><p class="cash-flow-note">可自由支配的现金净额；不计入债基合计或配置比例。</p>`}
+    ${editing ? cashFlowForm({ visible, draft, error, busy }) : `<p class="cash-flow-value">${unavailable ? '<span class="cash-flow-empty">本机现金流暂不可用</span>' : cashFlowValue(freeCashFlow, visible)}</p><p class="cash-flow-note">可自由支配的现金净额；计入债基总持仓和配置比例。</p>`}
   </section>`;
 }
 
@@ -137,10 +137,14 @@ export function renderBondsPage({ entries = [], valuationDate = null, visible = 
   if (!unavailable && Array.isArray(entries) && entries.length) {
     try { summary = calculateBondSummary(entries); } catch { /* Invalid or unavailable records have no financial display. */ }
   }
+  let holdingValue = null;
+  if (summary && !cashUnavailable) {
+    try { holdingValue = calculateBondHoldingValue(entries, freeCashFlow); } catch { /* Preserve fund cards while the aggregate is unavailable. */ }
+  }
   const overview = `<section ${reserveAttributes} class="panel bonds-summary bonds-summary-overview${locationClass}" aria-label="债基合计">${summary ? reserveNote(reserve) : ''}<dl>
-    <div><dt>合计持仓金额（元）</dt><dd class="num${summary ? '' : ' bonds-summary-pending'}">${summary ? privateValue(summary.marketValue, Boolean(visible)) : '待核验'}</dd></div>
-    <div><dt>占所有基金持仓比例</dt><dd class="num${summary && Number.isFinite(reserve?.ratio) ? '' : ' bonds-summary-pending'}" data-bond-reserve-share>${summary && Number.isFinite(reserve?.ratio) ? `${Math.round(reserve.ratio * 100)}%` : '待核验'}</dd></div>
-  </dl></section>`;
+    <div><dt>合计持仓金额（元）</dt><dd class="num${holdingValue === null ? ' bonds-summary-pending' : ''}">${holdingValue !== null ? privateValue(holdingValue, Boolean(visible)) : '待核验'}</dd></div>
+    <div><dt>占总持仓比例（含自由现金流）</dt><dd class="num${holdingValue !== null && Number.isFinite(reserve?.ratio) ? '' : ' bonds-summary-pending'}" data-bond-reserve-share>${holdingValue !== null && Number.isFinite(reserve?.ratio) ? `${Math.round(reserve.ratio * 100)}%` : '待核验'}</dd></div>
+  </dl><p class="helper">债基总持仓含自由现金流；纪律要求占总持仓的1/6～1/3，或持仓大于5万元。</p></section>`;
   if (!summary) {
     const hasRecords = !unavailable && BOND_FUNDS.some(fund => transactions?.[fund.code]?.length);
     if (hasRecords) {
