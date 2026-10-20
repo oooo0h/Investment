@@ -9,7 +9,7 @@ import { FUND_CODES } from '../src/funds.js';
 import { readLocalFile } from './local-bundle.mjs';
 
 const INDEX = '公共资料/历史净值/全基金历史净值当前入口.json';
-const METADATA = '公共资料/工具/tmp/交易记录六列整理/metadata.json';
+const METADATA = 'fund-trade-web/local/ledger-metadata.json';
 const reader = fileURLToPath(new URL('./local-workbooks.py', import.meta.url));
 const digest = value => createHash('sha256').update(value).digest('hex');
 const safeError = () => new Error('Local source validation failed.');
@@ -25,6 +25,18 @@ export function resolveFundPath(workspace, relative, code) {
   if (segments[0] === '持仓基金' || segments[0] === '观察基金') segments.shift();
   if (!segments[0] || !segments[0].startsWith(`${code}_`)) throw safeError();
   return full;
+}
+
+export function resolveNavPath(workspace, relative, code) {
+  const central = `公共资料/历史净值/维护数据/${code}/${code}_全部历史净值.json`;
+  if (/^\d{6}$/.test(code) && relative === central) return path.resolve(workspace, central);
+  return resolveFundPath(workspace, relative, code);
+}
+
+export function transactionSourcePath(entry) {
+  const directory = entry.xlsx_path ? path.posix.dirname(entry.xlsx_path)
+    : path.posix.dirname(path.posix.dirname(entry.json_path));
+  return path.posix.join(directory, `${entry.code}_交易记录.xlsx`);
 }
 
 export function adaptNav(document, entry, verifiedAt) {
@@ -116,11 +128,11 @@ export async function createLiveDataStore({ workspace, root, pythonPath }) {
       const metadataHit = await readLocalFile({ root, workspace, name: 'ledgerMetadata', legacy: METADATA });
       try { if (metadataHit) provenance = JSON.parse(metadataHit.bytes); } catch { /* Unknown provenance stays unverified. */ }
       const sources = index.funds.map(entry => ({ code: entry.code,
-        path: path.posix.join(path.posix.dirname(path.posix.dirname(entry.json_path)), `${entry.code}_交易记录.xlsx`),
+        path: transactionSourcePath(entry),
         estimated: provenance.funds?.find(fund => fund.code === entry.code)?.source_estimates_retained !== false,
         workbook_sha256: provenance.funds?.find(fund => fund.code === entry.code)?.workbook_sha256,
         row_provenance: provenance.funds?.find(fund => fund.code === entry.code)?.row_provenance }));
-      const navFiles = index.funds.map(entry => resolveFundPath(workspace, entry.json_path, entry.code));
+      const navFiles = index.funds.map(entry => resolveNavPath(workspace, entry.json_path, entry.code));
       const workbookFiles = sources.map(source => resolveFundPath(workspace, source.path, source.code));
       const files = [indexHit.file, ...(metadataHit ? [metadataHit.file] : []), ...navFiles, ...workbookFiles];
       const before = await fingerprint(files);

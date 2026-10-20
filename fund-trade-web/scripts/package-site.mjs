@@ -9,10 +9,11 @@ import { createLiveDataStore } from './live-data.mjs';
 import { validateEncryptedEnvelope, validatePublicNav } from './publish-data.mjs';
 import { STATIC_FILE_SOURCES, DEPLOY_FILES, WORKSPACE_ROOT, staticSourcePath, isPublicAsset } from './site-files.mjs';
 import { syncLocalSources } from './local-bundle.mjs';
+import { siteTemporaryPath } from './project-paths.mjs';
 const root = await realpath(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'));
 await syncLocalSources({ workspace: WORKSPACE_ROOT, root });
-const dist = path.join(root, 'dist');
-if (path.dirname(path.resolve(dist)) !== root || path.basename(dist) !== 'dist') throw new Error('Unsafe build target');
+const dist = siteTemporaryPath(root, 'dist');
+if (path.resolve(dist) !== path.resolve(WORKSPACE_ROOT, '临时文件', path.basename(root), 'dist')) throw new Error('Unsafe build target');
 try {
   if ((await lstat(dist)).isSymbolicLink()) throw new Error('Build target must not be a link');
   // This exact generated output directory has been resolved and checked above.

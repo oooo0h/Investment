@@ -9,6 +9,7 @@ import { createLiveBondDataStore } from './live-bond-data.mjs';
 import { createDisciplineSource } from './discipline-source.mjs';
 import { WORKSPACE_ROOT, staticSourcePath, isPublicAsset } from './site-files.mjs';
 import { syncLocalSources } from './local-bundle.mjs';
+import { siteTemporaryPath } from './project-paths.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 try { await syncLocalSources({ workspace: WORKSPACE_ROOT, root }); }
@@ -19,7 +20,7 @@ const port = Number(process.env.PORT || 4186);
 const demo = process.argv.includes('--demo');
 const disciplines = await createDisciplineSource({ workspace: WORKSPACE_ROOT, root });
 const tables = demo
-  ? await (await import('./demo-tables.mjs')).createDemoTableStore({ directory: path.join(root, 'tmp', 'demo-tables') })
+  ? await (await import('./demo-tables.mjs')).createDemoTableStore({ directory: siteTemporaryPath(root, 'demo-tables') })
   : await createLiveDataStore({
     workspace: WORKSPACE_ROOT, root,
     pythonPath: process.env.FUND_PREVIEW_PYTHON || path.join(os.homedir(), '.cache', 'codex-runtimes', 'codex-primary-runtime', 'dependencies', 'python', 'python.exe'),

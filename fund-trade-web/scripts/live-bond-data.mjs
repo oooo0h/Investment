@@ -4,12 +4,12 @@ import { readFile, stat } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { adaptNav, createEnvelopeEncryptor, resolveFundPath } from './live-data.mjs';
+import { adaptNav, createEnvelopeEncryptor, resolveFundPath, resolveNavPath, transactionSourcePath } from './live-data.mjs';
 import { calculateBondWorkbook } from './bond-ledger.mjs';
 import { normalizeBondTransactions } from '../src/bond-transactions.js';
 import { readLocalFile } from './local-bundle.mjs';
 const CODES = ['006485', '006663'];
-const META = '公共资料/工具/tmp/债基截图接入_20261019/metadata.json';
+const META = 'fund-trade-web/local/bond-metadata.json';
 const reader = fileURLToPath(new URL('./local-workbooks.py', import.meta.url));
 const safeError = () => new Error('Bond source validation failed.');
 function readBooks(pythonPath, workspace, sources) {
@@ -42,10 +42,10 @@ export async function createLiveBondDataStore({ workspace, root, pythonPath }) {
       const sources = CODES.map(code => {
         const entry = index.funds.find(fund => fund.code === code), details = metadata.funds.find(fund => fund.code === code);
         if (!entry || !details) throw safeError();
-        const relative = path.posix.join(path.posix.dirname(path.posix.dirname(entry.json_path)), `${code}_交易记录.xlsx`);
+        const relative = transactionSourcePath(entry);
         return { code, path: relative, estimated: false, allow_drafts: true, workbook_sha256: details.workbook_sha256, row_provenance: details.row_provenance };
       });
-      const navFiles = CODES.map(code => resolveFundPath(workspace, index.funds.find(fund => fund.code === code).json_path, code));
+      const navFiles = CODES.map(code => resolveNavPath(workspace, index.funds.find(fund => fund.code === code).json_path, code));
       const files = [...sources.map(source => resolveFundPath(workspace, source.path, source.code)), ...navFiles,
         indexHit.file];
       const fingerprint = async () => (await Promise.all([...files, metadataHit.file].map(async file => {

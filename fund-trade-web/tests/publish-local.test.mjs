@@ -294,7 +294,7 @@ test('logger creates the centralized file and strips credentials before writing'
   const root = mkdtempSync(path.join(tmpdir(), 'fund-publish-log-test-'));
   try {
     const logger = createPublishLogger({ root, now: () => new Date('2026-10-18T16:02:03.004Z') });
-    assert.equal(logger.file, path.join(root, 'tmp', 'logs', 'publish-20261019-000203-004.log'));
+    assert.equal(logger.file, path.join(path.dirname(root), '临时文件', path.basename(root), 'logs', 'publish-20261019-000203-004.log'));
     logger.write('阶段开始：验证 GitHub 登录');
     logger.write('password=SYNTHETIC_PASSWORD accountPayload={"amount":"PRIVATE_AMOUNT","cash":"PRIVATE_CASH"}');
     logger.write('ghp_SYNTHETIC_ACCESS_TOKEN github_pat_SYNTHETIC_TOKEN Bearer SYNTHETIC_BEARER ABCD-EFGH');
@@ -311,6 +311,6 @@ test('Windows launcher keeps pause and the Node process exit status', () => {
   assert.match(script, /set "RESULT=%ERRORLEVEL%"/);
   assert.match(script, /pause >nul/);
   assert.match(script, /exit \/b %RESULT%/);
-  assert.match(script, /tmp\\logs\\publish-\*\.log/);
+  assert.match(script, /临时文件\\fund-trade-web\\logs\\publish-\*\.log/);
   assert.doesNotMatch(script, /publish-local\.mjs[^\r\n]*[12]?>/);
 });

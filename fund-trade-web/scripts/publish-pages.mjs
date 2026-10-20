@@ -5,9 +5,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DEPLOY_FILES, ACCOUNT_FILES, isPublicAsset } from './site-files.mjs';
 import { classifyGithubFailure } from './publish-diagnostics.mjs';
+import { siteTemporaryPath } from './project-paths.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const dist = path.join(root, 'dist');
+const dist = siteTemporaryPath(root, 'dist');
 const repository = 'oooo0h/Investment';
 const arguments_ = process.argv.slice(2);
 if (arguments_.some(argument => argument !== '--include-account-data')) throw new Error('Unknown publish option');

@@ -1,5 +1,6 @@
 import { appendFileSync, mkdirSync } from 'node:fs';
 import path from 'node:path';
+import { siteTemporaryPath } from './project-paths.mjs';
 
 /** Defense in depth for our own messages. Child output also requires an allowlist below. */
 export function sanitizePublishText(value) {
@@ -26,7 +27,7 @@ export function publishLogName(date) {
   return `publish-${value.year}${value.month}${value.day}-${value.hour}${value.minute}${value.second}-${String(date.getUTCMilliseconds()).padStart(3, '0')}.log`;
 }
 export function createPublishLogger({ root, now = () => new Date() }) {
-  const directory = path.join(root, 'tmp', 'logs');
+  const directory = siteTemporaryPath(root, 'logs');
   mkdirSync(directory, { recursive: true });
   const file = path.join(directory, publishLogName(now()));
   appendFileSync(file, '', 'utf8');

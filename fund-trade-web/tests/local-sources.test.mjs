@@ -116,7 +116,7 @@ test('bond tables alone control row counts, retain unfinished drafts and never a
     assert.equal(spawnSync(pythonPath, ['-X', 'utf8', '-c', script, workbook], { windowsHide: true }).status, 0);
     checksums.push([workbook, hash(await readFile(workbook))]);
   }
-  const metadataFile = path.join(workspace, '公共资料/工具/tmp/债基截图接入_20261019/metadata.json');
+  const metadataFile = path.join(workspace, 'fund-trade-web/local/bond-metadata.json');
   await mkdir(path.dirname(metadataFile), { recursive: true });
   await writeFile(metadataFile, JSON.stringify({ funds: entries.map(item => ({ code: item.code, workbook_sha256: 'prior-source' })) }));
   const snapshot = await (await createLiveBondDataStore({ workspace, root, pythonPath })).snapshot();
@@ -146,7 +146,7 @@ test('real loader reads only selected canonical files, retains nulls, refreshes 
     const file = path.join(workspace, item.json_path); await mkdir(path.dirname(file), { recursive: true });
     await writeFile(file, JSON.stringify(nav(item.code)));
   }
-  const metadataFile = path.join(workspace, '公共资料/工具/tmp/交易记录六列整理/metadata.json');
+  const metadataFile = path.join(workspace, 'fund-trade-web/local/ledger-metadata.json');
   await mkdir(path.dirname(metadataFile), { recursive: true });
   await writeFile(metadataFile, JSON.stringify({ funds: [{ code: '005698', source_estimates_retained: true }] }));
   const workbook = path.join(workspace, '基金/005698_synthetic/005698_交易记录.xlsx');

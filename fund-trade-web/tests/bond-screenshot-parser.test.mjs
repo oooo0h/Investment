@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseTransfer, parseList } from '../../公共资料/工具/bond-screenshot-parser.mjs';
+import { parseTransfer, parseList } from '../../工具脚本/bond-screenshot-parser.mjs';
 const line = (text, x, y) => ({ text, words: [{ text, x, y, width: 150, height: 20 }] });
 const field = (label, value, y) => [line(label, 20, y), line(value, 400, y)];
 test('conversion confirmation fields retain each leg, fee and NAV date without using a completion deadline as a confirmation date', () => {

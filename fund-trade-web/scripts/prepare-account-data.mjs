@@ -10,6 +10,7 @@ import { validateEncryptedEnvelope } from './publish-data.mjs';
 import { PROJECT_ROOT, WORKSPACE_ROOT } from './site-files.mjs';
 import { syncLocalSources } from './local-bundle.mjs';
 import { FUND_CODES } from '../src/funds.js';
+import { siteTemporaryPath } from './project-paths.mjs';
 
 const filenames = ['ledger.enc.json', 'bonds.enc.json'];
 const sameKeys = (left, right) => Object.keys(left).length === Object.keys(right).length
@@ -39,7 +40,9 @@ export async function prepareAccountData({
     return !failed;
   };
   const stageBytes = async (file, bytes, label) => {
-    const candidate = `${file}.${label}-${uniqueId()}.tmp`;
+    const directory = siteTemporaryPath(root, 'account-staging');
+    await io.mkdir(directory, { recursive: true });
+    const candidate = path.join(directory, `${path.basename(file)}.${label}-${uniqueId()}.tmp`);
     temporary.add(candidate);
     await io.writeFile(candidate, bytes, { flag: 'wx', mode: 0o600 });
     return candidate;

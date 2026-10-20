@@ -11,8 +11,8 @@ export const LOCAL_DIR = path.join(PROJECT_ROOT, 'local');
 const SOURCES = Object.freeze([
   ['discipline.md', '交易纪律.md'],
   ['nav-index.json', '公共资料/历史净值/全基金历史净值当前入口.json'],
-  ['ledger-metadata.json', '公共资料/工具/tmp/交易记录六列整理/metadata.json'],
-  ['bond-metadata.json', '公共资料/工具/tmp/债基截图接入_20261019/metadata.json'],
+  ['ledger-metadata.json', 'fund-trade-web/local/ledger-metadata.json'],
+  ['bond-metadata.json', 'fund-trade-web/local/bond-metadata.json'],
 ]);
 
 async function readIfPresent(file) {

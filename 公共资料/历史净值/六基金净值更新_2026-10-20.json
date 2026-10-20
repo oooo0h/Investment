@@ -1,0 +1,390 @@
+{
+  "schema": "six-fund-public-nav-incremental-audit-v1",
+  "execution_date": "2026-10-20",
+  "checked_at": "2026-10-20T09:13:23+08:00",
+  "scope": [
+    "270023",
+    "005698",
+    "016701",
+    "006373",
+    "006485",
+    "006663"
+  ],
+  "source_index_path": "公共资料/历史净值/全基金历史净值当前入口.json",
+  "source_index_sha256_at_completion": "4c996f41c71e2c263b318a6396c078b425955d29381a65bed9db765cf5b10f54",
+  "table_columns": [
+    "日期",
+    "净值",
+    "日增长率"
+  ],
+  "results": [
+    {
+      "code": "270023",
+      "name": "广发全球精选股票（QDII）人民币A",
+      "records": 3894,
+      "first_date": "2010-08-18",
+      "last_date": "2026-10-16",
+      "source": "广发基金管理人官网公开历史净值接口",
+      "json_path": "基金/持仓基金/270023_广发全球精选股票_QDII_人民币A/历史净值/270023_全部历史净值.json",
+      "csv_path": "基金/持仓基金/270023_广发全球精选股票_QDII_人民币A/历史净值/270023_全部历史净值.csv",
+      "json_sha256": "162b4764579320f2633c30de90e082e9c8e6b395e3d59ef6b85d15e205373dce",
+      "csv_sha256": "0d7933e544b736d76a760bb245922bc2bb47eee98b1ccd075fd877ef2ffc4047",
+      "xlsx_path": "基金/持仓基金/270023_广发全球精选股票_QDII_人民币A/历史净值/270023_全部历史净值.xlsx",
+      "xlsx_sha256": "cdc20e5b24b5f8c1d75111c7ed5914933625a2cea5e1d90c6521f57cf5cf5cd9",
+      "checked_at": "2026-10-20T09:12:11.084+08:00",
+      "checked_dates": [
+        "2026-10-12",
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-15",
+        "2026-10-16"
+      ],
+      "status": "unchanged",
+      "added_dates": [],
+      "added_count": 0,
+      "revision_count": 0,
+      "revisions": [],
+      "missing_accumulated_nav_dates": [],
+      "missing_growth_dates": [],
+      "verification_path": "基金/持仓基金/270023_广发全球精选股票_QDII_人民币A/历史净值/原始数据/日常增量核验_2026-10-20_20261020091210730/270023_增量核验结果.json",
+      "verification_sha256": "e60f2eb258adaf1d7cf55b21562da88a2003cf2d235d8fbe38c6803e6811c499",
+      "raw_evidence": [],
+      "raw_evidence_path": "基金/持仓基金/270023_广发全球精选股票_QDII_人民币A/历史净值/原始数据/日常增量核验_2026-10-20_20261020091210730/270023_官网窗口原始响应.json",
+      "raw_evidence_sha256": "709d0db036ccb4e06ed9c1e318884c3a9a34f692a1311762c461f4944fe6d69e",
+      "csv_json_row_comparison_passed": true,
+      "prior_files_unchanged": true,
+      "full_history_refetched_this_run": false
+    },
+    {
+      "code": "005698",
+      "name": "华夏全球科技先锋混合(QDII)A(人民币)",
+      "records": 1980,
+      "first_date": "2018-04-17",
+      "last_date": "2026-10-16",
+      "source": "东方财富/天天基金 f10/lsjz，沿用第三方主档；非管理人官网独立核验",
+      "json_path": "基金/持仓基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/005698_全部历史净值.json",
+      "csv_path": "基金/持仓基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/005698_全部历史净值.csv",
+      "json_sha256": "b0ecd193da0fae70909e4371008fccb9c97e1742d72fd96f4310d96e8498936e",
+      "csv_sha256": "887965d33b23f3e368390aba3450c8e1484d666696cc048d78f7c7a2454bd955",
+      "xlsx_path": "基金/持仓基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/005698_全部历史净值.xlsx",
+      "xlsx_sha256": "7a5db5a2ce36ac06b8fd212487963a983e45bcc766cd5e19da2b619885cac91f",
+      "checked_at": "2026-10-20T01:11:32.467Z",
+      "checked_dates": [
+        "2026-10-12",
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-15",
+        "2026-10-16"
+      ],
+      "status": "unchanged",
+      "added_dates": [],
+      "added_count": 0,
+      "revision_count": 0,
+      "revisions": [],
+      "missing_accumulated_nav_dates": [],
+      "missing_growth_dates": [],
+      "verification_path": "基金/持仓基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/005698_增量复核结果.json",
+      "verification_sha256": "b72c84e2a555821f04e545e14d8a9a4f2e6ec938cf5471fdb2a3531f4fba25e5",
+      "raw_evidence": [
+        {
+          "path": "基金/持仓基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/005698_latest_page1_1792458692363.json",
+          "sha256": "dc8c770398cd23575d25cd76f3a1582334ed513d4612805cf0b1d6cdb2b4758f",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=005698&pageIndex=1&pageSize=20&startDate=&endDate=&_=1792458692229"
+        },
+        {
+          "path": "基金/持仓基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/005698_2026-10-16_page1_1792458692422.json",
+          "sha256": "2306e241585ab8db3290e0452457fd8f5d08d20bef33b2fe4fac046359e52c97",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=005698&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-16&_=1792458692392"
+        },
+        {
+          "path": "基金/持仓基金/005698_华夏全球科技先锋混合_QDII_A人民币/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/005698_2026-10-16_page1_1792458692450.json",
+          "sha256": "af6a76e7d6e43802a79e50d8f7c6a4bf4f42902d822a458145e73b6e317a2ae1",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=005698&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-16&_=1792458692425"
+        }
+      ],
+      "raw_evidence_path": null,
+      "raw_evidence_sha256": null,
+      "csv_json_row_comparison_passed": true,
+      "prior_files_unchanged": true,
+      "full_history_refetched_this_run": false
+    },
+    {
+      "code": "016701",
+      "name": "银华海外数字经济量化选股混合发起_QDII_A",
+      "records": 780,
+      "first_date": "2023-03-15",
+      "last_date": "2026-10-16",
+      "source": "东方财富/天天基金 f10/lsjz，沿用第三方主档；非管理人官网独立核验",
+      "json_path": "基金/持仓基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/016701_全部历史净值.json",
+      "csv_path": "基金/持仓基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/016701_全部历史净值.csv",
+      "json_sha256": "babab93396213a088b2720e407acc95065dd27a82f3b4089903b19a786cb12f8",
+      "csv_sha256": "58e94c1521d8eb4f90a5dfeb7a614d4b13db41384e9caf36d6e9cff554a68d7e",
+      "checked_at": "2026-10-20T01:11:32.742Z",
+      "checked_dates": [
+        "2026-10-12",
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-15",
+        "2026-10-16"
+      ],
+      "status": "unchanged",
+      "added_dates": [],
+      "added_count": 0,
+      "revision_count": 0,
+      "revisions": [],
+      "missing_accumulated_nav_dates": [],
+      "missing_growth_dates": [
+        "2023-03-15",
+        "2023-03-23",
+        "2023-03-30",
+        "2023-04-06",
+        "2023-04-13",
+        "2023-04-20",
+        "2023-04-27",
+        "2023-05-04",
+        "2023-05-11",
+        "2023-05-18",
+        "2023-05-25",
+        "2023-06-01",
+        "2023-06-08",
+        "2023-06-12",
+        "2023-06-20",
+        "2023-07-05",
+        "2023-07-18",
+        "2023-09-05",
+        "2023-09-11",
+        "2023-10-24",
+        "2023-12-27",
+        "2024-01-16",
+        "2024-02-20",
+        "2024-04-02",
+        "2024-05-16",
+        "2024-05-28",
+        "2024-06-20",
+        "2024-07-02",
+        "2024-07-05",
+        "2024-09-03",
+        "2024-09-09",
+        "2024-09-19",
+        "2024-10-14",
+        "2024-11-29",
+        "2024-12-27",
+        "2025-01-10",
+        "2025-01-21",
+        "2025-02-18",
+        "2025-04-22",
+        "2025-05-27",
+        "2025-06-20",
+        "2025-07-02",
+        "2025-07-07",
+        "2025-09-02",
+        "2025-10-30",
+        "2025-11-28",
+        "2025-12-29",
+        "2026-01-20",
+        "2026-04-08",
+        "2026-05-26",
+        "2026-07-02",
+        "2026-07-06",
+        "2026-09-08"
+      ],
+      "verification_path": "基金/持仓基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/016701_增量复核结果.json",
+      "verification_sha256": "759067396e713d8b70175c679ce232430fc69ea40ee10c1e13db1beb91b77302",
+      "raw_evidence": [
+        {
+          "path": "基金/持仓基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/016701_latest_page1_1792458692644.json",
+          "sha256": "e5b71b8b440158952eacc3922e3f42fc4e002eebed2e455c8a65c5d95b31879a",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=1&pageSize=20&startDate=&endDate=&_=1792458692602"
+        },
+        {
+          "path": "基金/持仓基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/016701_2026-10-16_page1_1792458692679.json",
+          "sha256": "b208e81907e060ce61bf7d512dd4e27d9da02f5f7eb279948f2ab49f7624071c",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-16&_=1792458692646"
+        },
+        {
+          "path": "基金/持仓基金/016701_银华海外数字经济量化选股混合发起_QDII_A/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/016701_2026-10-16_page1_1792458692739.json",
+          "sha256": "0e0a641336860b14f08cd4f925e4a36f33a815fa4ecbc32f5f35273c1913de99",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=016701&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-16&_=1792458692680"
+        }
+      ],
+      "raw_evidence_path": null,
+      "raw_evidence_sha256": null,
+      "csv_json_row_comparison_passed": true,
+      "prior_files_unchanged": true,
+      "full_history_refetched_this_run": false
+    },
+    {
+      "code": "006373",
+      "name": "国富全球科技互联混合(QDII)人民币A",
+      "records": 1906,
+      "first_date": "2018-11-20",
+      "last_date": "2026-10-16",
+      "source": "东方财富/天天基金 f10/lsjz，沿用第三方主档；非管理人官网独立核验",
+      "json_path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/006373_全部历史净值.json",
+      "csv_path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/006373_全部历史净值.csv",
+      "json_sha256": "c8939c133edf3af673abef4d1b378f360918276ea6aa46950173b2977286e6a9",
+      "csv_sha256": "1b5f7bc47ae289437c25fc09ee59905d9294298e4337212e140b94acd09f19a9",
+      "checked_at": "2026-10-20T01:11:32.596Z",
+      "checked_dates": [
+        "2026-10-12",
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-15",
+        "2026-10-16"
+      ],
+      "status": "unchanged",
+      "added_dates": [],
+      "added_count": 0,
+      "revision_count": 0,
+      "revisions": [],
+      "missing_accumulated_nav_dates": [
+        "2020-12-31",
+        "2021-02-10"
+      ],
+      "missing_growth_dates": [
+        "2018-11-20",
+        "2018-11-23",
+        "2018-11-30",
+        "2018-12-07",
+        "2018-12-14",
+        "2018-12-18",
+        "2018-12-31",
+        "2019-06-30",
+        "2020-01-23"
+      ],
+      "verification_path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006373_增量复核结果.json",
+      "verification_sha256": "6b3580bb3964448e8b059f25402a1664a17d66f3a3264620c2e73a0a400edaba",
+      "raw_evidence": [
+        {
+          "path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006373_latest_page1_1792458692493.json",
+          "sha256": "2e865682ae7b7d6dd88236144171581be965632670abb0ee8f4c31c4c4b147ce",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006373&pageIndex=1&pageSize=20&startDate=&endDate=&_=1792458692472"
+        },
+        {
+          "path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006373_2026-10-16_page1_1792458692537.json",
+          "sha256": "50032b957d1315b04800befc43248e995dfb5df85d1bf4a2e56b84142fe9f9aa",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006373&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-16&_=1792458692494"
+        },
+        {
+          "path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006373_2026-10-16_page1_1792458692577.json",
+          "sha256": "fff129648a109245709945e4a96629ba5fceab7d5b26e3ac21948fcef3431869",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006373&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-16&_=1792458692546"
+        }
+      ],
+      "raw_evidence_path": null,
+      "raw_evidence_sha256": null,
+      "csv_json_row_comparison_passed": true,
+      "prior_files_unchanged": true,
+      "full_history_refetched_this_run": false
+    },
+    {
+      "code": "006485",
+      "name": "广发中债1-3年国开债指数C",
+      "records": 1924,
+      "first_date": "2018-11-14",
+      "last_date": "2026-10-19",
+      "source": "东方财富/天天基金 f10/lsjz，沿用第三方主档；非管理人官网独立核验",
+      "json_path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/历史净值/006485_全部历史净值.json",
+      "csv_path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/历史净值/006485_全部历史净值.csv",
+      "json_sha256": "7c96e11e69ea3c7ee79a1b8261387e09430cbd3a1895b926739b0795411077ca",
+      "csv_sha256": "68a522c83788086291b1042b903d08f736385aaa0665fd34383d766f9d8645bd",
+      "checked_at": "2026-10-20T01:11:32.852Z",
+      "checked_dates": [
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-15",
+        "2026-10-16",
+        "2026-10-19"
+      ],
+      "status": "unchanged",
+      "added_dates": [],
+      "added_count": 0,
+      "revision_count": 0,
+      "revisions": [],
+      "missing_accumulated_nav_dates": [],
+      "missing_growth_dates": [],
+      "verification_path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006485_增量复核结果.json",
+      "verification_sha256": "35280282075db1212645d8f28c88db9da8dcd87c2c789a5bc9a0ca9d65691f7e",
+      "raw_evidence": [
+        {
+          "path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006485_latest_page1_1792458692778.json",
+          "sha256": "f21000819264d06e6df918ce3ff90be83dd755522357776f98e3fb800a63516f",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006485&pageIndex=1&pageSize=20&startDate=&endDate=&_=1792458692748"
+        },
+        {
+          "path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006485_2026-10-19_page1_1792458692815.json",
+          "sha256": "442290e39fdf86a15a2f54087d9d3355bfbdac2a4e80f966fd0afe7c55e71c69",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006485&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-19&_=1792458692778"
+        },
+        {
+          "path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006485_2026-10-19_page1_1792458692847.json",
+          "sha256": "4860e8531cca0ad43ad125a98a6cfbbdb6bd65791a66851f042185eab5884ade",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006485&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-19&_=1792458692816"
+        }
+      ],
+      "raw_evidence_path": null,
+      "raw_evidence_sha256": null,
+      "csv_json_row_comparison_passed": true,
+      "prior_files_unchanged": true,
+      "full_history_refetched_this_run": false
+    },
+    {
+      "code": "006663",
+      "name": "易方达安悦超短债C",
+      "records": 1898,
+      "first_date": "2018-12-05",
+      "last_date": "2026-10-19",
+      "source": "东方财富/天天基金 f10/lsjz，沿用第三方主档；非管理人官网独立核验",
+      "json_path": "基金/持仓基金/006663_易方达安悦超短债C/历史净值/006663_全部历史净值.json",
+      "csv_path": "基金/持仓基金/006663_易方达安悦超短债C/历史净值/006663_全部历史净值.csv",
+      "json_sha256": "f826d0a5a64a9ca141bd49878833c569594d1b288e53f0e52305e93c1fba4bc9",
+      "csv_sha256": "99d4f1f9f0c4b20363c4e018d16d5a763f1a33e4456b722487a1143f0173717b",
+      "checked_at": "2026-10-20T01:11:32.956Z",
+      "checked_dates": [
+        "2026-10-13",
+        "2026-10-14",
+        "2026-10-15",
+        "2026-10-16",
+        "2026-10-19"
+      ],
+      "status": "unchanged",
+      "added_dates": [],
+      "added_count": 0,
+      "revision_count": 0,
+      "revisions": [],
+      "missing_accumulated_nav_dates": [],
+      "missing_growth_dates": [],
+      "verification_path": "基金/持仓基金/006663_易方达安悦超短债C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006663_增量复核结果.json",
+      "verification_sha256": "39d078129f715ee9bf5932ea8241dda8f0a54f711c6077448d05744e6f445440",
+      "raw_evidence": [
+        {
+          "path": "基金/持仓基金/006663_易方达安悦超短债C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006663_latest_page1_1792458692893.json",
+          "sha256": "f08f84e3fd5ad9fab33dace283cb6dae30b4a7c2c1649583edde2fe112e37dd6",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006663&pageIndex=1&pageSize=20&startDate=&endDate=&_=1792458692857"
+        },
+        {
+          "path": "基金/持仓基金/006663_易方达安悦超短债C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006663_2026-10-19_page1_1792458692923.json",
+          "sha256": "4db0fe3421a27b894236429072f27a8353aed334b9fa98560336374eddade93c",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006663&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-19&_=1792458692894"
+        },
+        {
+          "path": "基金/持仓基金/006663_易方达安悦超短债C/历史净值/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006663_2026-10-19_page1_1792458692949.json",
+          "sha256": "7876a0b8c4cba37d7e6f616fe6894c05b2a88338ebc4adfe33ef273f997bb2e5",
+          "url": "https://api.fund.eastmoney.com/f10/lsjz?fundCode=006663&pageIndex=1&pageSize=20&startDate=&endDate=2026-10-19&_=1792458692924"
+        }
+      ],
+      "raw_evidence_path": null,
+      "raw_evidence_sha256": null,
+      "csv_json_row_comparison_passed": true,
+      "prior_files_unchanged": true,
+      "full_history_refetched_this_run": false
+    }
+  ],
+  "failures": [],
+  "all_six_verified": true,
+  "added_records": 0,
+  "revised_records": 0,
+  "full_history_refetched_this_run": false,
+  "disclosure_time_note": "抓取时间与净值归属日分别记录；接口未统一提供可确认的正式披露时间。",
+  "recovered_scan_issue": "首次目录扫描遇到并行整理后的基金分组，未请求净值即停止；改为按代码跨分组唯一定位后，最终逐只完成核验。"
+}

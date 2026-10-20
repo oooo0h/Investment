@@ -1,3 +1,6 @@
+# Keep remote file bytes identical to local files, including line endings.
+* -text
+
 # Preserve binary documents and images without line-ending conversion.
 *.pdf binary
 *.xls binary

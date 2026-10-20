@@ -38,7 +38,7 @@ export function runPublishWorkflow({
   const emit = message => output(sanitizePublishText(message));
   const record = message => {
     try { logger.write(message); }
-    catch { logWritable = false; throw new WorkflowError('无法写入发布日志，请检查 tmp/logs 的写入权限。'); }
+    catch { logWritable = false; throw new WorkflowError('无法写入发布日志，请检查 ../临时文件/fund-trade-web/logs 的写入权限。'); }
   };
   const line = (message = '') => { record(message); emit(message); };
   const stage = (name, action) => {
@@ -153,7 +153,7 @@ export function runPublishWorkflow({
       try { record(`流程失败：${stageName}；exit=${exitCode}；duration=${Math.max(0, now().getTime() - started)}ms；${message}`); } catch { /* Report log failures through the terminal below. */ }
     }
     emit(`发布失败：${message}`);
-    if (!logWritable || !logger) emit('日志无法写入，请检查 tmp/logs 的写入权限。');
+    if (!logWritable || !logger) emit('日志无法写入，请检查 ../临时文件/fund-trade-web/logs 的写入权限。');
     if (logger?.file) emit(`日志：${logger.file}`);
     return { exitCode, checkOnly: args.includes('--check'), logFile: logger?.file };
   }

@@ -1,8 +1,2 @@
-dist/
-tmp/
-*.log
-ledger-source.local.json
-__pycache__/
-scripts/update-data.local.py
-*.pyc
-local/
+# Temporary builds, logs, caches and dependencies live in ../临时文件/.
+# All files remaining in this project directory are synchronized.
