@@ -1,0 +1,4712 @@
+{
+  "fund_code": "005698",
+  "report_files": 55,
+  "non_summary_reports": 49,
+  "nav_performance": {
+    "start": "2018-04-17",
+    "end": "2026-08-12",
+    "start_nav": 1.0,
+    "end_nav": 2.7625,
+    "cumulative_pct": 176.25,
+    "cagr_pct": 12.99,
+    "annualized_vol_pct": 30.1,
+    "max_drawdown_pct": -54.28,
+    "max_drawdown_peak": "2021-02-10",
+    "max_drawdown_trough": "2023-01-05",
+    "max_drawdown_recovery": "2024-12-04",
+    "best_day_pct": 13.17,
+    "best_day_date": "2025-04-09",
+    "worst_day_pct": -8.81,
+    "worst_day_date": "2026-07-02",
+    "calendar_year": {
+      "2018": {
+        "return_pct": -11.41,
+        "max_drawdown_pct": -21.19,
+        "drawdown_peak": "2018-06-12",
+        "drawdown_trough": "2018-12-21",
+        "year_end_nav": 0.8859
+      },
+      "2019": {
+        "return_pct": 33.13,
+        "max_drawdown_pct": -14.95,
+        "drawdown_peak": "2019-04-17",
+        "drawdown_trough": "2019-06-03",
+        "year_end_nav": 1.1794
+      },
+      "2020": {
+        "return_pct": 25.72,
+        "max_drawdown_pct": -22.93,
+        "drawdown_peak": "2020-02-19",
+        "drawdown_trough": "2020-03-23",
+        "year_end_nav": 1.4828
+      },
+      "2021": {
+        "return_pct": -4.78,
+        "max_drawdown_pct": -31.71,
+        "drawdown_peak": "2021-02-10",
+        "drawdown_trough": "2021-05-13",
+        "year_end_nav": 1.4119
+      },
+      "2022": {
+        "return_pct": -38.17,
+        "max_drawdown_pct": -38.47,
+        "drawdown_peak": "2022-01-04",
+        "drawdown_trough": "2022-12-28",
+        "year_end_nav": 0.873
+      },
+      "2023": {
+        "return_pct": 58.19,
+        "max_drawdown_pct": -12.53,
+        "drawdown_peak": "2023-07-18",
+        "drawdown_trough": "2023-10-26",
+        "year_end_nav": 1.381
+      },
+      "2024": {
+        "return_pct": 34.65,
+        "max_drawdown_pct": -16.83,
+        "drawdown_peak": "2024-07-10",
+        "drawdown_trough": "2024-08-05",
+        "year_end_nav": 1.8595
+      },
+      "2025": {
+        "return_pct": 15.49,
+        "max_drawdown_pct": -30.06,
+        "drawdown_peak": "2025-01-23",
+        "drawdown_trough": "2025-04-08",
+        "year_end_nav": 2.1476
+      },
+      "2026": {
+        "return_pct": 28.63,
+        "max_drawdown_pct": -41.97,
+        "drawdown_peak": "2026-06-22",
+        "drawdown_trough": "2026-07-30",
+        "year_end_nav": 2.7625
+      }
+    }
+  },
+  "quarter_returns": [
+    {
+      "year": 2026,
+      "quarter": 1,
+      "return_pct": 8.03
+    },
+    {
+      "year": 2026,
+      "quarter": 2,
+      "return_pct": 75.91
+    },
+    {
+      "year": 2025,
+      "quarter": 1,
+      "return_pct": -18.18
+    },
+    {
+      "year": 2025,
+      "quarter": 2,
+      "return_pct": 25.19
+    },
+    {
+      "year": 2025,
+      "quarter": 3,
+      "return_pct": 11.11
+    },
+    {
+      "year": 2025,
+      "quarter": 4,
+      "return_pct": 1.47
+    },
+    {
+      "year": 2024,
+      "quarter": 1,
+      "return_pct": 12.47
+    },
+    {
+      "year": 2024,
+      "quarter": 2,
+      "return_pct": 10.67
+    },
+    {
+      "year": 2024,
+      "quarter": 3,
+      "return_pct": -1.44
+    },
+    {
+      "year": 2024,
+      "quarter": 4,
+      "return_pct": 9.75
+    },
+    {
+      "year": 2023,
+      "quarter": 1,
+      "return_pct": 19.38
+    },
+    {
+      "year": 2023,
+      "quarter": 2,
+      "return_pct": 20.6
+    },
+    {
+      "year": 2023,
+      "quarter": 3,
+      "return_pct": -4.05
+    },
+    {
+      "year": 2023,
+      "quarter": 4,
+      "return_pct": 14.51
+    },
+    {
+      "year": 2022,
+      "quarter": 1,
+      "return_pct": -9.97
+    },
+    {
+      "year": 2022,
+      "quarter": 2,
+      "return_pct": -21.27
+    },
+    {
+      "year": 2022,
+      "quarter": 3,
+      "return_pct": -4.41
+    },
+    {
+      "year": 2022,
+      "quarter": 4,
+      "return_pct": -8.75
+    },
+    {
+      "year": 2021,
+      "quarter": 1,
+      "return_pct": -8.3
+    },
+    {
+      "year": 2021,
+      "quarter": 2,
+      "return_pct": 15.16
+    },
+    {
+      "year": 2021,
+      "quarter": 3,
+      "return_pct": -10.37
+    },
+    {
+      "year": 2021,
+      "quarter": 4,
+      "return_pct": 0.6
+    },
+    {
+      "year": 2020,
+      "quarter": 1,
+      "return_pct": -14.65
+    },
+    {
+      "year": 2020,
+      "quarter": 2,
+      "return_pct": 23.71
+    },
+    {
+      "year": 2020,
+      "quarter": 3,
+      "return_pct": 3.82
+    },
+    {
+      "year": 2020,
+      "quarter": 4,
+      "return_pct": 14.69
+    },
+    {
+      "year": 2019,
+      "quarter": 1,
+      "return_pct": 15.96
+    },
+    {
+      "year": 2019,
+      "quarter": 2,
+      "return_pct": -4.22
+    },
+    {
+      "year": 2019,
+      "quarter": 3,
+      "return_pct": 9.67
+    },
+    {
+      "year": 2018,
+      "quarter": 3,
+      "return_pct": -0.64
+    }
+  ],
+  "scale": [
+    {
+      "date": "2026-06-30",
+      "subscriptions_shares": 1616131250.48,
+      "redemptions_shares": 649289820.04,
+      "end_shares_a": 2389114497.06,
+      "net_assets_a": 9750581682.26,
+      "net_assets_combined": 20323773010.72,
+      "net_asset_change_pct": 195.4828
+    },
+    {
+      "date": "2026-03-31",
+      "subscriptions_shares": 529074705.76,
+      "redemptions_shares": 332544112.84,
+      "end_shares_a": 1422273066.62,
+      "net_assets_a": 3299881689.67,
+      "net_assets_combined": 3299881689.67,
+      "net_asset_change_pct": 25.3553
+    },
+    {
+      "date": "2025-12-31",
+      "subscriptions_shares": 477113382.09,
+      "redemptions_shares": 261867345.84,
+      "end_shares_a": 1225742473.7,
+      "net_assets_a": 2632422832.86,
+      "net_assets_combined": 2632422832.86,
+      "net_asset_change_pct": 23.0822
+    },
+    {
+      "date": "2025-09-30",
+      "subscriptions_shares": 355831087.7,
+      "redemptions_shares": 495540370.83,
+      "end_shares_a": 1010496437.45,
+      "net_assets_a": 2138752294.49,
+      "net_assets_combined": 2306822485.2,
+      "net_asset_change_pct": -2.3824
+    },
+    {
+      "date": "2025-06-30",
+      "subscriptions_shares": 502137036.27,
+      "redemptions_shares": 769584312.84,
+      "end_shares_a": 1150205720.58,
+      "net_assets_a": 2190950028.29,
+      "net_assets_combined": 2215713145.04,
+      "net_asset_change_pct": 1.5747
+    },
+    {
+      "date": "2025-03-31",
+      "subscriptions_shares": 1048998847.35,
+      "redemptions_shares": 496113258.68,
+      "end_shares_a": 1417652997.15,
+      "net_assets_a": 2156984056.16,
+      "net_assets_combined": 2156984056.16,
+      "net_asset_change_pct": 34.1377
+    },
+    {
+      "date": "2024-12-31",
+      "subscriptions_shares": 555760335.22,
+      "redemptions_shares": 296666649.92,
+      "end_shares_a": 864767408.48,
+      "net_assets_a": 1608037307.92,
+      "net_assets_combined": 1608037307.92,
+      "net_asset_change_pct": 56.6948
+    },
+    {
+      "date": "2024-09-30",
+      "subscriptions_shares": 267999698.11,
+      "redemptions_shares": 280270566.16,
+      "end_shares_a": 605673723.18,
+      "net_assets_a": 1026222312.26,
+      "net_assets_combined": 1026222312.26,
+      "net_asset_change_pct": -3.3933
+    },
+    {
+      "date": "2024-06-30",
+      "subscriptions_shares": 357438765.15,
+      "redemptions_shares": 213859853.11,
+      "end_shares_a": 617944591.23,
+      "net_assets_a": 1062268109.02,
+      "net_assets_combined": 1062268109.02,
+      "net_asset_change_pct": 44.1878
+    },
+    {
+      "date": "2024-03-31",
+      "subscriptions_shares": 383886604.51,
+      "redemptions_shares": 165153470.18,
+      "end_shares_a": 474365679.19,
+      "net_assets_a": 736725318.53,
+      "net_assets_combined": 736725318.53,
+      "net_asset_change_pct": 108.6872
+    },
+    {
+      "date": "2023-12-31",
+      "subscriptions_shares": 128739698.72,
+      "redemptions_shares": 71996516.49,
+      "end_shares_a": 255632544.86,
+      "net_assets_a": 353028514.84,
+      "net_assets_combined": 353028514.84,
+      "net_asset_change_pct": 46.9281
+    },
+    {
+      "date": "2023-09-30",
+      "subscriptions_shares": 163109164.44,
+      "redemptions_shares": 128916004.19,
+      "end_shares_a": 198889362.63,
+      "net_assets_a": 240272983.25,
+      "net_assets_combined": 240272983.25,
+      "net_asset_change_pct": 16.0679
+    },
+    {
+      "date": "2023-06-30",
+      "subscriptions_shares": 122641442.13,
+      "redemptions_shares": 40715696.67,
+      "end_shares_a": 164696202.38,
+      "net_assets_a": 207010783.37,
+      "net_assets_combined": 207010783.37,
+      "net_asset_change_pct": 139.9734
+    },
+    {
+      "date": "2023-03-31",
+      "subscriptions_shares": 35302523.05,
+      "redemptions_shares": 21597297.54,
+      "end_shares_a": 82770456.92,
+      "net_assets_a": 86264056.94,
+      "net_assets_combined": 86264056.94,
+      "net_asset_change_pct": 43.0751
+    },
+    {
+      "date": "2022-12-31",
+      "subscriptions_shares": 14301320.83,
+      "redemptions_shares": 6454266.65,
+      "end_shares_a": 69065231.41,
+      "net_assets_a": 60292848.27,
+      "net_assets_combined": 60292848.27,
+      "net_asset_change_pct": 2.9497
+    },
+    {
+      "date": "2022-09-30",
+      "subscriptions_shares": 13103416.8,
+      "redemptions_shares": 11570006.92,
+      "end_shares_a": 61218177.23,
+      "net_assets_a": 58565373.49,
+      "net_assets_combined": 58565373.49,
+      "net_asset_change_pct": -1.9508
+    },
+    {
+      "date": "2022-06-30",
+      "subscriptions_shares": 9020261.04,
+      "redemptions_shares": 4084337.28,
+      "end_shares_a": 59684767.35,
+      "net_assets_a": 59730619.64,
+      "net_assets_combined": 59730619.64,
+      "net_asset_change_pct": -14.1738
+    },
+    {
+      "date": "2022-03-31",
+      "subscriptions_shares": 3986551.75,
+      "redemptions_shares": 5483916.54,
+      "end_shares_a": 54748843.59,
+      "net_assets_a": 69594823.35,
+      "net_assets_combined": 69594823.35,
+      "net_asset_change_pct": -12.3629
+    },
+    {
+      "date": "2021-12-31",
+      "subscriptions_shares": 3317988.87,
+      "redemptions_shares": 5449445.42,
+      "end_shares_a": 56246208.38,
+      "net_assets_a": 79412546.0,
+      "net_assets_combined": 79412546.0,
+      "net_asset_change_pct": -3.0753
+    },
+    {
+      "date": "2021-09-30",
+      "subscriptions_shares": 10037817.89,
+      "redemptions_shares": 17123709.22,
+      "end_shares_a": 58377664.93,
+      "net_assets_a": 81932240.25,
+      "net_assets_combined": 81932240.25,
+      "net_asset_change_pct": -20.0728
+    },
+    {
+      "date": "2021-06-30",
+      "subscriptions_shares": 16064060.97,
+      "redemptions_shares": 12428134.05,
+      "end_shares_a": 65463556.26,
+      "net_assets_a": 102508576.83,
+      "net_assets_combined": 102508576.83,
+      "net_asset_change_pct": 21.9273
+    },
+    {
+      "date": "2021-03-31",
+      "subscriptions_shares": 31937881.67,
+      "redemptions_shares": 18302108.87,
+      "end_shares_a": 61827629.34,
+      "net_assets_a": 84073515.76,
+      "net_assets_combined": 84073515.76,
+      "net_asset_change_pct": 17.6554
+    },
+    {
+      "date": "2020-12-31",
+      "subscriptions_shares": 8657449.0,
+      "redemptions_shares": 10253560.42,
+      "end_shares_a": 48191856.54,
+      "net_assets_a": 71457411.67,
+      "net_assets_combined": 71457411.67,
+      "net_asset_change_pct": 11.009
+    },
+    {
+      "date": "2020-09-30",
+      "subscriptions_shares": 9880916.63,
+      "redemptions_shares": 20281426.33,
+      "end_shares_a": 49787967.96,
+      "net_assets_a": 64370803.8,
+      "net_assets_combined": 64370803.8,
+      "net_asset_change_pct": -14.1213
+    },
+    {
+      "date": "2020-06-30",
+      "subscriptions_shares": 7583907.92,
+      "redemptions_shares": 17327797.86,
+      "end_shares_a": 60188477.66,
+      "net_assets_a": 74955477.95,
+      "net_assets_combined": 74955477.95,
+      "net_asset_change_pct": 6.4831
+    },
+    {
+      "date": "2020-03-31",
+      "subscriptions_shares": 10384691.85,
+      "redemptions_shares": 35618162.49,
+      "end_shares_a": 69932367.6,
+      "net_assets_a": 70391922.91,
+      "net_assets_combined": 70391922.91,
+      "net_asset_change_pct": -37.2851
+    },
+    {
+      "date": "2019-12-31",
+      "subscriptions_shares": 9398474.92,
+      "redemptions_shares": 35097212.1,
+      "end_shares_a": 95165838.24,
+      "net_assets_a": 112241092.46,
+      "net_assets_combined": 112241092.46,
+      "net_asset_change_pct": -12.7917
+    },
+    {
+      "date": "2019-09-30",
+      "subscriptions_shares": 4743495.69,
+      "redemptions_shares": 43757083.93,
+      "end_shares_a": 120864575.42,
+      "net_assets_a": 128704573.36,
+      "net_assets_combined": 128704573.36,
+      "net_asset_change_pct": -18.1791
+    },
+    {
+      "date": "2019-06-30",
+      "subscriptions_shares": 7188813.0,
+      "redemptions_shares": 38420859.06,
+      "end_shares_a": 159878163.66,
+      "net_assets_a": 157300384.24,
+      "net_assets_combined": 157300384.24,
+      "net_asset_change_pct": -19.8672
+    },
+    {
+      "date": "2019-03-31",
+      "subscriptions_shares": 10371200.29,
+      "redemptions_shares": 34681427.25,
+      "end_shares_a": 191110209.72,
+      "net_assets_a": 196299663.46,
+      "net_assets_combined": 196299663.46,
+      "net_asset_change_pct": 2.8547
+    },
+    {
+      "date": "2018-12-31",
+      "subscriptions_shares": 4107435.73,
+      "redemptions_shares": 20157570.09,
+      "end_shares_a": 215420436.68,
+      "net_assets_a": 190851367.06,
+      "net_assets_combined": 190851367.06,
+      "net_asset_change_pct": -20.262
+    },
+    {
+      "date": "2018-09-30",
+      "subscriptions_shares": 14191373.2,
+      "redemptions_shares": 57513249.9,
+      "end_shares_a": 231470571.04,
+      "net_assets_a": 239348113.72,
+      "net_assets_combined": 239348113.72,
+      "net_asset_change_pct": -15.7143
+    },
+    {
+      "date": "2018-06-30",
+      "subscriptions_shares": 18044913.12,
+      "redemptions_shares": 87573048.45,
+      "end_shares_a": 274792447.74,
+      "net_assets_a": 283972552.58,
+      "net_assets_combined": 283972552.58,
+      "net_asset_change_pct": -22.7051
+    },
+    {
+      "date": "2018-06-08",
+      "subscriptions_shares": null,
+      "redemptions_shares": null,
+      "end_shares_a": null,
+      "net_assets_a": 367388489.74,
+      "net_assets_combined": 367388489.74,
+      "net_asset_change_pct": 0.6298
+    },
+    {
+      "date": "2018-06-01",
+      "subscriptions_shares": null,
+      "redemptions_shares": null,
+      "end_shares_a": null,
+      "net_assets_a": 365089094.35,
+      "net_assets_combined": 365089094.35,
+      "net_asset_change_pct": 1.195
+    },
+    {
+      "date": "2018-05-25",
+      "subscriptions_shares": null,
+      "redemptions_shares": null,
+      "end_shares_a": null,
+      "net_assets_a": 360777674.03,
+      "net_assets_combined": 360777674.03,
+      "net_asset_change_pct": 1.1831
+    },
+    {
+      "date": "2018-05-18",
+      "subscriptions_shares": null,
+      "redemptions_shares": null,
+      "end_shares_a": null,
+      "net_assets_a": 356559217.27,
+      "net_assets_combined": 356559217.27,
+      "net_asset_change_pct": 1.2135
+    },
+    {
+      "date": "2018-05-11",
+      "subscriptions_shares": null,
+      "redemptions_shares": null,
+      "end_shares_a": null,
+      "net_assets_a": 352284341.7,
+      "net_assets_combined": 352284341.7,
+      "net_asset_change_pct": 2.0102
+    },
+    {
+      "date": "2018-05-04",
+      "subscriptions_shares": null,
+      "redemptions_shares": null,
+      "end_shares_a": null,
+      "net_assets_a": 345342293.04,
+      "net_assets_combined": 345342293.04,
+      "net_asset_change_pct": 0.6528
+    },
+    {
+      "date": "2018-04-27",
+      "subscriptions_shares": null,
+      "redemptions_shares": null,
+      "end_shares_a": null,
+      "net_assets_a": 343102496.25,
+      "net_assets_combined": 343102496.25,
+      "net_asset_change_pct": -0.139
+    },
+    {
+      "date": "2018-04-20",
+      "subscriptions_shares": null,
+      "redemptions_shares": null,
+      "end_shares_a": null,
+      "net_assets_a": 343580124.99,
+      "net_assets_combined": 343580124.99,
+      "net_asset_change_pct": -0.215
+    },
+    {
+      "date": "2018-04-17",
+      "subscriptions_shares": "",
+      "redemptions_shares": "",
+      "end_shares_a": 344320583.07,
+      "net_assets_a": 344320583.07,
+      "net_assets_combined": 344320583.07,
+      "net_asset_change_pct": null
+    }
+  ],
+  "asset_allocation": [
+    {
+      "date": "2026-06-30",
+      "equity_pct_nav": 73.35,
+      "bond_pct_nav": 0.01,
+      "cash_pct_nav": 14.61,
+      "depositary_receipt_pct_nav": 3.08,
+      "net_assets_100m": 203.24
+    },
+    {
+      "date": "2026-03-31",
+      "equity_pct_nav": 62.84,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 19.7,
+      "depositary_receipt_pct_nav": 4.87,
+      "net_assets_100m": 46.94
+    },
+    {
+      "date": "2025-12-31",
+      "equity_pct_nav": 67.2,
+      "bond_pct_nav": 0.01,
+      "cash_pct_nav": 17.01,
+      "depositary_receipt_pct_nav": 6.72,
+      "net_assets_100m": 32.94
+    },
+    {
+      "date": "2025-09-30",
+      "equity_pct_nav": 78.65,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 7.12,
+      "depositary_receipt_pct_nav": 5.9,
+      "net_assets_100m": 23.07
+    },
+    {
+      "date": "2025-06-30",
+      "equity_pct_nav": 79.34,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 9.88,
+      "depositary_receipt_pct_nav": 3.4,
+      "net_assets_100m": 22.16
+    },
+    {
+      "date": "2025-03-31",
+      "equity_pct_nav": 56.97,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 24.11,
+      "depositary_receipt_pct_nav": 8.62,
+      "net_assets_100m": 21.57
+    },
+    {
+      "date": "2024-12-31",
+      "equity_pct_nav": 63.77,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 12.67,
+      "depositary_receipt_pct_nav": 7.02,
+      "net_assets_100m": 16.08
+    },
+    {
+      "date": "2024-09-30",
+      "equity_pct_nav": 63.44,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 21.76,
+      "depositary_receipt_pct_nav": 7.82,
+      "net_assets_100m": 10.26
+    },
+    {
+      "date": "2024-06-30",
+      "equity_pct_nav": 62.79,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 20.44,
+      "depositary_receipt_pct_nav": 7.94,
+      "net_assets_100m": 10.62
+    },
+    {
+      "date": "2024-03-31",
+      "equity_pct_nav": 58.4,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 13.08,
+      "depositary_receipt_pct_nav": 5.25,
+      "net_assets_100m": 7.37
+    },
+    {
+      "date": "2023-12-31",
+      "equity_pct_nav": 80.25,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 8.08,
+      "depositary_receipt_pct_nav": null,
+      "net_assets_100m": 3.53
+    },
+    {
+      "date": "2023-09-30",
+      "equity_pct_nav": 93.19,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 7.13,
+      "depositary_receipt_pct_nav": null,
+      "net_assets_100m": 2.4
+    },
+    {
+      "date": "2023-06-30",
+      "equity_pct_nav": 94.15,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 7.47,
+      "depositary_receipt_pct_nav": null,
+      "net_assets_100m": 2.07
+    },
+    {
+      "date": "2023-03-31",
+      "equity_pct_nav": 85.7,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 10.98,
+      "depositary_receipt_pct_nav": 6.47,
+      "net_assets_100m": 0.86
+    },
+    {
+      "date": "2022-12-31",
+      "equity_pct_nav": 81.24,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 15.61,
+      "depositary_receipt_pct_nav": 2.11,
+      "net_assets_100m": 0.6
+    },
+    {
+      "date": "2022-09-30",
+      "equity_pct_nav": 86.79,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 15.26,
+      "depositary_receipt_pct_nav": null,
+      "net_assets_100m": 0.59
+    },
+    {
+      "date": "2022-06-30",
+      "equity_pct_nav": 75.04,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 15.38,
+      "depositary_receipt_pct_nav": null,
+      "net_assets_100m": 0.6
+    },
+    {
+      "date": "2022-03-31",
+      "equity_pct_nav": 89.12,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 13.13,
+      "depositary_receipt_pct_nav": null,
+      "net_assets_100m": 0.7
+    },
+    {
+      "date": "2021-12-31",
+      "equity_pct_nav": 84.41,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 10.46,
+      "depositary_receipt_pct_nav": 4.58,
+      "net_assets_100m": 0.79
+    },
+    {
+      "date": "2021-09-30",
+      "equity_pct_nav": 82.98,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 23.43,
+      "depositary_receipt_pct_nav": 7.52,
+      "net_assets_100m": 0.82
+    },
+    {
+      "date": "2021-06-30",
+      "equity_pct_nav": 87.22,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 8.98,
+      "depositary_receipt_pct_nav": 2.25,
+      "net_assets_100m": 1.03
+    },
+    {
+      "date": "2021-03-31",
+      "equity_pct_nav": 60.56,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 19.62,
+      "depositary_receipt_pct_nav": 21.56,
+      "net_assets_100m": 0.84
+    },
+    {
+      "date": "2020-12-31",
+      "equity_pct_nav": 65.95,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 10.65,
+      "depositary_receipt_pct_nav": 23.75,
+      "net_assets_100m": 0.71
+    },
+    {
+      "date": "2020-09-30",
+      "equity_pct_nav": 78.12,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 12.59,
+      "depositary_receipt_pct_nav": 9.93,
+      "net_assets_100m": 0.64
+    },
+    {
+      "date": "2020-06-30",
+      "equity_pct_nav": 71.66,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 8.21,
+      "depositary_receipt_pct_nav": 14.84,
+      "net_assets_100m": 0.75
+    },
+    {
+      "date": "2020-03-31",
+      "equity_pct_nav": 74.88,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 11.84,
+      "depositary_receipt_pct_nav": 1.05,
+      "net_assets_100m": 0.7
+    },
+    {
+      "date": "2019-12-31",
+      "equity_pct_nav": 82.57,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 13.23,
+      "depositary_receipt_pct_nav": 6.39,
+      "net_assets_100m": 1.12
+    },
+    {
+      "date": "2019-09-30",
+      "equity_pct_nav": 86.25,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 10.68,
+      "depositary_receipt_pct_nav": 1.64,
+      "net_assets_100m": 1.29
+    },
+    {
+      "date": "2019-06-30",
+      "equity_pct_nav": 81.62,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 11.69,
+      "depositary_receipt_pct_nav": 5.71,
+      "net_assets_100m": 1.57
+    },
+    {
+      "date": "2019-03-31",
+      "equity_pct_nav": 75.28,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 6.98,
+      "depositary_receipt_pct_nav": 12.61,
+      "net_assets_100m": 1.96
+    },
+    {
+      "date": "2018-12-31",
+      "equity_pct_nav": 76.67,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 8.53,
+      "depositary_receipt_pct_nav": 6.92,
+      "net_assets_100m": 1.91
+    },
+    {
+      "date": "2018-09-30",
+      "equity_pct_nav": 69.72,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 22.05,
+      "depositary_receipt_pct_nav": null,
+      "net_assets_100m": 2.39
+    },
+    {
+      "date": "2018-06-30",
+      "equity_pct_nav": 50.52,
+      "bond_pct_nav": null,
+      "cash_pct_nav": 38.97,
+      "depositary_receipt_pct_nav": 1.41,
+      "net_assets_100m": 2.84
+    }
+  ],
+  "holder_structure": [
+    {
+      "date": "2025-12-31",
+      "institution_pct": 0.71,
+      "individual_pct": 99.29,
+      "insider_pct": 0.08,
+      "shares_100m": 12.26
+    },
+    {
+      "date": "2025-06-30",
+      "institution_pct": 0.6,
+      "individual_pct": 99.4,
+      "insider_pct": 0.08,
+      "shares_100m": 11.5
+    },
+    {
+      "date": "2024-12-31",
+      "institution_pct": 0.25,
+      "individual_pct": 99.75,
+      "insider_pct": 0.06,
+      "shares_100m": 8.65
+    },
+    {
+      "date": "2024-06-30",
+      "institution_pct": 0.23,
+      "individual_pct": 99.77,
+      "insider_pct": 0.06,
+      "shares_100m": 6.18
+    },
+    {
+      "date": "2023-12-31",
+      "institution_pct": 1.12,
+      "individual_pct": 98.88,
+      "insider_pct": 0.07,
+      "shares_100m": 2.56
+    },
+    {
+      "date": "2023-06-30",
+      "institution_pct": 0.02,
+      "individual_pct": 99.98,
+      "insider_pct": 0.09,
+      "shares_100m": 1.65
+    },
+    {
+      "date": "2022-12-31",
+      "institution_pct": 0.06,
+      "individual_pct": 99.94,
+      "insider_pct": 0.07,
+      "shares_100m": 0.69
+    },
+    {
+      "date": "2022-06-30",
+      "institution_pct": 0.07,
+      "individual_pct": 99.93,
+      "insider_pct": 0.07,
+      "shares_100m": 0.6
+    },
+    {
+      "date": "2021-12-31",
+      "institution_pct": 0.12,
+      "individual_pct": 99.88,
+      "insider_pct": 0.06,
+      "shares_100m": 0.56
+    },
+    {
+      "date": "2021-06-30",
+      "institution_pct": 0.1,
+      "individual_pct": 99.9,
+      "insider_pct": 0.05,
+      "shares_100m": 0.65
+    },
+    {
+      "date": "2020-12-31",
+      "institution_pct": 0.21,
+      "individual_pct": 99.79,
+      "insider_pct": 0.09,
+      "shares_100m": 0.48
+    },
+    {
+      "date": "2020-06-30",
+      "institution_pct": 0.17,
+      "individual_pct": 99.83,
+      "insider_pct": 0.04,
+      "shares_100m": 0.6
+    },
+    {
+      "date": "2019-12-31",
+      "institution_pct": 0.09,
+      "individual_pct": 99.91,
+      "insider_pct": 0.06,
+      "shares_100m": 0.95
+    },
+    {
+      "date": "2019-06-30",
+      "institution_pct": 0.03,
+      "individual_pct": 99.97,
+      "insider_pct": 0.04,
+      "shares_100m": 1.6
+    },
+    {
+      "date": "2018-12-31",
+      "institution_pct": 0.11,
+      "individual_pct": 99.89,
+      "insider_pct": 0.11,
+      "shares_100m": 2.15
+    },
+    {
+      "date": "2018-06-30",
+      "institution_pct": 0.08,
+      "individual_pct": 99.92,
+      "insider_pct": 0.09,
+      "shares_100m": 2.75
+    }
+  ],
+  "turnover": [
+    {
+      "date": "2025-12-31",
+      "stock_turnover_pct": 334.53
+    },
+    {
+      "date": "2025-06-30",
+      "stock_turnover_pct": 302.64
+    },
+    {
+      "date": "2024-12-31",
+      "stock_turnover_pct": 352.26
+    },
+    {
+      "date": "2024-06-30",
+      "stock_turnover_pct": 323.32
+    },
+    {
+      "date": "2023-12-31",
+      "stock_turnover_pct": 215.28
+    },
+    {
+      "date": "2023-06-30",
+      "stock_turnover_pct": 181.03
+    },
+    {
+      "date": "2022-12-31",
+      "stock_turnover_pct": 135.62
+    },
+    {
+      "date": "2022-06-30",
+      "stock_turnover_pct": 429.78
+    },
+    {
+      "date": "2021-12-31",
+      "stock_turnover_pct": 587.73
+    },
+    {
+      "date": "2021-06-30",
+      "stock_turnover_pct": 436.26
+    },
+    {
+      "date": "2020-12-31",
+      "stock_turnover_pct": 510.77
+    },
+    {
+      "date": "2020-06-30",
+      "stock_turnover_pct": 695.23
+    },
+    {
+      "date": "2019-12-31",
+      "stock_turnover_pct": 782.66
+    },
+    {
+      "date": "2019-06-30",
+      "stock_turnover_pct": 557.85
+    },
+    {
+      "date": "2018-12-31",
+      "stock_turnover_pct": 299.65
+    },
+    {
+      "date": "2018-06-30",
+      "stock_turnover_pct": 254.51
+    }
+  ],
+  "industry_allocation": [
+    {
+      "date": "2026-06-30",
+      "industries": {
+        "信息技术": 60.31,
+        "材料": 7.82,
+        "工业": 7.07,
+        "保健": 1.23,
+        "非必需消费品": 0.0,
+        "通信服务": 0.0
+      }
+    },
+    {
+      "date": "2026-03-31",
+      "industries": {
+        "信息技术": 56.08,
+        "工业": 5.75,
+        "材料": 4.07,
+        "能源": 0.79,
+        "非必需消费品": 0.35,
+        "房地产": 0.18,
+        "保健": 0.17,
+        "金融": 0.1,
+        "必需消费品": 0.05,
+        "通信服务": 0.0
+      }
+    },
+    {
+      "date": "2025-12-31",
+      "industries": {
+        "信息技术": 58.41,
+        "通信服务": 8.31,
+        "工业": 2.89,
+        "非必需消费品": 2.79,
+        "材料": 1.25,
+        "能源": 0.09
+      }
+    },
+    {
+      "date": "2025-09-30",
+      "industries": {
+        "信息技术": 56.69,
+        "通信服务": 14.96,
+        "非必需消费品": 11.27,
+        "金融": 1.63
+      }
+    },
+    {
+      "date": "2025-06-30",
+      "industries": {
+        "信息技术": 43.86,
+        "通信服务": 27.01,
+        "非必需消费品": 9.73,
+        "保健": 1.12,
+        "金融": 1.03
+      }
+    },
+    {
+      "date": "2025-03-31",
+      "industries": {
+        "信息技术": 39.49,
+        "通信服务": 15.36,
+        "非必需消费品": 8.52,
+        "保健": 1.46,
+        "金融": 0.75
+      }
+    },
+    {
+      "date": "2024-12-31",
+      "industries": {
+        "信息技术": 42.94,
+        "非必需消费品": 13.18,
+        "通信服务": 12.29,
+        "工业": 1.2,
+        "金融": 0.83,
+        "保健": 0.36
+      }
+    },
+    {
+      "date": "2024-09-30",
+      "industries": {
+        "信息技术": 40.4,
+        "通信服务": 17.54,
+        "能源": 5.35,
+        "非必需消费品": 4.95,
+        "材料": 0.86,
+        "金融": 0.78,
+        "工业": 0.72,
+        "公用事业": 0.41,
+        "保健": 0.25
+      }
+    },
+    {
+      "date": "2024-06-30",
+      "industries": {
+        "信息技术": 35.39,
+        "通信服务": 12.93,
+        "非必需消费品": 9.77,
+        "工业": 5.4,
+        "能源": 3.43,
+        "公用事业": 2.56,
+        "材料": 0.7,
+        "必需消费品": 0.56
+      }
+    },
+    {
+      "date": "2024-03-31",
+      "industries": {
+        "信息技术": 43.63,
+        "通信服务": 8.97,
+        "工业": 4.05,
+        "非必需消费品": 3.63,
+        "能源": 1.62,
+        "必需消费品": 0.91,
+        "公用事业": 0.85
+      }
+    },
+    {
+      "date": "2023-12-31",
+      "industries": {
+        "信息技术": 45.85,
+        "通信服务": 16.76,
+        "非必需消费品": 16.74,
+        "金融": 0.9
+      }
+    },
+    {
+      "date": "2023-09-30",
+      "industries": {
+        "信息技术": 53.7,
+        "通信服务": 21.27,
+        "非必需消费品": 18.22
+      }
+    },
+    {
+      "date": "2023-06-30",
+      "industries": {
+        "信息技术": 57.24,
+        "通信服务": 20.06,
+        "非必需消费品": 16.85
+      }
+    },
+    {
+      "date": "2023-03-31",
+      "industries": {
+        "信息技术": 73.8,
+        "非必需消费品": 12.76,
+        "通信服务": 5.61
+      }
+    },
+    {
+      "date": "2022-12-31",
+      "industries": {
+        "信息技术": 60.67,
+        "通信服务": 10.09,
+        "非必需消费品": 7.75,
+        "保健": 4.85
+      }
+    },
+    {
+      "date": "2022-09-30",
+      "industries": {
+        "信息技术": 54.85,
+        "非必需消费品": 19.26,
+        "通信服务": 10.81,
+        "保健": 1.88
+      }
+    },
+    {
+      "date": "2022-06-30",
+      "industries": {
+        "信息技术": 40.48,
+        "非必需消费品": 18.87,
+        "通信服务": 15.68
+      }
+    },
+    {
+      "date": "2022-03-31",
+      "industries": {
+        "信息技术": 63.62,
+        "非必需消费品": 17.55,
+        "通信服务": 7.95
+      }
+    },
+    {
+      "date": "2021-12-31",
+      "industries": {
+        "信息技术": 47.76,
+        "工业": 19.0,
+        "材料": 10.3,
+        "通信服务": 7.48,
+        "非必需消费品": 4.44
+      }
+    },
+    {
+      "date": "2021-09-30",
+      "industries": {
+        "信息技术": 39.48,
+        "工业": 20.42,
+        "材料": 17.9,
+        "通信服务": 9.63,
+        "非必需消费品": 2.46,
+        "保健": 0.59
+      }
+    },
+    {
+      "date": "2021-06-30",
+      "industries": {
+        "工业": 20.97,
+        "材料": 18.19,
+        "非必需消费品": 15.53,
+        "信息技术": 14.39,
+        "通信服务": 9.6,
+        "保健": 9.11,
+        "房地产": 1.69
+      }
+    },
+    {
+      "date": "2021-03-31",
+      "industries": {
+        "通信服务": 25.1,
+        "信息技术": 22.68,
+        "非必需消费品": 20.74,
+        "工业": 6.98,
+        "保健": 4.61,
+        "必需消费品": 2.0
+      }
+    },
+    {
+      "date": "2020-12-31",
+      "industries": {
+        "非必需消费品": 27.63,
+        "信息技术": 24.13,
+        "通信服务": 21.3,
+        "工业": 10.02,
+        "材料": 5.73,
+        "金融": 0.83,
+        "保健": 0.05,
+        "必需消费品": 0.01
+      }
+    },
+    {
+      "date": "2020-09-30",
+      "industries": {
+        "信息技术": 36.69,
+        "非必需消费品": 30.67,
+        "通信服务": 12.74,
+        "工业": 3.99,
+        "材料": 0.87,
+        "房地产": 0.85,
+        "公用事业": 0.76,
+        "保健": 0.72,
+        "必需消费品": 0.69
+      }
+    },
+    {
+      "date": "2020-06-30",
+      "industries": {
+        "信息技术": 28.79,
+        "非必需消费品": 26.33,
+        "通信服务": 13.39,
+        "保健": 7.46,
+        "必需消费品": 6.92,
+        "房地产": 1.56,
+        "工业": 1.31,
+        "材料": 0.42
+      }
+    },
+    {
+      "date": "2020-03-31",
+      "industries": {
+        "信息技术": 57.51,
+        "非必需消费品": 6.19,
+        "保健": 4.45,
+        "通信服务": 3.65,
+        "必需消费品": 2.25,
+        "工业": 1.54,
+        "材料": 0.31
+      }
+    },
+    {
+      "date": "2019-12-31",
+      "industries": {
+        "信息技术": 70.5,
+        "工业": 10.01,
+        "非必需消费品": 4.82,
+        "通信服务": 2.82,
+        "保健": 0.81
+      }
+    },
+    {
+      "date": "2019-09-30",
+      "industries": {
+        "信息技术": 79.65,
+        "必需消费品": 4.19,
+        "工业": 2.93,
+        "保健": 1.1,
+        "非必需消费品": 0.02
+      }
+    },
+    {
+      "date": "2019-06-30",
+      "industries": {
+        "信息技术": 52.24,
+        "必需消费品": 14.8,
+        "非必需消费品": 8.09,
+        "保健": 5.33,
+        "房地产": 3.42,
+        "通信服务": 2.7,
+        "工业": 2.03,
+        "金融": 1.28,
+        "公用事业": 0.86,
+        "能源": 0.0
+      }
+    },
+    {
+      "date": "2019-03-31",
+      "industries": {
+        "信息技术": 49.21,
+        "通信服务": 16.66,
+        "必需消费品": 9.0,
+        "非必需消费品": 8.97,
+        "工业": 4.04,
+        "金融": 0.0
+      }
+    },
+    {
+      "date": "2018-12-31",
+      "industries": {
+        "信息技术": 54.5,
+        "非必需消费品": 11.0,
+        "通信服务": 10.37,
+        "保健": 4.4,
+        "金融": 3.32
+      }
+    },
+    {
+      "date": "2018-09-30",
+      "industries": {
+        "信息技术": 41.35,
+        "非必需消费品": 9.12,
+        "保健": 8.65,
+        "通信服务": 4.73,
+        "金融": 4.31,
+        "材料": 1.56
+      }
+    },
+    {
+      "date": "2018-06-30",
+      "industries": {
+        "信息技术": 34.88,
+        "非必需消费品": 9.16,
+        "工业": 4.75,
+        "材料": 3.13
+      }
+    }
+  ],
+  "top_holdings": [
+    {
+      "date": "2026-06-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "SNDK",
+          "name": "闪迪",
+          "nav_pct": 3.11,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "MU",
+          "name": "美光科技",
+          "nav_pct": 2.85,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "MRVL",
+          "name": "迈威尔科技",
+          "nav_pct": 1.6,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "TSM",
+          "name": "台积电",
+          "nav_pct": 1.57,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "UMC",
+          "name": "联华电子",
+          "nav_pct": 1.51,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "LITE",
+          "name": "Lumentum Holdings Inc",
+          "nav_pct": 1.51,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "STX",
+          "name": "希捷科技",
+          "nav_pct": 1.49,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "WDC",
+          "name": "西部数据",
+          "nav_pct": 1.46,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "01888",
+          "name": "建滔积层板",
+          "nav_pct": 1.38,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "00522",
+          "name": "ASMPT",
+          "nav_pct": 1.37,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2026-03-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "CIEN",
+          "name": "Ciena科技",
+          "nav_pct": 5.56,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "TSM",
+          "name": "台积电",
+          "nav_pct": 4.87,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "LITE",
+          "name": "Lumentum Holdings Inc",
+          "nav_pct": 4.72,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "COHR",
+          "name": "Coherent Corp",
+          "nav_pct": 4.59,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "VIAV",
+          "name": "Viavi Solutions Inc",
+          "nav_pct": 4.52,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "GLW",
+          "name": "康宁",
+          "nav_pct": 4.15,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "SNDK",
+          "name": "闪迪",
+          "nav_pct": 2.66,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "MU",
+          "name": "美光科技",
+          "nav_pct": 2.3,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "AEIS",
+          "name": "先进能源工业",
+          "nav_pct": 1.63,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "TER",
+          "name": "泰瑞达",
+          "nav_pct": 1.62,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2025-12-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "AVGO",
+          "name": "博通",
+          "nav_pct": 7.25,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 7.12,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 6.98,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "TSM",
+          "name": "台积电",
+          "nav_pct": 6.72,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 2.0,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "LITE",
+          "name": "Lumentum Holdings Inc",
+          "nav_pct": 1.98,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "COHR",
+          "name": "Coherent Corp",
+          "nav_pct": 1.94,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "CIEN",
+          "name": "Ciena科技",
+          "nav_pct": 1.3,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "TTMI",
+          "name": "TTM科技",
+          "nav_pct": 1.29,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "PLTR",
+          "name": "Palantir Technologies Inc-A",
+          "nav_pct": 1.23,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2025-09-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 9.96,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 6.87,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 6.69,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 6.41,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 6.4,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "AVGO",
+          "name": "博通",
+          "nav_pct": 6.34,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "META",
+          "name": "Meta Platforms Inc-A",
+          "nav_pct": 6.24,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "TSM",
+          "name": "台积电",
+          "nav_pct": 5.9,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "TSLA",
+          "name": "特斯拉",
+          "nav_pct": 4.86,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "PLTR",
+          "name": "Palantir Technologies Inc-A",
+          "nav_pct": 4.01,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2025-06-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 7.99,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 7.43,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "META",
+          "name": "Meta Platforms Inc-A",
+          "nav_pct": 7.08,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "AVGO",
+          "name": "博通",
+          "nav_pct": 6.63,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "NFLX",
+          "name": "奈飞",
+          "nav_pct": 6.55,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "CRWD",
+          "name": "CrowdStrike Holdings Inc-A",
+          "nav_pct": 6.39,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "PLTR",
+          "name": "Palantir Technologies Inc-A",
+          "nav_pct": 5.93,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 5.92,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 5.18,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "RBLX",
+          "name": "Roblox Corp-A",
+          "nav_pct": 4.94,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2025-03-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 6.21,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 6.19,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "META",
+          "name": "Meta Platforms Inc-A",
+          "nav_pct": 6.13,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 6.09,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "TSM",
+          "name": "台积电",
+          "nav_pct": 5.7,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 5.53,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "AVGO",
+          "name": "博通",
+          "nav_pct": 5.21,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "NFLX",
+          "name": "奈飞",
+          "nav_pct": 3.14,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "CRWD",
+          "name": "CrowdStrike Holdings Inc-A",
+          "nav_pct": 3.06,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "SAP",
+          "name": "思爱普",
+          "nav_pct": 2.92,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2024-12-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "TSLA",
+          "name": "特斯拉",
+          "nav_pct": 8.26,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 7.9,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "TSM",
+          "name": "台积电",
+          "nav_pct": 6.36,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "AVGO",
+          "name": "博通",
+          "nav_pct": 5.86,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 4.78,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "META",
+          "name": "Meta Platforms Inc-A",
+          "nav_pct": 4.59,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 3.35,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 2.32,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 2.16,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "MRVL",
+          "name": "迈威尔科技",
+          "nav_pct": 1.77,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2024-09-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "TSM",
+          "name": "台积电",
+          "nav_pct": 7.82,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 7.03,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "META",
+          "name": "Meta Platforms Inc-A",
+          "nav_pct": 5.32,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 4.6,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 4.56,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 4.41,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 4.35,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "601138",
+          "name": "工业富联",
+          "nav_pct": 4.24,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "00700",
+          "name": "腾讯控股",
+          "nav_pct": 3.5,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "AVGO",
+          "name": "博通",
+          "nav_pct": 3.0,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2024-06-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 8.01,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 7.99,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "TSM",
+          "name": "台积电",
+          "nav_pct": 7.94,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 4.17,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "AVGO",
+          "name": "博通",
+          "nav_pct": 3.96,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "META",
+          "name": "Meta Platforms Inc-A",
+          "nav_pct": 3.86,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 3.47,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "03690",
+          "name": "美团-W",
+          "nav_pct": 3.28,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "00700",
+          "name": "腾讯控股",
+          "nav_pct": 2.69,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "601138",
+          "name": "工业富联",
+          "nav_pct": 1.89,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2024-03-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 9.19,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 5.71,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "AVGO",
+          "name": "博通",
+          "nav_pct": 5.68,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "TSM",
+          "name": "台积电",
+          "nav_pct": 5.25,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "AMD",
+          "name": "超威半导体",
+          "nav_pct": 2.97,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 2.96,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 2.95,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "VRT",
+          "name": "Vertiv Holdings Co-A",
+          "nav_pct": 2.91,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "MU",
+          "name": "美光科技",
+          "nav_pct": 2.87,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "CLS",
+          "name": "天弘科技",
+          "nav_pct": 2.81,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2023-12-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "AMD",
+          "name": "超威半导体",
+          "nav_pct": 9.15,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 8.74,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 8.72,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 8.64,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "META",
+          "name": "Meta Platforms Inc-A",
+          "nav_pct": 8.61,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 8.15,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "TSLA",
+          "name": "特斯拉",
+          "nav_pct": 8.11,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 7.99,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "INTC",
+          "name": "英特尔",
+          "nav_pct": 3.66,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "QCOM",
+          "name": "高通",
+          "nav_pct": 3.58,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2023-09-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 9.94,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "META",
+          "name": "Meta Platforms Inc-A",
+          "nav_pct": 9.81,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 9.59,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 9.35,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "AVGO",
+          "name": "博通",
+          "nav_pct": 9.34,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 9.22,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "TSLA",
+          "name": "特斯拉",
+          "nav_pct": 9.18,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 9.04,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "AMD",
+          "name": "超威半导体",
+          "nav_pct": 6.06,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "LRCX",
+          "name": "拉姆研究",
+          "nav_pct": 2.02,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2023-06-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 9.54,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "TSLA",
+          "name": "特斯拉",
+          "nav_pct": 9.53,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 9.48,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 9.11,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "META",
+          "name": "Meta Platforms Inc-A",
+          "nav_pct": 9.02,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "AMD",
+          "name": "超威半导体",
+          "nav_pct": 8.3,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 8.18,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 7.32,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "NFLX",
+          "name": "奈飞",
+          "nav_pct": 2.86,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "AVGO",
+          "name": "博通",
+          "nav_pct": 2.77,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2023-03-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "TSLA",
+          "name": "特斯拉",
+          "nav_pct": 9.9,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 9.78,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 9.59,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 9.39,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "AMD",
+          "name": "超威半导体",
+          "nav_pct": 9.33,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "ON",
+          "name": "安森美半导体",
+          "nav_pct": 4.62,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "AVGO",
+          "name": "博通",
+          "nav_pct": 4.39,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "ANET",
+          "name": "Arista Networks Inc",
+          "nav_pct": 3.76,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "META",
+          "name": "Meta Platforms Inc-A",
+          "nav_pct": 3.65,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "CDNS",
+          "name": "铿腾电子",
+          "nav_pct": 3.55,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2022-12-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 9.35,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 8.18,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "ON",
+          "name": "安森美半导体",
+          "nav_pct": 7.13,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 6.72,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 5.68,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "AMD",
+          "name": "超威半导体",
+          "nav_pct": 4.96,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "UNH",
+          "name": "联合健康",
+          "nav_pct": 4.85,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 4.22,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "QCOM",
+          "name": "高通",
+          "nav_pct": 3.34,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "AVGO",
+          "name": "博通",
+          "nav_pct": 2.95,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2022-09-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 9.53,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "TSLA",
+          "name": "特斯拉",
+          "nav_pct": 8.98,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 8.57,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 8.26,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "ON",
+          "name": "安森美半导体",
+          "nav_pct": 7.48,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 6.46,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 4.67,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "AMD",
+          "name": "超威半导体",
+          "nav_pct": 4.49,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "QCOM",
+          "name": "高通",
+          "nav_pct": 4.21,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "NFLX",
+          "name": "奈飞",
+          "nav_pct": 2.39,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2022-06-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 8.55,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 8.17,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 7.67,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "TSLA",
+          "name": "特斯拉",
+          "nav_pct": 7.39,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 7.12,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "AMD",
+          "name": "超威半导体",
+          "nav_pct": 7.1,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 6.85,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "ON",
+          "name": "安森美半导体",
+          "nav_pct": 5.6,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "FTNT",
+          "name": "防特网",
+          "nav_pct": 3.95,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "09988",
+          "name": "阿里巴巴-SW",
+          "nav_pct": 2.76,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2022-03-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 9.25,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "TSLA",
+          "name": "特斯拉",
+          "nav_pct": 9.01,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 8.84,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 8.53,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 8.47,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 7.95,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "AMD",
+          "name": "超威半导体",
+          "nav_pct": 7.93,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "MRVL",
+          "name": "迈威尔科技",
+          "nav_pct": 5.4,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "AVGO",
+          "name": "博通",
+          "nav_pct": 4.54,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "ON",
+          "name": "安森美半导体",
+          "nav_pct": 4.38,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2021-12-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "300750",
+          "name": "宁德时代",
+          "nav_pct": 8.74,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 7.7,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 7.35,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 6.58,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "002812",
+          "name": "恩捷股份",
+          "nav_pct": 6.46,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 6.32,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "300763",
+          "name": "锦浪科技",
+          "nav_pct": 5.31,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "300274",
+          "name": "阳光电源",
+          "nav_pct": 4.96,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "TSLA",
+          "name": "特斯拉",
+          "nav_pct": 4.44,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "002709",
+          "name": "天赐材料",
+          "nav_pct": 3.84,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2021-09-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "002812",
+          "name": "恩捷股份",
+          "nav_pct": 7.01,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "300750",
+          "name": "宁德时代",
+          "nav_pct": 6.48,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "002709",
+          "name": "天赐材料",
+          "nav_pct": 6.31,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 5.44,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "GOOG",
+          "name": "谷歌-C",
+          "nav_pct": 5.38,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 5.35,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 5.25,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "300274",
+          "name": "阳光电源",
+          "nav_pct": 4.89,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "300763",
+          "name": "锦浪科技",
+          "nav_pct": 4.34,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "ASAN",
+          "name": "Asana Inc-A",
+          "nav_pct": 3.81,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2021-06-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "002812",
+          "name": "恩捷股份",
+          "nav_pct": 8.77,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "00700",
+          "name": "腾讯控股",
+          "nav_pct": 7.35,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "03690",
+          "name": "美团-W",
+          "nav_pct": 7.31,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "300274",
+          "name": "阳光电源",
+          "nav_pct": 6.51,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "300750",
+          "name": "宁德时代",
+          "nav_pct": 6.31,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "002709",
+          "name": "天赐材料",
+          "nav_pct": 5.75,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "01211",
+          "name": "比亚迪股份",
+          "nav_pct": 4.34,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "02269",
+          "name": "药明生物",
+          "nav_pct": 3.99,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 2.76,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "00354",
+          "name": "中国软件国际",
+          "nav_pct": 2.57,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2021-03-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "03690",
+          "name": "美团-W",
+          "nav_pct": 9.44,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "00700",
+          "name": "腾讯控股",
+          "nav_pct": 9.32,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "TSLA",
+          "name": "特斯拉",
+          "nav_pct": 5.93,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "BILI",
+          "name": "哔哩哔哩",
+          "nav_pct": 5.71,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "BIDU",
+          "name": "百度",
+          "nav_pct": 5.42,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "PDD",
+          "name": "拼多多",
+          "nav_pct": 5.37,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "02013",
+          "name": "微盟集团",
+          "nav_pct": 4.4,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "300750",
+          "name": "宁德时代",
+          "nav_pct": 3.53,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "300274",
+          "name": "阳光电源",
+          "nav_pct": 3.46,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "TSM",
+          "name": "台积电",
+          "nav_pct": 3.35,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2020-12-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "TSLA",
+          "name": "特斯拉",
+          "nav_pct": 7.31,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "BILI",
+          "name": "哔哩哔哩",
+          "nav_pct": 6.22,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "ROKU",
+          "name": "Roku Inc-A",
+          "nav_pct": 6.18,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "PDD",
+          "name": "拼多多",
+          "nav_pct": 5.67,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "NET",
+          "name": "Cloudflare Inc-A",
+          "nav_pct": 5.61,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "SE",
+          "name": "Sea Ltd ADR",
+          "nav_pct": 5.4,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "CRNC",
+          "name": "Cerence Inc",
+          "nav_pct": 5.24,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "03690",
+          "name": "美团-W",
+          "nav_pct": 4.89,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "300750",
+          "name": "宁德时代",
+          "nav_pct": 4.52,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "002812",
+          "name": "恩捷股份",
+          "nav_pct": 4.17,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2020-09-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "03690",
+          "name": "美团-W",
+          "nav_pct": 7.16,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 5.3,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "09988",
+          "name": "阿里巴巴-SW",
+          "nav_pct": 4.93,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "00700",
+          "name": "腾讯控股",
+          "nav_pct": 4.82,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 4.81,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "TSLA",
+          "name": "特斯拉",
+          "nav_pct": 4.74,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 3.9,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 3.86,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "AMD",
+          "name": "超威半导体",
+          "nav_pct": 3.28,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "BABA",
+          "name": "阿里巴巴",
+          "nav_pct": 1.52,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2020-06-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "600519",
+          "name": "贵州茅台",
+          "nav_pct": 5.46,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 4.38,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 3.43,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 3.23,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "00700",
+          "name": "腾讯控股",
+          "nav_pct": 3.1,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "BILI",
+          "name": "哔哩哔哩",
+          "nav_pct": 2.85,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "JD",
+          "name": "京东",
+          "nav_pct": 2.81,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "PDD",
+          "name": "拼多多",
+          "nav_pct": 2.63,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 2.61,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "META",
+          "name": "Meta Platforms Inc-A",
+          "nav_pct": 2.57,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2020-03-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 8.86,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 7.68,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 5.89,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "2330",
+          "name": "台湾集成电路制造",
+          "nav_pct": 5.11,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "AMD",
+          "name": "超威半导体",
+          "nav_pct": 4.12,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "NVDA",
+          "name": "英伟达",
+          "nav_pct": 3.71,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "NFLX",
+          "name": "奈飞",
+          "nav_pct": 2.65,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "600519",
+          "name": "贵州茅台",
+          "nav_pct": 2.05,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "ADBE",
+          "name": "奥多比",
+          "nav_pct": 1.6,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2019-12-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 8.12,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 5.48,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "6510",
+          "name": "精测",
+          "nav_pct": 5.12,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "002241",
+          "name": "歌尔股份",
+          "nav_pct": 5.06,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "300014",
+          "name": "亿纬锂能",
+          "nav_pct": 4.92,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "2330",
+          "name": "台湾集成电路制造",
+          "nav_pct": 3.84,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "TSM",
+          "name": "台积电",
+          "nav_pct": 3.18,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "3008",
+          "name": "大立光电",
+          "nav_pct": 3.11,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "09988",
+          "name": "阿里巴巴-SW",
+          "nav_pct": 2.7,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "VAR1",
+          "name": "VARTA AG",
+          "nav_pct": 2.56,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2019-09-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 6.56,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "002463",
+          "name": "沪电股份",
+          "nav_pct": 5.64,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "300782",
+          "name": "卓胜微",
+          "nav_pct": 5.62,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "002916",
+          "name": "深南电路",
+          "nav_pct": 5.07,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "600183",
+          "name": "生益科技",
+          "nav_pct": 4.71,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "6213",
+          "name": "联茂",
+          "nav_pct": 4.01,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "2455",
+          "name": "全新",
+          "nav_pct": 3.8,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "4968",
+          "name": "立积",
+          "nav_pct": 3.58,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "600519",
+          "name": "贵州茅台",
+          "nav_pct": 3.13,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2019-06-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "000858",
+          "name": "五粮液",
+          "nav_pct": 7.81,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "600519",
+          "name": "贵州茅台",
+          "nav_pct": 5.06,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 5.02,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "2330",
+          "name": "台湾集成电路制造",
+          "nav_pct": 3.34,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "002463",
+          "name": "沪电股份",
+          "nav_pct": 3.33,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "PYPL",
+          "name": "PayPal Holdings Inc",
+          "nav_pct": 2.75,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "3406",
+          "name": "玉晶光",
+          "nav_pct": 2.3,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "BABA",
+          "name": "阿里巴巴",
+          "nav_pct": 2.15,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "601888",
+          "name": "中国中免",
+          "nav_pct": 2.05,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "600887",
+          "name": "伊利股份",
+          "nav_pct": 1.93,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2019-03-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "00700",
+          "name": "腾讯控股",
+          "nav_pct": 7.65,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "BABA",
+          "name": "阿里巴巴",
+          "nav_pct": 6.07,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "AAPL",
+          "name": "苹果",
+          "nav_pct": 5.8,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "002384",
+          "name": "东山精密",
+          "nav_pct": 5.72,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "600519",
+          "name": "贵州茅台",
+          "nav_pct": 4.83,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "002456",
+          "name": "欧菲光",
+          "nav_pct": 4.61,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "000858",
+          "name": "五粮液",
+          "nav_pct": 4.14,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "600050",
+          "name": "中国联通",
+          "nav_pct": 3.32,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "XLNX",
+          "name": "赛灵思",
+          "nav_pct": 3.13,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2018-12-31",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 9.35,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "2330",
+          "name": "台湾集成电路制造",
+          "nav_pct": 7.59,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "V",
+          "name": "维萨",
+          "nav_pct": 7.02,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "ADBE",
+          "name": "奥多比",
+          "nav_pct": 6.54,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 5.4,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "CRM",
+          "name": "赛富时",
+          "nav_pct": 5.22,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "00700",
+          "name": "腾讯控股",
+          "nav_pct": 5.1,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "MA",
+          "name": "万事达",
+          "nav_pct": 4.61,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "BABA",
+          "name": "阿里巴巴",
+          "nav_pct": 3.4,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "ERIC",
+          "name": "爱立信",
+          "nav_pct": 2.49,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2018-09-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 8.55,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 8.06,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "V",
+          "name": "维萨",
+          "nav_pct": 6.56,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "CRM",
+          "name": "赛富时",
+          "nav_pct": 6.49,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "ADBE",
+          "name": "奥多比",
+          "nav_pct": 5.78,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "MA",
+          "name": "万事达",
+          "nav_pct": 4.48,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "GOOGL",
+          "name": "谷歌-A",
+          "nav_pct": 4.16,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "2330",
+          "name": "台湾集成电路制造",
+          "nav_pct": 3.81,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "02318",
+          "name": "中国平安",
+          "nav_pct": 2.94,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "ISRG",
+          "name": "直觉外科",
+          "nav_pct": 2.14,
+          "market_value_10k": null
+        }
+      ]
+    },
+    {
+      "date": "2018-06-30",
+      "holdings": [
+        {
+          "rank": 1.0,
+          "code": "MSFT",
+          "name": "微软",
+          "nav_pct": 7.4,
+          "market_value_10k": null
+        },
+        {
+          "rank": 2.0,
+          "code": "ADBE",
+          "name": "奥多比",
+          "nav_pct": 6.82,
+          "market_value_10k": null
+        },
+        {
+          "rank": 3.0,
+          "code": "AAOI",
+          "name": "应用光电",
+          "nav_pct": 6.5,
+          "market_value_10k": null
+        },
+        {
+          "rank": 4.0,
+          "code": "CRM",
+          "name": "赛富时",
+          "nav_pct": 5.94,
+          "market_value_10k": null
+        },
+        {
+          "rank": 5.0,
+          "code": "002050",
+          "name": "三花智控",
+          "nav_pct": 4.75,
+          "market_value_10k": null
+        },
+        {
+          "rank": 6.0,
+          "code": "01317",
+          "name": "枫叶教育",
+          "nav_pct": 3.74,
+          "market_value_10k": null
+        },
+        {
+          "rank": 7.0,
+          "code": "META",
+          "name": "Meta Platforms Inc-A",
+          "nav_pct": 3.17,
+          "market_value_10k": null
+        },
+        {
+          "rank": 8.0,
+          "code": "603799",
+          "name": "华友钴业",
+          "nav_pct": 3.13,
+          "market_value_10k": null
+        },
+        {
+          "rank": 9.0,
+          "code": "AMZN",
+          "name": "亚马逊",
+          "nav_pct": 2.77,
+          "market_value_10k": null
+        },
+        {
+          "rank": 10.0,
+          "code": "3008",
+          "name": "大立光电",
+          "nav_pct": 2.4,
+          "market_value_10k": null
+        }
+      ]
+    }
+  ],
+  "report_extracts": [
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2026年第2季度报告",
+      "publish_date": "2026-07-21",
+      "report_year": "2026",
+      "announcement_id": "AN202607211827190245",
+      "relative_path": "2026/2026-07-21_华夏全球科技先锋混合型证券投资基金（QDII）2026年第2季度报告_AN202607211827190245.pdf",
+      "pages": 16,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 114.26,
+      "one_year_benchmark_pct": 34.97,
+      "strategy_text": "2026年第二季度，全球美股市场整体呈现宏观压力边际缓释、市场风格稳步修复、科技板块结\n构性行情延续的运行特征，美股三大指数震荡上行，成长板块迎来估值修复与业绩兑现的双重驱动。\n纳斯达克100指数季度收涨，AI相关板块终结一季度深度回调走势，实现结构性修复。市场彻底摆\n脱前期流动性收紧、避险情绪升温的调整格局，正式步入业绩兑现为核心、硬科技赛道占优、流动\n性预期边际改善的良性运行阶段。\n本季度宏观基本面实现边际改善，前期压制市场的负面因素持续缓释。美联储降息延后的市场\n预期已充分消化，通胀粘性有所回落，货币政策市场预期逐步趋于平稳；中东地缘冲突持续缓和，\n国际能源价格自高位回落，全球供应链扰动逐步修复。当前市场不确定性仍未完全消退，市场风险\n偏好稳步修复但尚未全面回暖，科技板块内部分化格局延续，基本面扎实的核心资产与弱势标的走\n势差异进一步拉大。\n本季度科技板块结构性行情进一步深化，赛道分化特征显著。AI硬件产业链延续强势态势，半\n导体、光通信、PCB、存储器、先进封装、半导体设备等细分领域，依托确定性订单落地与持续兑\n现的业绩表现，持续斩获超额收益，成为市场核心投资主线。与此同时，缺乏业绩支撑的高估值AI\n应用题材标的持续估值回归，市场投资趋于理性。整体而言，AI赛道投资已进入硬核资产优先、业\n华夏全球科技先锋混合型证券投资基金（QDII）2026年第2季度报告\n9\n绩验证为本、精选龙头个股的常态化理性投资阶段。由于QDII额度受限的原因，我们在符合基金合\n同的投资规定下，持续增加了国内A股及港股AI相关优质的投资标的。介意者请谨慎投资。\n结合二季度宏观环境边际改善、 科技板块结构性行情延续、AI硬科技业绩持续兑现的市场特征，\n本季度本基金延续聚焦全球AI硬科技主线、坚守业绩确定性、动态优化持仓结构的核心投资策略，\n顺势把握市场修复行情，持续优化组合持仓结构，具体运作操作如下：\n1. 持续优化持仓结构，强化高景气主线配置\n本季度持续推进持仓结构优化，逐步出清基本面偏弱、缺乏业绩支撑、估值泡沫化且受产业迭\n代冲击的弱势标的。同时进一步提升持仓集中度，重点加仓AI算力产业链、半导体高端设备、高速\n光通信、存储芯片等高景气细分赛道，聚焦具备持续订单落地、业绩增长确定性强的硬核科技企业，\n强化组合核心赛道配置优势。\n2. 坚守AI核心组合，把握板块成长弹性\n本基金持续坚守「AI光通信+AI半导体+硬科技」的核心持仓架构，整体维持高仓位运作。一\n方面依托全球头部科技平台企业的全栈AI生态壁垒、核心技术优势与行业龙头地位，把握AI产业\n规模化落地的长期红利；另一方面深耕全球半导体硬核优质资产，紧抓行业周期上行与AI算力需求\n爆发的双重机遇，充分赚取硬件产业链的业绩增长收益。\n3. 精细化仓位管理，平衡收益与风险\n在市场整体修复的背景下，本基金执行精细化仓位管理策略，保留适度现金仓位，对冲宏观环\n境与市场波动带来的不确定性。同时秉持逆向投资思路，在市场阶段性回调、优质核心资产出现错\n杀时逢低布局、分批加仓，持续夯实组合核心资产底仓，平衡组合进攻性与抗风险能力，提升组合\n长期收益稳定性。",
+      "country_section": "国家（地区） 公允价值（人民币元） 占基金资产净值比例（%）\n中国内地 7,441,065,251.05 36.61\n中国香港 4,708,485,225.99 23.17\n美国 3,385,297,797.45 16.66\n合计 15,534,848,274.49 76.44\n华夏全球科技先锋混合型证券投资基金（QDII）2026年第2季度报告\n11\n5.3 报告",
+      "mentions_leveraged_funds": true
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2026年第1季度报告",
+      "publish_date": "2026-04-22",
+      "report_year": "2026",
+      "announcement_id": "AN202604221821424174",
+      "relative_path": "2026/2026-04-22_华夏全球科技先锋混合型证券投资基金（QDII）2026年第1季度报告_AN202604221821424174.pdf",
+      "pages": 15,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 52.49,
+      "one_year_benchmark_pct": 16.35,
+      "strategy_text": "1 季度， 全球美股市场整体呈现宏观压力加大、 风格剧烈切换、 科技板块深度分化的运行格局，\n三大指数震荡下行， 成长股普遍承压。 纳斯达克 100 指数一季度显著回调，AI 相关指数整体走弱，\n市场由此前流动性驱动的普涨行情，转向盈利兑现优先、硬科技占优、避险情绪上升的阶段。叠加\n美联储降息预期大幅延后、通胀粘性回升、中东伊朗冲突升级引发能源与供应链扰动，科技股估值\n消化压力进一步加大，板块内部分化达到近年罕见水平。AI 硬件链（半导体、光通信、存储器、先\n进封装、设备）凭借实际在手订单与业绩高增逆势跑出显著超额收益，而纯应用、高估值无业绩标\n的、 高久期软件股受AI 替代影响持续调整。MEGA 7 因高额资本支出， 市场担忧现金流影响， 股价\n承压。AI 投资彻底进入精选个股、硬核优先的理性阶段。 \n本季度中东地缘冲突显著升级，伊朗战事直接冲击全球能源供应与通胀预期，成为影响全球资\n本市场的关键变量： \n能源与通胀传导：伊朗扼守霍尔木兹海峡，全球约 20% 石油运输受影响，冲突导致原油价格\n快速站上 100 美元 / 桶上方，加剧全球通胀反弹压力，市场对美联储降息时点进一步延后，高久\n期科技成长股估值持续承压。 \n供应链扰动：中东地区氦气、氖气等半导体关键原料供应受阻，芯片制造与数据中心电力成本\n抬升，对 AI 算力基础设施形成阶段性成本冲击，但未造成实质性产能中断。 \n风险偏好收缩：全球避险情绪升温，VIX 指数抬升，资金从高估值成长板块流向能源、公用事\n业、高股息防御板块，科技板块整体波动加大、结构分化加剧。 \n中期判断：我们认为本次冲突以阶段性供给冲击、情绪冲击为主，大概率不引发全球性滞胀与\n长期衰退； 待局势缓和、 油价回落， 流动性与成长风格有望重新占优，AI 硬科技长期逻辑不受破坏。 \n本季度操作上，我们延续聚焦 AI 硬科技、强化盈利确定性、增加逢低加码的思路： \n结构优化：降低基本面偏弱、受 AI 颠覆冲击、地缘敏感的标的，大幅增持 AI 算力链、半导\n体设备、光通信、存储器等高景气方向； \n核心坚守： 重点配置HBM / 存储芯片、 高速光模块、 先进封装设备、 半导体核心零部件等业绩\n高增板块； 同时坚守MEGA 7 平台龙头 + 半导体硬科技龙头双核心组合， 保持高仓位、 高集中度，\n把握 AI 硬件链的高弹性机会； \n仓位管理：维持合理现金比例，应对地缘不确定性，逢市场恐慌性调整加仓优质核心资产。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 1,915,044,706.64 40.80 \n中国内地 1,076,852,800.30 22.94 \n中国香港 186,550,838.48 3.97 \n合计 3,178,448,345.42 67.71 \n华夏全球科技先锋混合型证券投资基金（QDII）2026 年第 1 季度报告 \n10 \n \n5.3 报告",
+      "mentions_leveraged_funds": true
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2025年年度报告",
+      "publish_date": "2026-03-31",
+      "report_year": "2025",
+      "announcement_id": "AN202603311820895602",
+      "relative_path": "2025/2026-03-31_华夏全球科技先锋混合型证券投资基金（QDII）2025年年度报告_AN202603311820895602.pdf",
+      "pages": 69,
+      "period_return_pct": 20.88,
+      "period_benchmark_pct": 22.55,
+      "one_year_return_pct": 15.49,
+      "one_year_benchmark_pct": 27.45,
+      "strategy_text": "2025 年美股 AI 科技投资呈现 “算力领涨、应用分化、资本高投、估值博弈” 的核心特征，成\n为美股科技板块增长核心引擎，AI 相关板块整体跑赢大盘， 信息技术、 通信服务板块分别以 25%、\n32% 涨幅领跑市场。 \n从投资规模看，美国 AI 年度化支出达 3000 亿美元，硬件投入占比超 60%，其中半导体（含 \nGPU/AI 芯片）支出 1120 亿美元，数据中心建设 880 亿美元，电力配套 650 亿美元，软件与服\n务 350 亿美元。科技巨头资本开支激增，微软、谷歌、Meta、亚马逊、甲骨文五大 AI 巨头三季度 \nCAPEX 同比增 72.9%，全年累计突破 3000 亿美元，OpenAI、软银联合甲骨文启动的 “星际之门” \n项目计划四年投资 5000 亿美元，Anthropic 宣布 500 亿美元 AI 基础设施投资计划，行业进入 “算\n力军备竞赛” 白热化阶段。 \n产业链层面呈现 “上游强确定性、中下游分化” 格局。上游算力赛道为最大赢家，英伟达凭借 \nBlackwell 芯片与 CUDA 生态垄断高端 GPU 市场，市占率超 85%，2025 年数据中心业务营收同\n比增超 90%， 全年股价涨幅超 40%， 但市盈率超 75 倍， 远超半导体行业 30 倍平均估值， 泡沫争\n议加剧；AMD 凭 MI300 系列突围，云端训练市占率升至 18%，数据中心业务营收同比增 65%，\n华夏全球科技先锋混合型证券投资基金（QDII）2025 年年度报告 \n14 \n \n成为云厂商第二供应商。光模块、数据中心电源等配套赛道爆发，Lumentum、Bloom Energy 全年\n涨幅分别达 372%、314%，受益于数据中心互联与电力需求激增。 \n中游云厂商深度绑定 AI 生态，微软 Azure 云业务增速 38%，Copilot 月活跃用户破 1 亿，\n与 OpenAI 协同效应显著； 谷歌云营收同比增 36%， 积压订单增 77%，Gemini 模型迭代推动 AI 搜\n索广告优化；Meta AI 驱动广告收入增 26%，资本支出达 700-720 亿美元。但除微软外，其余巨头\n自由现金流转负，高投入与短期回报失衡引发股价波动，云业务利润率普遍承压。 \n下游应用层分化显著，企业级 AI 商业化提速，2025 年企业生成式 AI 支出达 370 亿美元，\n同比增超 3 倍，医疗 AI 龙头 Tempus AI 全年营收增 83%，编程工具、垂直行业解决方案付费意\n愿强劲；消费级应用竞争激烈，通用 Chatbot 占据 80% 以上流量，图像生成、创意写作类应用大\n量出清，仅编程、角色陪伴等场景因数据闭环与用户粘性存活。 \n资金与估值层面，板块呈现结构性分化，算力赛道估值高企，应用层 SaaS 企业市盈率回落，\n市场对商业化效率存疑。私募市场投资向头部集中， OpenAI、Anthropic 等模型公司获巨额融资，\n中小初创企业融资难度加大。全年投资主线围绕 “算力垄断、垂直应用落地、产业链配套” 展开，\n同时面临多重风险：反垄断监管趋严，英伟达、微软等龙头遭调查；需求增速放缓担忧升温，硬件\n订单周期性波动；高资本开支导致自由现金流恶化，行业盈利兑现周期拉长。 \n2025 年美股 AI 科技投资告别普涨行情，呈现产业链分层、业绩兑现、估值体系、商业模式四\n大维度的深度分化，市场从 “概念炒作” 全面转向 “价值验证”，资金与估值向具备真实业绩、技术\n壁垒与商业化确定性的标的集中，形成 “强者恒强、弱者出清” 的格局。 \n产业链利润分配分化是核心表现，呈现 “上游暴利、中游承压、下游分化” 的特征。上游算力\n硬件作为 AI 基建核心， 成为最大赢家， 英伟达凭借 Blackwell 芯片与 CUDA 生态垄断高端 GPU \n市场，2025 年数据中心业务营收同比增超 90%，全年股价涨幅超 40%，市销率达 35 倍，远超半\n导体行业 10 倍均值；AMD 凭 MI300 系列突围，云端训练芯片市占率升至 18%，数据中心业务\n营收增 65%；光模块、液冷等配套赛道同步爆发，Lumentum 全年营收增超 80%，股价涨幅达 372%。\n中游云厂商与服务器厂商陷入 “高投入低回报” 困境，微软、谷歌、Meta 五大巨头全年资本开支突\n破 3000 亿美元，Azure 云业务增速 38% 但自由现金流阶段性承压，Dell、HPE 等服务器厂商利\n润率长期低于 10%， 受上游芯片涨价与下游压价双重挤压。 下游应用层分化显著， 企业级 AI 代理、\n医疗 AI 等垂直场景商业化提速，Cursor 编程工具年化收入达 5 亿美元，Tempus AI 营收增 83%；\n而通用 Chatbot、 图像生成等消费级应用陷入同质化竞争， 大量项目因缺乏付费用户出清， 仅少数具\n备数据闭环与用户粘性的标的存活。 \n由于 MEGA 7 股票股价表现因为基本面及 AI 趋势发展，产生较大的分化差异。我们持续降低\n华夏全球科技先锋混合型证券投资基金（QDII）2025 年年度报告 \n15 \n \n受到负面影响的个股，增持正面效益的个股。上半年主要持有 MEGA7，下半年增持半导体，光通\n信及存储器个股。",
+      "country_section": "................................................................... 50 \n8.3",
+      "mentions_leveraged_funds": true
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2025年第4季度报告",
+      "publish_date": "2026-01-22",
+      "report_year": "2025",
+      "announcement_id": "AN202601221818245376",
+      "relative_path": "2025/2026-01-22_华夏全球科技先锋混合型证券投资基金（QDII）2025年第4季度报告_AN202601221818245376.pdf",
+      "pages": 16,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 15.49,
+      "one_year_benchmark_pct": 27.45,
+      "strategy_text": "2025 年第四季度全球 AI 股市场呈现“高景气延续与结构性分化并存”的核心特征，美股 AI 股作\n为全球风向标，在流动性宽松与产业落地共振下维持上行态势，但经历前三季度大幅上涨后，估值\n消化压力显现，板块内部分化加剧。从市场表现看，美股AI 核心赛道（算力、算法、应用）相关标\n的四季度平均涨幅约 8.5%，跑赢标普 500 指数同期 4.2%的涨幅，但显著低于前三季度 25%以上的\n累计涨幅。市场对 AI 股的预期已从“概念炒作”转向“盈利兑现”，头部企业凭借业绩支撑持续领跑，\n而缺乏基本面的中小盘 AI 标的则陷入震荡调整， 整体进入“精选个股”的理性阶段。 今年在7 大科技\n公司，股价由于基本面的差异，表现产生比较大的分化，赢家及输家开始显现。 \n四季度 AI 股的走势核心受制于全球流动性宽松、AI 产业落地进程及机构资金配置三大核心因\n素。政策与流动性层面，美联储已进入降息周期，四季度市场预期后续将进一步扩大降息幅度，全\n球流动性充裕格局为高成长属性的 AI 股提供估值支撑，纳斯达克 100 指数中 AI 权重股获得资金持\n续流入。产业驱动层面，AI 行业已从基础设施建设阶段逐步转向应用落地深化期，上游算力领域资\n本开支持续增加，形成“闭环投资”格局，下游教育、游戏、军工等场景的AI 应用加速落地，市场对\n爆款产品的预期不断强化。头部企业如英伟达、微软等凭借稳定的盈利增长验证了AI 商业化潜力，\n进一步巩固了市场信心。资金流向方面，机构投资者呈现“向头部集中”的特征，纷纷增持具备核心\n技术壁垒与盈利确定性的 AI 龙头，规避估值过高的中小盘标的，导致板块分化加剧。 \n由于 MEGA 7 股票股价表现因为基本面及 AI 趋势发展，产生较大的差异。我们降低受到负面\n影响的个股，增持正面效益的个股。并增持半导体，光通信及存储器个股。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 1,832,107,451.18 55.62 \n中国内地 514,582,704.74 15.62 \n中国香港 88,174,563.83 2.68 \n合计 2,434,864,719.75 73.92 \n5.3 报告",
+      "mentions_leveraged_funds": true
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2025年第3季度报告",
+      "publish_date": "2025-10-28",
+      "report_year": "2025",
+      "announcement_id": "AN202510281770465326",
+      "relative_path": "2025/2025-10-28_华夏全球科技先锋混合型证券投资基金（QDII）2025年第3季度报告_AN202510281770465326.pdf",
+      "pages": 15,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 24.92,
+      "one_year_benchmark_pct": 39.54,
+      "strategy_text": "7 月美联储会议纪要释放 “谨慎降息” 信号后，市场对 9 月降息的概率预期一度升至 84%，\n杰克逊霍尔年会上鲍威尔的 “鸽派” 表态进一步提振风险偏好。AI 仍是股市核心引擎，预计 2026 \n年 AI 资本支出增 33%，叠加美股回购超 9500 亿美元、股息近 7000 亿美元的股东回报支撑。第\n三季美国股票市场延续强劲走势， 在AI 科技股的带动及市场降息预期下持续创新高。 企业回购行为\n与盈利韧性形成正向循环。标普 500 成份股二季度超预期盈利比例达 72%，其中科技板块超预期\n比例更是高达 81%，盈利改善为回购提供资金支撑，而回购又通过减少流通股数量推升每股收益，\n形成 “盈利 - 回购 - 估值” 的修复链条。 即将开启的财报季与利率政策走向， 将成为短期走势关键\n变量。 \n特朗普政策将主导今年的美股走势及市场波动性。从政策角度看，未来需持续关注减税、削减\n政府部门、关税及贸易战、驱逐移民、压降油价等政策出台及落地的实际情况。而且特朗普政策间\n常相互矛盾， 有利于经济增长， 但可能持续推升通胀， 带来的不确定性较高， 我们将继续保持跟踪。 \n我们中长期继续看好美国经济韧性及 AI 科技大趋势的成长机会。2025 年，我们投资方面重点\n关注三个方面： 特朗普的政策举措、 美联储的降息节奏以及AI 市场的实际变化。 特朗普政策总体对\n美国经济会有较好的带动提升， 而通胀压力较大， 同时也会带来更高的宏观不确定性； 美联储方面，\n降息步伐是否进一步暂缓需要结合美国各项经济数据进行密切关注。 \n2025 年我们仍将继续聚焦 AI 相关的大方向投资。AI 技术商业化验证加速缓解了市场对 “泡沫\n化” 的担忧，爱普拉维凭借 AI 广告引擎实现收入连续三个季度超预期增长，季度涨幅达 14.3%；\nMeta 则通过 AI 驱动的广告精准投放系统，单季广告收入同比提升 18%，支撑股价在科技股普跌\n中保持相对稳定。我们集中投资了美国最优秀的 7 大科技公司，包含英伟达、微软、苹果、谷歌、\n亚马逊、脸书 META 及特斯拉及两大 AI 核心科技股：博通及台积电，取得了不错的投资业绩。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 1,950,360,083.04 84.55 \n中国香港 19,939.48 0.00 \n合计 1,950,380,022.52 84.55 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2025年中期报告",
+      "publish_date": "2025-08-30",
+      "report_year": "2025",
+      "announcement_id": "AN202508301736779233",
+      "relative_path": "2025/2025-08-30_华夏全球科技先锋混合型证券投资基金（QDII）2025年中期报告_AN202508301736779233.pdf",
+      "pages": 47,
+      "period_return_pct": 7.57,
+      "period_benchmark_pct": 4.43,
+      "one_year_return_pct": 10.81,
+      "one_year_benchmark_pct": 25.49,
+      "strategy_text": "2025 年上半年美国股票市场， 由于美国总统特朗普上任的激进关税政策对美国经济的不确定性，\n加剧了市场的波动性，也使得美股迎来了修正。美股标普 500 指数回档技术性修正了 10%左右。使\n得市场超买及市场估值较高压力，获得了一定纾解，不稳定的筹码也被清洗掉。而后随着关税政策\n暂缓、美联储释放降息信号，市场情绪从“极度恐惧”转向“贪婪”。标普 500 从 4 月 8 日低点反弹\n到再创新高的 V 型反转。显见美国经济及美国股票市场的强大韧性。 \n2025 年我们仍将继续聚焦 AI 相关的大方向投资。 我们集中投资了美国最优秀的7 大科技公司，\n包含英伟达、微软、苹果、谷歌、亚马逊、脸书META、特斯拉及两大 AI 核心科技股：博通及台积\n电，前 3 年基金取得了优异的投资业绩。",
+      "country_section": "................................................................... 35 \n7.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2025年第2季度报告",
+      "publish_date": "2025-07-21",
+      "report_year": "2025",
+      "announcement_id": "AN202507211712820232",
+      "relative_path": "2025/2025-07-21_华夏全球科技先锋混合型证券投资基金（QDII）2025年第2季度报告_AN202507211712820232.pdf",
+      "pages": 15,
+      "period_return_pct": 7.57,
+      "period_benchmark_pct": 4.43,
+      "one_year_return_pct": 10.81,
+      "one_year_benchmark_pct": 25.49,
+      "strategy_text": "报告期内，由于美国总统特朗普上任的激进关税政策对美国经济的不确定性，加剧了美国股票\n市场的波动性，也使得美股迎来了修正。美股标普 500 指数回档技术性修正了 10%左右。这使得市\n场超买及市场估值较高压力获得了一定纾解，不稳定的筹码也被清洗掉。而后随着关税政策暂缓、\n美联储释放降息信号，市场情绪从“极度恐惧”转向“贪婪”。标普 500 从 4 月 8 日低点反弹 24%，\n仅用 89 个交易日完成从下跌 15% 到再创新高的最快 V 型反转。 这显见美国经济及美国市场的强\n大韧性。 \n特朗普政策将主导今年的美股走势及市场波动性。从政策角度看，未来需持续关注减税、削减\n政府部门、关税及贸易战、驱逐移民、压降油价等政策出台及落地的实际情况。而且特朗普政策间\n常相互矛盾， 有利于经济增长， 但可能持续推升通胀， 带来的不确定性较高， 我们将继续保持跟踪。 \n我们中长期继续看好美国经济韧性及 AI 科技大趋势的成长机会。2025 年，我们投资方面重点\n关注三个方面： 特朗普的政策举措、 美联储的降息节奏以及AI 市场的实际变化。 特朗普政策总体对\n美国经济会有较好的带动提升， 而通胀压力较大， 同时也会带来更高的宏观不确定性； 美联储方面，\n降息步伐是否进一步暂缓需要结合美国各项经济数据进行密切关注。 \n从投资操作看，除 AI 相关产业是确定性成长机会外，其他行业的成长性都相对疲软。目前AI\n行业正处于从乐观预期、 强反应到结果验证的阶段。 近期AI 市场热情及成长幅度有一定下降， 但从\n估值看， 回调的市场反应已经初步到位。 同时AI 革命带来的生产力跳跃， 也是经济增长的持续推动\n力。AI 在应用端（software， 机器人，无人机，AI AGENT，ADAS）在 2025 年将是百花齐放，是\n我们投资的重要方向。2025 年我们仍将继续聚焦 AI 相关的大方向投资。我们集中投资了美国最优\n秀的 7 大科技公司，包含英伟达、微软、苹果、谷歌、亚马逊、脸书META 及特斯拉及两大 AI 核\n心科技股：博通及台积电，前 3 年基金取得了优异的投资业绩。AI 的趋势至少能看 3 到 5 年，乐观\n一点能看到 10 年以上。随着各行各业导入 AI，AI 将极大地改变人类生活，这是一个投资人不容错\n过的可长可久的大级别投资机会。所以目前基金投资配置没有大幅改变，并将逢低持续加码。 \n我们认为美国科技股最大的吸引力， 就是能够以科技创新收获超越经济周期的回报。 科技创新，\n将带来长期劳动生产力大幅提升以及商业模式的改变，能创造最大价值。在这方面，美股科技股目\n前仍具备明显的优势。 加上美股“熊短牛长”的特征， 每一次回调都是新的起点。 在经济向上的时候，\n科技股的波动通常会超过市场平均水平，下跌的时候跌幅也比较大。但从长期来看，科技股的走势\n就像海浪一样一波一波地涌起，每一波向上的幅度都会超越前期的高点，到达下一个新的高度。换\n句话说，经济自带周期，但每次科技创新投资能够超越周期。通过累积和进化，科技投资将呈现一\n华夏全球科技先锋混合型证券投资基金（QDII）2025 年第 2 季度报告 \n9 \n \n个长期波浪式上涨的态势。从美股纳斯达克指数、费城半导体指数的长期走势上，就能清楚地看到\n这一点。 \n在全球科技投资方面，我们还是持续呼吁及建议基金投资人，不要看到市场很热了，才进来做\n单笔投资；也不要因为市场跌了，而过度恐惧，不理性杀低。这样可能会因为市场波动而导致投资\n体验不佳。投资者可以做好本身的资金配置，通过定期定额投资的方式适当平滑波动，长期分享这\n些美国科技蓝筹巨头科技创新带来的红利及投资机会， 分散投资到美股， 坚持做时间及趋势的朋友，\n才能分享人类文明长期科技创新的肥美果实。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 1,833,249,507.06 82.74 \n中国香港 14,858.86 0.00 \n合计 1,833,264,365.92 82.74 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2025年第1季度报告",
+      "publish_date": "2025-04-22",
+      "report_year": "2025",
+      "announcement_id": "AN202504221660335694",
+      "relative_path": "2025/2025-04-22_华夏全球科技先锋混合型证券投资基金（QDII）2025年第1季度报告_AN202504221660335694.pdf",
+      "pages": 13,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": -2.03,
+      "one_year_benchmark_pct": 22.74,
+      "strategy_text": "2025 年 1 季度，美国股票市场，由于美国总统特朗普上任的激进关税政策对美国经济的不确定\n性，加剧了市场的波动性，也使得美股迎来了修正。美股标普500 指数目前回档技术性修正了 10%\n左右。使得市场超买及市场估值较高压力，获得了一定纾解。本基金聚焦投资于高成长的科技蓝筹\n股，第一季相对跌幅比指数高。 \n特朗普政策将主导今年的美股走势及市场波动性。从政策角度看，未来需持续关注减税、削减\n政府部门、关税及贸易战、驱逐移民、压降油价等政策出台及落地的实际情况。而且特朗普政策间\n华夏全球科技先锋混合型证券投资基金（QDII）2025 年第 1 季度报告 \n6 \n \n常相互矛盾， 有利于经济增长， 但可能持续推升通胀， 带来的不确定性较高， 我们将继续保持跟踪。 \n我们中长期继续看好美国经济韧性及 AI 科技大趋势的成长机会。2025 年，投资方面重点关注\n三个方面： 特朗普的政策举措、 美联储的降息节奏以及AI 市场的实际变化。 特朗普政策总体对美国\n经济会有较好的带动提升，而通胀压力较大，同时也会带来更高的宏观不确定性；美联储方面，降\n息步伐是否进一步暂缓需要结合美国各项经济数据进行密切关注。 \n从投资操作看，除 AI 相关产业是确定性成长机会外，其他行业的成长性都相对疲软。目前AI\n行业正处于从乐观预期、 强反应到结果验证的阶段。 近期AI 市场热情及成长幅度有一定下降， 但从\n估值看， 回调的市场反应已经初步到位。 同时AI 革命带来的生产力跳跃， 也是经济增长的持续推动\n力。AI 在应用端（software， 机器人，无人机，AI AGENT，ADAS）在 2025 年将是百花齐放，是\n2025 年投资的重要方向。2025 年我们仍将继续聚焦 AI 相关的大方向投资。我们集中投资了美国最\n优秀的 7 大科技公司，包含英伟达、微软、苹果、谷歌、亚马逊、脸书META 及特斯拉及两大 AI\n核心科技股：博通及台积电，前 3 年基金取得了优异的投资业绩。AI 的趋势至少能看 3 到 5 年，乐\n观一点能看到 10 年以上。随着各行各业导入 AI，AI 将极大地改变人类生活，这是一个投资人不容\n错过的可长可久的大级别投资机会。所以目前基金投资配置没有改变，并将逢低持续加码。 \n我们认为美国科技股最大的吸引力， 就是能够以科技创新收获超越经济周期的回报。 科技创新，\n将带来长期劳动生产力大幅提升以及商业模式的改变，能创造最大价值。在这方面，美股科技股目\n前仍具备明显的优势。 加上美股“熊短牛长”的特征， 每一次回调都是新的起点。 在经济向上的时候，\n科技股的波动通常会超过市场平均水平，下跌的时候跌幅也比较大。但从长期来看，科技股的走势\n就像海浪一样一波一波地涌起，每一波向上的幅度都会超越前期的高点，到达下一个新的高度。换\n句话说，经济自带周期，但每次科技创新投资能够超越周期。通过累积和进化，科技投资将呈现一\n个长期波浪式上涨的态势。从美股纳斯达克指数、费城半导体指数的长期走势上，能清楚地看到这\n一点。 \n在全球科技投资方面，我们还是持续呼吁及建议基金投资人，不要看到市场很热了，才进来做\n单笔投资，这样可能会因为波动而导致投资体验不佳，可以做好本身的资金配置，通过定时定额投\n资的方式适当平滑波动，长期分享这些美国科技蓝筹巨头科技创新带来的红利及投资机会，分散投\n资到美股，做时间及趋势的朋友。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 1,414,814,578.39 65.59 \n中国香港 15,050.07 0.00 \n合计 1,414,829,628.46 65.59 \n5.3",
+      "mentions_leveraged_funds": true
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2024年年度报告",
+      "publish_date": "2025-03-31",
+      "report_year": "2024",
+      "announcement_id": "AN202503311649453213",
+      "relative_path": "2024/2025-03-31_华夏全球科技先锋混合型证券投资基金（QDII）2024年年度报告_AN202503311649453213.pdf",
+      "pages": 65,
+      "period_return_pct": 34.65,
+      "period_benchmark_pct": 16.91,
+      "one_year_return_pct": 34.65,
+      "one_year_benchmark_pct": 16.91,
+      "strategy_text": "2024 年从美国经济的整体趋势看，通胀情况开始出现明显的下滑趋势。美国经济在前期持续的\n高利率环境之下承压下行，美国经济整体处在通胀和名义增速下行、实际增速企稳的阶段，而近期\n非农数据、GDP 数据、消费数据等经济指标总体都超出预期，经济韧性强劲，距离经济衰退或者硬\n着陆都还有很大距离。 虽然劳动市场及国内消费开始露出疲态， 边际变差， 但总体还是表现非常好，\n具有韧性。 \n2024 年我们集中投资了美国最优秀的 7 大科技公司， 包含英伟达、 微软、 苹果、 谷歌、 亚马逊、\n脸书 META 及特斯拉及两大 AI 核心科技股：博通及台积电，在2024 年取得了优异的投资业绩。AI\n的趋势至少能看 3 到 5 年，乐观一点能看到 10 年以上。随着各行各业导入 AI，AI 将极大地改变人\n类生活，这是一个投资人不容错过的可长可久的大级别投资机会。",
+      "country_section": "................................................................... 44 \n8.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2024年第4季度报告",
+      "publish_date": "2025-01-22",
+      "report_year": "2024",
+      "announcement_id": "AN202501221642432986",
+      "relative_path": "2024/2025-01-22_华夏全球科技先锋混合型证券投资基金（QDII）2024年第4季度报告_AN202501221642432986.pdf",
+      "pages": 13,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 34.65,
+      "one_year_benchmark_pct": 16.91,
+      "strategy_text": "纳斯达克指数在 4 季度上涨 6.17%左右， 表现强劲。 纳斯达克指数在24 年全年上涨 28.64%左右，\n指数表现符合我们年初做的乐观判断。 \n本基金在 4 季度维持配置引领 AI 产业发展的半导体产业链龙头公司，包括 AI 算力芯片设计、\n先进通讯芯片设计、AI 晶圆代工、先进半导体设备等赛道龙头。这些公司的股价在7-8 月出现短暂\n较大波动， 但是后续股价仍然企稳走强, 在 4 季度部分持仓公司股价创历史新高。 同时， 本基金在3\n华夏全球科技先锋混合型证券投资基金（QDII）2024 年第 4 季度报告 \n6 \n \n季度末加仓了中国科技股票，这部分仓位在 10 月获得了很好受益。 \n人工智能 （AI） 产业是这个时代最大的产业浪潮。 全球互联网公司/各个行业公司/国家等不断开\n发新的大模型和垂直应用，对于 AI 算力的需求持续快速增长。全球 AI 半导体供应链订单饱满，进\n入销售增加-持续扩产-技术进步的正向循环。 \n本基金重仓的美国 AI 龙头芯片公司季度业绩和增长指引非常亮眼，持续引领全球AI 算力和网\n络通讯的技术进步。ASIC 芯片在推理端的应用是 25 年及以后的大产业趋势，ASIC 芯片出货量将大\n幅增长。随着算力密度的提升，铜/光互联也出现升级迭代，AEC 和 CPO 是新的技术方向。机柜电\n源，液冷散热等产品变化也带来新的投资机会。 \n有很多人质疑 AI 应用缺乏爆款， 但我们对于AI 应用已经取得的成绩满意， 并且对AI 应用的未\n来充满信心。ChatGPT 已经成为欧美日常工作和生活中的爆款应用，GPT4o(o 代表 Omni)多模态大\n模型大幅提升了大模型的交互性， 有效解决人们工作和生活中的问题。GPTo1 Pro 推出并开启收费，\n满足专业人士的推理需求。SORA 推出后使用火爆，普通人的艺术创作门槛大幅降低。Character.ai\n和 Midjourney 等 AI 应用崭露头角， 大幅提升各个细分行业的生产效。Office copilot 在欧美企业不断\n铺开， 用户数持续增长。SaaS 公司结合自身的 SaaS 产品， 纷纷推出AI Agent， 进一步提升客户的工\n作效率， 也产生了新的收入。 在消费电子方面，OpenAI 和苹果达成合作协议，ChatGPT 将集成到 iOS18\n等操作系统中，标志着 AI 原生智能手机预期在 25 年问世。我们相信 AI 时代才到奇点，未来的 AI\n应用和 AI 硬件，会带来各个行业商业模式的改变。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 980,415,321.44 60.97 \n中国香港 100,866,207.03 6.27 \n中国内地 57,127,241.82 3.55 \n合计 1,138,408,770.29 70.79 \n5.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2024年第3季度报告",
+      "publish_date": "2024-10-25",
+      "report_year": "2024",
+      "announcement_id": "AN202410251640488222",
+      "relative_path": "2024/2024-10-25_华夏全球科技先锋混合型证券投资基金（QDII）2024年第3季度报告_AN202410251640488222.pdf",
+      "pages": 13,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 40.25,
+      "one_year_benchmark_pct": 11.59,
+      "strategy_text": "纳斯达克指数在 3 季度上涨 2.57%左右， 表现稳健。 中国股票在9 月出现大幅上涨，3 季度表现\n亮眼。 \n本基金在 3 季度维持配置引领 AI 产业发展的半导体产业链龙头公司，包括 AI 算力芯片设计、\n先进通讯芯片设计、AI 晶圆代工、先进半导体设备等赛道龙头。这些公司的股价在7-8 月出现短暂\n较大波动，但后续股价仍然企稳走强。同时，本基金在 3 季度加仓了中国科技股票，这部分仓位在\n9 月获得了较好受益。 \n华夏全球科技先锋混合型证券投资基金（QDII）2024 年第 3 季度报告 \n6 \n \n人工智能（AI）产业在全球方兴未艾，已经成为巨大产业浪潮。全球互联网公司/各个行业公司\n/国家等不断开发新的大模型和垂直应用，对于AI 算力的需求持续快速增长。 全球AI 半导体供应链\n订单饱满，进入销售增加-持续扩产-技术进步的正向循环。 \n本基金重仓的美国 AI 龙头芯片公司季度业绩和增长指引非常亮眼，持续引领全球AI 算力和网\n络通讯的技术进步。股价在短暂的波动后企稳走强。经过了供应链的小改动后，GPU 新产品将在财\n年 4 季度出货，潜在需求极其旺盛。 \n特别的，OpenAI 公司在 9 月推出 GPTo1， 该模型在数理逻辑推理方面相比GPT4 有了很大提升，\n在各种智力活动需求中有更好的表现。GPT-o1 在推理时引入了 inference-time scaling， 极大增强了推\n理的能力和准确性，并在推理侧产生新的巨大的算力需求。 \n有很多人质疑 AI 应用缺乏爆款， 但我们对于AI 应用已经取得的成绩满意， 并且对AI 应用的未\n来充满信心。ChatGPT 已经成为欧美日常工作和生活中的爆款应用，GPT4O(O 代表 Omni)多模态大\n模型大幅提升了大模型的交互性，有效解决人们工作和生活中的问题。 据第三方数据，OpenAI 的年\n化收入已经超过 34 亿美元， 并且还在快速增长。 以Character.ai 和 Midjourney 等为代表的 AI 应用崭\n露头角，大幅提升各个细分行业的生产效。Office copilot 在欧美企业不断铺开，用户数持续增长。5\n月的台北电脑展， 多款AI PC 推出市场。6 月 OpenAI 亦和苹果达成合作协议，ChatGPT 将集成到 iOS18\n等操作系统中，标志着 AI 原生智能手机预期在 25 年问世。我们相信 AI 时代才到奇点，未来的 AI\n应用和 AI 硬件，会带来各个行业商业模式的改变。 \n目前，美国科技股票基本面维持强劲，且估值仍处于合理位置。3 季度在美国通胀进一步回落\n下，美联储在 9 月进行了 4 年来首次降息，并且一次性降息 50 个基点，标志着美国进入降息周期。\n货币宽松将提振经济，这对股市亦有助力。本基金对全球科技股票的未来表现充满信心。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 421,678,746.35 41.09 \n中国香港 207,343,402.93 20.20 \n中国内地 102,261,435.40 9.96 \n合计 731,283,584.68 71.26 \n5.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2024年中期报告",
+      "publish_date": "2024-08-30",
+      "report_year": "2024",
+      "announcement_id": "AN202408301639596779",
+      "relative_path": "2024/2024-08-30_华夏全球科技先锋混合型证券投资基金（QDII）2024年中期报告_AN202408301639596779.pdf",
+      "pages": 50,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 36.77,
+      "one_year_benchmark_pct": -1.9,
+      "strategy_text": "2024 年，在 AI（人工智能）产业发展的带领下，纳斯达克指数在 1 季度上涨 9.11%左右，在 2\n季度上涨 8.3%左右。AI 产业在全球方兴未艾，2024 年上半年，AI 受益的股票领涨美股，特别是AI\n算力芯片和半导体产业链的公司表现领先。 \n本基金主要配置于美股半导体、互联网、消费电子、电动车、SaaS 软件等行业龙头公司，同时\n加大配置于 AI 受益公司，持仓结构维持稳定。特别的，本基金在 2 季度加大配置引领 AI 产业发展\n的半导体产业链龙头公司，包括 AI 算力芯片设计、先进通讯芯片设计、AI 晶圆代工、先进半导体\n设备等细分赛道，这些公司在上半年都有较大涨幅，助推本基金净值出色表现。",
+      "country_section": "................................................................... 33 \n7.3",
+      "mentions_leveraged_funds": true
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2024年第2季度报告",
+      "publish_date": "2024-07-18",
+      "report_year": "2024",
+      "announcement_id": "AN202407181638031146",
+      "relative_path": "2024/2024-07-18_华夏全球科技先锋混合型证券投资基金（QDII）2024年第2季度报告_AN202407181638031146.pdf",
+      "pages": 12,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 36.77,
+      "one_year_benchmark_pct": -1.9,
+      "strategy_text": "人工智能（AI）产业在全球方兴未艾，带动全球科技股票在2024 年 2 季度继续表现强势。纳斯\n达克指数在 2 季度上涨 8.3%左右，上半年累计上涨 18.1%左右，十分亮眼。 \nAI 产业已经成为全球性的巨大产业浪潮。全球互联网公司/各个行业公司/国家等不断开发新的\n大模型和垂直应用，对于AI 算力的需求持续提升。全球AI 半导体供应链订单饱满，进入销售增加-\n持续扩产-技术进步的正向循环。 \n本基金在 2 季度加大配置引领 AI 产业发展的半导体产业链龙头公司，包括 AI 算力芯片设计，\n华夏全球科技先锋混合型证券投资基金（QDII）2024 年第 2 季度报告 \n6 \n \n先进通讯芯片设计，AI 晶圆代工， 先进半导体设备等细分赛道。AI 产业股票在上半年涨幅优秀， 助\n推本基金净值出色表现。 \n本基金重仓的美国 AI 龙头芯片公司季度业绩大超市场预期，GPU 产品迭代加快，并且从单一\n芯片销售转变成机架系统销售，持续引领全球 AI 算力和网络通讯的技术进步。 \n有很多人质疑 AI 应用缺乏爆款， 但我们对于AI 应用已经取得的成绩满意， 并且对AI 应用的未\n来充满信心。ChatGPT 已经成为欧美日常工作和生活中的爆款应用，GPT4O(O 代表 Omni)多模态大\n模型大幅提升了大模型的交互性，有效解决人们工作和生活中的问题。 据第三方数据，OpenAI 的年\n化收入已经超过 34 亿美元， 并且还在快速增长。 以Character.ai 和 Midjourney 等为代表的 AI 应用崭\n露头角， 大幅提升各个细分行业的生产效率。5 月的台北电脑展， 多款AI PC 推出市场。6 月 OpenAI\n亦和苹果达成合作协议，ChatGPT 将集成到 iOS18 等操作系统中，标志着 AI 原生智能手机预期在\n25 年问世。我们相信 AI 时代才到奇点，未来的 AI 应用和 AI 硬件，会带来各个行业商业模式的改\n变。 \n目前， 美国科技股票基本面维持强劲， 且估值仍处于合理位置。2 季度美国的通胀进一步回落，\n而加拿大和欧洲已经在 6 月降息。 市场预期美联储降息会在下半年发生， 货币宽松加码以提振经济，\n这对股市亦有助力。本基金对全球科技股票的未来表现充满信心。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 418,727,844.00 39.42 \n中国香港 294,681,884.49 27.74 \n中国内地 37,953,916.80 3.57 \n合计 751,363,645.29 70.73 \n5.3",
+      "mentions_leveraged_funds": true
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2024年第1季度报告",
+      "publish_date": "2024-04-19",
+      "report_year": "2024",
+      "announcement_id": "AN202404191630640684",
+      "relative_path": "2024/2024-04-19_华夏全球科技先锋混合型证券投资基金（QDII）2024年第1季度报告_AN202404191630640684.pdf",
+      "pages": 13,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 49.02,
+      "one_year_benchmark_pct": -1.72,
+      "strategy_text": "2024 年，在 AI（人工智能）产业发展的带领下，全球科技股票的开局表现突出。纳斯达克指数\n在 1 季度上涨 9.11%左右。 \nAI 产业已经成为全世界公认的最大产业浪潮。1 季度，AI 受益的股票领涨美股，特别是 AI 算\n力芯片和上下游产业链的公司表现最好。无论是大预言模型还是各个行业的垂直应用，都需要AI\n算力作为基础设施。AI 算力建设如火如荼，各大互联网科技公司，各非科技行业的龙头公司，甚至\n华夏全球科技先锋混合型证券投资基金（QDII）2024 年第 1 季度报告 \n6 \n \n主权国家都积极投入 AI 基础设施的建设。 \n大语言模型不断迭代进化，相信今年会以更加出色的表现惊艳人们，在答疑解惑之外，解决人\n们日常生活中的问题。 以SORA 和 KIMI 为代表的 AI 应用开始方兴未艾， 大幅提升各个细分行业的\n生产效率。我们相信 AI 时代才到奇点，未来更可能带来商业模式的改变。 \n本基金主要配置于美股互联网、半导体、SaaS 软件、消费电子、电动车等龙头公司，持仓结构\n维持稳定，同时加大配置于 AI 受益公司。特别的，本基金抓住了受益于 AI 的半导体龙头公司，这\n些公司在一季度都有较大涨幅。 \n目前， 美国科技股票基本面维持强劲， 且估值处于合理位置。1 季度美国的经济增长超出预期，\n唯通胀受到大宗商品影响回落较慢。 我们不预期美联储降息很快发生， 但是相信AI 等科技会快速发\n展。本基金对全球科技股票的未来表现充满信心。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 356,346,959.06 48.37 \n中国香港 91,468,707.51 12.42 \n中国内地 21,130,985.00 2.87 \n合计 468,946,651.57 63.65 \n5.3",
+      "mentions_leveraged_funds": true
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2023年年度报告",
+      "publish_date": "2024-03-28",
+      "report_year": "2023",
+      "announcement_id": "AN202403281628423819",
+      "relative_path": "2023/2024-03-28_华夏全球科技先锋混合型证券投资基金（QDII）2023年年度报告_AN202403281628423819.pdf",
+      "pages": 56,
+      "period_return_pct": 58.19,
+      "period_benchmark_pct": 12.23,
+      "one_year_return_pct": 58.19,
+      "one_year_benchmark_pct": 12.23,
+      "strategy_text": "早在 2022 年年底我们就判断美联储加息会在 2023 年结束，经济和股市将随之走出底部，科技\n股将是助推经济增长和股市上涨的领头羊。当这个结论得到印证时，我们已经知道怎么去布局了。\n通过产业链梳理和交叉验证， 我们选择重仓以AI 为主的大型蓝筹科技股， 首先是最核心的算力芯片，\n其次是相关的云服务、软件、模型等。在经济复苏初期，中小成长股的抗风险能力是比较弱的，而\n大型蓝筹科技股的技术及市场优势、财务状况及现金流都比较好，还通过自购向市场传递信心。我\n们认为科技股最大的吸引力就是能够收获超越周期的回报。创新是最有价值的，因为它带来了一些\n难以替代、不可复制的东西，而这些东西将带来长期价值以及商业模式的改变。在这方面，美股科\n技股目前仍具备明显的优势。从美股科技股的表现来看，当前已经提前走出了下行周期，回到了长\n期上涨的轨道。 在这过程中， 即使遭遇回调， 持续时间也不会太久， 再加上美股“熊短牛长”的特征，\n每一次回调都是新的起点。在经济向上的时候，科技股的波动通常会超过市场平均水平，下跌的时\n候跌幅也比较大。但从长期来看，科技股的走势就像海浪一样一波一波地涌起，每一波向上的幅度\n都会超越前期的高点，到达一个新的高度。换句话说，经济自带周期，但科技投资能够超越周期。\n通过累积和进化，科技投资将呈现一个长期波浪式上涨的态势。从美股纳斯达克指数、费城半导体\n指数的走势上，我们能清楚地看到这一点。 \n我们集中投资了美国最优秀的 7 大科技公司，包含英伟达、微软、苹果、谷歌、亚马逊、脸书\nMETA 及特斯拉，及两大 AI 核心科技股：博通及超威半导体。个股仓位占组合仓位的比重均在9%\n以上。取得了优异的投资业绩。AI 的趋势至少能看 3 到 5 年，乐观一点能看到 10 年以上。随着各\n行各业导入 AI，AI 将极大地改变人类生活， 这是一个投资人不容错过的可长可久的大级别投资机会。",
+      "country_section": "................................................................... 43 \n8.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2023年第4季度报告",
+      "publish_date": "2024-01-19",
+      "report_year": "2023",
+      "announcement_id": "AN202401191617719105",
+      "relative_path": "2023/2024-01-19_华夏全球科技先锋混合型证券投资基金（QDII）2023年第4季度报告_AN202401191617719105.pdf",
+      "pages": 12,
+      "period_return_pct": 14.31,
+      "period_benchmark_pct": 0.42,
+      "one_year_return_pct": 58.19,
+      "one_year_benchmark_pct": 12.23,
+      "strategy_text": "纳斯达克指数在 4 季度上涨 13.56%左右，23 年全年大幅上涨 43.42%左右。 \n本基金在 4 季度仍重仓美国科技股，持仓结构维持稳定。回顾 4 季度，美国的经济保持强势，\nGDP 增长超出预期，通胀则继续回落到 3%左右，就业在高息环境下仍然保持强劲。在硅谷，AI 为\n代表的科技浪潮仍如火如荼，AI 大模型和 AI 应用持续发布推出，生成式 AI 在逐步落地变现。 \n本基金在 23 年年初的时候就非常看好 23 年全年美国科技股的表现。主要原因是美国科技公司\n基本面维持强劲， 在经过22 年的下跌后估值吸引， 美国宏观经济韧性强， 同时我们预期通胀得到控\n制稳定回落，美国加息周期接近尾声。超出我们年初预期的是以ChatGPT 为代表的 AI 产业快速爆\n发，成为美国科技股大幅上涨的催化剂。 \n华夏全球科技先锋混合型证券投资基金（QDII）2023 年第 4 季度报告 \n6 \n \n本基金主要配置于美股互联网，半导体，SaaS 软件，消费电子，电动车等龙头公司。ChatGPT\n为代表的大模型能够让 C 端获得新奇的产品体验，同时极大赋能软件应用和产品，大模型自身也在\n不断快速迭代。AI 时代，带来了对于算力的大量需求，数据中心的通信架构也出现很大变化，以算\n力芯片和通信芯片为代表的半导体公司因此受益。本基金相信AI 时代才到奇点，未来新的 AI 应用\n会层出不穷，极大的提升各个行业工作效率，甚至重塑各行业的产品形态和商业模式。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 283,292,123.63 80.25 \n合计 283,292,123.63 80.25 \n5.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2023年第3季度报告",
+      "publish_date": "2023-10-24",
+      "report_year": "2023",
+      "announcement_id": "AN202310241602898286",
+      "relative_path": "2023/2023-10-24_华夏全球科技先锋混合型证券投资基金（QDII）2023年第3季度报告_AN202310241602898286.pdf",
+      "pages": 12,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 26.28,
+      "one_year_benchmark_pct": 17.32,
+      "strategy_text": "纳斯达克指数在 3 季度下跌 4.12%左右，在经过 1-2 季度的大幅上涨后，出现小幅回调。 \n从 2-3 季度看，美国的经济增长超出预期，通胀稳定回落在预期之中，就业在高息环境下仍然\n保持强劲。 \n本基金在年初的时候就非常看好今年美国科技股的表现。主要原因是美国科技公司基本面维持\n强劲，在经过 22 年的下跌后估值吸引，美国宏观经济韧性强，同时美国加息周期接近尾声。超出我\n们年初预期的是以 ChatGPT 为代表的 AI 产业快速爆发，成为美国科技股上涨的催化剂。 \n本基金在 3 季度仍然重仓美国科技股， 持仓结构稳定。 本基金主要配置于美股互联网、 半导体、\nSaaS 软件、消费电子、电动车等龙头公司。AI 时代，带来了对于算力的新需求，半导体公司因此受\n益。以 ChatGPT 为代表的大模型极大赋能软件应用和产品，产生了新的收入。本基金相信AI 时代\n华夏全球科技先锋混合型证券投资基金（QDII）2023 年第 3 季度报告 \n6 \n \n才到奇点，未来新的应用会层出不穷，极大的提升各个行业工作效率，甚至重塑各行业的产品形态\n和商业模式。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 223,915,646.52 93.19 \n合计 223,915,646.52 93.19 \n华夏全球科技先锋混合型证券投资基金（QDII）2023 年第 3 季度报告 \n7 \n \n5.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2023年中期报告",
+      "publish_date": "2023-08-30",
+      "report_year": "2023",
+      "announcement_id": "AN202308301596809522",
+      "relative_path": "2023/2023-08-30_华夏全球科技先锋混合型证券投资基金（QDII）2023年中期报告_AN202308301596809522.pdf",
+      "pages": 42,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 25.59,
+      "one_year_benchmark_pct": 9.06,
+      "strategy_text": "本基金在上半年取得优秀的业绩，主要原因是重仓美国科技股，同时也受惠于美元的升值。纳\n斯达克指数上半年上涨 31.73%左右，表现出色。 \n本基金在年初市场对纳斯达克非常悲观的时候，就坚定看好今年美国科技股的表现。主要原因\n是美国科技公司基本面维持强劲， 在经过22 年的下跌后估值非常有吸引力， 同时美国宏观经济韧性\n较强，而美国通胀持续回落，使得美国加息周期接近尾声。超出我们预期的是以ChatGPT 为代表的\nAI 快速崛起，成为美国科技股上涨的催化剂。 \n本基金上半年主要配置于美股互联网、半导体、SaaS 软件、消费电子、电动车等方向，上述方\n向均产生了很强的正收益。",
+      "country_section": "................................................................... 31 \n7.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2023年第2季度报告",
+      "publish_date": "2023-07-20",
+      "report_year": "2023",
+      "announcement_id": "AN202307201592480531",
+      "relative_path": "2023/2023-07-20_华夏全球科技先锋混合型证券投资基金（QDII）2023年第2季度报告_AN202307201592480531.pdf",
+      "pages": 12,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 25.59,
+      "one_year_benchmark_pct": 9.06,
+      "strategy_text": "纳斯达克指数在 2 季度上涨 12.81%左右，上半年上涨 31.73%左右。 \n本基金今年以来取得优秀的业绩，主要原因是重仓了美国科技股，同时也受惠于美元的升值。 \n本基金在年初的时候就非常看好今年美国科技股的表现。主要原因是美国科技公司基本面维持\n强劲，美国宏观经济韧性强，在经过去年一年的下跌后估值吸引，同时美国加息周期接近尾声。超\n出我们预期的是以 ChatGPT 为代表的 AI 快速崛起，成为美国科技股上涨的催化剂。 \n本基金主要配置于美股互联网，半导体，SaaS 软件，消费电子，电动车等龙头公司。AI 时代，\n带来了对于算力的新需求，半导体公司因此受益。以OPEN AI 为代表的大模型极大赋能软件应用和\n产品， 提升了软件产品的能力， 产生了新的收入。 本基金相信AI 时代才刚过奇点， 未来新的应用会\n层出不穷，极大的提升各个行业工作效率，甚至重塑商品形态和商业模式。 \n华夏全球科技先锋混合型证券投资基金（QDII）2023 年第 2 季度报告 \n6",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 191,705,670.37 92.61 \n中国香港 3,190,714.63 1.54 \n合计 194,896,385.00 94.15 \n华夏全球科技先锋混合型证券投资基金（QDII）2023 年第 2 季度报告 \n7 \n \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2023年第一季度报告",
+      "publish_date": "2023-04-21",
+      "report_year": "2023",
+      "announcement_id": "AN202304211585664617",
+      "relative_path": "2023/2023-04-21_华夏全球科技先锋混合型证券投资基金（QDII）2023年第一季度报告_AN202304211585664617.pdf",
+      "pages": 11,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": -18.01,
+      "one_year_benchmark_pct": 7.1,
+      "strategy_text": "1 季度，中美科技板块表现很好，科创 50 和纳斯达克分别是中美股市表现最好的指数。 \n如我们之前预期，美国 1 季度通胀继续回落而经济增长稳定，纳斯达克迎来反转向上行情。我\n们对美国科技股的前景更加乐观。美联储在 23 年将会停止加息，科技股估值将会得到修复。而以\nChatGPT 为代表的 AI 在未来会给各个行业带来革命性变化。 \n报告期内，本基金持仓板块维持高配美国科技股，以互联网，半导体，消费电子，软件为主。\n本基金持续优化持仓结构，对基本面转差的股票进行卖出。 \n中长期，我们持续看好全球科技发展前景。 \n我们看好美国互联网公司的持续成长。加息对于有强劲现金流和稳定增长的巨头几乎没有基本\n面和估值影响。AI 引领科技创新的趋势，巨头们都在积极布局 AI 大模型和应用。 \n我们看好美股半导体板块。随着AI 的兴起，半导体的需求有望加速增长，带动半导体设计， 制\n造和设备维持高景气。 半导体设计创新与先进制程的落地形成强绑定。 我们尤其看好AI/数据中心对\n于 GPU/CPU/存储的需求，电动车/AIoT 对于功率半导体的需求。 \n我们也看好以 SaaS 为主的美股软件板块，加息使得美股 SaaS 板块从 1 月开始出现大幅下跌，\n但是目前估值已经变得很吸引。 在美欧人力资源短缺的背景下， 公有云计算带动许多SaaS 应用的渗\n透率在快速提升，垂直行业领域的 SaaS 也在快速成长。未来 AI 赋能软件，将加强现有的功能，创\n造新的功能，软件对于办公的效率提升将会更加明显，从而使软件的ARPU 进一步提升。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 79,403,376.63 92.05 \n中国香港 109,290.56 0.13 \n合计 79,512,667.19 92.17 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2022年年度报告",
+      "publish_date": "2023-03-30",
+      "report_year": "2022",
+      "announcement_id": "AN202303301584685155",
+      "relative_path": "2022/2023-03-30_华夏全球科技先锋混合型证券投资基金（QDII）2022年年度报告_AN202303301584685155.pdf",
+      "pages": 56,
+      "period_return_pct": -38.17,
+      "period_benchmark_pct": -18.48,
+      "one_year_return_pct": -38.17,
+      "one_year_benchmark_pct": -18.48,
+      "strategy_text": "1 季度，沪深 300 上涨 1.52%左右，创业板指下跌 19.96%。标普 500 下跌 4.95%，纳斯达克下\n跌 9.10%。A 股市场在 1 月单边下跌，2 月企稳震荡，3 月前半月大幅下跌后反弹震荡。美股市场在\n1 月大幅下跌，2 月震荡下行，3 月在前半月探底后快速回升。 \n美联储加息使得流动性和估值受到影响，俄乌战争则推升了通胀并降低了市场风险偏好。美国\n科技股和中国科技股在 1 季度都出现较大回调。 \n2 季度，沪深 300 上涨 6.21%左右，创业板指数上涨 5.68%，标普 500 下跌 16.45%，纳斯达克\n下跌 22.44%。A 股和港股在 4 月快速下跌并见底，5 月企稳震荡，6 月大幅反弹回升。 美股市场在4\n月大幅下跌，5 月震荡，6 月则继续下跌。 \n美国通胀持续高企，美联储不得不持续加息，市场流动性和风险偏好受到很大负面影响。美国\n科技股在 2 季度都出现较大回撤，让投资人大跌眼镜。 \n3 季度，沪深 300 下跌 15.16%左右，创业板指数下跌 18.56%左右，标普 500 下跌 5.28%左右，\n纳斯达克下跌 4.11%左右。A 股和港股在 7、8、9 月连续下跌。美股市场在 7 月大幅反弹，但在 8、\n9 月又下跌探底。 \n美国通胀在 3 季度仍然高企，美联储持续加息，市场流动性和风险偏好受到很大负面影响。美\n国科技股在 7 月反弹后，在 8、9 月回撤探底。美国科技股的涨跌与加息预期大体相关联，所以呈现\n出先反弹后下跌的走势。 \n4 季度，沪深 300 上涨 1.75%左右，创业板指数上涨 2.53%左右，标普 500 上涨 7.08%左右，纳\n斯达克下跌 1.03%左右。 \n美国通胀在 10 月出现向下拐点， 为23 年美联储停止加息打下了基础。 美股在4 季度企稳回升，\n但是美国科技股仍然落后于市场。主要是美国科技股的走势与加息预期相关联，而美联储态度仍然\n维持鹰派，所以呈现出震荡走势。 \n华夏全球科技先锋混合型证券投资基金（QDII）2022 年年度报告 \n12 \n \n报告期内，本基金持仓板块维持高配美国科技股，以互联网、半导体、消费电子、软件为主。\n本基金持续优化持仓结构，降低了整体持仓的 beta，对基本面转差的股票进行卖出。",
+      "country_section": "................................................................... 46 \n8.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2022年第四季度报告",
+      "publish_date": "2023-01-20",
+      "report_year": "2022",
+      "announcement_id": "AN202301201582217052",
+      "relative_path": "2022/2023-01-20_华夏全球科技先锋混合型证券投资基金（QDII）2022年第四季度报告_AN202301201582217052.pdf",
+      "pages": 11,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": -38.17,
+      "one_year_benchmark_pct": -18.48,
+      "strategy_text": "4 季度，沪深 300 上涨 1.75%左右，创业板指数上涨 2.53%左右，标普 500 上涨 7.08%左右，纳\n斯达克下跌 1.03%左右。 \n美国通胀在 10 月出现向下拐点， 为23 年美联储停止加息打下了基础。 美股在4 季度企稳回升，\n但是美国科技股仍落后于市场。主要是美国科技股的走势与加息预期相关联，而美联储态度仍然维\n持鹰派，所以呈现出震荡走势。 \n报告期内，本基金持仓板块维持高配美国科技股，以互联网、半导体、消费电子、软件为主。\n本基金持续优化持仓结构，对基本面转差的股票进行卖出。 \n目前美国科技股的估值已经回落到历史均值之下，正是很好的布局时点。 \n我们看好美国互联网公司的持续成长。加息对于有强劲现金流和稳定增长的巨头几乎没有基本\n面和估值影响。 移动互联网的创新仍在持续。 而虚拟现实和WEB3.0 也许是下一波科技创新的趋势。 \n我们看好美股半导体板块。随着电动车渗透率的提升和元宇宙的兴起，半导体的需求有望加速\n增长，带动半导体设计和设备维持高景气，半导体设计创新与先进制程的落地形成强绑定。我们尤\n其看好电动车/AIoT 对于功率半导体的需求，数据中心/无人驾驶/VR 对于 GPU/CPU/存储的需求。 \n我们也看好以 SaaS 为主的美股软件板块，加息使得美股 SaaS 板块从 1 月开始出现大幅下跌，\n但是目前估值已经变得很吸引。 在美欧人力资源短缺的背景下， 公有云计算带动许多SaaS 应用的渗\n透率在快速提升，其中专业的网络安全保护 SaaS 在当今世界变得更加重要，垂直行业领域的 SaaS\n也在快速成长。 \n在化石能源供给受限价格高企的背景下，全球能源自主独立的趋势更强，我们看好光伏和风电\n在全球整体能源份额的加速提升，看好全球电动车渗透率的快速提升。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 49,778,833.17 82.56 \n中国香港 477,363.49 0.79 \n合计 50,256,196.66 83.35 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2022年第三季度报告",
+      "publish_date": "2022-10-25",
+      "report_year": "2022",
+      "announcement_id": "AN202210251579430631",
+      "relative_path": "2022/2022-10-25_华夏全球科技先锋混合型证券投资基金（QDII）2022年第三季度报告_AN202210251579430631.pdf",
+      "pages": 11,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": -31.83,
+      "one_year_benchmark_pct": -20.75,
+      "strategy_text": "3 季度，沪深 300 下跌 15.16%左右，创业板指数下跌 18.56%左右，标普 500 下跌 5.28%左右，\n纳斯达克下跌 4.11%左右。 \nA 股和港股在 7 至 9 月连续下跌。美股市场在 7 月大幅反弹，但在 8 至 9 月又下跌探底。 \n美国通胀在 3 季度仍然高企，美联储持续加息，市场流动性和风险偏好受到很大负面影响。美\n国科技股在 7 月反弹后，在 8、9 月回撤探底。美国科技股的涨跌与加息预期大体相关联，所以呈现\n出先反弹后下跌的走势。 \n报告期内，本基金持仓板块维持高配美国科技股，以互联网、半导体、消费电子、软件为主。\n本基金持续优化持仓结构，降低了整体持仓的 beta，对基本面转差的股票进行卖出。",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 50,829,214.96 86.79 \n合计 50,829,214.96 86.79 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2022年中期报告",
+      "publish_date": "2022-08-30",
+      "report_year": "2022",
+      "announcement_id": "AN202208301577821685",
+      "relative_path": "2022/2022-08-30_华夏全球科技先锋混合型证券投资基金（QDII）2022年中期报告_AN202208301577821685.pdf",
+      "pages": 42,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": -36.09,
+      "one_year_benchmark_pct": 0.92,
+      "strategy_text": "上半年， 全球科技股票出现大分化。 美国科技股出现大幅回撤。 中国A 股新能源板块表现较好。 \n上半年，A 股科技跑输全市场。沪深 300 下跌 9.22%左右，而创业板指数下跌 15.41%左右，科\n创 50 下跌 20.92%左右。 美股科技大幅下跌， 标普500 下跌 20.58%左右， 而纳斯达克下跌29.51%左\n右。 \n美国通胀持续高企，美联储不得不持续加息，市场流动性和风险偏好受到较大负面影响。美国\n科技股在 1-2 季度都出现大幅回撤，让投资人大跌眼镜。 \n报告期内，本基金持仓板块维持高配美国科技股，以互联网，半导体，消费电子，软件为主。\n本基金持续优化持仓结构，降低了整体持仓的 beta，卖出基本面转差的股票。",
+      "country_section": "................................................................... 33 \n7.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2022年第二季度报告",
+      "publish_date": "2022-07-20",
+      "report_year": "2022",
+      "announcement_id": "AN202207201576364021",
+      "relative_path": "2022/2022-07-20_华夏全球科技先锋混合型证券投资基金（QDII）2022年第二季度报告_AN202207201576364021.pdf",
+      "pages": 12,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": -36.09,
+      "one_year_benchmark_pct": 0.92,
+      "strategy_text": "2 季度，沪深 300 上涨 6.21%左右，创业板指数上涨 5.68%，标普 500 下跌 16.45%，纳斯达克\n下跌 22.44%。 \nA 股和港股在 4 月快速下跌并见底，5 月企稳震荡，6 月大幅反弹回升。 美股市场在4 月大幅下\n跌，5 月震荡，6 月则继续下跌。 \n美国通胀持续高企，美联储不得不持续加息，市场流动性和风险偏好受到较大负面影响。美国\n科技股在 2 季度都出现较大回撤，让投资人大跌眼镜。 \n报告期内，本基金持仓板块维持高配美国科技股，以互联网，半导体，消费电子，软件为主。\n本基金持续优化持仓结构，降低了整体持仓的 beta，卖出基本面转差的股票。 \n我们对美国科技保持乐观，虽然美国通胀高企，美联储可能继续加息缩表，但是美国经济并没\n有衰退迹象。目前股价已经提前反映所有负面因素，美国科技估值已经回落到历史均值之下。 \n在化石能源供给，受限价格高企的背景下，全球能源自主独立的趋势更强，我们看好光伏和风\n电在全球整体能源份额的加速提升，看好全球电动车渗透率的快速提升。 \n我们看好美国互联网公司持续的增长。加息对于有强劲现金流和稳定增长的巨头几乎没有基本\n面和估值影响。 移动互联网的创新仍在持续。 而虚拟现实和WEB3.0 也许是下一波科技创新的趋势。 \n我们看好美股半导体板块。随着电动车渗透率的提升和元宇宙的兴起，半导体的需求有望加速\n增长，带动半导体设计和设备维持高景气，半导体设计创新与先进制程的落地形成强绑定。我们尤\n其看好电动车/AIoT 对于功率半导体的需求，数据中心/无人驾驶/VR 对于 GPU/CPU/存储的需求。 \n我们也看好以 SaaS 为主的美股软件板块，加息使得美股 SaaS 板块从 1 月开始出现大幅下跌，\n但是目前估值已经变得很吸引。 在美欧人力资源短缺的背景下， 公有云计算带动许多SaaS 应用的渗\n透率在快速提升，其中专业的网络安全保护 SaaS 在当今世界变得更加重要，垂直行业领域的 SaaS\n也在快速成长。 \n华夏全球科技先锋混合型证券投资基金（QDII）2022 年第 2 季度报告 \n6",
+      "country_section": "国家（地区） 公允价值（元） 占基金资产净值比例（％） \n美国 37,264,091.52 62.39 \n中国香港 7,557,091.68 12.65 \n合计 44,821,183.20 75.04 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2022年第一季度报告",
+      "publish_date": "2022-04-21",
+      "report_year": "2022",
+      "announcement_id": "AN202204211560593059",
+      "relative_path": "2022/2022-04-21_华夏全球科技先锋混合型证券投资基金（QDII）2022年第一季度报告_AN202204211560593059.pdf",
+      "pages": 13,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": -6.52,
+      "one_year_benchmark_pct": 5.44,
+      "strategy_text": "1 季度，沪深 300 指数上涨 1.52%左右，创业板指下跌 19.96%。标普 500 下跌 4.95%，纳斯达\n克下跌 9.10%。 \nA 股市场在 1 月单边下跌，2 月企稳震荡，3 月前半月大幅下跌后反弹震荡。 美股市场在1 月大\n幅下跌，2 月震荡下行，3 月在前半月探底后快速回升。 \n华夏全球科技先锋混合型证券投资基金（QDII）2022 年第 1 季度报告 \n6 \n \n美联储加息使得流动性和估值受到影响，俄乌战争则推升了通胀并降低了市场风险偏好。中美\n科技股在 1 季度都出现较大回调。 \n1 季度是光伏和锂电的淡季， 但排产环比稳中有增， 数据仍非常好。 在煤价油价高企的背景下，\n全球能源自主独立的趋势更强，我们看好光伏和风电在全球整体能源份额的加速提升，看好全球电\n动车渗透率的快速提升。 \n我们对美国科技保持乐观看法， 虽然22 年美联储可能多次加息， 俄乌战争仍悬而未决， 但目前\n股价已经提前反应，且加息对于有强劲现金流和稳定增长的巨头几乎没有估值影响。我们看好美股\n半导体板块。随着电动车渗透率的提升和元宇宙的兴起，半导体的需求有望加速增长，带动半导体\n设计和设备维持高景气， 半导体设计创新与先进制程的落地形成强绑定。 我们尤其看好电动车/AIoT\n对于功率半导体的需求， 数据中心/无人驾驶/VR 对于 GPU/CPU/存储的需求。 我们也看好以SaaS 为\n主的美股软件板块，加息使得美股 SaaS 板块从 1 月开始出现大幅下跌，目前估值已经变得很吸引。\n公有云计算带动许多 SaaS 应用的渗透率在快速提升，其中专业的网络安全保护 SaaS 在当今世界变\n得更加重要，垂直行业领域的 SaaS 也在快速成长。 \n报告期内，本基金持仓维持高配美国科技股，以互联网、半导体、消费电子和软件为主。同时\n组合持续优化持仓结构，卖出了基本面转差的股票。",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n美国 62,022,546.92 89.12 \n合计 62,022,546.92 89.12 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2021年年度报告",
+      "publish_date": "2022-03-30",
+      "report_year": "2021",
+      "announcement_id": "AN202203301555989737",
+      "relative_path": "2021/2022-03-30_华夏全球科技先锋混合型证券投资基金（QDII）2021年年度报告_AN202203301555989737.pdf",
+      "pages": 61,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": -4.78,
+      "one_year_benchmark_pct": 22.19,
+      "strategy_text": "2021 年，第 1-2 季度，全球科技股票出现较大分化。美国互联网和科技股票稳定上涨，中国A\n股半导体、新能源等股票表现强劲，中美生物科技股票表现一般，中国互联网股票则表现较差。 \n1-2 季度，A 股科技显著跑赢大盘。 沪深300 上涨 0.24%左右， 而创业板指数上涨17.22%左右，\n科创 50 上涨 14.0%左右。美股方面，标普500 上涨 14.4%左右，纳斯达克上涨12.54%左右。中证海\n外互联网指数则下跌 9.7%。 \n1-2 季度，本基金进行了积极的持仓调整，减持中国互联网股票，加配 A 股新能源和半导体板\n块。 \n3 季度，沪深 300 下跌 6.85%左右，恒生国企指数下跌 18.17%左右，标普 500 上涨 0.23%。A\n股市场在 7 月大幅下跌，在 8-9 月企稳回升，成长股跑赢价值股。周期板块表现最好。科技、新能\n源板块有一定超额收益。美股在 7-8 月维持上涨态势，在 9 月下跌。 \n3 季度，本基金持仓保持稳定，维持对美股科技的高配。维持 A 股新能源板块的高配，主要持\n有光伏和电动车产业链。A 股半导体板块在 7 月大涨，在 8-9 月开始回调，本基金顺势对半导体进\n行了减仓。 \n4 季度，沪深 300 上涨 1.52%左右，恒生国企指数下跌 5.62%左右，标普 500 上涨 10.65%。A\n股市场在 10 月小幅上涨，11 月又回踩，最后在 12 月企稳回升。4 季度价值股跑赢，中小市值股票\n则大幅跑赢大市值股票。A 股新能源板块出现明显修正。港股在 4 季度整体表现较差，互联网和生\n物科技板块大幅下跌，唯绿电运营商和电子板块表现强势。美股在 10 月大幅上涨，11 月平稳，12\n月又有上攻。美股半导体、消费电子、电动车表现亮眼，唯惟软件板块在12 月出现大幅回撤。 \n4 季度，本基金持仓保持稳定。维持对美股科技的高配，超配美股半导体相关股票，同时高配\n光伏和锂电为代表的 A 股新能源板块。",
+      "country_section": "................................................................. 41 \n8.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2021年第四季度报告",
+      "publish_date": "2022-01-21",
+      "report_year": "2021",
+      "announcement_id": "AN202201211541680167",
+      "relative_path": "2021/2022-01-21_华夏全球科技先锋混合型证券投资基金（QDII）2021年第四季度报告_AN202201211541680167.pdf",
+      "pages": 14,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": -4.78,
+      "one_year_benchmark_pct": 22.19,
+      "strategy_text": "4 季度，沪深 300 上涨 1.52%左右，恒生国企指数下跌 5.62%左右，标普 500 上涨 10.65%。A\n股市场在 10 月小幅上涨，11 月又回踩，最后在 12 月企稳回升。4 季度价值股跑赢，中小市值股票\n华夏全球科技先锋混合型证券投资基金（QDII）2021 年第 4 季度报告 \n6 \n \n则大幅跑赢大市值股票。A 股新能源板块出现明显修正。港股在 4 季度整体表现较差，互联网和生\n物科技板块大幅下跌，唯惟绿电运营商和电子板块表现强势。美股在10 月大幅上涨，11 月平稳，\n12 月又有上攻。美股半导体/消费电子/电动车表现亮眼，唯惟软件板块在 12 月出现大幅回撤。 \n报告期内，本基金持仓保持稳定。维持对美股科技的高配，超配美股半导体相关股票。维持A\n股新能源板块的高配，主要持有光伏和锂电。 \n我们对美国科技保持乐观看法， 虽然在美联储加息预期下， 以SaaS 为主的美股软件板块率先做\n出下跌反应， 但是加息对于有强劲现金流和稳定成长的巨头 （如FAANG） 几乎没有估值影响。 随着\n电动车和元宇宙的兴起，半导体的需求有望加速增长，带动半导体设计和设备维持高景气，半导体\n设计创新与先进制程的落地形成强绑定。 我们尤其看好电动车/AIoT 对于功率半导体的需求， 数据中\n心/无人驾驶/VR 对于 GPU/CPU/存储的需求。",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n美国 45,387,934.13 57.15 \n中国内地 24,312,604.49 30.62 \n德国 967,870.38 1.22 \n合计 70,668,409.00 88.99 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2021年第三季度报告",
+      "publish_date": "2021-10-26",
+      "report_year": "2021",
+      "announcement_id": "AN202110261525053530",
+      "relative_path": "2021/2021-10-26_华夏全球科技先锋混合型证券投资基金（QDII）2021年第三季度报告_AN202110261525053530.pdf",
+      "pages": 14,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 8.55,
+      "one_year_benchmark_pct": 1.48,
+      "strategy_text": "3 季度，沪深 300 下跌 6.85%左右，恒生国企指数下跌 18.17%左右，标普 500 上涨 0.23%。 \nA 股市场在 7 月大幅下跌，在 8-9 月企稳回升，成长股跑赢价值股，周期板块表现最好，而科\n技、新能源板块有一定超额收益。美股在 7-8 月维持上涨态势，在 9 月下跌。 \n报告期内，本基金持仓保持稳定，维持对美股科技和A 股新能源板块的高配，主要持有光伏和\n电动车产业链相关股票。A 股半导体板块在 7 月大涨，在 8-9 月大幅回调，本基金顺势对半导体板\n华夏全球科技先锋混合型证券投资基金（QDII）2021 年第 3 季度报告 \n6 \n \n块股票进行了减仓。",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n美国 43,532,447.05 53.13 \n中国内地 30,615,434.14 37.37 \n合计 74,147,881.19 90.50 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2021年中期报告",
+      "publish_date": "2021-08-30",
+      "report_year": "2021",
+      "announcement_id": "AN202108301513318662",
+      "relative_path": "2021/2021-08-30_华夏全球科技先锋混合型证券投资基金（QDII）2021年中期报告_AN202108301513318662.pdf",
+      "pages": 48,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 25.74,
+      "one_year_benchmark_pct": 9.82,
+      "strategy_text": "上半年，全球科技股票出现较大分化。美国互联网和科技股票稳定上涨，中国A 股半导体、新\n能源等股票表现强劲，中美医药股票表现强劲，但中国互联网股票表现较差。 \n市场方面，A 股科技股显著跑赢大盘。沪深 300 上涨 0.24%左右，而创业板指数上涨 17.22%左\n右，科创 50 上涨 14.0%左右。美股方面，标普500 上涨 14.4%左右，纳斯达克上涨 12.54%左右。中\n证海外互联网指数则下跌 9.7%。 \n报告期内，本基金进行了积极的持仓调整，减持中国互联网股票，增配A 股新能源和半导体板\n块。本基金增配基本面向好的公司，同时买入了新挖掘的优质成长公司，卖出基本面转差或长期投\n资逻辑被破坏的公司。",
+      "country_section": "................................................................... 32 \n7.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2021年第2季度报告",
+      "publish_date": "2021-07-20",
+      "report_year": "2021",
+      "announcement_id": "AN202107201504976191",
+      "relative_path": "2021/2021-07-20_华夏全球科技先锋混合型证券投资基金（QDII）2021年第2季度报告_AN202107201504976191.pdf",
+      "pages": 14,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 25.74,
+      "one_year_benchmark_pct": 9.82,
+      "strategy_text": "2021 年二季度，全球市场在震荡中上行。联储反复解答市场担忧，欧美疫苗接种渐入佳境，中\n国方面经济继续强劲复苏，市场在犹豫踌躇中不断创出新高。二季度，标普500 指数、纳斯达克指\n数分别收涨、9.33%、10.7%，尤其是传统大盘龙头股票普遍创出新高；中资方面，创业板指引领A\n股不断新高， 港股大盘新经济标的受反垄断影响较为低迷， 报告期内， 恒生国企指数跌8%，创业板\n涨 23.0%，上证涨 3.0%。 \n报告期内，结合对于市场的分析，我们继续对以中国为代表的新兴市场进行了超配，同时配置\n美国欧洲等全球优质资产。我们坚持“自下而上”研究，选择具有成长性、国际竞争力、性价比高的\n平台型领导厂商进行中长期投资。在行业重点上提前集中配置长期趋势向好、业绩增长确定性强的\n新能源、科技制造、半导体等板块。精选细分板块里全球领先的优质龙头公司，着重考虑公司的成\n长性、盈利能力、现金流质量、负债情况等，着重投资于具有长期成长性的优质的龙头公司。 \n报告期内，基金业绩收到反垄断影响较大，美团、腾讯等期初重点持仓在受到反垄断政策冲击\n下，回撤较为严重，拖累了组合业绩。报告期内，管理人积极调整持仓，增配了恩捷、天赐、阳光\n电源等科技制造新能源板块的，长期看好，短期处于景气周期的板块和个股，为基金业绩恢复做出\n华夏全球科技先锋混合型证券投资基金（QDII）2021 年第 2 季度报告 \n6 \n \n了贡献。",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n中国香港 42,899,188.28 41.85 \n中国内地 42,397,617.64 41.36 \n美国 6,425,438.07 6.27 \n合计 91,722,243.99 89.48 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2021年第1季度报告",
+      "publish_date": "2021-04-21",
+      "report_year": "2021",
+      "announcement_id": "AN202104211486806829",
+      "relative_path": "2021/2021-04-21_华夏全球科技先锋混合型证券投资基金（QDII）2021年第1季度报告_AN202104211486806829.pdf",
+      "pages": 14,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 35.09,
+      "one_year_benchmark_pct": 20.33,
+      "strategy_text": "一季度，全球市场波动较大。开年以来，市场延续 4 季度以来的流动性行情，美国方面，大选\n的靴子落地、新冠疫苗加速接种、新一轮刺激方案通过等诸多因素推高投资者的预期；中国方面，\n流动性合理充裕的政策环境和经济持续复苏的预期，使得市场从乐观走向更加乐观。上述多重因素\n驱动下，美股 1 季度前半段均创出历史新高，A/H 股市场也创出阶段性新高，但这种乐观的情况背\n后隐藏着风险。2 月中旬，美债收益率上升开始改变投资者对市场的观点。市场随美债收益率飙升\n在 2 月中下出现较大回调， 基本抹去一季度前半段的涨幅。3 月中下以来， 市场在筑底中逐步反弹，\n其中中资 A/H 市场较弱，而美股市场在反弹后再次创出历史新高。截止一季度末，标普 500 指数收\n涨 8.5%，6.3%；H 股恒生指数/恒生国企指数收涨 6.3%/4.5%；沪深 300 指数收跌-2.4%，-5.9%。 \n报告期内，本基金紧密跟踪全球各国的疫情后复苏进展，采取稳健积极的仓位策略，保持较高\n仓位。板块配置方面，本基金仍集中重点配置长期趋势向好、业绩增长确定性强的科技板块，精选\n了细分板块里全球领先的优质龙头公司， 对公司盈利能力、 现金流质量、 负债情况等进行严格筛选，\n以确保能在基本面及企业盈利受到全球疫情冲击经济前景的情况下，企业具备足够的内生自我造血\n的能力。报告期内，本基金加仓了代表中国新经济方向的腾讯、美团、微盟为代表的港股互联网、\n云计算龙头公司。本基金将继续坚持“自下而上”研究，选择具有成长性、国际竞争力、性价比高的\n平台型领导厂商进行中长期投资。 \n华夏全球科技先锋混合型证券投资基金（QDII）2021 年第 1 季度报告 \n6",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n中国香港 39,219,487.61 46.65 \n美国 23,947,564.97 28.48 \n中国内地 5,871,054.00 6.98 \n合计 69,038,106.58 82.12 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2020年年度报告",
+      "publish_date": "2021-03-30",
+      "report_year": "2020",
+      "announcement_id": "AN202103301478327612",
+      "relative_path": "2020/2021-03-30_华夏全球科技先锋混合型证券投资基金（QDII）2020年年度报告_AN202103301478327612.pdf",
+      "pages": 54,
+      "period_return_pct": 25.72,
+      "period_benchmark_pct": 15.17,
+      "one_year_return_pct": 25.72,
+      "one_year_benchmark_pct": 15.17,
+      "strategy_text": "2020 年， 全球股票市场经历了先跌后涨的巨大反转。 年初市场开局良好，2 月疫情突发蔓延后，\n市场一度因流动性冲击出现风险资产和避险资产同时大幅下跌，道指、标普 500 指数、纳斯达克指\n数分别跌 23.2%、20.0%、14.2%，创下 2008 年以来单季度最大跌幅并出现多次熔断。二季度，全球\n疫情持续蔓延，对企业盈利造成实质性的短期冲击，基本面修复仍需时日；但随着美欧出台一系列\n货币及财政政策措施，引领全球货币宽松和大规模财政刺激的支持，海外资本市场在 2 季度初期恢\n复稳定运行，股市整体呈现 V 型反弹，并在 3 季度创出新高。全年来看道指、标普 500 指数、纳斯\n达克指数分别收涨 6.0%，16.3，43.7%，均创出历史新高。 \n报告期末，结合对于市场的分析，我们继续对美国为首的发达国家市场股票进行了超配，对新\n兴市场股票进行了低配。我们坚持“自下而上”研究，选择具有成长性、国际竞争力、性价比高的平\n台型领导厂商进行中长期投资。在行业重点上提前集中配置长期趋势向好、业绩增长确定性强的新\n能源、云计算、半导体、互联网及移动支付等板块。精选细分板块里全球领先的优质龙头公司，着\n重考虑公司的成长性、盈利能力、现金流质量、负债情况等，着重投资于具有长期成长性的优质的\n华夏全球科技先锋混合型证券投资基金（QDII）2020 年年度报告 \n11 \n \n龙头公司。",
+      "country_section": "................................................................. 39 \n8.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2020年第4季度报告",
+      "publish_date": "2021-01-21",
+      "report_year": "2020",
+      "announcement_id": "AN202101211452769617",
+      "relative_path": "2020/2021-01-21_华夏全球科技先锋混合型证券投资基金（QDII）2020年第4季度报告_AN202101211452769617.pdf",
+      "pages": 14,
+      "period_return_pct": 14.69,
+      "period_benchmark_pct": 3.21,
+      "one_year_return_pct": 25.72,
+      "one_year_benchmark_pct": 15.17,
+      "strategy_text": "4 季度，市场在震荡中上行。美国方面，大选不确定性终于靴子落地、新冠疫苗的上市、新一\n轮刺激方案在争执中通过，市场在在对未来预期确定性的提升的过程中，逐步走向历史新高。中国\n市场方面，经历了 3 季度的盘整、回撤之后，货币政策转向流动性保持合理充裕、财政拨付和使用\n节奏明显加快、经济增速恢复疫情前水平且结构上更趋合理。在多重因素驱动下，中资A/H 市场在\n四季度企稳反弹，创出近期新高。报告期内，标普500 指数、纳斯达克指数分别收涨 11.7%、15.4%\n左右；A 股沪深 300 指数、创业板指数分别收涨 9.4%、15.2%左右；H 股恒生指数/恒生国企指数分\n别收涨 16.1%、4.3%左右，一改年初以来的落后于美股、A 股的颓势。 \n报告期内，本基金紧密跟踪全球各国的疫情后复苏进展，采取稳健积极的仓位策略，始终保持\n较高仓位。板块配置方面，本基金仍集中重点配置长期趋势向好、业绩增长确定性强的科技板块，\n精选了细分板块里全球领先的优质龙头公司，对公司盈利能力、现金流质量、负债情况等进行严格\n筛选，以确保能在基本面及企业盈利受到全球疫情冲击经济前景的情况下，企业具备足够的内生自\n我造血的能力。报告期内，本基金加仓了 TSLA、ROKU、CloudFlare 等代表美股科技在新能源车、\n视频流媒体、云安全等领域的领先公司，也加仓了哔哩哔哩、宁德时代等代表中国互联网新经济、\n中国新能源产业链的优质公司。 本基金将继续坚持“自下而上”研究， 选择具有成长性、 国际竞争力、\n性价比高的平台型领导厂商进行中长期投资。 \n华夏全球科技先锋混合型证券投资基金（QDII）2020 年第 4 季度报告 \n6",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n美国 39,966,774.10 55.93 \n中国内地 13,406,594.16 18.76 \n中国香港 10,220,817.24 14.30 \n德国 497,259.98 0.70 \n合计 64,091,445.48 89.70 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2020年第3季度报告",
+      "publish_date": "2020-10-27",
+      "report_year": "2020",
+      "announcement_id": "AN202010271423920613",
+      "relative_path": "2020/2020-10-27_华夏全球科技先锋混合型证券投资基金（QDII）2020年第3季度报告_AN202010271423920613.pdf",
+      "pages": 13,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 21.41,
+      "one_year_benchmark_pct": 19.31,
+      "strategy_text": "3 季度，市场较为动荡曲折。美国市场方面，7-8 月， 疫情后的流动性宽松催生的V 型反弹持续\n创出历史新高；9 月始，在短期涨幅过大以及年内估值普遍偏高的大背景下，出于对新一轮刺激方\n案出台的不确定性和对大选的不确定性的担忧，市场进入了阶段性回调，并一度抹掉8 月涨幅。中\n国市场方面，沪深市场在 7 月中冲高后，盘整中逐步回落，前期强势的医药板块回吐显著，顺周期\n板块表现抢眼。 截止3 季度末， 道指、 标普500 指数、 纳斯达克指数分别收涨7.6%、8.5%、11.0%；\nA 股沪深 300 指数单季度收涨 10.2%，创业板收涨 5.6%，表现与美股市场接近；H 股市场方面恒生\n指数/恒生国企指数分别收跌 4.0%、3.7%，表现远落后于 A 股和美股市场。 \n报告期内， 本基金紧密跟踪疫情在全球范围内的持续进展， 分析全球宏观政策应对和经济态势，\n采取稳健积极的仓位策略。美股在充裕流动性支持的背景下有着可观的恢复，各国央行已尽全力出\n台相关货币及财政政策为市场提供短期流动性支持，且作用卓著，符合上季度的判断。即便在9 月\n份市场担心疫苗供应、担心刺激方案出台延迟、担心大选出现较多变数的大背景下，我们也坚持保\n持偏积极的仓位。 \n本基金仍集中重点配置长期趋势向好、业绩增长确定性强的科技板块，精选了细分板块里全球\n领先的优质龙头公司，对公司盈利能力、现金流质量、负债情况等进行严格筛选，以确保能在基本\n面及企业盈利受到全球疫情冲击经济前景的情况下，企业具备足够的内生自我造血的能力。运作期\n华夏全球科技先锋混合型证券投资基金（QDII）2020 年第 3 季度报告 \n6 \n \n内，组合加仓了 AAPL、MSFT、SQ 等重点个股，继续增大集中持股程度，代表了本基金对硬件、\n云、金融科技等美股科技新兴方向的持续看好。本基金将继续坚持“自下而上”研究，选择具有成长\n性、国际竞争力、性价比高的平台型领导厂商进行中长期投资。",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n美国 30,008,485.54 46.62 \n中国香港 16,091,700.59 25.00 \n中国内地 10,580,422.97 16.44 \n合计 56,680,609.10 88.05 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2020年中期报告",
+      "publish_date": "2020-08-29",
+      "report_year": "2020",
+      "announcement_id": "AN202008291403959040",
+      "relative_path": "2020/2020-08-29_华夏全球科技先锋混合型证券投资基金（QDII）2020年中期报告_AN202008291403959040.pdf",
+      "pages": 45,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 26.57,
+      "one_year_benchmark_pct": 22.97,
+      "strategy_text": "上半年，基金运行环境极为复杂： \n一季度，疫情由国内范围迅速发展到全球大范围蔓延，叠加油价因沙特政治事件而出现暴跌的\n“灰犀牛”事件， 市场风险偏好短期内出现严重打击， 全球金融市场出现数十年未见的巨幅震荡冲击；\n市场一度因流动性冲击出现风险资产和避险资产同时大幅下跌，道指、标普 500 指数、纳斯达克指\n数分别收跌-23.2%、-20.0%、-14.2%，创下 2008 年以来单季度最大跌幅并出现多次熔断。 \n二季度，全球疫情持续蔓延，对企业盈利造成实质性的短期冲击，基本面修复仍需时日；但随\n着美联储出台一系列货币及财政政策措施，引领全球货币宽松和大规模财政刺激的支持，海外资本\n市场在 2 季度初期恢复稳定运行，股市整体呈现 V 型反弹甚至逼近前期高点。美国三大股指自 3 月\n末低点以来开始出现持续反弹，成长板块带动效应明显，道指、标普 500 指数、纳斯达克指数分别\n收涨 17.8%、20.0%、30.6%；纳斯达克指数甚至创下疫情前的新高，YTD 累计收益达到 12.1%。 \n在上半年处于 V 型大转折的复杂环境中， 本基金采取鲜明的投资策略和灵活的应对方式相结合： \n在仓位策略上， 坚持以选股为主， 选时为辅， 全程保持高仓位运作； 上半年平均仓位保持在90%\n以上，仅在疫情导致大盘大幅回撤期间阶段性低于 90%仓位。 \n在资产配置策略上，前期以美股权益类资产配置为主，兼顾全球其他优质资产配置；后期大幅\n增加了对中资权益资产（A 股、港股、美股 ADR）的配置。我们认为，从长期来看，美股资产仍然\n代表着全球创新的源动力，具有较大吸引力；但二季度以来，随着以中国为代表的新兴市场国家的\n抗疫取得阶段性成功，率先引领全球复苏的中资资产性价比优势开始凸显，因此二季度开始加强了\n对中资类权益资产的配置。 \n从板块、 行业配置思路上， 我们仍集中重点配置长期趋势向好、 业绩增长确定性强的科技板块，\n精选了细分板块里全球领先的优质龙头公司，对公司盈利能力、现金流质量、负债情况等进行严格\n筛选，以确保能在基本面及企业盈利受到全球疫情冲击经济前景的情况下，企业具备足够的内生自\n我造血的能力，如苹果等核心企业已经在报告期内创下股价新高；同时，考虑到因疫情导致远程在\n线办公、教育等需求出现快速增长，叠加 5G 自身原本需求，云计算及数据中心方向具有强劲的需\n求因素支撑，报告期内也加强了对美股云计算及数据相关的龙头核心标的的配置；此外，结合我们\n的资产配置策略， 我们从二季度开始， 优选了中资资产中代表新兴成长方向的半导体、 互联网电商、\n生物科技、新兴消费等板块。",
+      "country_section": ".................................................................... 30 \n7.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2020年第2季度报告",
+      "publish_date": "2020-07-20",
+      "report_year": "2020",
+      "announcement_id": "AN202007201392859885",
+      "relative_path": "2020/2020-07-20_华夏全球科技先锋混合型证券投资基金（QDII）2020年第2季度报告_AN202007201392859885.pdf",
+      "pages": 14,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": 26.57,
+      "one_year_benchmark_pct": 22.97,
+      "strategy_text": "2 季度，各国政府出台经济刺激政策和央行放水是主旋律。虽然新冠疫情仍在肆虐并蔓延到更\n多国家，但以中国为代表的早先受到疫情影响的国家和地区疫情见顶，生产生活逐步恢复常态。在\n以上因素作用下，全球股票市场迎来强劲反弹。美国方面在遭遇十几年来罕见的大跌之后指数快速\n反弹，标普 500、纳斯达克指数分别大涨 19.9%、30.6%，纳斯达克指数创历史新高。新兴市场在美\n股带动下也普遍录得较好表现。国内方面由于疫情控制当得、经济逐步恢复，股市延续1 季度相对\n较好的表现，上证指数上涨 8.5%，而创业板指数则继续大涨 30.2%，创下近几年新高。港股也扭转\n了 1 季度的低迷表现，恒生指数上涨 3.4%。 \n报告期内，本基金持续跟踪全球科技行业的创新趋势，坚持“自下而上”的选股方法，着重在消\n费电子、云计算、5G、电子支付等领域进行投资，精选了细分板块里全球领先的优质龙头公司，对\n公司盈利能力、现金流质量、负债情况等进行严格筛选，确保能在复杂多变的环境下维持长期竞争\n力和持续稳定的内生增长，为投资组合贡献稳定的回报。报告期内，本基金对国家配置保持基本稳\n定，适当减少了科技硬件方面的配置，同时增加了互联网、电商等板块的配置比例。",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n美国 29,451,262.99 39.29 \n中国香港 20,612,843.25 27.50 \n中国内地 11,700,434.62 15.61 \n中国台湾 3,072,728.41 4.10 \n合计 64,837,269.27 86.50 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2020年第1季度报告",
+      "publish_date": "2020-04-22",
+      "report_year": "2020",
+      "announcement_id": "AN202004221378379901",
+      "relative_path": "2020/2020-04-22_华夏全球科技先锋混合型证券投资基金（QDII）2020年第1季度报告_AN202004221378379901.pdf",
+      "pages": 14,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": null,
+      "one_year_benchmark_pct": null,
+      "strategy_text": "1 季度，新冠疫情的突如其来给全球经济和股市蒙上阴影。尽管去年12 月中美贸易战的缓和为\n今年的市场带来了较好的开端，但新冠疫情在全球范围内的迅速蔓延扭转了这一势头。美国方面由\n于严重低估了疫情的挑战造成几乎失控局面，股票市场迎来几十年来罕见的大跌，标普500、纳斯\n达克指数分别下跌 20.0%、14.1%。新兴市场由于资金出逃效应明显，股票市场普遍表现更差。国内\n方面由于年初涨幅明显、疫情控制相对得当，1 季度虽然波动较大但相对表现领跑全球，上证指数\n下跌 9.8%， 而创业板指数则在年初科技创新浪潮的带动下上涨4.1%。 港股市场由于受海外资金影响\n较大，恒生指数下跌 16.2%。 \n报告期内，本基金持续跟踪全球科技行业的创新趋势，坚持“自下而上”的选股方法，着重在消\n费电子、云计算、5G、电子支付等领域进行投资，精选了细分板块里全球领先的优质龙头公司，对\n公司盈利能力、现金流质量、负债情况等进行严格筛选，确保能在复杂多变的环境下维持长期竞争\n力和持续稳定的内生增长，为投资组合贡献稳定的回报。报告期内，本基金对国家配置保持基本稳\n定，考虑到云计算等领域基本面的向好，报告期内适当增加了对相关板块的配置比例。",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n美国 26,966,494.40 38.31 \n中国内地 22,636,527.98 32.16 \n中国台湾 3,849,277.36 5.47 \n合计 53,452,299.74 75.94 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2019年年度报告",
+      "publish_date": "2020-04-09",
+      "report_year": "2019",
+      "announcement_id": "AN202004091377791341",
+      "relative_path": "2019/2020-04-09_华夏全球科技先锋混合型证券投资基金（QDII）2019年年度报告_AN202004091377791341.pdf",
+      "pages": 56,
+      "period_return_pct": 33.13,
+      "period_benchmark_pct": 29.87,
+      "one_year_return_pct": 33.13,
+      "one_year_benchmark_pct": 29.87,
+      "strategy_text": "2019 年，贸易战缓和、流动性宽松、新一轮科技创新是贯穿全年的主旋律，全球股市均呈现较\n好表现。贸易战方面，12 月中美双方宣布两国就第一阶段经贸协议文本达成一致，标志着已经持续\n一年多的贸易纷争终于取得明显的阶段性成果。流动性方面，美联储年内连续 3 次降息，也对市场\n起到明显的提振作用。美国方面，年内 GDP 增速超预期，叠加贸易缓和与降息的影响，标普 500、\n纳斯达克指数全年分别大涨 28.8%、35.2%。新兴市场方面受益于美元走弱、流动性宽裕、风险偏好\n提升等，也普遍录得较好表现。国内方面，上证指数全年上涨22.3%，创业板指数受惠于 5G、国产\n替代进程加速、消费电子回暖、新能源车等新一轮科技创新拉动，全年大涨 43.7%，领涨全球主要\n指数。 港股市场由于贸易战缓和、 人民币升值等因素也扭转了去年的低迷表现， 恒生指数上涨9.6%。 \n报告期内，本基金持续跟踪全球科技行业的创新趋势，坚持“自下而上”的选股方法，着重在消\n费电子、云计算、5G、电子支付等领域进行投资，精选了细分板块里全球领先的优质龙头公司，对\n公司盈利能力、现金流质量、负债情况等进行严格筛选，确保能在复杂多变的环境下维持长期竞争\n力和持续稳定的内生增长，为投资组合贡献稳定的回报。报告期内，本基金对国家配置保持基本稳\n定， 考虑到电动汽车、 消费电子等基本面的持续向好， 报告期内适当增加了对相关板块的配置比例。",
+      "country_section": "................................................................. 37 \n8.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2019年第4季度报告",
+      "publish_date": "2020-01-21",
+      "report_year": "2019",
+      "announcement_id": "AN202001211374413090",
+      "relative_path": "2019/2020-01-21_华夏全球科技先锋混合型证券投资基金（QDII）2019年第4季度报告_AN202001211374413090.pdf",
+      "pages": 13,
+      "period_return_pct": 10.75,
+      "period_benchmark_pct": 6.92,
+      "one_year_return_pct": null,
+      "one_year_benchmark_pct": null,
+      "strategy_text": "4 季度，中美贸易谈判取得阶段性成果，全球主要经济体增长稳定，全球股市整体表现较好。\n12 月中美双方宣布两国就第一阶段经贸协议文本达成一致，标志着已经持续 1 年多的贸易战终于\n取得明显的阶段性成果。受此影响，全球股票市场基调发生显著的积极变化。美国 GDP 增速超预\n期，同时美联储 10 月末宣布今年以来第三次降息，对市场形成较好的提振作用，标普 500、纳斯\n达克指数分别大涨 9.6%、12.2%。新兴市场方面受益于美元指数走弱、经济预期改善等，普遍录得\n较好表现。国内方面，A 股市场 4 季度表现不错：上证指数上涨 3.4%，创业板指数受惠于 5G 和国\n产替代进程加速、消费电子基本面回暖等因素影响，延续了上季度的较好表现，大幅上涨 8.9%。\n港股市场由于贸易战缓和、人民币升值、资金流入等影响，4 季度大涨 7.9%，扭转了 3 季度的低迷\n表现。\n报告期内，本基金持续跟踪全球科技行业的创新趋势，坚持“自下而上”的选股方法，着重在消\n费电子、云计算、5G、电子支付等领域进行投资，精选了细分板块里全球领先的优质龙头公司，\n对公司盈利能力、现金流质量、负债情况等进行严格筛选，确保能在复杂多变的环境下维持长期竞\n争力和持续稳定的内生增长，为投资组合贡献稳定的回报。报告期内，本基金对国家配置保持基本\n稳定，考虑到电动汽车、消费电子等基本面的向好，报告期内适当增加了对相关板块的配置比例。\n华夏全球科技先锋混合型证券投资基金（QDII）2019 年第 4 季度报告\n6",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％）\n中国台湾 39,178,523.75 34.91\n美国 24,426,190.43 21.76\n中国内地 19,204,831.52 17.11\n日本 7,675,016.26 6.84\n中国香港 5,346,910.82 4.76\n德国 2,871,073.94 2.56\n韩国 1,145,955.13 1.02\n合计 99,848,501.85 88.96\n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2019年第3季度报告",
+      "publish_date": "2019-10-22",
+      "report_year": "2019",
+      "announcement_id": "AN201910221369402004",
+      "relative_path": "2019/2019-10-22_华夏全球科技先锋混合型证券投资基金（QDII）2019年第3季度报告_AN201910221369402004.pdf",
+      "pages": 13,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": null,
+      "one_year_benchmark_pct": null,
+      "strategy_text": "3 季度，贸易战阴影持续笼罩，全球股市整体表现各有不同。美国总统特朗普8 月初再次宣布\n对 3000 亿美元中国商品加征关税， 导致中美贸易谈判前景依旧不明朗。 受此影响， 全球股票市场主\n基调依旧是防御，以此应对经济不确定性的影响。尽管如此，我们也看到了不少可喜的变化，尤其\n在国内 A 股市场。3 季度 A 股市场表现相对较好，上证指数上涨 0.2%，扭转了 2 季度的低迷表现，\n而创业板指数受惠于 5G、国产替代进程的加速，大幅上涨12.1%。港股市场由于受到贸易战、汇率\n及资金流出压力的影响表现不佳，下跌 7.9%。美国方面虽然衰退预期依然存在，但美联储自8 月以\n来连续 2 次降息，对市场起到明显的提振作用，受此影响美股 3 季度表现相对稳定，标普 500、纳\n指分别上涨 1.7%、1.3%。新兴市场方面，受到美元指数上行带来的汇率压力，3 季度表现平淡、涨\n跌不一。 \n报告期内，本基金持续跟踪全球科技行业的创新趋势，坚持“自下而上”的选股方法，着重在消\n费电子、云计算、5G、电子支付等领域进行投资，精选了细分板块里全球领先的优质龙头公司，对\n公司盈利能力、现金流质量、负债情况等进行严格筛选，确保能在复杂多变的环境下维持长期竞争\n力和持续稳定的内生增长，为投资组合贡献稳定的回报。报告期内，本基金对国家配置进行了一定\n华夏全球科技先锋混合型证券投资基金（QDII）2019 年第 3 季度报告 \n6 \n \n调整， 考虑到国内5G 应用和国产替代进程的加速， 报告期内适当增加了A 股科技硬件的配置比例，\n美股的配置比例适度降低。",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n中国内地 53,526,812.21 41.59 \n中国台湾 38,833,889.88 30.17 \n美国 20,678,533.29 16.07 \n中国香港 74,866.83 0.06 \n合计 113,114,102.21 87.89 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2019年半年度报告",
+      "publish_date": "2019-08-29",
+      "report_year": "2019",
+      "announcement_id": "AN201908291345289656",
+      "relative_path": "2019/2019-08-29_华夏全球科技先锋混合型证券投资基金（QDII）2019年半年度报告_AN201908291345289656.pdf",
+      "pages": 47,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": -4.79,
+      "one_year_benchmark_pct": 3.66,
+      "strategy_text": "上半年，全球主要股票市场呈现鲜明的分阶走势：第一阶段为年初以来在中美贸易谈判积极进\n展推动外加美联储鸽派转向的推动下，刺激全球风险偏好大幅改善，带动以股票为代表的风险资产\n自 18 年末低点显著修复估值反弹。A/H 市场在流动性释放以及风险偏好提升的背景下一季度领涨全\n华夏全球科技先锋混合型证券投资基金（QDII）2019 年半年度报告 \n9 \n \n球，美股市场也显著反弹，一度创出新高；但进入第二阶段，随着国内金融去杠杆再度显现，外加\n5 月之后贸易摩擦重新爆发超市场预期，避险情绪叠加对增长的担忧使得全球风险偏好因此急转直\n下，资金再度避险，估值大幅回撤、盈利前景趋于谨慎对全球股市造成双杀。但临近季末，随着美\n联储在 6 月 FOMC 会议上进一步强化降息预期释放宽松信号， 以及市场逐渐预期G20 谈判取得阶段\n性进展，全球股票市场风险偏好部分恢复，推动美股部分指数再创新高。 \n报告期内，本基金持续跟踪全球科技行业的创新趋势，坚持“自下而上”的选股方法，仍着重在\n科技硬件、云计算、5G、电子支付等领域进行投资，但考虑到二季度贸易战重燃对于全球科技板块\n的悲观预期难以预测， 我们适当在重仓股中配置了部分内需消费类标的， 增强基金抵御回撤的能力；\n其他标的则仍坚持精选细分板块里全球领先的优质龙头公司，对公司盈利能力、现金流质量、负债\n情况等进行严格筛选，以确保能在流动性趋紧的情况下，企业具备内生自我造血的能力。",
+      "country_section": ".................................................................... 29 \n7.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2019年第2季度报告",
+      "publish_date": "2019-07-17",
+      "report_year": "2019",
+      "announcement_id": "AN201907171339132470",
+      "relative_path": "2019/2019-07-17_华夏全球科技先锋混合型证券投资基金（QDII）2019年第2季度报告_AN201907171339132470.pdf",
+      "pages": 14,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": null,
+      "one_year_benchmark_pct": null,
+      "strategy_text": "2 季度，全球股票市场在贸易战阴影笼罩下，没能延续 1 季度强劲的开局表现。美国总统特朗\n普 5 月初突然宣布对中国 2000 亿美元商品加征关税， 使得此前进展顺利的中美贸易谈判再次陷入僵\n局。 受此影响， 全球经济不确定性增加， 全球股票市场从“Risk-On”转向“Risk Off”， 防御和悲观情绪\n持续升温。2 季度 A 股市场表现不佳，上证指数下跌 3.7%、创业板指数大跌 11.2%，港股市场受 A\n股市场带动和资金流出的影响，下跌 2.8%。美国方面虽然国债收益率倒挂继续和衰退预期增加，但\n美联储最近的温和表态使得市场对降息预期明显提升，受此影响美股2 季度表现相对稳定，标普、\n纳指分别上涨 2.8%、2.3%。新兴市场方面受益美元指数继续走弱，汇率压力小，普遍录得个位数上\n涨。 \n报告期内，本基金持续跟踪全球科技行业的创新趋势，坚持“自下而上”的选股方法，着重在消\n费电子、云计算、5G、电子支付等领域进行投资，精选了细分板块里全球领先的优质龙头公司，对\n公司盈利能力、现金流质量、负债情况等进行严格筛选，确保能在复杂多变的环境下维持长期竞争\n力和持续稳定的内生增长，为投资组合贡献稳定的回报。报告期内，考虑到贸易战的不确定性和对\n国内经济的产生的影响， 本基金对国家配置进行了一定调整， 同时适当减少了科技硬件的配置比例，\n华夏全球科技先锋混合型证券投资基金（QDII）2019 年第 2 季度报告 \n6 \n \n美股的配置比例则基本稳定。",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n美国 60,634,980.63 38.55 \n中国内地 50,166,299.79 31.89 \n中国台湾 26,576,866.75 16.90 \n合计 137,378,147.17 87.33 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2019年第1季度报告",
+      "publish_date": "2019-04-20",
+      "report_year": "2019",
+      "announcement_id": "AN201904201321009693",
+      "relative_path": "2019/2019-04-20_华夏全球科技先锋混合型证券投资基金（QDII）2019年第1季度报告_AN201904201321009693.pdf",
+      "pages": 13,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": null,
+      "one_year_benchmark_pct": null,
+      "strategy_text": "1 季度， 全球股票市场创下10 年来最佳表现。 前期压制风险资产的三大因素：1） 美联储加息，\n2）中美贸易战，3）全球经济放缓，其中两大因素得到较大缓解。美联储在1 月初宣布暂停加息计\n划， 此外中美贸易谈判进展顺利， 全球股票市场迎来“Risk-On”的表现， 美国三大股指涨幅均超过10%，\n创下 10 年来最佳表现。在美国市场的强劲反弹下，全球市场的表现极佳，中国A 股市场表现牛冠\n全球，上证指数涨幅近 24%、创业板涨幅 35%左右，创造历史最佳开局表现。港股市场受到A 股市\n场带动，恒生指数涨幅达到 12.40%，表现抢眼。此外，其他新兴市场受到美元指数走弱的影响，汇\n率压力得到较大缓解，也均录得近 10%的涨幅。同时，原油市场受到对经济悲观预期逐渐缓和的影\n响，在 1 季度也出现了明显反弹。黄金价格因美元指数走弱，也持续反弹。 \n报告期内，本基金持续跟踪全球科技行业的创新趋势，坚持“自下而上”的选股方法，着重在消\n费电子、云计算、电子支付等领域进行投资，精选了细分板块里全球领先的优质龙头公司，对公司\n盈利能力、现金流质量、负债情况等进行严格筛选，以确保能在流动性趋紧的情况下，企业具备内\n生自我造血的能力。此外，本基金对国家配置进行了一定调整，考虑到目前中国市场的风险因素逐\n渐缓解、以及中国资产估值偏低的情况，报告期内增高了A 股、H 股的配置比例，适当降低了美股\n华夏全球科技先锋混合型证券投资基金（QDII）2019 年第 1 季度报告 \n6 \n \n的配置比例。",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n中国内地 75,617,119.15 38.52 \n美国 57,338,859.49 29.21 \n中国香港 22,572,254.92 11.50 \n中国台湾 17,000,218.97 8.66 \n合计 172,528,452.53 87.89 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2018年年度报告",
+      "publish_date": "2019-03-26",
+      "report_year": "2018",
+      "announcement_id": "AN201903261309655021",
+      "relative_path": "2018/2019-03-26_华夏全球科技先锋混合型证券投资基金（QDII）2018年年度报告_AN201903261309655021.pdf",
+      "pages": 53,
+      "period_return_pct": -11.41,
+      "period_benchmark_pct": -13.81,
+      "one_year_return_pct": null,
+      "one_year_benchmark_pct": null,
+      "strategy_text": "2018 年，全球主要股票市场跌幅较大。从美国市场来看，在 1 季度经历高点之后，美债 10 年\n期收益率突破 3%的临界点，在 1 季度末 2 季度初美国三大股指迎来 7-8%的较大跌幅，之后全球进\n入贸易战的紧张氛围中，但美国因为国内减税的刺激政策，企业盈利增速达到了近年来的高点，三\n大股指在 3 季度末均创造历史新高，随后因美联储加息与贸易战对实体经济的影响逐步显现，在 4\n季度迎来历史性的暴跌修正，三大股指跌幅均超 15%，创造了金融危机以来的最大单季跌幅水平。\n从中国市场来看，在 1 季度经历高点后，股市正式进入熊市阶段，在国内经济下行、美联储持续加\n息、贸易战越来越严重的三大利空下，所有板块轮番下跌，其中还伴随着阶段性的行业政策利空，\n造成了相关板块的深度回调。从其他发达国家与新兴市场来看，全部市场均未能幸免，在整个商业\n周期下行叠加全球流动性收紧的情况下，股市下跌幅度较大，新兴市场汇率承压，普遍出现股汇双\n杀的局面。 \n报告期内，本基金继续跟踪分析全球科技行业的发展态势，整体采取中性的仓位策略，将仓位\n控制在 70%左右，重点配置长期趋势向好、业绩增长确定性强的科技板块，选取了云计算、支付平\n台等行业板块，在 2、3 季度取得一定的超额收益。整体上，我们坚持“自下而上”研究，选择具有成\n长性、国际竞争力、性价比高的平台型领导厂商进行中长期投资。",
+      "country_section": "................................................................. 36 \n8.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2018年第4季度报告",
+      "publish_date": "2019-01-21",
+      "report_year": "2018",
+      "announcement_id": "AN201901211287213741",
+      "relative_path": "2018/2019-01-21_华夏全球科技先锋混合型证券投资基金（QDII）2018年第4季度报告_AN201901211287213741.pdf",
+      "pages": 14,
+      "period_return_pct": -14.32,
+      "period_benchmark_pct": -10.36,
+      "one_year_return_pct": null,
+      "one_year_benchmark_pct": null,
+      "strategy_text": "4 季度，全球主要股票市场跌幅较大。虽因 G20 峰会上中美两国元首的会面短暂地改善了全球\n贸易紧张的预期， 但全球市场对经济前景的展望持续悲观、 以及华为CFO 被调查等风险事件的不断\n发生，导致全球股票市场跌幅较大。其中美国市场三大股指在报告期内均创新低，年内均转跌，进\n入技术性熊市。 其他发达国家市场包括欧洲与日本等， 由于全面下调对2019 年经济展望， 股票指数\n均创年内新低。由于对 2019 年经济预期的不确定性，美国国债收益率指数持续下跌，10 年期国债\n收益率跌破 3%， 短暂出现2 年期与 10 年期的债券收益率倒挂的情况。 新兴市场国家汇率普遍走弱，\n阿根廷、土耳其、俄罗斯、巴西等股市调整幅度较大，人民币由于贸易战缓解的预期而趋于稳定。\n大宗商品方面，原油受到 OPEC 会议以及美国的行政干预的影响，跌幅较大，一度跌幅超过25%，\n而黄金价格持续反弹，但在 12 月美国加息后走势趋弱。 \n报告期内，本基金持续跟踪全球科技行业的创新趋势，坚持“自下而上”的选股方法，着重在云\n计算、电子支付等领域进行投资，精选了细分板块里全球领先的优质龙头公司，对公司盈利能力、\n现金流质量、负债情况等进行严格筛选，以确保能在流动性趋紧的情况下，企业具备内生自我造血\n的能力。此外，本基金对 5G 的产业趋势比较乐观，在全球范围内精选了众多优质个股，在报告期\n华夏全球科技先锋混合型证券投资基金（QDII）2018 年第 4 季度报告 \n6 \n \n内适时建仓。",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n美国 122,149,562.81 64.00 \n中国台湾 15,965,320.98 8.37 \n中国香港 13,908,413.27 7.29 \n日本 4,186,049.06 2.19 \n中国内地 3,314,628.00 1.74 \n合计 159,523,974.12 83.59 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2018年第3季度报告",
+      "publish_date": "2018-10-26",
+      "report_year": "2018",
+      "announcement_id": "AN201810261222329060",
+      "relative_path": "2018/2018-10-26_华夏全球科技先锋混合型证券投资基金（QDII）2018年第3季度报告_AN201810261222329060.pdf",
+      "pages": 14,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": null,
+      "one_year_benchmark_pct": null,
+      "strategy_text": "3 季度，全球主要股票市场涨跌不一。其中美国市场、日本、欧洲等发达国家市场表现较为抢\n眼，取得上涨，而新兴市场表现较为一般。受到美联储 9 月持续加息的影响，全球资本市场的资金\n逐步抽水涌向美国，带来美国指数的上涨，其中美国三大股指道琼斯指数、纳斯达克指数、标普指\n数均在报告期内创出历史新高。而新兴市场中，中国A 股市场与中国香港市场波动巨大，前期下跌\n主要因贸易战继续加剧影响了大部分中国公司的基本面趋势，市场信心脆弱；后期政府相关稳经济\n的政策陆续出台，在报告期末迎来一定的反弹。 \n报告期内，本基金持续跟踪全球科技行业的创新趋势，坚持“自下而上”的选股方法，着重在云\n计算、电子支付、互联网、智能硬件创新等领域进行投资，精选了细分板块里全球领先的优质龙头\n公司， 对公司盈利能力、 现金流质量、 负债情况等进行严格筛选， 以确保能在流动性趋紧的情况下，\n企业具备内生自我造血的能力。此外，我们将更多仓位放置在平台型企业上，确保所投企业在全球\n贸易局势紧张的情况下能够有较大的免疫能力，维持未来的稳健成长。",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n美国 140,081,113.81 58.53 \n中国台湾 12,839,137.66 5.36 \n中国香港 7,030,580.51 2.94 \n韩国 2,693,613.55 1.13 \n日本 2,537,226.18 1.06 \n荷兰 1,689,540.99 0.71 \n合计 166,871,212.70 69.72 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2018年半年度报告",
+      "publish_date": "2018-08-25",
+      "report_year": "2018",
+      "announcement_id": "AN201808251182992585",
+      "relative_path": "2018/2018-08-25_华夏全球科技先锋混合型证券投资基金（QDII）2018年半年度报告_AN201808251182992585.pdf",
+      "pages": 43,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": null,
+      "one_year_benchmark_pct": null,
+      "strategy_text": "上半年，全球主要股票市场涨跌不一。其中美国市场、日本、欧洲等发达国家市场表现较为抢\n眼，取得上涨，而新兴市场表现较为一般。受到美联储 3 月与 6 月加息的影响，全球资本市场的资\n金逐步抽水涌向美国，带来美元指数的强劲上涨与美国指数的上涨，其中代表美国经济的科技创新\n指数纳斯达克在年内创出历史新高。而新兴市场中，尤其以A 股市场与中国香港市场表现较弱，主\n要是前期因 MSCI 纳入 A 股而涌入的全球资金逐步撤出市场，新兴市场与美国市场的跷跷板效应明\n显。同时，在 3 月底与 6 月底，美国特朗普政府两度挑起贸易战，引发了全球市场的进一步震荡，\n全球股市在两个季度末出现不同程度的回调。 \n在报告期内，本基金跟踪全球科技行业的创新趋势，坚持“自下而上”的选股方法，着重在云计\n算、互联网、教育、智能硬件创新等领域进行投资，精选了细分板块里全球领先的优质龙头公司，\n对公司盈利能力、现金流质量、负债情况等进行严格筛选，以确保能在流动性趋紧的情况下，企业\n具备内生自我造血的能力。同时在市场配置上，考虑到全球市场的资金流动情况，我们对美国为首\n的发达国家市场股票进行了超配，对新兴市场股票进行了低配。",
+      "country_section": ".................................................................... 31 \n7.3",
+      "mentions_leveraged_funds": false
+    },
+    {
+      "title": "华夏全球科技先锋混合型证券投资基金(QDII)2018年第2季度报告",
+      "publish_date": "2018-07-18",
+      "report_year": "2018",
+      "announcement_id": "AN201807181167602139",
+      "relative_path": "2018/2018-07-18_华夏全球科技先锋混合型证券投资基金（QDII）2018年第2季度报告_AN201807181167602139.pdf",
+      "pages": 13,
+      "period_return_pct": null,
+      "period_benchmark_pct": null,
+      "one_year_return_pct": null,
+      "one_year_benchmark_pct": null,
+      "strategy_text": "2 季度，全球主要股票市场出现一定波动。其中美国市场、日本、欧洲等发达国家市场表现较\n为抢眼，取得小幅上涨，而新兴市场表现较为一般。受到美联储6 月加息预期的影响，全球资本市\n场的资金逐步抽水涌向美国，带来美元指数的强劲上涨与美国指数的上涨，其中代表美国经济的科\n技创新指数纳斯达克在季度内创出历史新高。而新兴市场中，尤其以中国A 股市场与中国香港市场\n表现较弱，主要是前期因 MSCI 纳入 A 股而涌入的全球资金逐步撤出市场，新兴市场与美国市场的\n跷跷板效应明显。同时，在 6 月下旬，美国特朗普政府再度挑起贸易战，引发了全球市场的进一步\n震荡，全球股市在季度末出现不同程度的回调。 \n在报告期内，本基金跟踪全球科技行业的创新趋势，坚持“自下而上”的选股方法，着重在云计\n算、互联网、教育、智能硬件创新等领域进行投资，精选了细分板块里全球领先的优质龙头公司，\n对公司盈利能力、现金流质量、负债情况等进行严格筛选，以确保能在流动性趋紧的情况下，企业\n具备内生自我造血的能力。同时在市场配置上，考虑到全球市场的资金流动情况，我们对美国为首\n的发达国家市场进行了超配，对新兴市场进行了低配。 \n华夏全球科技先锋混合型证券投资基金（QDII）2018 年第 2 季度报告 \n6",
+      "country_section": "国家（地区） 公允价值(元) 占基金资产净值比例（％） \n美国 96,558,902.17 34.00 \n中国内地 27,061,110.26 9.53 \n中国香港 14,147,858.76 4.98 \n中国台湾 9,683,066.94 3.41 \n合计 147,450,938.13 51.92 \n5.3 报告",
+      "mentions_leveraged_funds": false
+    }
+  ],
+  "strategy_topics": {
+    "total_mentions": {
+      "人工智能": 221,
+      "半导体": 111,
+      "软件/SaaS": 59,
+      "现金/仓位管理": 53,
+      "大平台/互联网": 48,
+      "估值": 48,
+      "新能源车": 23,
+      "云计算": 20,
+      "存储": 13,
+      "光通信": 9
+    },
+    "by_year": {
+      "2018": {
+        "现金/仓位管理": 7,
+        "大平台/互联网": 5,
+        "云计算": 1
+      },
+      "2019": {
+        "云计算": 6,
+        "现金/仓位管理": 6,
+        "估值": 3,
+        "新能源车": 1
+      },
+      "2020": {
+        "现金/仓位管理": 14,
+        "云计算": 6,
+        "大平台/互联网": 6,
+        "半导体": 2,
+        "新能源车": 1,
+        "估值": 1
+      },
+      "2021": {
+        "半导体": 17,
+        "大平台/互联网": 13,
+        "新能源车": 6,
+        "现金/仓位管理": 5,
+        "软件/SaaS": 4,
+        "人工智能": 1,
+        "存储": 1,
+        "估值": 1,
+        "云计算": 1
+      },
+      "2022": {
+        "软件/SaaS": 24,
+        "半导体": 21,
+        "大平台/互联网": 10,
+        "估值": 10,
+        "新能源车": 8,
+        "云计算": 3,
+        "人工智能": 3,
+        "存储": 3,
+        "现金/仓位管理": 3
+      },
+      "2023": {
+        "人工智能": 28,
+        "软件/SaaS": 22,
+        "半导体": 18,
+        "估值": 7,
+        "大平台/互联网": 6,
+        "新能源车": 5,
+        "现金/仓位管理": 4,
+        "云计算": 1,
+        "存储": 1
+      },
+      "2024": {
+        "人工智能": 91,
+        "半导体": 31,
+        "大平台/互联网": 6,
+        "软件/SaaS": 6,
+        "估值": 3,
+        "现金/仓位管理": 2,
+        "新能源车": 2
+      },
+      "2025": {
+        "人工智能": 74,
+        "估值": 15,
+        "半导体": 11,
+        "光通信": 3,
+        "现金/仓位管理": 3,
+        "云计算": 2,
+        "软件/SaaS": 2,
+        "存储": 2
+      },
+      "2026": {
+        "人工智能": 24,
+        "半导体": 11,
+        "现金/仓位管理": 9,
+        "估值": 8,
+        "光通信": 6,
+        "存储": 6,
+        "大平台/互联网": 2,
+        "软件/SaaS": 1
+      }
+    }
+  }
+}

@@ -19,7 +19,11 @@ const validDate = date => typeof date === 'string' && /^\d{4}-\d{2}-\d{2}$/.test
 export function resolveFundPath(workspace, relative, code) {
   if (typeof relative !== 'string' || !/^\d{6}$/.test(code) || path.isAbsolute(relative)) throw safeError();
   const full = path.resolve(workspace, relative), within = path.relative(path.resolve(workspace, '基金'), full);
-  if (within.startsWith('..') || path.isAbsolute(within) || !within.split(path.sep)[0].startsWith(`${code}_`)) throw safeError();
+  if (within.startsWith('..') || path.isAbsolute(within)) throw safeError();
+  // Funds live one level down after the 持仓基金/观察基金 split.
+  const segments = within.split(path.sep);
+  if (segments[0] === '持仓基金' || segments[0] === '观察基金') segments.shift();
+  if (!segments[0] || !segments[0].startsWith(`${code}_`)) throw safeError();
   return full;
 }
 

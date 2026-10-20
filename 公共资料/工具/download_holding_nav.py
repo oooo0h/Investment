@@ -158,10 +158,10 @@ def api_rows(data):
 
 def process(config):
     code, dirname, expected_first, holding_status = config
-    matches = list((ROOT / "基金").glob(code + "_*"))
+    matches = list((ROOT / "基金").glob("*/" + code + "_*"))
     if len(matches) > 1:
         raise ValueError(f"Duplicate fund directories: {code}")
-    fund_dir = matches[0] if matches else ROOT / "基金" / (code + "_" + dirname)
+    fund_dir = matches[0] if matches else ROOT / "基金" / "观察基金" / (code + "_" + dirname)
     directory = fund_dir / "历史净值"
     rows, reused = load_local(directory, code)
     previous_count = len(rows)
@@ -302,7 +302,7 @@ def main():
                 failures.append({"code": code, "error": str(exc)})
                 print(json.dumps({"code": code, "error": str(exc)}, ensure_ascii=False), flush=True)
     # Preserve the already synced official archive and its separately sourced supplements.
-    gf_path = next((ROOT / "基金").glob("270023*/历史净值/270023_全部历史净值_截至*.json"))
+    gf_path = next((ROOT / "基金").glob("*/270023*/历史净值/270023_全部历史净值_截至*.json"))
     gf = json.loads(gf_path.read_text(encoding="utf-8-sig"))
     results.append({"code": "270023", "name": gf["name"], "holding_identity_status": "已记录人民币A类",
                     "count": gf["count"], "first_date": gf["first_date"], "last_date": gf["last_date"],

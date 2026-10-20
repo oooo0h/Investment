@@ -47,12 +47,17 @@ async function request(code, page, endDate, evidence) {
 async function update(code) {
   const entry = manifest.funds.find(item => item.code === code);
   assert.ok(entry, 'Code absent from current manifest');
-  const dirs = (await fs.readdir(path.join(root, '基金'), { withFileTypes: true })).filter(item => item.isDirectory() && item.name.startsWith(code + '_'));
+  const dirs = [];
+  for (const group of ['持仓基金', '观察基金']) {
+    let items = [];
+    try { items = await fs.readdir(path.join(root, '基金', group), { withFileTypes: true }); } catch { continue; }
+    dirs.push(...items.filter(item => item.isDirectory() && item.name.startsWith(code + '_')).map(item => ({ group, name: item.name })));
+  }
   assert.equal(dirs.length, 1, 'Fund directory must be unique');
   const jsonPath = path.resolve(root, entry.json_path);
   const csvPath = path.resolve(root, entry.csv_path);
   const history = path.dirname(jsonPath);
-  assert.equal(history, path.join(root, '基金', dirs[0].name, '历史净值'));
+  assert.equal(history, path.join(root, '基金', dirs[0].group, dirs[0].name, '历史净值'));
   const previousBytes = await fs.readFile(jsonPath);
   const previousCsv = await fs.readFile(csvPath);
   assert.equal(hash(previousBytes), entry.json_sha256, 'Current JSON does not match manifest hash');

@@ -3,12 +3,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const funds = [
-  { code: "270023", name: "广发全球精选股票(QDII)人民币A", dir: "270023_广发全球精选股票_QDII_人民币A" },
-  { code: "005698", name: "华夏全球科技先锋混合(QDII)A(人民币)", dir: "005698_华夏全球科技先锋混合_QDII_A人民币" },
-  { code: "009608", name: "广发中证500指数增强A", dir: "009608_广发中证500指数增强A" },
-  { code: "000216", name: "华安黄金ETF联接A", dir: "000216_华安黄金ETF联接A" },
-  { code: "018124", name: "永赢先进制造智选混合发起A", dir: "018124_永赢先进制造智选混合发起A" },
-  { code: "015789", name: "永赢高端装备智选混合发起A", dir: "015789_永赢高端装备智选混合发起A" },
+  { code: "270023", name: "广发全球精选股票(QDII)人民币A", group: "持仓基金", dir: "270023_广发全球精选股票_QDII_人民币A" },
+  { code: "005698", name: "华夏全球科技先锋混合(QDII)A(人民币)", group: "持仓基金", dir: "005698_华夏全球科技先锋混合_QDII_A人民币" },
+  { code: "009608", name: "广发中证500指数增强A", group: "观察基金", dir: "009608_广发中证500指数增强A" },
+  { code: "000216", name: "华安黄金ETF联接A", group: "观察基金", dir: "000216_华安黄金ETF联接A" },
+  { code: "018124", name: "永赢先进制造智选混合发起A", group: "观察基金", dir: "018124_永赢先进制造智选混合发起A" },
+  { code: "015789", name: "永赢高端装备智选混合发起A", group: "观察基金", dir: "015789_永赢高端装备智选混合发起A" },
 ];
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -153,7 +153,7 @@ async function fetchFund(fund) {
     ]),
   ];
 
-  const outDir = path.join(projectRoot, "基金", fund.dir, "历史净值");
+  const outDir = path.join(projectRoot, "基金", fund.group, fund.dir, "历史净值");
   await fs.mkdir(outDir, { recursive: true });
   const filePath = path.join(outDir, `${safeFileName(fund.name)}.csv`);
   await fs.writeFile(filePath, csv(csvRows), "utf8");

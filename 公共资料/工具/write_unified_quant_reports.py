@@ -148,7 +148,7 @@ def write_reports(result_path, config_path):
     assert protocol['fund_code'] == code
     assert protocol['funding_cap'] is None and config['funding_cap'] is None
     assert sha(config_path) == protocol['config_sha256'], 'Configuration changed after registration'
-    folders = list((ROOT / '基金').glob(code + '_*'))
+    folders = list((ROOT / '基金').glob('*/' + code + '_*'))
     assert len(folders) == 1
     folder = folders[0] / '研究'
     assert result_path.parent == folder.resolve(), 'One result and report folder per fund'

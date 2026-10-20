@@ -21,7 +21,7 @@ const code = '270023';
 const name = '广发全球精选股票（QDII）人民币A';
 const shareClass = '人民币A';
 const projectDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
-const fundDir = path.join(projectDir, '基金/270023_广发全球精选股票_QDII_人民币A');
+const fundDir = path.join(projectDir, '基金/持仓基金/270023_广发全球精选股票_QDII_人民币A');
 const navDir = path.join(fundDir, '历史净值');
 const now = new Date();
 const timestamp = () => new Date(Date.now() + 8 * 3600000).toISOString().replace('Z', '+08:00');

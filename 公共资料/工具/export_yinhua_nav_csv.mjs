@@ -24,8 +24,12 @@ function decimal(x,source){
 }
 
 for(const code of ['016701','016702']){
-  const funds=await fs.readdir(path.join(root,'基金'));
-  const matches=funds.filter(x=>x.startsWith(code+'_'));
+  const matches=[];
+  for(const group of ['持仓基金','观察基金']){
+    let funds=[];
+    try{funds=await fs.readdir(path.join(root,'基金',group));}catch{continue;}
+    for(const name of funds) if(name.startsWith(code+'_')) matches.push(path.join(group,name));
+  }
   assert.equal(matches.length,1);
   const dir=path.join(root,'基金',matches[0],'历史净值');
   const files=(await fs.readdir(dir)).filter(x=>x.startsWith(code+'_全部历史净值_截至')&&x.endsWith('.json')).sort();

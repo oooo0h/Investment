@@ -23,7 +23,7 @@ class UnifiedResearch:
         self.c=load(self.config_path)
         assert self.c['funding_cap'] is None
         self.code=self.c['code']
-        folders=list((ROOT/'基金').glob(self.code+'_*'))
+        folders=list((ROOT/'基金').glob('*/'+self.code+'_*'))
         assert len(folders)==1
         self.fund=folders[0]
         self.out=self.fund/'研究'

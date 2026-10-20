@@ -372,7 +372,7 @@ def main():
     parser.add_argument('--skip-pending',action='store_true')
     args = parser.parse_args()
     for code in args.codes:
-        folder = next((ROOT/'基金').glob(code+'_*'))/'研究'
+        folder = next((ROOT/'基金').glob('*/'+code+'_*'))/'研究'
         matches = list(folder.glob(code+'_统一量化研究_截至????-??-??.json'))
         if not matches and args.skip_pending:
             print(json.dumps({'code':code,'audit':'PENDING'},ensure_ascii=False),flush=True)

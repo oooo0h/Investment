@@ -17,7 +17,7 @@ NAMES = {'005698': '华夏全球科技先锋', '270023': '广发全球精选', '
 FETCH = '2026-10-15'
 frames, raw = {}, {}
 for code in CODES:
-    path = next((ROOT / '基金').glob(f'{code}*/历史净值/{code}_公开日净值_抓取{FETCH}.json'))
+    path = next((ROOT / '基金').glob(f'*/{code}*/历史净值/{code}_公开日净值_抓取{FETCH}.json'))
     rows = json.loads(path.read_text(encoding='utf-8'))
     assert len({x['date'] for x in rows}) == len(rows)
     assert all(x['nav'] > 0 for x in rows)

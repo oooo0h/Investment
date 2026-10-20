@@ -1,0 +1,34 @@
+{
+  "schema": "five-fund-incremental-nav-v1",
+  "execution_date": "2026-10-20",
+  "run_id": "20261020T011026111Z",
+  "manifest_path": "公共资料/历史净值/全基金历史净值当前入口.json",
+  "results": [],
+  "failures": [
+    {
+      "code": "005698",
+      "status": "failed",
+      "error": "Fund directory must be unique\n\n0 !== 1\n"
+    },
+    {
+      "code": "006373",
+      "status": "failed",
+      "error": "Fund directory must be unique\n\n0 !== 1\n"
+    },
+    {
+      "code": "016701",
+      "status": "failed",
+      "error": "Fund directory must be unique\n\n0 !== 1\n"
+    },
+    {
+      "code": "006485",
+      "status": "failed",
+      "error": "Fund directory must be unique\n\n0 !== 1\n"
+    },
+    {
+      "code": "006663",
+      "status": "failed",
+      "error": "Fund directory must be unique\n\n0 !== 1\n"
+    }
+  ]
+}

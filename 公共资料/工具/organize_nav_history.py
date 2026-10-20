@@ -59,7 +59,7 @@ def validate(doc):
 def prepare():
     STATE.mkdir(parents=True, exist_ok=True)
     funds = []
-    for history in sorted((ROOT / "基金").glob("*/历史净值")):
+    for history in sorted((ROOT / "基金").glob("*/*/历史净值")):
         code = history.parent.name[:6]
         candidates = []
         for file in history.glob(code + "_全部历史净值*.json"):
@@ -170,7 +170,7 @@ def check_staged():
 
 def publish_index():
     entries = []
-    for history in sorted((ROOT / "基金").glob("*/历史净值")):
+    for history in sorted((ROOT / "基金").glob("*/*/历史净值")):
         code = history.parent.name[:6]
         files = list(history.iterdir())
         assert all(f.is_file() for f in files), "History contains a subdirectory"

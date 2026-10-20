@@ -10,7 +10,7 @@ CODES = ("006373", "005698")
 FETCH_DATE = "2026-09-28"
 data = {}
 for code in CODES:
-    path = next((ROOT / "基金").glob(f"{code}*/历史净值/{code}_公开日净值_抓取{FETCH_DATE}.json"))
+    path = next((ROOT / "基金").glob(f"*/{code}*/历史净值/{code}_公开日净值_抓取{FETCH_DATE}.json"))
     rows = json.loads(path.read_text(encoding="utf-8"))
     assert all(r["nav"] > 0 and not r["event"] for r in rows), "Reinvestment adjustment required"
     data[code] = {r["date"]: r["nav"] for r in rows}

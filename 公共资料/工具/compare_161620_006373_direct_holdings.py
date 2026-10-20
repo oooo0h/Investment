@@ -6,8 +6,8 @@ import pdfplumber
 
 ROOT = Path(__file__).resolve().parents[2]
 SOURCES = {
-    "161620": (ROOT / "基金/161620_融通核心价值混合QDIIA/定期报告/2026/2026-08-28_融通核心价值混合QDII_2026年中期报告.pdf", range(37, 41)),
-    "006373": (ROOT / "基金/006373_国富全球科技互联混合_QDII_人民币A/定期报告/2026/2026-08-31_国富全球科技互联_2026年中期报告_AN202608311828779589.pdf", range(45, 49)),
+    "161620": (ROOT / "基金/观察基金/161620_融通核心价值混合QDIIA/定期报告/2026/2026-08-28_融通核心价值混合QDII_2026年中期报告.pdf", range(37, 41)),
+    "006373": (ROOT / "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/定期报告/2026/2026-08-31_国富全球科技互联_2026年中期报告_AN202608311828779589.pdf", range(45, 49)),
 }
 
 def compact(value):
@@ -64,7 +64,7 @@ output = {
     "common_holdings": common,
     "all_direct_holdings": holdings,
 }
-dest = ROOT / "基金/161620_融通核心价值混合QDIIA/研究/161620_006373_直接股票重叠_2026-06-30.json"
+dest = ROOT / "基金/观察基金/161620_融通核心价值混合QDIIA/研究/161620_006373_直接股票重叠_2026-06-30.json"
 dest.parent.mkdir(parents=True, exist_ok=True)
 dest.write_text(json.dumps(output, ensure_ascii=False, indent=2), encoding="utf-8")
 print(json.dumps({key: output[key] for key in ("stock_counts", "direct_weight_sums_pct", "common_issuer_count", "overlap_pct_of_nav", "common_holdings")}, ensure_ascii=False, indent=2))

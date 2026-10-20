@@ -9,7 +9,7 @@ import pathlib
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 ASOF = "2026-10-16"
-RAW_A = "基金/016701_银华海外数字经济量化选股混合发起_QDII_A/临时资料"
+RAW_A = "基金/持仓基金/016701_银华海外数字经济量化选股混合发起_QDII_A/临时资料"
 PROSPECTUS = "https://statics.citics.com/product/file/prospectus/016702.pdf"
 ANNUAL = "https://pdf.dfcfw.com/pdf/H2_AN202603281820829854_1.pdf"
 INTERIM = "https://pdf.dfcfw.com/pdf/H2_AN202608291828680755_1.pdf"
@@ -36,7 +36,7 @@ def main():
     summaries = []
     all_dates = []
     for code in ("016701", "016702"):
-        directory, = ROOT.glob("基金/" + code + "_*")
+        directory, = ROOT.glob("基金/*/" + code + "_*")
         source, = (directory / "历史净值").glob(code + "_全部历史净值_截至*.json")
         doc = json.loads(source.read_text(encoding="utf-8-sig"))
         rows = doc["rows"]

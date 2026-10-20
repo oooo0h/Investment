@@ -17,7 +17,7 @@ BASE='006373'
 FETCH='2026-10-15'
 series={}
 for c in CODES:
-    p=next((ROOT/'基金').glob(f'{c}*/历史净值/{c}_公开日净值_抓取{FETCH}.json'))
+    p=next((ROOT/'基金').glob(f'*/{c}*/历史净值/{c}_公开日净值_抓取{FETCH}.json'))
     rows=json.loads(p.read_text(encoding='utf-8'))
     assert len({x['date'] for x in rows})==len(rows)
     assert all(x['nav']>0 and not x['event'] for x in rows), 'Adjust distributions/splits before analysis'

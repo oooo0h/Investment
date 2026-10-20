@@ -316,7 +316,7 @@ def main():
     parser.add_argument('--codes', nargs='+', default=['006373','018124','015789'])
     args = parser.parse_args()
     for code in args.codes:
-        folder = next((ROOT/'基金').glob(code+'_*'))/'研究'
+        folder = next((ROOT/'基金').glob('*/'+code+'_*'))/'研究'
         experiment = '年度阈值量化研究' if args.comparison else '无补款上限量化研究'
         matches = list(folder.glob(code+'_'+experiment+'_截至????-??-??.json'))
         assert len(matches) == 1
