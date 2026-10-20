@@ -1,13 +1,7 @@
 @echo off
+chcp 65001 >nul
 setlocal
-cd /d "%~dp0"
-set "FUND_WEB_NODE=%USERPROFILE%\.cache\codex-runtimes\codex-primary-runtime\dependencies\node\bin\node.exe"
-if exist "%FUND_WEB_NODE%" goto bundled
-node scripts/serve.mjs
-goto finished
-:bundled
-"%FUND_WEB_NODE%" scripts/serve.mjs
-:finished
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "%~dp0scripts\start-local.ps1" %*
 set "FUND_WEB_EXIT=%ERRORLEVEL%"
 if not "%FUND_WEB_EXIT%"=="0" pause
 exit /b %FUND_WEB_EXIT%

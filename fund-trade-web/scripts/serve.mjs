@@ -31,15 +31,21 @@ const bondTables = demo ? null : await createLiveBondDataStore({ workspace: WORK
 try { await tables.snapshot(); if (bondTables) await bondTables.snapshot(); }
 catch { console.error('Local data unavailable.'); process.exit(1); }
 http.createServer(async (req, res) => {
+  res.setHeader('X-Fund-Trade-Web', demo ? 'demo' : 'live');
   let dataRequest = false;
   try {
     const url = new URL(req.url, 'http://localhost');
     const relative = decodeURIComponent(url.pathname).replace(/^\//, '') || 'index.html';
-    dataRequest = ['data/discipline.json', 'data/version.json', 'data/ledger.enc.json', 'data/bonds.enc.json'].includes(relative)
+    dataRequest = ['__local/health', 'data/discipline.json', 'data/version.json', 'data/ledger.enc.json', 'data/bonds.enc.json'].includes(relative)
       || /^data\/nav\/\d{6}\.json$/.test(relative);
     let bytes;
     let contentType;
-    if (relative === 'data/discipline.json') {
+    if (relative === '__local/health') {
+      await tables.snapshot();
+      if (bondTables) await bondTables.snapshot();
+      bytes = JSON.stringify({ application: 'fund-trade-web', mode: demo ? 'demo' : 'live', status: 'ready' });
+      contentType = 'application/json';
+    } else if (relative === 'data/discipline.json') {
       bytes = JSON.stringify(await disciplines.snapshot());
       contentType = 'application/json';
     } else if (relative === 'data/version.json') {
