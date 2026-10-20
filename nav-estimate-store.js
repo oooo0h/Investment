@@ -1,6 +1,6 @@
 // Public fund identities and return ratios only. Never stores NAV or account data.
 import { FUND_CODES } from './funds.js';
-import { buildEstimatedNav, getEstimateDates } from './nav-estimates.js';
+import { buildEstimatedNav, getEstimateDates } from './nav-estimates.js?v=20261020-nav-dates-trades';
 
 export const NAV_ESTIMATE_STORAGE_KEY = 'fund-ledger:nav-estimates:v1';
 export const MAX_NAV_ESTIMATES = 4000;

@@ -113,12 +113,15 @@ function inspectionTimeline(points, trades) {
   return [...timeline.values()].sort((left, right) => left.date.localeCompare(right.date));
 }
 
-export function setupNavChartInteractions(root) {
+export function setupNavChartInteractions(root, { matchMedia = globalThis.matchMedia?.bind(globalThis) } = {}) {
   if (!root || typeof root.addEventListener !== 'function') return () => {};
   installations.get(root)?.();
   const cache = new WeakMap();
   const indices = new WeakMap();
   const measurements = new WeakMap();
+  const measurementCharts = new Set();
+  const desktop = matchMedia?.('(min-width: 761px)');
+  const canMeasure = () => !desktop || desktop.matches;
   let active = null;
   const findChart = target => {
     const chart = target?.closest?.('.nav-chart');
@@ -130,7 +133,7 @@ export function setupNavChartInteractions(root) {
     const domainRaw = chart.getAttribute('data-nav-domain');
     const prior = cache.get(chart);
     if (prior && prior.raw === raw && prior.tradesRaw === tradesRaw && prior.domainRaw === domainRaw) return prior.points;
-    if (prior) { measurements.delete(chart); renderMeasurement(chart); }
+    if (prior) { measurements.delete(chart); measurementCharts.delete(chart); renderMeasurement(chart); }
     let points = null;
     let domain = null;
     try {
@@ -159,6 +162,7 @@ export function setupNavChartInteractions(root) {
     return points;
   }
   function renderMeasurement(chart) {
+    if (!canMeasure()) measurements.delete(chart);
     const scope = chart.closest?.('.nav-chart-frame') || chart;
     const item = measurements.get(chart);
     const panel = scope.querySelector('.nav-measure-panel');
@@ -198,9 +202,11 @@ export function setupNavChartInteractions(root) {
     }
   }
   function selectPoint(chart, point) {
-    if (measurements.has(chart)) { measurements.delete(chart); renderMeasurement(chart); return; }
+    if (!canMeasure()) { measurements.delete(chart); measurementCharts.delete(chart); renderMeasurement(chart); return; }
+    if (measurements.has(chart)) { measurements.delete(chart); measurementCharts.delete(chart); renderMeasurement(chart); return; }
     if (!Number.isFinite(point?.nav) || point.nav <= 0) return;
     measurements.set(chart, { start: point, end: null });
+    measurementCharts.add(chart);
     renderMeasurement(chart);
   }
   function hide(chart) {
@@ -339,7 +345,7 @@ export function setupNavChartInteractions(root) {
   const keyboard = event => {
     const chart = findChart(event.target);
     if (!chart) return;
-    if (event.key === 'Escape') { measurements.delete(chart); renderMeasurement(chart); hide(chart); return; }
+    if (event.key === 'Escape') { measurements.delete(chart); measurementCharts.delete(chart); renderMeasurement(chart); hide(chart); return; }
     const points = pointsFor(chart);
     if (points && ['Enter', ' '].includes(event.key)) {
       event.preventDefault();
@@ -365,8 +371,16 @@ export function setupNavChartInteractions(root) {
     show(chart, next);
   };
   const handlers = { pointermove: inspect, pointerdown: pointerDown, pointerout: leave, focusout: leave, keydown: keyboard, click };
+  const resetMobileMeasurement = () => {
+    if (canMeasure()) return;
+    for (const chart of measurementCharts) { measurements.delete(chart); renderMeasurement(chart); }
+    measurementCharts.clear();
+  };
+  desktop?.addEventListener?.('change', resetMobileMeasurement);
   for (const [name, handler] of Object.entries(handlers)) root.addEventListener(name, handler, name === 'keydown' ? false : { passive: true });
   const cleanup = () => {
+    desktop?.removeEventListener?.('change', resetMobileMeasurement);
+    measurementCharts.clear();
     for (const [name, handler] of Object.entries(handlers)) root.removeEventListener(name, handler);
     hide(active);
     if (installations.get(root) === cleanup) installations.delete(root);

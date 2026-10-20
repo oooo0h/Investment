@@ -1105,3 +1105,23 @@ input, select, textarea { background-color: color-mix(in srgb, var(--paper) 80%,
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+
+/* Trade events stay legible over both the price curve and the short-range dots. */
+.nav-trade-marker { width: 18px; height: 18px; z-index: 7; pointer-events: none; }
+.nav-trade-dot { width: 9px; height: 9px; border-width: 2px; }
+.nav-trade-marker > .nav-trade-dot { box-shadow: 0 0 0 2px var(--paper), 0 0 9px color-mix(in srgb, var(--trade-blue) 55%, transparent); }
+.nav-trade-marker.is-order > .nav-trade-dot { border-style: dashed; }
+.nav-chart-legend { flex-wrap: wrap; row-gap: 7px; }
+.nav-chart-legend-order { color: var(--muted); font-size: 11px; }
+
+@media (max-width: 760px) {
+  .nav-chart-dates { margin-top: 9px; gap: 8px; font-size: 11px; line-height: 1.4; }
+  .nav-hover-axis-date { font-size: 11px; line-height: 1.4; }
+  .nav-hover-left-days, .nav-hover-right-days { font-size: 10px; line-height: 1.4; }
+  .nav-hover-axis-date, .nav-hover-left-days, .nav-hover-right-days { top: calc(100% + 9px); }
+}
+
+@media (max-width: 760px) {
+  .nav-measure-panel, .nav-measure-band, .nav-measure-start, .nav-measure-end,
+  .nav-measure-start-line, .nav-measure-end-line { display: none !important; }
+}

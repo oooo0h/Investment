@@ -2,9 +2,9 @@ import { calculateLedger, describeModeEffect } from './engine.js?v=20261020-mode
 import { createRefreshController } from './refresh-controller.js';
 import { unlockErrorMessage } from './unlock-errors.js';
 import { NAV_PERIODS, recentNavPeriod, resolveNavRange, moveNavBoundary, resolveNavSliderDomain } from './nav-range.js';
-import { renderNavChart } from './nav-chart.js?v=20261019-transactions';
+import { renderNavChart, buildTradeMarkers } from './nav-chart.js?v=20261020-nav-dates-trades';
 import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap } from './nav-annualized.js?v=20261019-sheet-discipline';
-import { setupNavChartInteractions } from './nav-interaction.js?v=20261019-gap-scroll-markers';
+import { setupNavChartInteractions } from './nav-interaction.js?v=20261020-nav-dates-trades';
 import { setupNavSliderInteractions } from './nav-slider.js';
 import { calculateTransactionPerformance } from './transaction-performance.js';
 import { FUNDS, FUND_CODES } from './funds.js?v=20261019-collapsible-panels';
@@ -19,9 +19,9 @@ import { calculateBondSummary } from './bond-model.js';
 import { evaluateBondReserve } from './bond-reserve.js';
 import { calculateBondHoldingDuration } from './bond-holding-duration.js?v=20261019-bond-calculated-lots';
 import { renderBondsPage } from './bonds-view.js?v=20261019-bond-calculated-lots';
-import { getEstimateDates, parseEstimatePercent, buildEstimatedNav } from './nav-estimates.js';
-import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js';
-import { renderEstimatePanel } from './estimate-panel.js?v=20261019-collapsible-panels';
+import { getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav } from './nav-estimates.js?v=20261020-nav-dates-trades';
+import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js?v=20261020-nav-dates-trades';
+import { renderEstimatePanel } from './estimate-panel.js?v=20261020-nav-dates-trades';
 import { getDisciplineActions, adjustDisciplineRule } from './discipline-actions.js?v=20261019-sheet-discipline';
 import { getNavChartDisplay } from './nav-display.js';
 import { createFundViewportKeeper } from './viewport-anchor.js?v=20261019-flow-header';
@@ -491,7 +491,7 @@ function navEstimateStorage() {
 }
 
 function syncNavEstimates() {
-  const now = new Date(), { yesterday } = getEstimateDates(now);
+  const now = new Date(), yesterday = getEstimateTargetDate(now);
   if (!state.estimateLoaded) {
     const loaded = loadNavEstimates({ storage: navEstimateStorage(), now });
     state.navEstimateEntries = loaded.entries;
@@ -583,7 +583,7 @@ function refreshEstimateViews() {
 function saveNavEstimateEdits(event, { automatic = false, onlyCode = null } = {}) {
   event.preventDefault();
   if (!state.unlocked || !checkSession()) return;
-  const date = getEstimateDates(new Date()).yesterday;
+  const date = getEstimateTargetDate(new Date());
   if (!date || date !== state.estimateDate) { syncNavEstimates(); render(); return; }
   const drafts = automatic ? { ...state.estimateDrafts } : {}, errors = automatic ? { ...state.estimateErrors } : {};
   const next = state.navEstimateEntries.filter(entry => entry.date !== date || (onlyCode && entry.code !== onlyCode));
@@ -934,8 +934,9 @@ function chartOverlays(code) {
   const originals = new Map(getBook(code).transactions.map(tx => [tx.id, tx]));
   const costNav = summary.valid && Number.isFinite(summary.principal) && summary.principal >= 0 && Number.isFinite(summary.shares) && summary.shares > 0
     ? summary.principal / summary.shares : null;
-  const markers = rows.filter(row => row.status === 'included' && row.dateBasis !== 'order' && ['buy', 'sip', 'transfer-in', 'reinvest', 'sell'].includes(row.type))
-    .map(row => ({ date: row.date, nav: row.nav, type: row.type === 'sell' ? 'sell' : 'buy', estimated: row.estimated === true || ['estimated', '历史估算'].includes(originals.get(row.id)?.status) }));
+  const markers = buildTradeMarkers(rows.map(row => ({ ...row,
+    estimated: row.estimated === true || ['estimated', '历史估算'].includes(originals.get(row.id)?.status),
+  })), officialNav(code));
   return { costNav, costEstimated: summary.estimatedCount > 0, markers };
 }
 
