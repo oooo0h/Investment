@@ -15,7 +15,7 @@ test('partial screenshot records render both ledgers without inventing account t
   assert.equal((html.match(/class="panel bond-card"/g) || []).length, 2);
   const overview = html.match(/<section[^>]*aria-label="债基合计"[\s\S]*?<\/section>/)[0];
   assert.match(overview, /合计持仓金额（元）/);
-  assert.match(overview, /占所有基金持仓比例/);
+  assert.match(overview, /占总持仓比例（含自由现金流）/);
   assert.equal((overview.match(/待核验/g) || []).length, 2);
   assert.doesNotMatch(html, /交易记录已接入|暂不展示账户汇总|class="bonds-summary-return|1\.00/);
 });
@@ -62,10 +62,25 @@ test('free cash flow masks by default, reveals a signed amount, and edits with t
 
 test('the overview shows only a rounded current portfolio share even while amounts are hidden', () => {
   const html = renderBondsPage({ entries: entries(), reserve: { status: 'met', ratio: 0.28456 } });
-  assert.match(html, /占所有基金持仓比例/);
+  assert.match(html, /占总持仓比例（含自由现金流）/);
   assert.match(html, /data-bond-reserve-share>28%/);
   assert.doesNotMatch(html, /330\.00|110\.00|220\.00|28\.456/);
   assert.match(renderBondsPage({ entries: entries(), reserve: { status: 'unknown', ratio: null } }), /data-bond-reserve-share>待核验/);
+});
+
+test('the overview adds signed cash, preserves fund returns, and withholds unavailable cash totals', () => {
+  for (const [cash, total] of [[12.35, '342.35'], [-12.35, '317.65'], [0, '330.00'], [null, '330.00']]) {
+    const html = renderBondsPage({ entries: entries(), freeCashFlow: cash, visible: true });
+    const overview = html.match(/aria-label="债基合计"[\s\S]*?<\/section>/)[0];
+    assert.ok(overview.includes(total));
+    assert.equal((html.match(/\+10\.00%/g) || []).length, 2);
+    assert.match(html, /计入债基总持仓和配置比例/);
+    assert.doesNotMatch(renderBondsPage({ entries: entries(), freeCashFlow: cash }), /342\.35|317\.65|330\.00/);
+  }
+  const html = renderBondsPage({ entries: entries(), cashUnavailable: true, visible: true, reserve: { ratio: .25 } });
+  const overview = html.match(/aria-label="债基合计"[\s\S]*?<\/section>/)[0];
+  assert.equal((overview.match(/待核验/g) || []).length, 2);
+  assert.equal((html.match(/class="panel bond-card"/g) || []).length, 2);
 });
 
 test('a verified maturity distribution places recent holdings in red left and mature holdings in green right', () => {

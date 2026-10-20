@@ -2,6 +2,14 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { calculatePortfolioAllocation, evaluateHoldingLimit, holdingLimitFrom } from '../src/portfolio-allocation.js';
 const rule = { id: 'us-exposure', title: '基金持有量按美股含量确定。', detail: '如果美股含量低于40%，则【立刻】降低该基金持仓至总持仓的【10%】；已低于10%时不因本条加仓。' };
+
+test('signed free cash flow changes the common denominator once and missing cash is optional', () => {
+  const rows = [{ code: 'a', marketValue: 20 }, { code: 'b', marketValue: 80 }];
+  assert.equal(calculatePortfolioAllocation(rows, ['a', 'b'], 100).shares.a, .1);
+  assert.equal(calculatePortfolioAllocation(rows, ['a', 'b'], -50).shares.a, .4);
+  assert.equal(calculatePortfolioAllocation(rows, ['a', 'b'], null).shares.a, .2);
+  for (const cash of [-100, -101, NaN, Infinity, '10']) assert.equal(calculatePortfolioAllocation(rows, ['a', 'b'], cash).status, 'unavailable');
+});
 test('all selected fund values, including bonds, form one denominator and return proportions only', () => {
   const rows = [{ code: 'a', marketValue: 20 }, { code: 'b', marketValue: 80 }], before = structuredClone(rows);
   assert.deepEqual(calculatePortfolioAllocation(rows, ['a', 'b']), { status: 'available', shares: { a: .2, b: .8 } });

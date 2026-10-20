@@ -2,11 +2,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { calculateLedger } from '../src/engine.js';
+import { calculateLedger, describeModeEffect } from '../src/engine.js';
 import { estimateApplications, GUOFU_TRADING_DATES } from '../src/application-estimates.js';
 import { getDailyCode } from '../src/vault.js';
 import { createRefreshController } from '../src/refresh-controller.js';
-import { NAV_PERIODS, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain } from '../src/nav-range.js';
+import { NAV_PERIODS, recentNavPeriod, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain } from '../src/nav-range.js';
 import { renderNavChart, buildTradeMarkers } from '../src/nav-chart.js';
 import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap } from '../src/nav-annualized.js';
 import { setupNavChartInteractions } from '../src/nav-interaction.js';
@@ -19,7 +19,8 @@ import { REGION_DATA } from '../src/region-data.js';
 import { evaluateUsExposure } from '../src/us-exposure.js';
 import { calculateHoldingDuration, createHoldingDurationScale } from '../src/holding-duration.js';
 import { renderBondsPage } from '../src/bonds-view.js';
-import { calculateBondSummary } from '../src/bond-model.js';
+import { calculateBondHoldingValue } from '../src/bond-model.js';
+import { calculatePortfolioAllocation, evaluateHoldingLimit } from '../src/portfolio-allocation.js';
 import { evaluateBondReserve } from '../src/bond-reserve.js';
 import { calculateBondHoldingDuration } from '../src/bond-holding-duration.js';
 import { getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav } from '../src/nav-estimates.js';
@@ -28,7 +29,7 @@ import { renderEstimatePanel } from '../src/estimate-panel.js';
 import { getDisciplineActions, adjustDisciplineRule } from '../src/discipline-actions.js';
 import { getNavChartDisplay } from '../src/nav-display.js';
 import { createFundViewportKeeper } from '../src/viewport-anchor.js';
-import { requestJson, withTimeout } from '../src/request-json.js';
+
 
 const source = (await readFile(new URL('../src/app.js', import.meta.url), 'utf8'))
   .replace(/^import[\s\S]*?;\s*/gm, '')
@@ -136,10 +137,10 @@ function harness(timestamp = '2026-01-08T02:00:00.000Z', options = {}) {
     };
   });
   const fetch = options.fetch || (async url => ({ ok: true, json: async () => ({ code: /([0-9]{6})\.json$/.exec(url)?.[1], history: [] }) }));
-  const api = new Function('requestJson', 'withTimeout', 'calculateLedger', 'estimateApplications', 'GUOFU_TRADING_DATES', 'createRefreshController', 'NAV_PERIODS', 'resolveNavRange', 'moveNavBoundary', 'summarizeNavRange', 'resolveNavSliderDomain', 'renderNavChart', 'buildTradeMarkers', 'calculateNavAnnualized', 'evaluateAnnualDiscipline', 'evaluateAddDiscipline', 'getNavDisciplineGap', 'setupNavChartInteractions', 'setupNavSliderInteractions', 'calculateTransactionPerformance', 'FUNDS', 'FUND_CODES', 'DISCIPLINE_ENTRIES', 'createDisciplineSync', 'REGION_DATA', 'evaluateUsExposure', 'calculateHoldingDuration', 'createHoldingDurationScale', 'openBondStore', 'renderBondsPage', 'calculateBondSummary', 'evaluateBondReserve', 'calculateBondHoldingDuration', 'getEstimateDates', 'getEstimateTargetDate', 'parseEstimatePercent', 'buildEstimatedNav', 'loadNavEstimates', 'saveNavEstimates', 'renderEstimatePanel', 'getDisciplineActions', 'adjustDisciplineRule', 'getNavChartDisplay', 'createFundViewportKeeper', 'document', 'location', 'window', 'matchMedia', 'localStorage', 'Date',
+  const api = new Function('describeModeEffect', 'recentNavPeriod', 'calculateLedger', 'estimateApplications', 'GUOFU_TRADING_DATES', 'createRefreshController', 'NAV_PERIODS', 'resolveNavRange', 'moveNavBoundary', 'summarizeNavRange', 'resolveNavSliderDomain', 'renderNavChart', 'buildTradeMarkers', 'calculateNavAnnualized', 'evaluateAnnualDiscipline', 'evaluateAddDiscipline', 'getNavDisciplineGap', 'setupNavChartInteractions', 'setupNavSliderInteractions', 'calculateTransactionPerformance', 'FUNDS', 'FUND_CODES', 'DISCIPLINE_ENTRIES', 'createDisciplineSync', 'REGION_DATA', 'evaluateUsExposure', 'calculateHoldingDuration', 'createHoldingDurationScale', 'openBondStore', 'renderBondsPage', 'calculateBondHoldingValue', 'evaluateBondReserve', 'calculatePortfolioAllocation', 'evaluateHoldingLimit', 'calculateBondHoldingDuration', 'getEstimateDates', 'getEstimateTargetDate', 'parseEstimatePercent', 'buildEstimatedNav', 'loadNavEstimates', 'saveNavEstimates', 'renderEstimatePanel', 'getDisciplineActions', 'adjustDisciplineRule', 'getNavChartDisplay', 'createFundViewportKeeper', 'document', 'location', 'window', 'matchMedia', 'localStorage', 'Date',
     'setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'scrollTo', 'scrollY', 'fetch', 'loadVault',
-    `${source}\nreturn { state, startSession, checkSession, lock, render, remainingTime, actionClick, unlock, saveCashFlow, saveNavEstimateEdits, refreshCurrentData, dataRefresh, disciplineSync, chartOverlays, navRangeControls, navContext, navSliderDomain, navVisualValues, valuation, ledger, navPanel, fundRegions, sparkline, estimateHomePanel, bondReserveCheck, annualDisciplineAlert, handles: () => ({ sessionInterval, sessionTimeout, dailyCodeReader }) };`)(
-    requestJson, withTimeout, calculateLedger, estimateApplications, GUOFU_TRADING_DATES, createRefreshController, NAV_PERIODS, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain, renderNavChart, buildTradeMarkers, calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap, setupNavChartInteractions, setupNavSliderInteractions, calculateTransactionPerformance, FUNDS, FUND_CODES, DISCIPLINE_ENTRIES, createDisciplineSync, REGION_DATA, evaluateUsExposure, calculateHoldingDuration, createHoldingDurationScale, fakeBondOpen, renderBondsPage, calculateBondSummary, evaluateBondReserve, calculateBondHoldingDuration, getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav, loadNavEstimates, saveNavEstimates, renderEstimatePanel, getDisciplineActions, adjustDisciplineRule, getNavChartDisplay, createFundViewportKeeper, document, location, window, () => ({ matches: false }), localStorage, clock.Date,
+    `${source}\nreturn { state, startSession, checkSession, lock, render, remainingTime, actionClick, unlock, saveCashFlow, saveNavEstimateEdits, refreshCurrentData, dataRefresh, disciplineSync, chartOverlays, navRangeControls, navContext, navSliderDomain, navVisualValues, valuation, ledger, navPanel, fundRegions, sparkline, estimateHomePanel, bondReserveCheck, portfolioAllocation, annualDisciplineAlert, handles: () => ({ sessionInterval, sessionTimeout, dailyCodeReader }) };`)(
+    describeModeEffect, recentNavPeriod, calculateLedger, estimateApplications, GUOFU_TRADING_DATES, createRefreshController, NAV_PERIODS, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain, renderNavChart, buildTradeMarkers, calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap, setupNavChartInteractions, setupNavSliderInteractions, calculateTransactionPerformance, FUNDS, FUND_CODES, DISCIPLINE_ENTRIES, createDisciplineSync, REGION_DATA, evaluateUsExposure, calculateHoldingDuration, createHoldingDurationScale, fakeBondOpen, renderBondsPage, calculateBondHoldingValue, evaluateBondReserve, calculatePortfolioAllocation, evaluateHoldingLimit, calculateBondHoldingDuration, getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav, loadNavEstimates, saveNavEstimates, renderEstimatePanel, getDisciplineActions, adjustDisciplineRule, getNavChartDisplay, createFundViewportKeeper, document, location, window, () => ({ matches: false }), localStorage, clock.Date,
     clock.setTimeout, clock.clear, clock.setInterval, clock.clear, settings => scrollCalls.push(settings), scrollY, fetch, loadVault,
   );
   function start() {
@@ -1980,6 +1981,57 @@ function configureReserveFixture(h, { equityShares = 1000, bonds = syntheticBond
   h.api.state.bondUnavailable = false;
   h.api.render();
 }
+
+test('cash participates in reserve compliance and saving or clearing recalculates immediately', async () => {
+  const { h } = bondsHarness();
+  await h.submit();
+  configureReserveFixture(h);
+  assert.equal(h.api.bondReserveCheck().status, 'below');
+  assert.match(h.api.bondReserveCheck().message, /含自由现金流.*低于下限 1\/6.*替代条件也未满足/);
+  assert.match(reserveRule(h), /未完全遵守 · 比例偏低/);
+  showBonds(h);
+  const save = value => h.api.saveCashFlow({ preventDefault() {}, target: { elements: { freeCashFlow: { value } } } });
+  h.click('cash-edit');
+  await save('670');
+  assert.equal(h.api.bondReserveCheck().status, 'met');
+  assert.equal(h.api.bondReserveCheck().ratio, .2);
+  assert.equal(h.api.portfolioAllocation().shares[FUND_CODES[0]], .2);
+  assert.match(h.app.innerHTML, /data-bond-reserve-share>20%/);
+  h.api.state.cashUnavailable = true;
+  assert.equal(h.api.bondReserveCheck().status, 'unknown');
+  assert.match(h.api.bondReserveCheck().message, /自由现金流记录暂不可用/);
+  assert.equal(h.api.portfolioAllocation().status, 'unavailable');
+  h.api.state.cashUnavailable = false;
+  h.click('cash-edit');
+  await save('');
+  assert.equal(h.api.bondReserveCheck().status, 'below');
+  h.api.lock();
+});
+
+test('reserve warnings distinguish high ratios, inclusive boundaries and the alternative absolute condition', () => {
+  const h = harness();
+  h.start();
+  configureReserveFixture(h, { equityShares: 100 });
+  assert.equal(h.api.bondReserveCheck().reason, 'share-high');
+  assert.match(h.api.bondReserveCheck().message, /高于上限 1\/3.*替代条件也未满足/);
+  assert.match(reserveRule(h), /未完全遵守 · 比例偏高/);
+  for (const [equity, cash] of [[500, 70], [200, 70]]) {
+    configureReserveFixture(h, { equityShares: equity });
+    h.api.state.freeCashFlow = cash;
+    h.api.render();
+    assert.equal(h.api.bondReserveCheck().status, 'met');
+    assert.doesNotMatch(reserveRule(h), /未完全遵守|待核验/);
+  }
+  h.api.state.freeCashFlow = 50_000;
+  h.api.render();
+  assert.equal(h.api.bondReserveCheck().reason, 'absolute-threshold');
+  assert.doesNotMatch(reserveRule(h), /未完全遵守|比例偏高/);
+  h.api.state.freeCashFlow = -331;
+  h.api.render();
+  assert.equal(h.api.bondReserveCheck().status, 'unknown');
+  assert.match(h.api.bondReserveCheck().message, /合计为负/);
+  h.api.lock();
+});
 function reserveRule(h) {
   return h.app.innerHTML.match(/<(?:details|article)\b[^>]*data-discipline="bond-reserve"[\s\S]*?<\/(?:details|article)>/)?.[0] || '';
 }

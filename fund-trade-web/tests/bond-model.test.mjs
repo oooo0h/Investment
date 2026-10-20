@@ -1,13 +1,27 @@
 // All amounts below are synthetic and never read from an account or a file.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { BOND_FUNDS, normalizeBondEntries, normalizeFreeCashFlow, calculateBondSummary } from '../src/bond-model.js';
+import { BOND_FUNDS, normalizeBondEntries, normalizeFreeCashFlow, calculateBondSummary, calculateBondHoldingValue } from '../src/bond-model.js';
 
 const entries = (first = {}, second = {}) => [
   { code: '006485', marketValue: 120, holdingProfit: 20, ...first },
   { code: '006663', marketValue: 45, holdingProfit: -5, ...second },
 ];
 const close = (actual, expected) => assert.ok(Math.abs(actual - expected) < 1e-12);
+
+test('bond allocation includes signed cash exactly once without changing fund returns', () => {
+  const rows = entries(), before = structuredClone(rows);
+  assert.equal(calculateBondHoldingValue(rows), 165);
+  assert.equal(calculateBondHoldingValue(rows, 12.35), 177.35);
+  assert.equal(calculateBondHoldingValue(rows, -12.35), 152.65);
+  assert.equal(calculateBondHoldingValue(rows, -165), 0);
+  assert.equal(calculateBondHoldingValue(rows, -166), -1);
+  assert.equal(calculateBondHoldingValue(entries({ marketValue: .1, holdingProfit: 0 }, { marketValue: .2, holdingProfit: 0 }), .3), .6);
+  assert.equal(calculateBondSummary(rows).returnRate, .1);
+  assert.deepEqual(rows, before);
+  for (const value of [NaN, Infinity, '12']) assert.throws(() => calculateBondHoldingValue(rows, value), /Invalid bond entries/);
+  assert.throws(() => calculateBondHoldingValue([], 12), /Invalid bond entries/);
+});
 
 test('only the two requested public bond identities are exposed', () => {
   assert.deepEqual(BOND_FUNDS, [

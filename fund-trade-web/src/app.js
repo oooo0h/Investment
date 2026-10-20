@@ -12,13 +12,13 @@ import { DISCIPLINE_ENTRIES } from './discipline.js?v=20261019-sheet-discipline'
 import { createDisciplineSync } from './discipline-sync.js';
 import { REGION_DATA } from './region-data.js';
 import { evaluateUsExposure } from './us-exposure.js';
-import { calculatePortfolioAllocation, evaluateHoldingLimit } from './portfolio-allocation.js';
+import { calculatePortfolioAllocation, evaluateHoldingLimit } from './portfolio-allocation.js?v=20261020-cash-in-holdings';
 import { calculateHoldingDuration, createHoldingDurationScale } from './holding-duration.js';
 import { openBondStore } from './bond-store.js?v=20261019-bond-calculated-lots';
-import { calculateBondSummary } from './bond-model.js';
+import { calculateBondHoldingValue } from './bond-model.js?v=20261020-cash-in-holdings';
 import { evaluateBondReserve } from './bond-reserve.js';
 import { calculateBondHoldingDuration } from './bond-holding-duration.js?v=20261019-bond-calculated-lots';
-import { renderBondsPage } from './bonds-view.js?v=20261019-bond-calculated-lots';
+import { renderBondsPage } from './bonds-view.js?v=20261020-cash-in-holdings';
 import { getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav } from './nav-estimates.js?v=20261020-nav-dates-trades';
 import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js?v=20261020-nav-dates-trades';
 import { renderEstimatePanel } from './estimate-panel.js?v=20261020-nav-dates-trades';
@@ -645,7 +645,7 @@ function portfolioAllocation() {
     const result = ledger(fund.code);
     return { code: fund.code, marketValue: result.summary.valid === true && !result.errors.length && !getBook(fund.code).incomplete ? result.summary.marketValue : null };
   });
-  return calculatePortfolioAllocation([...positions, ...(!state.bondUnavailable ? state.bonds : [])], [...FUND_CODES, '006485', '006663']);
+  return calculatePortfolioAllocation([...positions, ...(!state.bondUnavailable && !state.cashUnavailable ? state.bonds : [])], [...FUND_CODES, '006485', '006663'], state.freeCashFlow);
 }
 
 function holdingLimitCopy(code) {
@@ -663,8 +663,8 @@ function exposureNavTitle(fund, check) {
 function bondReserveCheck() {
   let bondValue = null, equityValue = 0;
   const missing = [];
-  if (!state.bondUnavailable) {
-    try { bondValue = calculateBondSummary(state.bonds).marketValue; } catch { /* Unavailable is never zero. */ }
+  if (!state.bondUnavailable && !state.cashUnavailable) {
+    try { bondValue = calculateBondHoldingValue(state.bonds, state.freeCashFlow); } catch { /* Unavailable is never zero. */ }
   }
   for (const fund of FUNDS) {
     const book = getBook(fund.code);
@@ -676,9 +676,11 @@ function bondReserveCheck() {
   }
   const check = evaluateBondReserve({ equityValue, bondValue, complete: missing.length === 0 });
   const message = check.status === 'below'
-    ? `债基占比约 ${number(check.ratio * 100, 0)}%，${check.reason === 'share-high' ? '高于 1/3' : '低于 1/6'}，且持仓未超过 5 万元。`
+    ? `债基（含自由现金流）占总持仓约 ${number(check.ratio * 100, 0)}%，${check.reason === 'share-high' ? '高于上限 1/3（约33%）' : '低于下限 1/6（约17%）'}；“持仓大于5万元”的替代条件也未满足。`
     : check.status === 'unknown'
-      ? bondValue === null ? '债基数据暂不可用，无法核验配置。'
+      ? state.cashUnavailable ? '自由现金流记录暂不可用，无法核验债基总持仓与配置比例。'
+        : bondValue === null ? '债基数据暂不可用，无法核验配置。'
+        : bondValue < 0 ? '债基与自由现金流合计为负，配置比例待核验。'
         : missing.length ? `${missing.join('、')}持仓资料不完整，暂无法核验债基占比。`
           : '总持仓暂无有效估值，无法核验债基占比。'
       : '';
@@ -693,7 +695,7 @@ function bondNavMarkup(active, check, mobile = false) {
   const below = check?.status === 'below', unknown = check?.status === 'unknown';
   const label = below ? '债基，配置未达标' : unknown ? '债基，配置待核验' : '债基';
   const dot = below || unknown ? '<span class="exposure-nav-dot" aria-hidden="true"></span>' : '';
-  return `<a href="#/bonds" class="${active ? 'active' : ''}${below ? ' exposure-nav-warning' : unknown ? ' bond-nav-pending' : ''}" ${active ? 'aria-current="page"' : ''} aria-label="${label}">${mobile ? `<span class="nav-letter">债${dot}</span><span>债基</span>` : `债基${dot}`}</a>`;
+  return `<a href="#/bonds" class="${active ? 'active' : ''}${below ? ' exposure-nav-warning' : unknown ? ' bond-nav-pending' : ''}" ${active ? 'aria-current="page"' : ''} aria-label="${label}" title="${esc(check?.message ? `${label}：${check.message}` : label)}">${mobile ? `<span class="nav-letter">债${dot}</span><span>债基</span>` : `债基${dot}`}</a>`;
 }
 
 function header(code, reserve) {
@@ -882,7 +884,7 @@ function homeRules(reserve) {
       }
       if (entry.id === 'long-term') return `<details class="discipline-entry discipline-entry-checkable${panelExpanded('discipline-long-term') ? ' holding-progress-visible' : ''}" data-discipline="long-term" data-panel="discipline-long-term" ${panelExpanded('discipline-long-term') ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="discipline-expand-hint"><span class="when-closed">查看持有时间</span><span class="when-open">收起持有时间</span>${icon('down')}</span></div></div></summary>${holdingDurationDetails()}</details>`;
       if (entry.id === 'bond-reserve' && reserve.status !== 'met') {
-        const below = reserve.status === 'below', label = below ? '未完全遵守' : '待核验';
+        const below = reserve.status === 'below', label = below ? `未完全遵守 · ${reserve.reason === 'share-high' ? '比例偏高' : '比例偏低'}` : '待核验';
         return `<details class="discipline-entry discipline-entry-checkable${below ? ' discipline-entry-warning' : ''}" data-discipline="bond-reserve" data-panel="discipline-bond-reserve" data-bond-reserve-status="${reserve.status}" ${panelExpanded('discipline-bond-reserve') ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="exposure-badge ${below ? 'exposure-warning' : 'bond-reserve-pending'}">${icon('info')}${label}</span><span class="discipline-expand-hint"><span class="when-closed">查看原因</span><span class="when-open">收起原因</span>${icon('down')}</span></div></div></summary><div class="discipline-compliance-details"><a class="exposure-check-target bond-reserve-target" href="#/bonds?section=bond-reserve" aria-label="查看债基配置"><p>${esc(reserve.message)}</p><span class="bond-reserve-link">查看债基${icon('arrow')}</span></a></div></details>`;
       }
       if (entry.id === 'bond-reserve') return `<article class="discipline-entry" data-discipline="bond-reserve" data-bond-reserve-status="met" tabindex="-1"><p class="discipline-entry-label">${esc(labels[entry.id])}</p><div class="discipline-entry-content">${content}</div></article>`;
