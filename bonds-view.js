@@ -1,5 +1,6 @@
 import { calculateBondSummary, calculateBondHoldingValue, BOND_FUNDS } from './bond-model.js?v=20261020-cash-in-holdings';
 import { BOND_FEE_RULES } from './bond-holding-duration.js?v=20261019-bond-calculated-lots';
+import { bondReserveTone } from './bond-reserve.js?v=20261020-bond-color-notices';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
@@ -94,9 +95,27 @@ function bondCard(entry, options) {
 }
 
 function reserveNote(reserve) {
-  if (!reserve || !['below', 'unknown'].includes(reserve.status)) return '';
-  const title = reserve.status === 'below' ? `债基配置未达标 · ${reserve.reason === 'share-high' ? '比例偏高' : '比例偏低'}` : '债基配置待核验';
+  if (!reserve || !['red', 'green', 'unknown'].includes(reserve.tone)) return '';
+  const title = { red: '钱不多了', green: '可以花钱了', unknown: '债基配置待核验' }[reserve.tone];
   return `<div class="bond-reserve-note"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7v1"/></svg><p><strong>${title}</strong>：${escapeHtml(reserve.message)}<a href="#/?section=bond-reserve">查看首页规则与原因</a></p></div>`;
+}
+
+function totalHoldingProgress(holdingValue, ratio) {
+  const knownValue = Number.isFinite(holdingValue) && holdingValue >= 0;
+  const knownRatio = knownValue && Number.isFinite(ratio) && ratio >= 0 && ratio <= 1;
+  const tone = bondReserveTone(holdingValue, ratio);
+  const status = { red: '低于5万元', yellow: '占比在1/6～1/3', green: '其余区间', unknown: '待核验' }[tone];
+  const percent = knownRatio ? Math.round(ratio * 100) : null;
+  const label = knownRatio ? `债基总持仓占比约${percent}%，${status}` : `债基总持仓占比待核验，${status}`;
+  const attributes = knownRatio
+    ? `role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}" aria-valuetext="${label}" aria-label="债基总持仓占比"`
+    : `role="img" aria-label="${label}"`;
+  return `<div class="bond-total-progress" data-bond-total-tone="${tone}">
+    <div class="bond-total-progress-heading"><span>总持仓配置</span><span class="bond-total-progress-status">${status}${knownRatio ? ` · 约${percent}%` : ' · 占比待核验'}</span></div>
+    <div class="bond-duration-track bond-total-progress-track" ${attributes}>${knownRatio ? `<span class="bond-total-progress-fill" style="width:${percent}%"></span>` : ''}</div>
+    <div class="bond-total-progress-legend"><span class="bond-total-red">低于5万元</span><span class="bond-total-yellow">占比1/6～1/3</span><span class="bond-total-green">其余</span></div>
+    <p class="bond-total-progress-note">低于5万元优先标红，其余按占比着色；总持仓含自由现金流。</p>
+  </div>`;
 }
 
 function cashFlowValue(value, visible) {
@@ -130,7 +149,7 @@ export function renderBondsPage({ entries = [], valuationDate = null, visible = 
   const calculated = Object.values(holdingByCode).some(item => item?.status === 'calculated');
   const hasPending = Object.values(transactions).some(rows => rows.some(row => row.status === 'pending'));
   const heading = `<header class="page-heading bonds-heading"><div><h1>债基</h1><p class="bonds-local-note">${calculated ? '按完整记录推算' : '数据来自基金表格'}${valuationDate ? ` · 净值截至 ${escapeHtml(valuationDate)}` : ''}${calculated && hasPending ? ' · 待补全记录未计入' : ''}</p></div></header>`;
-  const reserveAttributes = `id="bonds-reserve-summary" tabindex="-1"${reserve ? ` data-bond-reserve-status="${escapeHtml(reserve.status)}"` : ''}`;
+  let reserveAttributes = `id="bonds-reserve-summary" tabindex="-1"${reserve ? ` data-bond-reserve-status="${escapeHtml(reserve.status)}"` : ''}`;
   const locationClass = locateReserve ? ' bond-reserve-location' : '';
   if (loading) return `<main id="main" class="workspace bonds-page">${heading}<section class="panel bonds-state" aria-busy="true"><p>正在读取债基记录…</p></section></main>`;
   let summary = null;
@@ -141,10 +160,13 @@ export function renderBondsPage({ entries = [], valuationDate = null, visible = 
   if (summary && !cashUnavailable) {
     try { holdingValue = calculateBondHoldingValue(entries, freeCashFlow); } catch { /* Preserve fund cards while the aggregate is unavailable. */ }
   }
+  const tone = bondReserveTone(holdingValue, reserve?.ratio);
+  if (reserve) reserve = { ...reserve, tone };
+  reserveAttributes += ` data-bond-reserve-tone="${tone}"`;
   const overview = `<section ${reserveAttributes} class="panel bonds-summary bonds-summary-overview${locationClass}" aria-label="债基合计">${summary ? reserveNote(reserve) : ''}<dl>
     <div><dt>合计持仓金额（元）</dt><dd class="num${holdingValue === null ? ' bonds-summary-pending' : ''}">${holdingValue !== null ? privateValue(holdingValue, Boolean(visible)) : '待核验'}</dd></div>
     <div><dt>占总持仓比例（含自由现金流）</dt><dd class="num${holdingValue !== null && Number.isFinite(reserve?.ratio) ? '' : ' bonds-summary-pending'}" data-bond-reserve-share>${holdingValue !== null && Number.isFinite(reserve?.ratio) ? `${Math.round(reserve.ratio * 100)}%` : '待核验'}</dd></div>
-  </dl><p class="helper">债基总持仓含自由现金流；纪律要求占总持仓的1/6～1/3，或持仓大于5万元。</p></section>`;
+  </dl>${totalHoldingProgress(holdingValue, reserve?.ratio)}<p class="helper">债基总持仓含自由现金流；纪律要求占总持仓的1/6～1/3，或持仓大于5万元。</p></section>`;
   if (!summary) {
     const hasRecords = !unavailable && BOND_FUNDS.some(fund => transactions?.[fund.code]?.length);
     if (hasRecords) {

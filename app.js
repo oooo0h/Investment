@@ -16,9 +16,9 @@ import { calculatePortfolioAllocation, evaluateHoldingLimit } from './portfolio-
 import { calculateHoldingDuration, createHoldingDurationScale } from './holding-duration.js';
 import { openBondStore } from './bond-store.js?v=20261019-bond-calculated-lots';
 import { calculateBondHoldingValue } from './bond-model.js?v=20261020-cash-in-holdings';
-import { evaluateBondReserve } from './bond-reserve.js';
+import { evaluateBondReserve, bondReserveTone } from './bond-reserve.js?v=20261020-bond-color-notices';
 import { calculateBondHoldingDuration } from './bond-holding-duration.js?v=20261019-bond-calculated-lots';
-import { renderBondsPage } from './bonds-view.js?v=20261020-cash-in-holdings';
+import { renderBondsPage } from './bonds-view.js?v=20261020-bond-color-notices';
 import { getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav } from './nav-estimates.js?v=20261020-nav-dates-trades';
 import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js?v=20261020-nav-dates-trades';
 import { renderEstimatePanel } from './estimate-panel.js?v=20261020-nav-dates-trades';
@@ -675,16 +675,20 @@ function bondReserveCheck() {
     } catch { missing.push(fund.navLabel); }
   }
   const check = evaluateBondReserve({ equityValue, bondValue, complete: missing.length === 0 });
-  const message = check.status === 'below'
-    ? `债基（含自由现金流）占总持仓约 ${number(check.ratio * 100, 0)}%，${check.reason === 'share-high' ? '高于上限 1/3（约33%）' : '低于下限 1/6（约17%）'}；“持仓大于5万元”的替代条件也未满足。`
-    : check.status === 'unknown'
+  const tone = bondReserveTone(bondValue, check.ratio);
+  const notice = { red: 'low-cash', green: 'spend', yellow: 'none', unknown: 'pending' }[tone];
+  const message = tone === 'red'
+    ? '债基总持仓（含自由现金流）低于5万元，备用资金不多了。'
+    : tone === 'green'
+      ? `债基总持仓（含自由现金流）已不低于5万元，当前占总持仓约 ${number(check.ratio * 100, 0)}%，在1/6～1/3区间之外，可按计划花钱。`
+    : tone === 'unknown'
       ? state.cashUnavailable ? '自由现金流记录暂不可用，无法核验债基总持仓与配置比例。'
         : bondValue === null ? '债基数据暂不可用，无法核验配置。'
         : bondValue < 0 ? '债基与自由现金流合计为负，配置比例待核验。'
         : missing.length ? `${missing.join('、')}持仓资料不完整，暂无法核验债基占比。`
           : '总持仓暂无有效估值，无法核验债基占比。'
       : '';
-  return { ...check, message };
+  return { ...check, tone, notice, message };
 }
 
 function bondHoldingPeriods() {
@@ -692,10 +696,10 @@ function bondHoldingPeriods() {
 }
 
 function bondNavMarkup(active, check, mobile = false) {
-  const below = check?.status === 'below', unknown = check?.status === 'unknown';
-  const label = below ? '债基，配置未达标' : unknown ? '债基，配置待核验' : '债基';
-  const dot = below || unknown ? '<span class="exposure-nav-dot" aria-hidden="true"></span>' : '';
-  return `<a href="#/bonds" class="${active ? 'active' : ''}${below ? ' exposure-nav-warning' : unknown ? ' bond-nav-pending' : ''}" ${active ? 'aria-current="page"' : ''} aria-label="${label}" title="${esc(check?.message ? `${label}：${check.message}` : label)}">${mobile ? `<span class="nav-letter">债${dot}</span><span>债基</span>` : `债基${dot}`}</a>`;
+  const red = check?.tone === 'red', green = check?.tone === 'green', unknown = check?.tone === 'unknown';
+  const label = red ? '债基，钱不多了' : green ? '债基，可以花钱了' : unknown ? '债基，配置待核验' : '债基';
+  const dot = red || green || unknown ? '<span class="exposure-nav-dot" aria-hidden="true"></span>' : '';
+  return `<a href="#/bonds" class="${active ? 'active' : ''}${red ? ' exposure-nav-warning' : green ? ' bond-nav-spend' : unknown ? ' bond-nav-pending' : ''}" data-bond-reserve-notice="${esc(check?.notice || 'none')}" ${active ? 'aria-current="page"' : ''} aria-label="${label}" title="${esc(check?.message ? `${label}：${check.message}` : label)}">${mobile ? `<span class="nav-letter">债${dot}</span><span>债基</span>` : `债基${dot}`}</a>`;
 }
 
 function header(code, reserve) {
@@ -883,11 +887,12 @@ function homeRules(reserve) {
         if (below) return `<details class="discipline-entry discipline-entry-checkable discipline-entry-warning" data-discipline="us-exposure" data-panel="discipline-us-exposure" data-exposure-status="below" ${panelExpanded('discipline-us-exposure') ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="exposure-badge exposure-warning">${icon('info')}未完全遵守 · ${below}只未达标</span><span class="discipline-expand-hint"><span class="when-closed">查看原因</span><span class="when-open">收起原因</span>${icon('down')}</span></div></div></summary>${exposureRuleDetails(checks)}</details>`;
       }
       if (entry.id === 'long-term') return `<details class="discipline-entry discipline-entry-checkable${panelExpanded('discipline-long-term') ? ' holding-progress-visible' : ''}" data-discipline="long-term" data-panel="discipline-long-term" ${panelExpanded('discipline-long-term') ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="discipline-expand-hint"><span class="when-closed">查看持有时间</span><span class="when-open">收起持有时间</span>${icon('down')}</span></div></div></summary>${holdingDurationDetails()}</details>`;
-      if (entry.id === 'bond-reserve' && reserve.status !== 'met') {
-        const below = reserve.status === 'below', label = below ? `未完全遵守 · ${reserve.reason === 'share-high' ? '比例偏高' : '比例偏低'}` : '待核验';
-        return `<details class="discipline-entry discipline-entry-checkable${below ? ' discipline-entry-warning' : ''}" data-discipline="bond-reserve" data-panel="discipline-bond-reserve" data-bond-reserve-status="${reserve.status}" ${panelExpanded('discipline-bond-reserve') ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="exposure-badge ${below ? 'exposure-warning' : 'bond-reserve-pending'}">${icon('info')}${label}</span><span class="discipline-expand-hint"><span class="when-closed">查看原因</span><span class="when-open">收起原因</span>${icon('down')}</span></div></div></summary><div class="discipline-compliance-details"><a class="exposure-check-target bond-reserve-target" href="#/bonds?section=bond-reserve" aria-label="查看债基配置"><p>${esc(reserve.message)}</p><span class="bond-reserve-link">查看债基${icon('arrow')}</span></a></div></details>`;
+      if (entry.id === 'bond-reserve' && reserve.notice !== 'none') {
+        const red = reserve.tone === 'red', green = reserve.tone === 'green';
+        const label = red ? '钱不多了' : green ? '可以花钱了' : '待核验';
+        return `<details class="discipline-entry discipline-entry-checkable${red ? ' discipline-entry-warning' : green ? ' discipline-entry-spend' : ''}" data-discipline="bond-reserve" data-panel="discipline-bond-reserve" data-bond-reserve-status="${reserve.status}" data-bond-reserve-tone="${reserve.tone}" data-bond-reserve-notice="${reserve.notice}" ${panelExpanded('discipline-bond-reserve') ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="exposure-badge ${red ? 'exposure-warning' : green ? 'bond-reserve-spend' : 'bond-reserve-pending'}">${icon('info')}${label}</span><span class="discipline-expand-hint"><span class="when-closed">查看原因</span><span class="when-open">收起原因</span>${icon('down')}</span></div></div></summary><div class="discipline-compliance-details"><a class="exposure-check-target bond-reserve-target" href="#/bonds?section=bond-reserve" aria-label="查看债基配置"><p>${esc(reserve.message)}</p><span class="bond-reserve-link">查看债基${icon('arrow')}</span></a></div></details>`;
       }
-      if (entry.id === 'bond-reserve') return `<article class="discipline-entry" data-discipline="bond-reserve" data-bond-reserve-status="met" tabindex="-1"><p class="discipline-entry-label">${esc(labels[entry.id])}</p><div class="discipline-entry-content">${content}</div></article>`;
+      if (entry.id === 'bond-reserve') return `<article class="discipline-entry" data-discipline="bond-reserve" data-bond-reserve-status="${reserve.status}" data-bond-reserve-tone="yellow" data-bond-reserve-notice="none" tabindex="-1"><p class="discipline-entry-label">${esc(labels[entry.id])}</p><div class="discipline-entry-content">${content}</div></article>`;
       return `<article class="discipline-entry${entry.id === 'add-discipline' ? ' discipline-entry-focus' : ''}" data-discipline="${esc(entry.id)}"${entry.id === 'add-discipline' ? ' tabindex="-1"' : ''}><p class="discipline-entry-label">${esc(labels[entry.id] || '交易纪律')}</p><div class="discipline-entry-content">${content}${entry.id === 'add-discipline' ? addDisciplineMatches() : ''}</div></article>`;
     }).join('')}</section>`;
 }
