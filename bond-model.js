@@ -57,6 +57,24 @@ export function normalizeBondEntries(entries) {
   } catch { invalid(); }
 }
 
+// Cash awaiting buy confirmation affects displayed market value only. Once a
+// row is included/confirmed its shares already contribute and it is not added.
+export function addPendingPurchaseValue(marketValue, transactions = []) {
+  if (typeof marketValue !== 'number' || !Number.isFinite(marketValue)) return marketValue;
+  const seen = new Set();
+  let total = cents(marketValue);
+  for (const row of transactions) {
+    if (!row || !['pending', '待确认'].includes(row.status) || !['buy', 'sip'].includes(row.type)
+      || ['draft', 'cancelled', 'canceled', 'failed', 'closed'].includes(row.sourceStatus)) continue;
+    const amount = Number.isFinite(row.confirmedAmount) ? row.confirmedAmount : row.amount;
+    if (!Number.isFinite(amount) || amount <= 0) continue;
+    if (row.id && seen.has(row.id)) continue;
+    if (row.id) seen.add(row.id);
+    total += cents(amount);
+  }
+  return money(total);
+}
+
 /** Null clears the optional free-cash-flow record; finite amounts round to cents. */
 export function normalizeFreeCashFlow(value) {
   if (value === null || value === undefined || value === '') return null;

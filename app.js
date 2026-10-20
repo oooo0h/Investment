@@ -1,10 +1,10 @@
 import { calculateLedger, describeModeEffect } from './engine.js?v=20261020-mode-explanation';
 import { createRefreshController } from './refresh-controller.js';
 import { unlockErrorMessage } from './unlock-errors.js';
-import { NAV_PERIODS, recentNavPeriod, resolveNavRange, moveNavBoundary, resolveNavSliderDomain } from './nav-range.js';
-import { renderNavChart, buildTradeMarkers } from './nav-chart.js?v=20261020-nav-dates-trades';
+import { NAV_PERIODS, recentNavPeriod, resolveNavRange, moveNavBoundary, resolveNavSliderDomain, latestCoveredTradeDate } from './nav-range.js?v=20261020-since-trade-orders';
+import { renderNavChart, buildTradeMarkers } from './nav-chart.js?v=20261020-interval-days-caption';
 import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap } from './nav-annualized.js?v=20261019-sheet-discipline';
-import { setupNavChartInteractions } from './nav-interaction.js?v=20261020-nav-dates-trades';
+import { setupNavChartInteractions } from './nav-interaction.js?v=20261020-interval-days-caption';
 import { setupNavSliderInteractions } from './nav-slider.js';
 import { calculateTransactionPerformance } from './transaction-performance.js';
 import { FUNDS, FUND_CODES } from './funds.js?v=20261019-collapsible-panels';
@@ -14,18 +14,18 @@ import { REGION_DATA } from './region-data.js';
 import { evaluateUsExposure } from './us-exposure.js';
 import { calculatePortfolioAllocation, evaluateHoldingLimit } from './portfolio-allocation.js?v=20261020-cash-in-holdings';
 import { calculateHoldingDuration, createHoldingDurationScale } from './holding-duration.js';
-import { openBondStore } from './bond-store.js?v=20261019-bond-calculated-lots';
-import { calculateBondHoldingValue } from './bond-model.js?v=20261020-cash-in-holdings';
+import { openBondStore } from './bond-store.js?v=20261020-pending-source-fix';
+import { calculateBondHoldingValue, addPendingPurchaseValue } from './bond-model.js?v=20261020-pending-purchases';
 import { evaluateBondReserve, bondReserveTone } from './bond-reserve.js?v=20261020-bond-color-notices';
-import { calculateBondHoldingDuration } from './bond-holding-duration.js?v=20261019-bond-calculated-lots';
-import { renderBondsPage } from './bonds-view.js?v=20261020-bond-color-notices';
+import { calculateBondHoldingDuration } from './bond-holding-duration.js?v=20261020-short-bond-seven-days';
+import { renderBondsPage } from './bonds-view.js?v=20261020-total-holding-label';
 import { getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav } from './nav-estimates.js?v=20261020-nav-dates-trades';
 import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js?v=20261020-nav-dates-trades';
 import { renderEstimatePanel } from './estimate-panel.js?v=20261020-nav-dates-trades';
 import { getDisciplineActions, adjustDisciplineRule } from './discipline-actions.js?v=20261019-sheet-discipline';
 import { getNavChartDisplay } from './nav-display.js';
 import { createFundViewportKeeper } from './viewport-anchor.js?v=20261019-flow-header';
-const TYPE_NAMES = { buy: '买入', sip: '定投', sell: '卖出', reinvest: '红利再投', dividend: '现金分红', 'transfer-in': '转换转入' };
+const TYPE_NAMES = { buy: '买入', sip: '定投', sell: '卖出', reinvest: '红利再投', dividend: '现金分红', 'transfer-in': '转入' };
 const STATUS_NAMES = { confirmed: '已确认', estimated: '历史估算', pending: '待确认', cancelled: '撤单', failed: '交易失败', closed: '交易关闭' };
 const state = { unlocked: false, visible: false, funds: {}, nav: {}, disciplines: DISCIPLINE_ENTRIES, bonds: [], freeCashFlow: null, cashEditing: false, cashDraft: null, cashBusy: false, cashError: '', bondUnavailable: true, bondUpdatedAt: null, navPreset: null, navCycles: { months: '1m', years: '1y' }, navRanges: {}, navDomains: {}, navVisuals: {}, expandedPanels: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null, deadline: 0, dayDeadline: 0, sessionDay: null };
 const app = document.querySelector('#app');
@@ -179,12 +179,12 @@ function renderGate(notice = '') {
   document.title = '解锁 · 基金账本';
   app.innerHTML = `<main id="main" class="gate"><div class="gate-theme">${themeButton()}</div><div class="gate-content">
     <div class="brand"><span class="brand-mark">${icon('book')}</span>基金账本</div>
-    <section class="gate-vision" aria-label="基金账本"><p class="observatory-eyebrow">PORTFOLIO OBSERVATORY</p><h2>以纪律，<span>穿越波动。</span></h2><p>记录每次选择 · 看清每段历程</p></section>
+    <div class="gate-access"><section class="gate-vision" aria-label="基金账本"><p class="observatory-eyebrow">PORTFOLIO OBSERVATORY</p><h2>以纪律，<span>穿越波动。</span></h2><p>记录每次选择 · 看清每段历程</p></section>
     <section class="gate-panel"><div class="gate-lock">${icon('lock')}</div><h1>解锁账本</h1>
       <form id="unlock-form" class="gate-form"><label for="vault-password">访问密码<input id="vault-password" name="password" type="password" inputmode="numeric" pattern="[0-9]{4}" minlength="4" maxlength="4" autocomplete="off" required aria-describedby="gate-error"></label>
         <button type="submit" class="button primary">解锁${icon('arrow')}</button><p id="gate-error" class="gate-error" role="alert">${esc(notice)}</p>
       </form>
-    </section>
+    </section></div>
   </div></main>`;
 }
 
@@ -633,7 +633,12 @@ function ledger(code) {
   if (!book.transactions.length || book.incomplete) {
     for (const key of ['shares', 'principal', 'marketValue', 'holdingProfit', 'holdingReturn', 'totalInvested', 'totalRecovered', 'totalProfitWithdrawn', 'totalClosedLoss', 'totalProfit', 'totalReturn']) result.summary[key] = null;
   }
+  result.summary.marketValue = addPendingPurchaseValue(result.summary.marketValue, transactions);
   return result;
+}
+
+function bondPositions() {
+  return state.bonds.map(entry => ({ ...entry, marketValue: addPendingPurchaseValue(entry.marketValue, state.bondTransactions?.[entry.code] || []) }));
 }
 
 function fundExposure(code) {
@@ -645,7 +650,49 @@ function portfolioAllocation() {
     const result = ledger(fund.code);
     return { code: fund.code, marketValue: result.summary.valid === true && !result.errors.length && !getBook(fund.code).incomplete ? result.summary.marketValue : null };
   });
-  return calculatePortfolioAllocation([...positions, ...(!state.bondUnavailable && !state.cashUnavailable ? state.bonds : [])], [...FUND_CODES, '006485', '006663'], state.freeCashFlow);
+  return calculatePortfolioAllocation([...positions, ...(!state.bondUnavailable && !state.cashUnavailable ? bondPositions() : [])], [...FUND_CODES, '006485', '006663'], state.freeCashFlow);
+}
+
+// Account values remain in memory. Purchases, withdrawals and dividends inside
+// the selected interval must not be mistaken for market gains or losses.
+function navRangeProfit(code, summary) {
+  const book = getBook(code);
+  const validDate = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)
+    && Number.isFinite(Date.parse(`${value}T00:00:00Z`)) && new Date(`${value}T00:00:00Z`).toISOString().slice(0, 10) === value;
+  if (book.incomplete || !Array.isArray(book.transactions) || !book.transactions.length
+    || !validDate(summary?.startDate) || !validDate(summary?.endDate) || summary.startDate > summary.endDate
+    || !Number.isFinite(summary.startNav) || summary.startNav <= 0 || !Number.isFinite(summary.endNav) || summary.endNav <= 0) return null;
+  const inactive = new Set(['cancelled', 'failed', 'closed', '撤单', '交易失败', '交易关闭', 'pending', '待确认']);
+  const transactions = book.transactions.filter(row => !inactive.has(row?.status));
+  if (transactions.some(row => !validDate(row?.date))) return null;
+  const snapshot = (date, nav, inclusive) => calculateLedger(transactions.filter(row => inclusive ? row.date <= date : row.date < date),
+    { mode: book.mode, valuationNav: nav, valuationDate: date, openingPrincipal: 0, openingShares: 0 });
+  const start = snapshot(summary.startDate, summary.startNav, false);
+  const end = snapshot(summary.endDate, summary.endNav, true);
+  if (start.errors.length || end.errors.length || !start.summary.valid || !end.summary.valid
+    || ![start.summary.totalProfit, end.summary.totalProfit].every(value => Number.isFinite(value) && Math.abs(value) <= Number.MAX_SAFE_INTEGER / 100)) return null;
+  return (Math.round(end.summary.totalProfit * 100) - Math.round(start.summary.totalProfit * 100)) / 100 || 0;
+}
+
+function navProfitAmount(value) {
+  return Number.isFinite(value) ? `${state.visible && value > 0 ? '+' : ''}${sensitive(value)}` : '待核验';
+}
+
+function equityHoldingDistribution() {
+  const positions = FUNDS.map(fund => {
+    const book = getBook(fund.code), result = ledger(fund.code);
+    return { fund, marketValue: book.transactions.length && !book.incomplete && result.summary.valid && !result.errors.length ? result.summary.marketValue : null };
+  });
+  const allocation = calculatePortfolioAllocation(positions.map(row => ({ code: row.fund.code, marketValue: row.marketValue })), FUND_CODES);
+  const available = allocation.status === 'available';
+  const parts = available ? positions.map(row => allocation.shares[row.fund.code] * 1000) : [];
+  const rounded = parts.map(Math.floor);
+  if (available) {
+    const order = parts.map((part, index) => ({ index, remainder: part - rounded[index] })).sort((a, b) => b.remainder - a.remainder || a.index - b.index);
+    const remainder = 1000 - rounded.reduce((sum, value) => sum + value, 0);
+    for (let index = 0; index < remainder; index++) rounded[order[index].index]++;
+  }
+  return `<section class="equity-allocation" aria-label="四只基金持仓分布" data-equity-allocation="${available ? 'available' : 'unavailable'}"><div class="equity-allocation-heading"><span>基金持仓分布</span><span>${available ? '合计 100%' : '占比待核验'}</span></div><div class="equity-allocation-track" role="img" aria-label="四只基金持仓比例${available ? '' : '待核验'}">${available ? positions.map((row, index) => `<span class="brand-${row.fund.brand}" style="width:${rounded[index] / 10}%"></span>`).join('') : ''}</div><ul class="equity-allocation-legend">${positions.map((row, index) => `<li class="brand-${row.fund.brand}"><a class="equity-allocation-name" href="#/fund/${row.fund.code}"><i aria-hidden="true"></i>${esc(row.fund.short)}</a><strong class="num">${available ? `${number(rounded[index] / 10, 1)}%` : '待核验'}</strong><span class="equity-allocation-amount num">${sensitive(row.marketValue)}<small>元</small></span></li>`).join('')}</ul><p class="equity-allocation-note">比例按这四只基金的合计持仓计算。</p></section>`;
 }
 
 function holdingLimitCopy(code) {
@@ -664,7 +711,7 @@ function bondReserveCheck() {
   let bondValue = null, equityValue = 0;
   const missing = [];
   if (!state.bondUnavailable && !state.cashUnavailable) {
-    try { bondValue = calculateBondHoldingValue(state.bonds, state.freeCashFlow); } catch { /* Unavailable is never zero. */ }
+    try { bondValue = calculateBondHoldingValue(bondPositions(), state.freeCashFlow); } catch { /* Unavailable is never zero. */ }
   }
   for (const fund of FUNDS) {
     const book = getBook(fund.code);
@@ -692,7 +739,7 @@ function bondReserveCheck() {
 }
 
 function bondHoldingPeriods() {
-  return Object.fromEntries(state.bonds.map(entry => [entry.code, calculateBondHoldingDuration(state.bondHoldingLots?.[entry.code], { now: new Date() })]));
+  return Object.fromEntries(state.bonds.map(entry => [entry.code, calculateBondHoldingDuration(state.bondHoldingLots?.[entry.code], { now: new Date(), code: entry.code })]));
 }
 
 function bondNavMarkup(active, check, mobile = false) {
@@ -877,7 +924,7 @@ function homeRules(reserve) {
   return `<section class="discipline-sheet" aria-label="持有与交易纪律">${entries.map(entry => {
       const children = groups.includes(entry.id) ? state.disciplines.filter(child => child.id.startsWith(`${entry.id}-`)) : [];
       const punctuation = entry.detail.match(/^[。！？]+/)?.[0] || '';
-      const detail = entry.detail.slice(punctuation.length).trim();
+      const detail = entry.id === 'equity-scope' ? '' : entry.detail.slice(punctuation.length).trim();
       const headingNumber = headingNumbers[entry.id];
       const heading = `<h2${headingNumber ? ' class="discipline-numbered-heading"' : ''}>${headingNumber ? `<span class="discipline-heading-number">${headingNumber}.</span>` : ''}<span>${disciplineCopy(entry.title + punctuation, entry.id === 'equity-scope')}</span></h2>`;
       const content = `${heading}${detail ? `<p>${disciplineCopy(detail, entry.id === 'equity-scope')}</p>` : ''}${children.length ? `<div class="discipline-subrules">${children.map(child => `<div class="discipline-subrule" data-discipline="${esc(child.id)}"><small class="discipline-clause-label">${esc(clauseLabels[child.id] || '')}</small><p>${disciplineCopy(`${child.title}${child.detail ? ` ${child.detail}` : ''}`)}</p></div>`).join('')}</div>` : ''}`;
@@ -893,7 +940,7 @@ function homeRules(reserve) {
         return `<details class="discipline-entry discipline-entry-checkable${red ? ' discipline-entry-warning' : green ? ' discipline-entry-spend' : ''}" data-discipline="bond-reserve" data-panel="discipline-bond-reserve" data-bond-reserve-status="${reserve.status}" data-bond-reserve-tone="${reserve.tone}" data-bond-reserve-notice="${reserve.notice}" ${panelExpanded('discipline-bond-reserve') ? 'open' : ''}><summary class="discipline-rule-toggle"><span class="discipline-entry-label">${esc(labels[entry.id])}</span><div class="discipline-entry-content">${content}<div class="discipline-compliance-line"><span class="exposure-badge ${red ? 'exposure-warning' : green ? 'bond-reserve-spend' : 'bond-reserve-pending'}">${icon('info')}${label}</span><span class="discipline-expand-hint"><span class="when-closed">查看原因</span><span class="when-open">收起原因</span>${icon('down')}</span></div></div></summary><div class="discipline-compliance-details"><a class="exposure-check-target bond-reserve-target" href="#/bonds?section=bond-reserve" aria-label="查看债基配置"><p>${esc(reserve.message)}</p><span class="bond-reserve-link">查看债基${icon('arrow')}</span></a></div></details>`;
       }
       if (entry.id === 'bond-reserve') return `<article class="discipline-entry" data-discipline="bond-reserve" data-bond-reserve-status="${reserve.status}" data-bond-reserve-tone="yellow" data-bond-reserve-notice="none" tabindex="-1"><p class="discipline-entry-label">${esc(labels[entry.id])}</p><div class="discipline-entry-content">${content}</div></article>`;
-      return `<article class="discipline-entry${entry.id === 'add-discipline' ? ' discipline-entry-focus' : ''}" data-discipline="${esc(entry.id)}"${entry.id === 'add-discipline' ? ' tabindex="-1"' : ''}><p class="discipline-entry-label">${esc(labels[entry.id] || '交易纪律')}</p><div class="discipline-entry-content">${content}${entry.id === 'add-discipline' ? addDisciplineMatches() : ''}</div></article>`;
+      return `<article class="discipline-entry${entry.id === 'add-discipline' ? ' discipline-entry-focus' : ''}" data-discipline="${esc(entry.id)}"${entry.id === 'add-discipline' ? ' tabindex="-1"' : ''}><p class="discipline-entry-label">${esc(labels[entry.id] || '交易纪律')}</p><div class="discipline-entry-content">${content}${entry.id === 'add-discipline' ? addDisciplineMatches() : entry.id === 'equity-scope' ? equityHoldingDistribution() : ''}</div></article>`;
     }).join('')}</section>`;
 }
 
@@ -906,8 +953,7 @@ function fundRegions(fund) {
   if (!data) return '';
   const history = officialNav(fund.code);
   const annualized = calculateNavAnnualized(history);
-  const allocation = portfolioAllocation().shares[fund.code];
-  const overview = `<div class="fund-basic-overview"><p class="fund-portfolio-share"><span>占总持仓比例</span><strong class="num" data-fund-portfolio-share>${Number.isFinite(allocation) ? number(allocation * 100) + '%' : '待核验'}</strong></p><p class="nav-annualized" title="按全部已载入正式净值计算复合年化；不含昨日估值，未计现金分红再投资"><span>平均年化</span><strong class="num ${signClass(annualized)}" data-nav-annualized>${percent(annualized)}</strong></p>${history.at(-1)?.date ? `<p class="helper">净值截至 <time datetime="${esc(history.at(-1).date)}">${esc(history.at(-1).date)}</time></p>` : ''}</div>`;
+  const overview = `<div class="fund-basic-overview"><p class="nav-annualized" title="按全部已载入正式净值计算复合年化；不含昨日估值，未计现金分红再投资"><span>平均年化</span><strong class="num ${signClass(annualized)}" data-nav-annualized>${percent(annualized)}</strong></p>${history.at(-1)?.date ? `<p class="helper">净值截至 <time datetime="${esc(history.at(-1).date)}">${esc(history.at(-1).date)}</time></p>` : ''}</div>`;
   const check = fundExposure(fund.code), below = check.status === 'below';
   const source = safeSource(data.source?.url);
   return `<details class="panel fund-regions panel-disclosure${below ? ' exposure-below' : ''}" aria-label="基金基本信息" data-panel="fund-basics" data-fund="${fund.code}"${panelExpanded('fund-basics', true) ? ' open' : ''}><summary class="panel-toggle"><h2>基金基本信息</h2><time class="helper" datetime="${esc(data.asOf)}" title="报告公告日期 ${esc(data.publishedAt || '待核实')}">地区截至 ${esc(data.asOf)}</time></summary><div class="panel-content">${overview}<p class="region-basis">直接股票持仓 · 占基金净资产</p><ul class="region-shares">${data.regions.map(region => `<li${region.name === '美国' ? ` id="fund-${fund.code}-us-exposure" tabindex="-1" class="region-us${below ? ' region-us-below' : ''}${routeSection() === 'us-exposure' ? ' exposure-location' : ''}"` : ''}><span>${esc(region.name)}${region.name === '美国' && below ? '<small class="region-state">未达标</small>' : ''}</span><strong class="num">${number(region.percent, 2)}%</strong></li>`).join('')}</ul>${data.note ? `<p class="helper region-note">${esc(data.note)}</p>` : ''}${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(data.source.title)}">原报告</a>` : ''}</div></details>`;
@@ -917,6 +963,7 @@ function fundPage(fund) {
   const book = getBook(fund.code);
   const result = ledger(fund.code);
   const { summary, errors } = result;
+  const allocation = portfolioAllocation().shares[fund.code];
   const alternate = calculateLedger(book.transactions, { mode: book.mode === 'principal-first' ? 'profit-first' : 'principal-first',
     valuationNav: summary.valuationNav, valuationDate: summary.valuationDate });
   const modeEffect = describeModeEffect(result, alternate, { incomplete: book.incomplete });
@@ -934,7 +981,7 @@ function fundPage(fund) {
       <p class="mode-explanation" role="status" data-mode-effect="${modeEffect.kind}">${modeEffect.message}</p>
       ${formulaAdjustedCount ? `<p class="helper" role="status" data-source-formula-warning>${formulaAdjustedCount} 笔份额公式已计入手续费重新估算，原表未改写；请以实际确认份额为准。</p>` : ''}
       ${errors.length ? `<div class="error-note" role="alert">第 ${errors[0].index} 笔交易待修正：${esc(errors[0].message)}<br>修正前暂停展示汇总结果。</div>` : ''}
-      <div class="summary-main"><div><p class="card-label">当前市值（元）</p><p class="card-value num">${sensitive(summary.marketValue)}</p><p class="helper">估值净值日期 ${esc(summary.valuationDate || '尚无可用净值')}</p></div><div class="summary-return"><p class="card-label">持有收益率</p><span class="num ${signClass(summary.holdingReturn)}">${percent(summary.holdingReturn)}</span></div></div>
+      <div class="summary-main"><div><p class="card-label">当前市值（元）</p><div class="summary-value-line"><p class="card-value num">${sensitive(summary.marketValue)}</p><p class="fund-portfolio-share"><span>占总持仓比例</span><strong class="num" data-fund-portfolio-share>${Number.isFinite(allocation) ? number(allocation * 100) + '%' : '待核验'}</strong></p></div><p class="helper">估值净值日期 ${esc(summary.valuationDate || '尚无可用净值')}</p></div><div class="summary-return"><p class="card-label">持有收益率</p><span class="num ${signClass(summary.holdingReturn)}">${percent(summary.holdingReturn)}</span></div></div>
       <dl class="summary-grid">${metric('剩余本金（元）', summary.principal)}${metric('持有收益（元）', summary.holdingProfit, 2, signClass(summary.holdingProfit))}${metric('持有份额', summary.shares, 2)}${metric('累计投入（元）', summary.totalInvested)}${metric('累计到账（元）', summary.totalRecovered)}${metric('已提取利润（元）', summary.totalProfitWithdrawn)}${metric('累计收益（元）', summary.totalProfit, 2, signClass(summary.totalProfit))}<div><dt>累计收益率</dt><dd class="num ${signClass(summary.totalReturn)}">${percent(summary.totalReturn)}</dd></div>${metric('清仓损失（元）', summary.totalClosedLoss)}</dl>
     </div></details>${ledgerPanel(result, book, fund.code)}</div></div></main>`;
 }
@@ -960,8 +1007,7 @@ function navPeriodDisabled(period, range) {
 }
 
 function navContext(code) {
-  const rows = ledger(code).rows.filter(row => row.status === 'included' && row.dateBasis !== 'order' && ['buy', 'sip', 'sell', 'transfer-in', 'reinvest'].includes(row.type));
-  return { tradeDate: rows.at(-1)?.date || null };
+  return { tradeDate: latestCoveredTradeDate(ledger(code).rows, state.nav[code]?.history || []) };
 }
 
 function navSelection(code) {
@@ -1054,6 +1100,41 @@ function navRangeControls(code, history, range) {
     <div class="nav-periods nav-trends" role="group" aria-label="趋势与交易时段">${navTrendButtons(code, history, range)}</div></div>`;
 }
 
+function updateNavHeadline(panel, code, summary, dateText) {
+  const intervalProfit = navRangeProfit(code, summary);
+  const headline = panel.querySelector('[data-nav-value]');
+  headline.innerHTML = navProfitAmount(intervalProfit);
+  headline.className = `num ${state.visible ? signClass(intervalProfit) : ''}`;
+  const change = panel.querySelector('[data-nav-change]');
+  change.textContent = percent(summary?.change);
+  change.className = `num ${signClass(summary?.change)}`;
+  const disciplineGap = panel.querySelector('[data-nav-discipline-gap]');
+  if (disciplineGap) {
+    disciplineGap.innerHTML = navDisciplineGap(code, summary?.change);
+    disciplineGap.hidden = !disciplineGap.innerHTML;
+  }
+  panel.querySelector('[data-nav-date]').textContent = dateText;
+}
+
+function updateNavMeasurement({ chart, start, end, pending = false }) {
+  if (!state.unlocked || !checkSession()) return;
+  const panel = chart?.closest?.('.nav-panel'), code = panel?.dataset?.fund;
+  const history = state.nav[code]?.history;
+  if (!panel || !FUND_CODES.includes(code) || !history?.length) return;
+  if (start && end && Number.isFinite(start.nav) && Number.isFinite(end.nav)) {
+    const [from, to] = [start, end].sort((a, b) => a.date.localeCompare(b.date));
+    updateNavHeadline(panel, code, { startDate: from.date, endDate: to.date, startNav: from.nav, endNav: to.nav, change: to.nav / from.nav - 1 },
+      `${from.date} → ${to.date}${from.estimated || to.estimated ? ' · 含估值' : ''}`);
+  } else if (pending) {
+    updateNavHeadline(panel, code, null, '区间终点净值待更新');
+    panel.querySelector('[data-nav-value]').innerHTML = '待更新';
+  } else {
+    const range = selectedNavRange(code, history);
+    const { summary } = getNavChartDisplay(range, estimatedNav(code));
+    updateNavHeadline(panel, code, summary, navRangeDate(summary, state.nav[code], range));
+  }
+}
+
 function updateNavRange(code, selection, interaction = {}) {
   const history = state.nav[code]?.history;
   const panel = app.querySelector(`.nav-panel[data-fund="${code}"]`);
@@ -1073,16 +1154,7 @@ function updateNavRange(code, selection, interaction = {}) {
   const domain = navSliderDomain(code, history, range, interaction);
   const display = getNavChartDisplay(range, estimatedNav(code));
   const { summary } = display;
-  panel.querySelector('[data-nav-value]').textContent = number(summary.endNav, 4);
-  const change = panel.querySelector('[data-nav-change]');
-  change.textContent = percent(summary.change);
-  change.className = `num ${signClass(summary.change)}`;
-  const disciplineGap = panel.querySelector('[data-nav-discipline-gap]');
-  if (disciplineGap) {
-    disciplineGap.innerHTML = navDisciplineGap(code, summary.change);
-    disciplineGap.hidden = !disciplineGap.innerHTML;
-  }
-  panel.querySelector('[data-nav-date]').textContent = navRangeDate(summary, state.nav[code], range);
+  updateNavHeadline(panel, code, summary, navRangeDate(summary, state.nav[code], range));
   if (!sameDates || !interaction.visualDomain) panel.querySelector('[data-nav-chart]').innerHTML = sparkline(range.points, code, range);
   panel.querySelector('[data-nav-count]').textContent = `${display.points.length + display.estimatedPoints.length} 期`;
   panel.querySelector('[data-nav-start]').textContent = range.from;
@@ -1139,8 +1211,9 @@ function navPanel(fund) {
   const display = getNavChartDisplay(range, estimatedNav(fund.code));
   const { summary } = display;
   const disciplineGap = navDisciplineGap(fund.code, summary.change);
+  const intervalProfit = navRangeProfit(fund.code, summary);
 
-  return `<details class="panel nav-panel panel-disclosure" data-panel="nav-quotes" data-fund="${fund.code}"${panelExpanded('nav-quotes', true) ? ' open' : ''}><summary class="panel-toggle"><h2>公开净值</h2><span class="helper" data-nav-count>${display.points.length + display.estimatedPoints.length} 期</span></summary><div class="panel-content"><div class="nav-value"><strong class="num" data-nav-value>${number(summary.endNav, 4)}</strong><span class="num ${signClass(summary.change)}" data-nav-change title="所选区间涨跌幅">${percent(summary.change)}</span></div><p class="nav-discipline-gap" data-nav-discipline-gap${disciplineGap ? '' : ' hidden'}>${disciplineGap}</p><p class="nav-date" data-nav-date>${navRangeDate(summary, nav, range)}</p><div id="nav-chart-${fund.code}" data-nav-chart>${history.length ? sparkline(range.points, fund.code, range) : ''}</div>${navRangeControls(fund.code, history, range)}</div></details>`;
+  return `<details class="panel nav-panel panel-disclosure" data-panel="nav-quotes" data-fund="${fund.code}"${panelExpanded('nav-quotes', true) ? ' open' : ''}><summary class="panel-toggle"><h2>公开净值</h2><span class="helper" data-nav-count>${display.points.length + display.estimatedPoints.length} 期</span></summary><div class="panel-content"><p class="nav-profit-label">区间盈亏（元）</p><div class="nav-value"><strong class="num ${state.visible ? signClass(intervalProfit) : ''}" title="所选区间盈亏，含区间内买卖费用与分红，期初持仓按起始净值计量" data-nav-value>${navProfitAmount(intervalProfit)}</strong><span class="num ${signClass(summary.change)}" data-nav-change title="所选区间净值涨跌幅">${percent(summary.change)}</span></div><p class="nav-discipline-gap" data-nav-discipline-gap${disciplineGap ? '' : ' hidden'}>${disciplineGap}</p><p class="nav-date" data-nav-date>${navRangeDate(summary, nav, range)}</p><div id="nav-chart-${fund.code}" data-nav-chart>${history.length ? sparkline(range.points, fund.code, range) : ''}</div>${navRangeControls(fund.code, history, range)}</div></details>`;
 }
 
 function ledgerPanel(result, book, code) {
@@ -1172,25 +1245,21 @@ function transactionCard(row, book, performance = {}) {
     : row.status === 'error' ? '待修正' : '前序待修正';
   const hasNote = tx.note !== undefined && tx.note !== null && String(tx.note).trim() !== '';
   const displayDate = tx.dateBasis === 'order' ? `交易日期（下单） ${esc(tx.submittedAt || row.date)}` : included && row.date ? `${estimated ? '估算净值日期' : '净值日期'} ${esc(row.date)}` : tx.submittedAt ? `申请日期 ${esc(tx.submittedAt)}` : esc(row.date || '净值日期待填');
-  const dateNote = tx.dateBasis === 'order' ? `交易日期沿用原始下单日期；${tx.navDate ? `来源备份净值日期 ${esc(tx.navDate)}${estimated ? '（历史估算）' : '（沿用原确认状态）'}` : '原表未提供成交净值日期'}。` : tx.submittedAt
-    ? `申请日期：${esc(tx.submittedAt)} · ${estimated ? '估算净值日期' : '净值日期'}：${esc(row.date || '待确认')}`
-    : `净值日期：${esc(row.date || '待填')}${tx.recordedAt ? ` · 录入日期：${esc(String(tx.recordedAt).slice(0, 10))}` : ' · 录入日期：原表未记录'}`;
   const detailMetrics = [
     `<div><dt>成交净值</dt><dd class="num">${number(values.nav, 4)}</dd></div>`,
-    metric('确认份额', values.shares, 2), metric('实际手续费', values.fee),
+    metric(estimated ? '估算份额' : '确认份额', values.shares, 2), metric('实际手续费', values.fee),
     ...(performance.kind === 'lot' ? [metric('本笔剩余市值', performance.marketValue)] : []),
     ...(performance.kind === 'lot' || performance.kind === 'sell' ? [metric(performance.kind === 'sell' ? '卖出成本（FIFO）' : row.type === 'reinvest' ? '新增投入' : '本笔原始成本', performance.cost)] : []),
     ...(performance.kind === 'lot' ? [metric('本笔剩余份额', performance.remainingShares, 2), metric('本笔剩余成本', performance.remainingCost), metric('本笔卖出回款', performance.proceeds), metric('本笔分红', performance.cashDividends), metric('本笔已实现盈亏', performance.realizedProfit, 2, signClass(performance.realizedProfit)), metric('本笔未实现盈亏', performance.unrealizedProfit, 2, signClass(performance.unrealizedProfit))] : []),
   ];
   const profitLabel = performance.kind === 'sell' ? performance.estimated ? '本笔已实现盈亏（估算）' : '本笔已实现盈亏' : performance.kind === 'dividend' ? '本笔分红收益' : performance.estimated ? '本笔累计盈亏（估算）' : '本笔累计盈亏';
-  const pendingHint = tx.sourceStatus === 'processing' ? '等待成交确认，不计入持仓' : Number.isFinite(tx.nav) && tx.nav > 0 ? '表格资料待补全' : '表格净值待补全';
+  const pendingHint = tx.sourceStatus === 'processing' ? ['buy', 'sip'].includes(tx.type) ? '等待成交确认，买入金额已计入市值' : '等待成交确认，份额与收益暂不计入' : Number.isFinite(tx.nav) && tx.nav > 0 ? '表格资料待补全' : '表格净值待补全';
   const profitSummary = pending
     ? `<span class="transaction-pending-hint">${pendingHint}</span>`
     : `<span class="transaction-profit-summary"><span class="transaction-profit-label">${profitLabel}</span><span class="transaction-profit-values"><strong class="transaction-profit-value num ${signClass(performance.profit)}">${sensitive(performance.profit)}</strong>${performance.kind === 'dividend' ? '' : `<span class="transaction-profit-rate num ${signClass(performance.returnRate)}">${percent(performance.returnRate)}</span>`}</span></span>`;
-  const estimateExtras = performance.kind === 'lot' ? `<p class="helper detail-date-note">估值净值日期 ${esc(performance.valuationDate || '待更新')}${performance.estimated ? ' · 含估算交易' : ''}</p>` : '';
   return `<article class="transaction${pending ? ' transaction-pending' : ''}"><details class="transaction-detail" data-id="${esc(row.id)}"><summary class="transaction-expand"><div class="transaction-top"><div class="transaction-label"><span class="transaction-type-icon ${out ? 'out' : ''}">${icon(out ? 'up' : row.type === 'reinvest' ? 'coins' : 'down')}</span><div><p class="transaction-title">${esc(TYPE_NAMES[row.type] || '未知类型')}<span class="row-status${pending ? ' row-status-pending' : ''}">${esc(label)}</span></p><p class="transaction-date">${displayDate} · 第 ${row.index} 笔</p></div></div><div class="transaction-top-right"><p class="transaction-amount num">${included && row.type === 'reinvest' ? sensitive(values.shares, 2) : sensitive(row.amount ?? tx.amount ?? tx.cost)}<small>${!included ? '记录金额 · 元' : row.type === 'reinvest' ? '增加份额 · 份' : estimated ? '估算支出 · 元' : out ? '实际到账 · 元' : '确认支出 · 元'}</small></p></div></div>
     ${row.error ? `<p class="row-error">${esc(row.error)}</p>` : ''}
-    <div class="transaction-profit-row">${profitSummary}<span class="transaction-detail-toggle">详细信息<span class="transaction-detail-chevron" aria-hidden="true">⌄</span></span></div></summary><div class="detail-inner"><dl class="transaction-stats transaction-detail-metrics">${detailMetrics.join('')}</dl><p class="helper detail-date-note">${dateNote}</p>${tx.formulaAdjustment ? `<p class="helper detail-date-note" data-formula-adjustment>份额按金额与手续费重新估算，原表未改写，请以实际确认份额为准。</p>` : ''}${row.estimateReason ? `<p class="helper detail-date-note">${esc(row.estimateReason)}</p>` : ''}${estimateExtras}${hasNote && state.visible ? `<p class="transaction-note">备注：${esc(tx.note)}</p>` : ''}</div></details></article>`;
+    <div class="transaction-profit-row">${profitSummary}<span class="transaction-detail-toggle">详细信息<span class="transaction-detail-chevron" aria-hidden="true">⌄</span></span></div></summary><div class="detail-inner"><dl class="transaction-stats transaction-detail-metrics">${detailMetrics.join('')}</dl>${tx.formulaAdjustment ? `<p class="helper detail-date-note" data-formula-adjustment>份额按金额与手续费重新估算，原表未改写，请以实际确认份额为准。</p>` : ''}${row.estimateReason ? `<p class="helper detail-date-note">${esc(row.estimateReason)}</p>` : ''}${hasNote && state.visible ? `<p class="transaction-note">备注：${esc(tx.note)}</p>` : ''}</div></details></article>`;
 }
 app.addEventListener('toggle', event => {
   const panel = event.target;
@@ -1329,7 +1398,7 @@ function actionClick(event) {
   if (action === 'more') { const position = scrollY; state.limit += 25; render(); scrollTo({ top: position, behavior: 'instant' }); }
   if (action === 'reset-filter') { state.filter = 'all'; state.statusFilter = 'all'; render(); }
 }
-setupNavChartInteractions(app);
+setupNavChartInteractions(app, { onMeasure: updateNavMeasurement });
 navSliders = setupNavSliderInteractions(app, { onUpdate(update) {
   if (!state.unlocked || !checkSession()) { navSliders?.cancel(); return; }
   const history = state.nav[update.code]?.history;

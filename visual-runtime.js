@@ -1,5 +1,7 @@
 // Presentation only. No ledger, vault, storage, account values or data requests.
+import { createEdgeNavigation } from './edge-navigation.js?v=20261020-persistent-side-menu';
 const app = document.querySelector('#app');
+const edgeNavigation = createEdgeNavigation({ root: app });
 const host = document.querySelector('#ambient-scene');
 const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
 let scene = null, motion = null, ambientFactory = null, motionFactory = null;
@@ -14,6 +16,7 @@ function view() {
 
 function refresh(reason = 'render') {
   if (stopped) return;
+  edgeNavigation.sync();
   const current = view();
   document.documentElement.dataset.view = current;
   document.body.dataset.view = current;
@@ -90,6 +93,7 @@ function destroy() {
   if (frame !== null) cancelAnimationFrame(frame);
   contentObserver.disconnect();
   themeObserver.disconnect();
+  edgeNavigation.destroy();
   motionPreference.removeEventListener('change', recreate);
   motion?.destroy();
   scene?.destroy();

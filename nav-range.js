@@ -48,6 +48,24 @@ export function recentNavPeriod(history) {
   return NAV_PERIODS.find(period => period.id === id);
 }
 
+// An order date can locate a public chart interval without claiming it is the
+// execution NAV date. Pending/invalid rows and dates beyond published NAVs
+// cannot displace the latest covered operation.
+export function latestCoveredTradeDate(rows, history) {
+  const latest = history?.at(-1)?.date;
+  if (!latest || !Array.isArray(rows)) return null;
+  let result = null;
+  for (const row of rows) {
+    if (row?.status !== 'included' || !['buy', 'sip', 'sell', 'transfer-in', 'reinvest'].includes(row.type)) continue;
+    const date = row.dateBasis === 'order' && row.navDate ? row.navDate : row.date;
+    if (typeof date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(date)) continue;
+    const stamp = Date.parse(`${date}T00:00:00Z`);
+    if (!Number.isFinite(stamp) || iso(new Date(stamp)) !== date || date > latest) continue;
+    if (result === null || date > result) result = date;
+  }
+  return result;
+}
+
 export function resolveNavRange(history, selection, { tradeDate = null } = {}) {
   if (!history.length) return {
     start: 0, end: 0, from: null, to: null, points: [], preset: selection ? selection.preset ?? null : '3m',
