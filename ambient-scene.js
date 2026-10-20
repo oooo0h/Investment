@@ -33,6 +33,9 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
   const materials = new Set();
   const textures = new Set();
   const orbits = [];
+  const sculptures = [];
+  let haloDust;
+  let coreUniforms;
   const pointer = new THREE.Vector2();
   const pointerTarget = new THREE.Vector2();
   const targetPosition = new THREE.Vector3();
@@ -58,8 +61,8 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
   host.append(fallback, canvas);
 
   const palettes = {
-    dark: { primary: 0x9bc9ff, secondary: 0x667ff4, stars: 0xd7e8ff, globe: 0x316cb4, multiplier: 1 },
-    light: { primary: 0x267c75, secondary: 0x609ca4, stars: 0x3d8488, globe: 0x6dafa1, multiplier: 0.66 },
+    dark: { primary: 0x7dcfff, secondary: 0xe4b87e, stars: 0xc8d9ff, globe: 0x3d68e3, multiplier: 1 },
+    light: { primary: 0x3269c4, secondary: 0xa67b40, stars: 0x5b7fba, globe: 0x608bda, multiplier: 0.76 },
   };
 
   function paintFallback() {
@@ -94,9 +97,16 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
   function updatePalette() {
     const palette = palettes[theme];
     for (const value of materials) {
+      if (!value.color) continue;
       value.color.setHex(palette[value.userData.ambientKind]);
       value.opacity = value.userData.ambientOpacity * palette.multiplier * intensity;
       if (value.userData.ambientGlow) value.blending = theme === 'dark' ? THREE.AdditiveBlending : THREE.NormalBlending;
+    }
+    if (coreUniforms) {
+      coreUniforms.uBlue.value.setHex(palette.primary);
+      coreUniforms.uGold.value.setHex(palette.secondary);
+      coreUniforms.uLight.value = theme === 'light' ? 1 : 0;
+      coreUniforms.uIntensity.value = intensity;
     }
   }
 
@@ -151,11 +161,11 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
     }
     const wireGeometry = rememberGeometry(new THREE.BufferGeometry());
     wireGeometry.setAttribute('position', new THREE.Float32BufferAttribute(lines, 3));
-    globe.add(new THREE.LineSegments(wireGeometry, material('primary', 0.26)));
+    globe.add(new THREE.LineSegments(wireGeometry, material('primary', 0.09)));
     const sphereGeometry = rememberGeometry(new THREE.SphereGeometry(radius * 0.997, mobile ? 24 : 40, mobile ? 16 : 24));
     globe.add(new THREE.Mesh(sphereGeometry, material('globe', 0.065, { side: THREE.FrontSide }, THREE.MeshBasicMaterial)));
 
-    const count = mobile ? 240 : 580;
+    const count = 1800;
     const locations = new Float32Array(count * 3);
     for (let index = 0; index < count; index += 1) {
       const y = 1 - (index / (count - 1)) * 2;
@@ -168,6 +178,91 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
     globe.add(new THREE.Points(pointGeometry, material('primary', 0.76, { size: 0.026, sizeAttenuation: true }, THREE.PointsMaterial)));
     globe.rotation.set(0.12, 0.25, -0.22);
     orbitalSystem.add(globe);
+  }
+
+  // An optical instrument: a luminous core, metallic gimbals and a particle disk.
+  // All geometry is procedural and independent of account data.
+  function addChronosphere(glowTexture) {
+    const coreGeometry = rememberGeometry(new THREE.SphereGeometry(1.24, 112, 80));
+    coreUniforms = { uTime: { value: 0 }, uBlue: { value: new THREE.Color() },
+      uGold: { value: new THREE.Color() }, uLight: { value: 0 }, uIntensity: { value: 1 } };
+    const core = new THREE.ShaderMaterial({
+      uniforms: coreUniforms, transparent: true, depthWrite: false,
+      vertexShader: `varying vec3 vNormal; varying vec3 vEye; varying vec3 vPosition;
+        void main(){ vec4 mv=modelViewMatrix*vec4(position,1.0); vNormal=normalize(normalMatrix*normal);
+          vEye=normalize(-mv.xyz); vPosition=position; gl_Position=projectionMatrix*mv; }`,
+      fragmentShader: `uniform float uTime; uniform vec3 uBlue; uniform vec3 uGold;
+        uniform float uLight; uniform float uIntensity;
+        varying vec3 vNormal; varying vec3 vEye; varying vec3 vPosition;
+        void main(){ float rim=pow(1.0-max(dot(normalize(vNormal),normalize(vEye)),0.0),2.8);
+          float wave=sin(vPosition.y*31.0+sin(vPosition.x*5.0+uTime*.3)*2.0-uTime*.65);
+          float filaments=pow(max(wave,0.0),19.0);
+          float sweep=pow(max(sin(vPosition.y*3.4-vPosition.x*2.1+uTime*.27),0.0),9.0);
+          vec3 base=mix(vec3(.012,.026,.10),vec3(.48,.64,.84),uLight);
+          vec3 color=base+uBlue*(rim*1.65+filaments*.16+sweep*.13);
+          color+=uGold*pow(rim,3.0)*.65;
+          gl_FragColor=vec4(color,(.76+rim*.24)*uIntensity); }`,
+    });
+    materials.add(core);
+    globe.add(new THREE.Mesh(coreGeometry, core));
+    const inner = new THREE.Mesh(coreGeometry, material('globe', .82, {
+      metalness: .72, roughness: .23, clearcoat: 1, clearcoatRoughness: .12,
+    }, THREE.MeshPhysicalMaterial));
+    inner.scale.setScalar(.89);
+    globe.add(inner);
+    const bands = [
+      [1.69, .055, 1.12, .32, -.48, 'secondary'],
+      [2.22, .027, .94, -.36, .45, 'primary'],
+      [2.71, .014, 1.35, .47, -.4, 'secondary'],
+      [1.48, .016, .35, -.4, .92, 'primary'],
+    ];
+    bands.forEach(([radius, tube, rx, ry, rz, kind], index) => {
+      const group = new THREE.Group();
+      group.rotation.set(rx, ry, rz);
+      const geometry = rememberGeometry(new THREE.TorusGeometry(radius, tube, 24, 320));
+      const surface = material(kind, .96, { metalness: .82, roughness: .19, clearcoat: 1 }, THREE.MeshPhysicalMaterial);
+      group.add(new THREE.Mesh(geometry, surface));
+      const luminous = rememberGeometry(new THREE.TorusGeometry(radius + tube * .3, tube * .18, 12, 320));
+      const rim = new THREE.Mesh(luminous, material(kind, .9, { blending: THREE.AdditiveBlending }, THREE.MeshBasicMaterial));
+      rim.position.z = tube * .9;
+      group.add(rim);
+      const tickGeometry = rememberGeometry(new THREE.BoxGeometry(.012, .08, .016));
+      const ticks = new THREE.InstancedMesh(tickGeometry, material(kind, .7, {}, THREE.MeshBasicMaterial), 96);
+      const dummy = new THREE.Object3D();
+      for (let i = 0; i < 96; i++) {
+        const angle = i / 96 * Math.PI * 2;
+        dummy.position.set(Math.cos(angle) * (radius + .10), Math.sin(angle) * (radius + .10), 0);
+        dummy.rotation.z = angle - Math.PI / 2;
+        dummy.scale.y = i % 8 === 0 ? 1.8 : .7;
+        dummy.updateMatrix(); ticks.setMatrixAt(i, dummy.matrix);
+      }
+      group.add(ticks); orbitalSystem.add(group);
+      sculptures.push({ group, rx, ry, rz, speed: (index % 2 ? -1 : 1) * (.025 + index * .008) });
+    });
+    const count = 16000;
+    const positions = new Float32Array(count * 3), colors = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      const seed = ((i * 16807 + 127) % 2147483647) / 2147483647;
+      const a = i * 2.399963229728653;
+      const fraction = ((i * 7919) % count) / count;
+      const radius = 1.48 + Math.pow(fraction, 1.75) * 2.25;
+      const spiral = a + radius * .7;
+      positions.set([Math.cos(spiral) * radius, (seed - .5) * .23 * fraction, Math.sin(spiral) * radius], i * 3);
+      const c = new THREE.Color(i % 7 === 0 ? 0xe8bd80 : i % 3 ? 0x8fcaff : 0x6477ed);
+      colors.set([c.r, c.g, c.b], i * 3);
+    }
+    const dustGeometry = rememberGeometry(new THREE.BufferGeometry());
+    dustGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    dustGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    haloDust = new THREE.Points(dustGeometry, material('stars', .76, {
+      vertexColors: true, map: glowTexture, size: .032, blending: THREE.AdditiveBlending,
+    }, THREE.PointsMaterial));
+    haloDust.rotation.set(.25, 0, -.18);
+    orbitalSystem.add(haloDust);
+    scene.add(new THREE.HemisphereLight(0xa7cbff, 0x151126, 2.7));
+    const key = new THREE.DirectionalLight(0xd5eaff, 4.8); key.position.set(-4, 5, 7); scene.add(key);
+    const edge = new THREE.DirectionalLight(0xe6b775, 4.1); edge.position.set(5, -1, 2); scene.add(edge);
+    const fill = new THREE.PointLight(0x668cff, 35, 18); fill.position.set(-2, -3, 3); scene.add(fill);
   }
 
   function addOrbits(glowTexture) {
@@ -220,7 +315,7 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
   }
 
   function addStars() {
-    const count = mobile ? 160 : 420;
+    const count = 1600;
     const locations = new Float32Array(count * 3);
     // A fixed seed keeps the decorative composition stable between visits.
     let seed = 41;
@@ -242,13 +337,13 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
     const halfHeight = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z;
     const halfWidth = halfHeight * camera.aspect;
     if (view === 'gate') {
-      targetPosition.set(mobile ? 0 : -halfWidth * 0.48, mobile ? halfHeight * 0.32 : -0.1, 0);
-      targetScale = mobile ? 0.61 : Math.min(1.12, halfWidth / 5.8);
-      targetIntensity = mobile ? 0.78 : 1;
+      targetPosition.set(mobile ? 0 : -halfWidth * 0.48, mobile ? halfHeight * .53 : .32, 0);
+      targetScale = mobile ? Math.min(.60, halfWidth / 3.3) : Math.min(1.12, halfWidth / 6.5);
+      targetIntensity = 1;
     } else {
       targetPosition.set(halfWidth * (mobile ? 0.91 : 0.81), halfHeight * (view === 'home' ? 0.57 : 0.72), -0.8);
-      targetScale = mobile ? 0.42 : view === 'home' ? 0.64 : 0.53;
-      targetIntensity = view === 'home' ? 0.65 : 0.43;
+      targetScale = mobile ? .46 : view === 'home' ? .88 : .67;
+      targetIntensity = view === 'home' ? .92 : .72;
     }
     if (snap || quiet) {
       orbitalSystem.position.copy(targetPosition);
@@ -275,6 +370,13 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
     stars.rotation.y = elapsed * 0.002 * movement;
     stars.position.x = pointer.x * 0.035 * movement;
     stars.position.y = pointer.y * 0.035 * movement;
+    if (coreUniforms) coreUniforms.uTime.value = elapsed * movement;
+    if (haloDust) haloDust.rotation.y = elapsed * .035 * movement;
+    for (const sculpture of sculptures) {
+      sculpture.group.rotation.x = sculpture.rx + Math.sin(elapsed * .12) * .08 * movement;
+      sculpture.group.rotation.y = sculpture.ry + elapsed * sculpture.speed * movement;
+      sculpture.group.rotation.z = sculpture.rz + pointer.x * .06 * movement;
+    }
     for (const orbit of orbits) {
       const angle = orbit.phase + elapsed * orbit.speed * movement;
       orbit.bead.position.set(Math.cos(angle) * orbit.radius, Math.sin(angle) * orbit.radius, 0);
@@ -289,8 +391,6 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
   const newScale = new THREE.Vector3();
 
   function animate(timestamp) {
-    const interval = 1000 / 60;
-    if (timestamp - lastFrame < interval) return;
     const delta = lastTime ? Math.min((timestamp - lastTime) / 1000, 0.1) : 1 / 45;
     lastFrame = timestamp;
     lastTime = timestamp;
@@ -318,7 +418,7 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
       syncPlayback();
       return;
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(window.devicePixelRatio || 1);
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();
@@ -422,6 +522,9 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
     if (context) {
       renderer = new THREE.WebGLRenderer({ canvas, context, alpha: true, antialias: true, powerPreference: 'high-performance' });
       renderer.setClearColor(0x000000, 0);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.3;
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
       scene = new THREE.Scene();
       camera = new THREE.PerspectiveCamera(42, 1, 0.1, 50);
       camera.position.z = 10.5;
@@ -433,6 +536,7 @@ export function createAmbientScene({ host, reducedMotion = false } = {}) {
         orbitalSystem.add(atmosphere);
       }
       addGlobe();
+      addChronosphere(glowTexture);
       addOrbits(glowTexture);
       addStars();
       scene.add(orbitalSystem);

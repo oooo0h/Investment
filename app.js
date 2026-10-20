@@ -179,6 +179,7 @@ function renderGate(notice = '') {
   document.title = '解锁 · 基金账本';
   app.innerHTML = `<main id="main" class="gate"><div class="gate-theme">${themeButton()}</div><div class="gate-content">
     <div class="brand"><span class="brand-mark">${icon('book')}</span>基金账本</div>
+    <section class="gate-vision" aria-label="基金账本"><p class="observatory-eyebrow">PORTFOLIO OBSERVATORY</p><h2>以纪律，<span>穿越波动。</span></h2><p>记录每次选择 · 看清每段历程</p></section>
     <section class="gate-panel"><div class="gate-lock">${icon('lock')}</div><h1>解锁账本</h1>
       <form id="unlock-form" class="gate-form"><label for="vault-password">访问密码<input id="vault-password" name="password" type="password" inputmode="numeric" pattern="[0-9]{4}" minlength="4" maxlength="4" autocomplete="off" required aria-describedby="gate-error"></label>
         <button type="submit" class="button primary">解锁${icon('arrow')}</button><p id="gate-error" class="gate-error" role="alert">${esc(notice)}</p>
@@ -858,7 +859,7 @@ function holdingDurationDetails() {
 }
 
 function homePage(reserve) {
-  return `<main id="main" class="workspace home-page discipline-home"><header class="discipline-heading"><h1>交易纪律</h1></header>${estimateHomePanel()}${homeRules(reserve)}</main>`;
+  return `<main id="main" class="workspace home-page discipline-home"><header class="discipline-heading"><p class="observatory-eyebrow">PORTFOLIO OBSERVATORY</p><h1>交易纪律</h1><p class="observatory-caption">市场有波动，行动有章法。</p></header>${estimateHomePanel()}${homeRules(reserve)}</main>`;
 }
 
 function homeRules(reserve) {
