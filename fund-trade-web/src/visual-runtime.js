@@ -51,7 +51,7 @@ themeObserver.observe(document.documentElement, { attributes: true, attributeFil
 motionPreference.addEventListener('change', recreate);
 
 // Each visual layer is optional; a graphics failure never blocks the application.
-const ambientReady = import('./ambient-scene.js?v=20261019-collapsible-panels').then(module => {
+const ambientReady = import('./ambient-scene.js?v=20261020-optical-observatory').then(module => {
   if (stopped) return;
   ambientFactory = module.createAmbientScene;
   scene = ambientFactory({ host, reducedMotion: motionPreference.matches });
