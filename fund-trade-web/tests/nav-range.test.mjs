@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { NAV_PERIODS, resolveNavRange, moveNavBoundary, resolveNavSliderDomain, summarizeNavRange } from '../src/nav-range.js';
+import { NAV_PERIODS, resolveNavRange, moveNavBoundary, resolveNavSliderDomain, summarizeNavRange, latestCoveredTradeDate } from '../src/nav-range.js';
 
 const history = dates => dates.map((date, index) => ({ date, nav: 1 + index / 100 }));
 
@@ -364,6 +364,40 @@ test('since-trade starts from the latest provided operation and follows the late
   assert.deepEqual(range.points, rows.slice(2));
   assert.equal(range.to, rows.at(-1).date);
   assert.deepEqual(moveNavBoundary(rows, { preset: 'since-trade' }, 'start', 1, { tradeDate: rows[2].date }), { from: rows[1].date, to: rows.at(-1).date });
+});
+
+test('six-column order dates enable since-trade while pending and not-yet-covered operations do not displace its anchor', () => {
+  const nav = history(['2026-10-08', '2026-10-09', '2026-10-12', '2026-10-13', '2026-10-14', '2026-10-15', '2026-10-16']);
+  const rows = [
+    { type: 'buy', date: '2026-10-09', dateBasis: 'order', status: 'included' },
+    { type: 'transfer-in', date: '2026-10-15', dateBasis: 'order', status: 'included' },
+    { type: 'buy', date: '2026-10-20', dateBasis: 'order', status: 'included' },
+    { type: 'buy', date: '2026-10-16', dateBasis: 'order', status: 'pending' },
+    { type: 'sell', date: '2026-10-16', status: 'excluded' },
+    { type: 'sell', date: '2026-10-16', status: 'error' },
+    { type: 'sell', date: '2026-10-16', status: 'blocked' },
+  ];
+  const before = structuredClone(rows);
+  const tradeDate = latestCoveredTradeDate(rows, nav);
+  assert.equal(tradeDate, '2026-10-15');
+  const range = resolveNavRange(nav, { preset: 'since-trade' }, { tradeDate });
+  assert.equal(range.tradeAvailable, true);
+  assert.equal(range.from, '2026-10-15');
+  assert.equal(range.to, '2026-10-16');
+  assert.deepEqual(rows, before);
+  const refreshed = [...nav, { date: '2026-10-20', nav: 1.1 }];
+  assert.equal(latestCoveredTradeDate(rows, refreshed), '2026-10-20');
+});
+
+test('trade anchors prefer a provided execution NAV date and reject invalid or missing evidence', () => {
+  const nav = history(['2026-10-09', '2026-10-12', '2026-10-16']);
+  const operation = { type: 'sell', date: '2026-10-09', navDate: '2026-10-12', dateBasis: 'order', status: 'included' };
+  assert.equal(latestCoveredTradeDate([operation], nav), '2026-10-12');
+  for (const row of [null, { ...operation, date: 'invalid', navDate: null }, { ...operation, date: '2026-02-30', navDate: null }, { ...operation, type: 'dividend' }, { ...operation, navDate: '2026-10-20' }]) {
+    assert.equal(latestCoveredTradeDate([row], nav), null);
+  }
+  assert.equal(latestCoveredTradeDate([], nav), null);
+  assert.equal(latestCoveredTradeDate([operation], []), null);
 });
 
 test('since-trade is unavailable without a valid operation before the last NAV and does not invent prices', () => {

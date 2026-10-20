@@ -151,7 +151,7 @@ export async function createLiveDataStore({ workspace, root, pythonPath }) {
           // It must not become a guessed fill or erase the confirmed history.
           if (tx.status === 'pending' && tx.sourceStatus === 'incomplete'
             && validDate(tx.date) && tx.date > nav[entry.code].lastDate
-            && ['buy', 'sell'].includes(tx.type) && Number.isFinite(tx.amount) && tx.amount > 0
+            && ['buy', 'sell', 'transfer-in'].includes(tx.type) && Number.isFinite(tx.amount) && tx.amount > 0
             && (tx.nav === null || tx.shares === null)) return { ...tx, sourceStatus: 'processing' };
           return tx;
         });
@@ -162,7 +162,7 @@ export async function createLiveDataStore({ workspace, root, pythonPath }) {
         const formulaAdjusted = transactions.filter(tx => tx.formulaAdjustment).length;
         funds[entry.code] = { transactions, mode: 'profit-first', incomplete,
           sourceNote: imported
-            ? `来源：${entry.code}_交易记录.xlsx（六列）。交易日期为原始下单日期，不当作净值日期。${estimated ? '含估算记录，未重新核实成交。' : '确认状态沿用来源记录，未重新核实成交。'}${formulaAdjusted ? `有 ${formulaAdjusted} 笔份额公式已按手续费口径重新估算，原表未改写，请核对实际确认份额。` : ''}${processing ? `有 ${processing} 笔进行中订单未计入持仓和收益。` : ''}${incomplete ? '成交资料待补全或存在来源差异，暂停账户汇总。' : ''}${pendingBackupCount ? `旧网站另有 ${pendingBackupCount} 笔待确认订单保留在加密备份中，未列为已成交。` : ''}`
+            ? `来源：${entry.code}_交易记录.xlsx（六列）。交易日期为原始下单日期，不当作净值日期。${estimated ? '含估算记录，未重新核实成交。' : '确认状态沿用来源记录，未重新核实成交。'}${formulaAdjusted ? `有 ${formulaAdjusted} 笔份额公式已按手续费口径重新估算，原表未改写，请核对实际确认份额。` : ''}${processing ? `有 ${processing} 笔进行中订单尚未确认份额与收益；买入金额先计入市值。` : ''}${incomplete ? '成交资料待补全或存在来源差异，暂停账户汇总。' : ''}${pendingBackupCount ? `旧网站另有 ${pendingBackupCount} 笔待确认订单保留在加密备份中，未列为已成交。` : ''}`
             : '尚未提供六列交易记录表；不推断持仓。' };
         sourceSummary.push({ code: entry.code, nav: { kind: 'full-history', records: nav[entry.code].count },
           transactions: { kind: imported ? 'workbook' : 'absent', records: transactions.length, incomplete, estimated } });

@@ -10,8 +10,7 @@ const freezeFee = (redemption) => Object.freeze({
   redemption: Object.freeze(redemption.map(tier => Object.freeze(tier))),
 });
 
-/** User-supplied ordinary buy/redemption fees, not actual conversion charges.
- * The 30-day holding bar is independent of these fee tiers. */
+/** User-supplied ordinary buy/redemption fees, not actual conversion charges. */
 export const BOND_FEE_RULES = Object.freeze({
   '006485': freezeFee([
     { minDays: 0, maxDaysExclusive: 7, rate: .015 },
@@ -69,8 +68,8 @@ export function normalizeBondHoldingLots(value) {
   return Object.fromEntries(Object.entries(value).map(([code, record]) => [code, normalizeRecord(record)]));
 }
 
-const unknown = reason => ({
-  status: 'unknown', reason, recentRatio: null, matureRatio: null, under7Ratio: null, sevenTo29Ratio: null, maturityDays: MATURITY_DAYS,
+const unknown = (reason, maturityDays = MATURITY_DAYS) => ({
+  status: 'unknown', reason, recentRatio: null, matureRatio: null, under7Ratio: null, sevenTo29Ratio: null, maturityDays,
   youngestDays: null, oldestDays: null, remainingDays: null, lotCount: 0,
 });
 
@@ -83,25 +82,27 @@ const unknown = reason => ({
  * Within one fund all remaining shares have the same current per-share value,
  * so share weights equal current market-value weights without needing a NAV.
  */
-export function calculateBondHoldingDuration(record, { now = new Date() } = {}) {
-  if (!recordObject(record) || (record.complete !== true && record.basis !== 'calculated')) return unknown('incomplete');
+export function calculateBondHoldingDuration(record, { now = new Date(), code } = {}) {
+  const maturityDays = code === '006663' ? 7 : MATURITY_DAYS;
+  const unavailable = reason => unknown(reason, maturityDays);
+  if (!recordObject(record) || (record.complete !== true && record.basis !== 'calculated')) return unavailable('incomplete');
   const today = beijingDay(now);
-  if (today === null) return unknown('invalid-clock');
+  if (today === null) return unavailable('invalid-clock');
   let normalized;
   try { normalized = normalizeRecord(record); }
-  catch { return unknown('invalid-lots'); }
+  catch { return unavailable('invalid-lots'); }
   if (!normalized.lots.length) return normalized.complete
-    ? { ...unknown('empty'), status: 'empty', recentRatio: 0, matureRatio: 0, under7Ratio: 0, sevenTo29Ratio: 0, remainingDays: 0 }
-    : unknown('no-provided-lots');
+    ? { ...unavailable('empty'), status: 'empty', recentRatio: 0, matureRatio: 0, under7Ratio: 0, sevenTo29Ratio: 0, remainingDays: 0 }
+    : unavailable('no-provided-lots');
   const lots = normalized.lots.map(lot => ({
     shares: lot.remainingShares, days: (today - utcDay(lot.confirmedDate || lot.orderDate)) / DAY_MS,
   }));
-  if (lots.some(lot => lot.days < 0)) return unknown('future-confirmation');
+  if (lots.some(lot => lot.days < 0)) return unavailable('future-confirmation');
   const scale = Math.max(...lots.map(lot => lot.shares));
   const weights = lots.reduce((sum, lot) => {
     const weight = lot.shares / scale;
     sum.total += weight;
-    if (lot.days < MATURITY_DAYS) sum.recent += weight;
+    if (lot.days < maturityDays) sum.recent += weight;
     if (lot.days < 7) sum.under7 += weight;
     return sum;
   }, { total: 0, recent: 0, under7: 0 });
@@ -109,9 +110,9 @@ export function calculateBondHoldingDuration(record, { now = new Date() } = {}) 
   const under7Ratio = Math.min(recentRatio, Math.max(0, weights.under7 / weights.total));
   const youngestDays = Math.min(...lots.map(lot => lot.days));
   return {
-    status: normalized.basis === 'calculated' ? 'calculated' : 'known', reason: normalized.basis === 'calculated' ? 'provided-history' : 'complete-lots', recentRatio, matureRatio: 1 - recentRatio, under7Ratio, sevenTo29Ratio: recentRatio - under7Ratio, maturityDays: MATURITY_DAYS,
+    status: normalized.basis === 'calculated' ? 'calculated' : 'known', reason: normalized.basis === 'calculated' ? 'provided-history' : 'complete-lots', recentRatio, matureRatio: 1 - recentRatio, under7Ratio, sevenTo29Ratio: recentRatio - under7Ratio, maturityDays,
     dateBasis: normalized.lots.some(lot => lot.orderDate) ? 'order' : 'confirmed',
     youngestDays, oldestDays: Math.max(...lots.map(lot => lot.days)),
-    remainingDays: Math.max(0, MATURITY_DAYS - youngestDays), lotCount: lots.length,
+    remainingDays: Math.max(0, maturityDays - youngestDays), lotCount: lots.length,
   };
 }

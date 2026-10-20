@@ -33,7 +33,7 @@ def fee_adjusted_formula_shares(formula, index, kind, nav, cached_shares, amount
     Do not evaluate arbitrary Excel formulas or replace missing/error caches.
     Amount means purchase total cash outlay or sale net proceeds in this format.
     """
-    if kind not in ('买入', '卖出') or not isinstance(formula, str):
+    if kind not in ('买入', '卖出', '转入', '转换转入') or not isinstance(formula, str):
         return None
     normalized = re.sub(r'\s+', '', formula).upper().replace('$', '')
     if normalized != f'=E{index}/B{index}':
@@ -44,7 +44,7 @@ def fee_adjusted_formula_shares(formula, index, kind, nav, cached_shares, amount
     if nav <= 0 or cached_shares <= 0 or amount <= 0 or fee <= 0:
         return None
     try:
-        cash = Decimal(str(amount)) + Decimal(str(fee)) * (-1 if kind == '买入' else 1)
+        cash = Decimal(str(amount)) + Decimal(str(fee)) * (1 if kind == '卖出' else -1)
         if cash <= 0:
             return None
         shares = float((cash / Decimal(str(nav))).quantize(Decimal('0.000001'), rounding=ROUND_HALF_UP))
@@ -96,7 +96,7 @@ def read_book(data, code, estimated=False, provenance=None, allow_drafts=False):
                 date = None
             elif not isinstance(date, str) or dt.date.fromisoformat(date).isoformat() != date:
                 raise ValueError("Invalid transaction date")
-            if kind not in ("买入", "卖出") and not (allow_drafts and kind in (None, "")):
+            if kind not in ("买入", "卖出", "转入", "转换转入") and not (allow_drafts and kind in (None, "")):
                 raise ValueError("Invalid transaction type")
             nav, shares, amount, fee = map(number, (nav, shares, amount, fee))
             if any(value is not None and value < 0 for value in (nav, shares, amount, fee)):
@@ -116,16 +116,16 @@ def read_book(data, code, estimated=False, provenance=None, allow_drafts=False):
             transaction = {
                 "id": f"{code}-workbook-{index}", "date": date,
                 "submittedAt": date, "dateBasis": "order", "navDate": detail.get('nav_date'),
-                "type": "buy" if kind == "买入" else "sell" if kind == "卖出" else "unknown",
+                "type": "buy" if kind == "买入" else "sell" if kind == "卖出" else "transfer-in" if kind in ("转入", "转换转入") else "unknown",
                 "nav": nav, "shares": shares, "amount": amount, "fee": fee,
                 "status": historical_status if complete and not conflict else "pending",
                 "sourceStatus": "draft" if draft else "unverified" if conflict else "formula-calculated" if formula_columns else "incomplete" if not complete else "historical-estimate" if historical_status == 'estimated' else "complete",
             }
             if adjusted is not None:
-                transaction['formulaAdjustment'] = 'purchase-net-shares' if kind == '买入' else 'sale-gross-shares'
+                transaction['formulaAdjustment'] = 'sale-gross-shares' if kind == '卖出' else 'purchase-net-shares'
                 transaction['calculationNote'] = (
                     '原份额公式未计手续费，已按买入总支出扣除手续费后重新估算份额；请以实际确认份额为准。'
-                    if kind == '买入' else
+                    if kind != '卖出' else
                     '原份额公式未计手续费，已按卖出到账加上手续费后重新估算份额；请以实际确认份额为准。')
             transactions.append(transaction)
         # Stable order for multiple orders on the same date.

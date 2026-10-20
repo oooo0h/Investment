@@ -85,6 +85,60 @@ print(json.dumps([{'shares':r['shares'],'status':r['status'],'sourceStatus':r['s
   ]);
 });
 
+test('six-column transfer-in dropdown labels map to the existing ledger transfer type', () => {
+  const script = String.raw`
+import io,json,importlib.util
+from openpyxl import Workbook
+spec=importlib.util.spec_from_file_location('reader','scripts/local-workbooks.py')
+reader=importlib.util.module_from_spec(spec);spec.loader.exec_module(reader)
+rows=[]
+for kind in ['转入','转换转入']:
+ b=Workbook();s=b.active;s.title='交易记录';s.append(reader.HEADERS)
+ s.append(['2024-01-02',1,10,kind,10,0]);out=io.BytesIO();b.save(out)
+ rows.append(reader.read_book(out.getvalue(),'016701',False)[0])
+print(json.dumps(rows))
+`;
+  const result = spawnSync(pythonPath, ['-X', 'utf8', '-B', '-c', script], { windowsHide: true, encoding: 'utf8' });
+  assert.equal(result.status, 0, 'Synthetic transfer workbook could not be read');
+  for (const row of JSON.parse(result.stdout)) {
+    assert.equal(row.type, 'transfer-in');
+    const ledger = calculateLedger([row], { valuationNav: 1.1, valuationDate: '2024-01-03' });
+    assert.equal(ledger.errors.length, 0); assert.equal(ledger.summary.shares, 10); assert.equal(ledger.summary.marketValue, 11);
+  }
+});
+
+test('transfer-in gross-cash share formulas apply the purchase fee before ledger validation without changing literal shares', () => {
+  const script = String.raw`
+import io,json,zipfile,importlib.util
+from openpyxl import Workbook
+spec=importlib.util.spec_from_file_location('reader','scripts/local-workbooks.py')
+reader=importlib.util.module_from_spec(spec);spec.loader.exec_module(reader)
+rows=[]
+for kind in ['转入','转换转入']:
+ b=Workbook();s=b.active;s.title='交易记录';s.append(reader.HEADERS)
+ s.append(['2024-01-02',2,'=E2/B2',kind,100,2]);raw=io.BytesIO();b.save(raw);out=io.BytesIO()
+ with zipfile.ZipFile(raw) as source,zipfile.ZipFile(out,'w') as target:
+  for item in source.infolist():
+   data=source.read(item.filename)
+   if item.filename=='xl/worksheets/sheet1.xml':data=data.replace(b'<f>E2/B2</f><v></v>',b'<f>E2/B2</f><v>50</v>')
+   target.writestr(item,data)
+ rows.append(reader.read_book(out.getvalue(),'016701',False)[0])
+ assert reader.fee_adjusted_formula_shares(None,2,kind,2,49,100,2) is None
+print(json.dumps(rows))
+`;
+  const result = spawnSync(pythonPath, ['-X', 'utf8', '-B', '-c', script], { windowsHide: true, encoding: 'utf8' });
+  assert.equal(result.status, 0, 'Synthetic transfer formula workbook could not be read');
+  for (const row of JSON.parse(result.stdout)) {
+    assert.equal(row.type, 'transfer-in');
+    assert.equal(row.shares, 49);
+    assert.equal(row.formulaAdjustment, 'purchase-net-shares');
+    assert.match(row.calculationNote, /总支出扣除手续费/);
+    const ledger = calculateLedger([row], { valuationNav: 2, valuationDate: '2024-01-02' });
+    assert.equal(ledger.summary.valid, true);
+    assert.equal(ledger.errors.length, 0);
+  }
+});
+
 test('live encryption retains credentials and session key across source updates', () => {
   const fixture = encryptionFixture(), encrypt = createEnvelopeEncryptor(fixture.original);
   const first = encrypt({ funds: { synthetic: { transactions: [] } } });

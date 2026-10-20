@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { renderNavChart, createNavScale } from '../src/nav-chart.js';
+import { renderNavChart, createNavScale, createNavDateScale } from '../src/nav-chart.js';
 
 // Invented NAVs and markers only. Never read account snapshots in this suite.
 const point = (date, nav) => ({ date, nav });
@@ -21,6 +21,30 @@ const coloredSegments = markup => [...markup.matchAll(/<polyline class="(nav-cha
   points: match[2].split(' ').map(pair => pair.split(',').map(Number)), markup: match[0],
 }));
 
+test('adjacent trading dates are equally spaced across weekends and closures, including trade markers', () => {
+  const dates = ['2026-09-30', '2026-10-08', '2026-10-09', '2026-10-12', '2026-10-13'];
+  const series = dates.map((date, index) => point(date, 2 - index / 100));
+  const markup = renderNavChart(series, { domainEnd: '2026-10-20', markers: [{ date: dates[3], nav: series[3].nav, type: 'buy' }] });
+  const observations = hoverPoints(markup);
+  const gaps = observations.slice(1).map((observation, index) => observation.x - observations[index].x);
+  assert.ok(gaps.every(gap => Math.abs(gap - gaps[0]) < .0002));
+  assert.ok(Math.abs(markerPosition(markup, 'buy')[0] - observations[3].x * 3) < .001);
+  assert.deepEqual(observations.map(observation => observation.date), dates);
+});
+
+test('date scale round trips valued dates and pending weekdays without calendar-sized arrays', () => {
+  const dates = ['2026-10-08', '2026-10-09', '2026-10-12', '2026-10-16'];
+  const scale = createNavDateScale(dates, '2026-10-20');
+  dates.forEach((date, index) => { assert.equal(scale.project(date), index); assert.equal(scale.dateAt(index), date); });
+  assert.equal(scale.dateAt(4), '2026-10-19');
+  assert.equal(scale.dateAt(5), '2026-10-20');
+  assert.equal(scale.span, 5);
+  const distant = createNavDateScale(['2026-10-16'], '9999-12-31');
+  assert.equal(distant.dateAt(distant.span), '9999-12-31');
+  assert.equal(distant.dateAt(1), '2026-10-19');
+  assert.ok(Number.isFinite(distant.project('9999-12-31')));
+});
+
 test('adaptive Y ticks divide a tight visible domain evenly, including flat and tiny series', () => {
   for (const values of [[2.111, 2.115, 2.113], [1.2, 1.2], [1e-10, 2e-10], [100, 200]]) {
     const scale = createNavScale(values);
@@ -36,7 +60,7 @@ test('adaptive Y ticks divide a tight visible domain evenly, including flat and 
   assert.ok(scale.upper - scale.lower < .01, 'small visible changes use a close scale');
 });
 
-test('plain NAV curve has one SVG, an adaptive vertical axis, and elapsed-date x coordinates', () => {
+test('plain NAV curve has one SVG, an adaptive vertical axis, and equally spaced valued dates', () => {
   const input = [points[2], points[0], points[1]];
   const original = structuredClone(input);
   const markup = renderNavChart(input);
@@ -48,7 +72,7 @@ test('plain NAV curve has one SVG, an adaptive vertical axis, and elapsed-date x
   const positions = curve(markup);
   assert.equal(positions[0][0], 8);
   assert.equal(positions[2][0], 292);
-  assert.ok(Math.abs((positions[1][0] - positions[0][0]) / (positions[2][0] - positions[0][0]) - 0.1) < 0.00001);
+  assert.ok(Math.abs((positions[1][0] - positions[0][0]) / (positions[2][0] - positions[0][0]) - 0.5) < 0.00001);
   assert.doesNotMatch(markup, /class="nav-cost|class="nav-trade|class="nav-chart-legend/);
 });
 
@@ -73,7 +97,7 @@ test('buy and sell positions use actual marker NAV and interpolate dates within 
   assertSafe(markup);
   const buy = markerPosition(markup, 'buy');
   const sell = markerPosition(markup, 'sell');
-  assert.equal(buy[0], 150, 'mid-window date is at the middle of the timeline');
+  assert.ok(Math.abs(buy[0] - (8 + (1 + 4 / 9) / 2 * 284)) < .001, 'a trade-only date interpolates between its adjacent valued dates');
   assert.ok(Math.abs(sell[0] - 292) < 0.001);
   assert.ok(buy[1] < Math.min(...curve(markup).map(([, y]) => y)), 'marker uses its own execution NAV');
   assert.ok(sell[1] > Math.max(...curve(markup).map(([, y]) => y)));
@@ -232,7 +256,7 @@ test('an extended date domain leaves the official curve on its real dates and ma
   assertSafe(markup);
   const positions = curve(markup);
   assert.equal(positions[0][0], 8);
-  assert.ok(Math.abs(positions.at(-1)[0] - (8 + 10 / 14 * 284)) < .0001);
+  assert.ok(Math.abs(positions.at(-1)[0] - (8 + 2 / 6 * 284)) < .0001);
   assert.ok(positions.at(-1)[0] < 292, 'the latest official observation does not move to today');
   assert.match(markup, /class="nav-chart-pending-region"/);
   assert.match(markup, /class="nav-chart-pending-label"[^>]*>待更新/);
@@ -352,7 +376,7 @@ test('estimates never create a chart without real history or escape the selected
   assert.doesNotMatch(markup, /nav-chart-estimated|<svg onload|2025-12-31|2026-01-12/);
 });
 
-test('a visible range of at most seven elapsed calendar days gives every NAV a lower-only resting guide', () => {
+test('a range containing at most seven dated valuations gives every NAV a lower-only resting guide', () => {
   const series = [point('2026-01-01', 1), point('2026-01-04', 1.1), point('2026-01-08', 1.04)];
   const markup = renderNavChart(series);
   const payload = hoverPoints(markup);
@@ -370,13 +394,23 @@ test('a visible range of at most seven elapsed calendar days gives every NAV a l
   assertSafe(markup);
 });
 
-test('more than seven visible days omits resting guides even when the real observations span fewer days', () => {
-  assert.doesNotMatch(renderNavChart(points), /nav-chart-rest-/);
+test('pending calendar dates do not consume the seven valued dates or create resting guides', () => {
+  assert.equal((renderNavChart(points).match(/class="nav-chart-rest-line"/g) || []).length, points.length);
   const series = [point('2026-01-01', 1), point('2026-01-03', 1.1)];
-  const markup = renderNavChart(series, { domainEnd: '2026-01-09' });
-  assert.doesNotMatch(markup, /nav-chart-rest-/);
+  const markup = renderNavChart(series, { domainEnd: '2026-02-09' });
+  assert.equal((markup.match(/class="nav-chart-rest-line"/g) || []).length, 2);
+  assert.doesNotMatch(markup, /nav-chart-rest-line[^>]*data-date="2026-02-09"/);
   assert.match(markup, /nav-chart-pending-region/);
   assert.match(markup, /class="nav-hover-line" hidden/);
+});
+
+test('seven valuations across weekends get guides; an eighth valued date hides them', () => {
+  const dates = ['2026-10-08', '2026-10-09', '2026-10-12', '2026-10-13', '2026-10-14', '2026-10-15', '2026-10-16'];
+  const series = dates.map((date, index) => point(date, 1 + index / 100));
+  const options = { domainEnd: '2026-10-20' };
+  assert.equal((renderNavChart(series, options).match(/class="nav-chart-rest-line"/g) || []).length, 7);
+  assert.doesNotMatch(renderNavChart([...series, point('2026-10-19', 1.07)], options), /nav-chart-rest-/);
+  assert.doesNotMatch(renderNavChart(series, { ...options, estimatedPoints: [{ date: '2026-10-19', nav: 1.07, estimated: true }] }), /nav-chart-rest-/);
 });
 
 test('short-window resting guides include estimates and never extend to a pending date', () => {

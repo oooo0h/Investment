@@ -7,6 +7,24 @@ const now = '2026-10-19T07:00:00Z';
 const lot = (confirmedDate, remainingShares, status = 'confirmed') => ({ confirmedDate, remainingShares, status });
 const record = lots => ({ complete: true, lots });
 
+test('ultrashort bond uses day seven at Beijing midnight while the other bond still uses day thirty', () => {
+  const source = record([lot('2026-10-12', 1)]);
+  const before = calculateBondHoldingDuration(source, { code: '006663', now: '2026-10-18T15:59:59.999Z' });
+  const after = calculateBondHoldingDuration(source, { code: '006663', now: '2026-10-18T16:00:00.000Z' });
+  assert.equal(before.recentRatio, 1);
+  assert.equal(before.remainingDays, 1);
+  assert.equal(after.recentRatio, 0);
+  assert.equal(after.matureRatio, 1);
+  assert.equal(after.remainingDays, 0);
+  assert.equal(after.maturityDays, 7);
+  const other = calculateBondHoldingDuration(source, { code: '006485', now });
+  assert.equal(other.recentRatio, 1);
+  assert.equal(other.maturityDays, 30);
+  const mixed = calculateBondHoldingDuration(record([lot('2026-10-13', 1), lot('2026-10-12', 3)]), { code: '006663', now });
+  assert.equal(mixed.recentRatio, .25);
+  assert.equal(mixed.matureRatio, .75);
+});
+
 test('current remaining shares, not original invested amounts, weight the red and green portions', () => {
   const source = record([lot('2026-09-20', 3), lot('2026-09-19', 1)]);
   const before = structuredClone(source);

@@ -2,6 +2,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { renderBondsPage } from '../src/bonds-view.js';
+import { calculateBondHoldingDuration } from '../src/bond-holding-duration.js';
 
 const entries = () => [
   { code: '006485', marketValue: 110, holdingProfit: 10 },
@@ -10,13 +11,28 @@ const entries = () => [
 
 const progress = html => html.match(/<div class="bond-total-progress"[\s\S]*?<p class="bond-total-progress-note">[\s\S]*?<\/p>\s*<\/div>/)?.[0] || '';
 
+test('ultrashort maturity bar calculates and labels the seven-day split, including legacy explicit day weights', () => {
+  const source = { complete: true, lots: [
+    { status: 'confirmed', confirmedDate: '2026-10-14', remainingShares: 1 },
+    { status: 'confirmed', confirmedDate: '2026-10-13', remainingShares: 3 },
+  ] };
+  for (const code of ['006663', undefined]) {
+    const duration = calculateBondHoldingDuration(source, { code, now: '2026-10-20' });
+    const html = renderBondsPage({ entries: entries(), holdingByCode: { '006663': duration } });
+    const card = html.match(/aria-labelledby="bond-title-006663"[\s\S]*?<\/details>/)[0];
+    assert.match(card, /未满7天约25%，已满7天约75%/);
+    assert.match(card, /class="bond-duration-recent" style="width:25%"><\/span><span class="bond-duration-mature" style="width:75%"/);
+    assert.doesNotMatch(card, /30天|7～29天/);
+  }
+});
+
 test('total progress uses signed cash and prioritizes red below the exact threshold', () => {
   for (const [cash, tone] of [[49_669.99, 'red'], [49_670, 'yellow'], [49_670.01, 'yellow']]) {
     const html = progress(renderBondsPage({ entries: entries(), freeCashFlow: cash, reserve: { ratio: .25 } }));
     assert.match(html, new RegExp(`data-bond-total-tone="${tone}"`));
-    assert.match(html, /role="progressbar"[^>]*aria-valuenow="25"/);
-    assert.match(html, /style="width:25%"/);
-    assert.doesNotMatch(html, /49,?6|50,?000|data-(?:amount|value|cost)=/);
+    assert.match(html, /role="img"[^>]*当前占比约25%/);
+    assert.match(html, /bond-total-segment-red.*bond-total-segment-yellow.*bond-total-segment-green/);
+    assert.doesNotMatch(html, /style="width:|49,?6|data-(?:amount|value|cost)=/);
   }
   assert.match(progress(renderBondsPage({ entries: entries(), reserve: { ratio: .25 } })), /data-bond-total-tone="red"/);
 });
@@ -25,16 +41,44 @@ test('total progress uses inclusive ratio boundaries before rounding and green f
   for (const [ratio, tone] of [[0, 'green'], [1 / 6 - .000001, 'green'], [1 / 6, 'yellow'], [.25, 'yellow'], [1 / 3, 'yellow'], [1 / 3 + .000001, 'green'], [1, 'green']]) {
     const html = progress(renderBondsPage({ entries: entries(), freeCashFlow: 49_670, reserve: { ratio } }));
     assert.match(html, new RegExp(`data-bond-total-tone="${tone}"`));
-    assert.match(html, new RegExp(`aria-valuenow="${Math.round(ratio * 100)}"`));
+    assert.match(html, new RegExp(`当前占比约${Math.round(ratio * 100)}%`));
   }
 });
 
-test('unavailable totals or shares keep a neutral track without fabricated percentages or amounts', () => {
+test('unavailable totals or shares retain the full color key without fabricated percentages or personal amounts', () => {
   for (const options of [{ cashUnavailable: true, reserve: { ratio: .25 } }, { reserve: { ratio: null } }, { reserve: { ratio: NaN } }, { reserve: { ratio: -1 } }, { reserve: { ratio: 2 } }]) {
     const html = progress(renderBondsPage({ entries: entries(), freeCashFlow: 49_670, ...options }));
     assert.match(html, /data-bond-total-tone="unknown"/);
     assert.match(html, /占比待核验/);
     assert.doesNotMatch(html, /aria-valuenow|style="width:|role="progressbar"/);
+    assert.match(html, /bond-total-segment-red.*bond-total-segment-yellow.*bond-total-segment-green/);
+    assert.match(html, /分段金额暂不可用/);
+  }
+});
+
+test('color legends show the actual holding amount inside each band and respect global amount visibility', () => {
+  const options = { entries: entries(), freeCashFlow: 179_670, reserve: { ratio: .4 } };
+  const shown = progress(renderBondsPage({ ...options, visible: true }));
+  for (const [color, amount] of [['red', '50,000.00'], ['yellow', '100,000.00'], ['green', '30,000.00']]) {
+    assert.ok(shown.includes(`class="bond-total-${color}"><span class="num">${amount}<small>元`));
+  }
+  assert.doesNotMatch(shown, /＜|＞|～|低于5万元|占比1\/6|其余|规则|progressbar/);
+  const hidden = progress(renderBondsPage(options));
+  assert.doesNotMatch(hidden, /50,000|100,000|30,000|450,000/);
+  assert.equal((hidden.match(/class="masked"/g) || []).length, 3);
+  const zero = progress(renderBondsPage({ entries: entries(), freeCashFlow: -330, reserve: { ratio: 0 }, visible: true }));
+  assert.equal((zero.match(/0\.00<small>元/g) || []).length, 3);
+  assert.doesNotMatch(zero, /Infinity|NaN|～/);
+});
+
+test('band amounts conserve displayed cents, stop at current holdings and never show a negative band', () => {
+  for (const [holding, ratio] of [[20_000, .4], [50_000, .25], [60_000, .4], [90_000, .25], [123_456.78, .37], [180_000.01, .4]]) {
+    const shown = progress(renderBondsPage({ entries: entries(), freeCashFlow: holding - 330, reserve: { ratio }, visible: true }));
+    const amounts = [...shown.matchAll(/class="bond-total-(?:red|yellow|green)"><span class="num">([\d,.]+)<small>元/g)].map(match => Math.round(Number(match[1].replaceAll(',', '')) * 100));
+    assert.equal(amounts.length, 3);
+    assert.equal(amounts.reduce((sum, amount) => sum + amount, 0), Math.round(holding * 100));
+    assert.equal(amounts[0], Math.min(Math.round(holding * 100), 5_000_000));
+    assert.ok(amounts.every(amount => amount >= 0));
   }
 });
 

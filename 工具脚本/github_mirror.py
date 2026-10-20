@@ -26,7 +26,7 @@ def command(args, data=None):
                      env={**os.environ,'GIT_TERMINAL_PROMPT':'0','GIT_LITERAL_PATHSPECS':'1'})
     if p.returncode:
         error=p.stderr.decode('utf-8',errors='replace')
-        category='network' if re.search(r'reset|connect|timeout|schannel|credentials',error,re.I) else 'permissions' if re.search(r'denied|index.lock|permission',error,re.I) else 'command_failed'
+        category='authentication' if re.search(r'HTTP\s+401|GitHub API failed:\s*401|bad credentials|gh auth login|not logged|requires authentication',error,re.I) else 'network' if re.search(r'reset|connect|timeout|schannel',error,re.I) else 'permissions' if re.search(r'denied|index.lock|permission|HTTP\s+403',error,re.I) else 'command_failed'
         raise RuntimeError(f'{args[0]} failed: {category}')
     return p.stdout
 
@@ -69,6 +69,7 @@ def remote():
     return commit,{e['path']:e['sha'] for e in tree['tree'] if e['type']=='blob'}
 
 def verify_context():
+    require((ROOT/'.git').exists(),'Local Git metadata missing; restore repository metadata before mirroring')
     require(git('remote','get-url','origin')==f'https://github.com/{REPOSITORY}.git','Unexpected Git destination')
     require(git('branch','--show-current')=='main','Unexpected local branch')
     require(not git('diff','--cached','--name-only'),'Unreviewed staged changes; stop before preparing')

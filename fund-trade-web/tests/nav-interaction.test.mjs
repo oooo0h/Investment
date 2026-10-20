@@ -35,7 +35,7 @@ function harness(raw = JSON.stringify(publicPoints), dimensions = {}, trades = [
   const rect = { left: 100, top: 20, width: 300, height: 128, ...dimensions };
   chart.getBoundingClientRect = () => rect;
   const elements = Object.fromEntries(['line', 'point', 'tooltip', 'date', 'status', 'value', 'change', 'trades', 'axis-date', 'left-days', 'right-days'].map(name => [name, node(chart)]));
-  const measurement = Object.fromEntries(['panel', 'result', 'dates', 'days', 'value', 'band', 'start', 'end', 'start-line', 'end-line'].map(name => [name, node(chart)]));
+  const measurement = Object.fromEntries(['panel', 'result', 'dates', 'days', 'caption', 'value', 'band', 'start', 'end', 'start-line', 'end-line'].map(name => [name, node(chart)]));
   elements.tooltip.getBoundingClientRect = () => ({ width: dimensions.tooltipWidth || 104, height: dimensions.tooltipHeight || 18 });
   const resting = [node(chart), node(chart)];
   resting.forEach((element, index) => { element.hidden = false; element.style = { left: '15%', top: '55%', ...(index === 0 ? { bottom: '0' } : {}) }; });
@@ -114,21 +114,43 @@ test('first click anchors, hover updates returns and calendar days, second click
   h.emit('pointermove', { clientX: 145 });
   assert.equal(h.measurement.value.textContent, '+5.88%');
   assert.equal(h.measurement.days.textContent, '1 天');
+  assert.equal(h.measurement.caption.hidden, false);
+  assert.equal(h.measurement.caption.textContent, '1 天');
+  assert.equal(h.measurement.caption.style.getPropertyValue('--nav-measure-midpoint'), '10%');
   assert.match(h.measurement.dates.textContent, /2026-01-01 → 2026-01-02/);
   h.emit('pointermove', { clientX: 385 });
   assert.equal(h.measurement.value.textContent, '+23.53%');
   assert.equal(h.measurement.days.textContent, '10 天');
+  assert.equal(h.measurement.caption.textContent, '10 天');
+  assert.equal(h.measurement.caption.style.getPropertyValue('--nav-measure-midpoint'), '50%');
   h.emit('click', { clientX: 385 });
   h.emit('pointermove', { clientX: 145 });
   assert.equal(h.measurement.result.hidden, true);
   assert.equal(h.measurement.start.hidden, true);
+  assert.equal(h.measurement.caption.hidden, true);
   h.emit('click', { clientX: 145 });
   assert.equal(h.measurement.result.hidden, true);
   h.emit('pointermove', { clientX: 115 });
-  assert.equal(h.measurement.value.textContent, '-5.56%');
+  assert.equal(h.measurement.value.textContent, '+5.88%');
+  assert.equal(h.measurement.caption.textContent, '1 天');
+  assert.equal(h.measurement.caption.style.getPropertyValue('--nav-measure-midpoint'), '10%');
   h.emit('keydown', { key: 'Escape' });
+  assert.equal(h.measurement.caption.hidden, true);
   assert.equal(h.measurement.start.hidden, true);
   assert.equal(h.measurement.result.hidden, true);
+  h.cleanup();
+});
+
+test('measurement publishes each changed public interval and clears the headline override on escape', () => {
+  const updates = [];
+  const h = harness(JSON.stringify(publicPoints), { interactions: { onMeasure: update => updates.push(update) } });
+  h.emit('click', { clientX: 115 });
+  h.emit('pointermove', { clientX: 145 });
+  assert.equal(updates.at(-1).start.date, '2026-01-01'); assert.equal(updates.at(-1).end.date, '2026-01-02');
+  h.emit('pointermove', { clientX: 385 });
+  assert.equal(updates.at(-1).end.date, '2026-01-11');
+  h.emit('keydown', { key: 'Escape' });
+  assert.equal(updates.at(-1).start, null); assert.equal(updates.at(-1).end, null);
   h.cleanup();
 });
 
@@ -508,6 +530,29 @@ test('malformed or private domain and estimate metadata cannot render unsafe too
     assert.equal(h.elements.value.textContent, '');
     h.cleanup();
   }
+});
+
+test('a compressed trading-date axis keeps pointer and keyboard inspection aligned through a weekend', () => {
+  const decode = (markup, name) => JSON.parse(new RegExp(`${name}="([^"]*)"`).exec(markup)[1].replaceAll('&quot;', '"').replaceAll('&amp;', '&'));
+  const observations = ['2026-10-08', '2026-10-09', '2026-10-12', '2026-10-16'].map((date, index) => ({ date, nav: 2 + index / 10 }));
+  const markup = renderNavChart(observations, { domainEnd: '2026-10-20' });
+  const points = decode(markup, 'data-nav-points');
+  const h = harness(JSON.stringify(points), {}, [], decode(markup, 'data-nav-domain'));
+  for (const point of points) {
+    h.emit('pointermove', { clientX: h.rect.left + point.x / 100 * h.rect.width });
+    assert.equal(h.elements.date.textContent, point.date);
+    assert.equal(h.elements.value.textContent, point.nav.toFixed(4));
+  }
+  h.emit('keydown', { key: 'ArrowRight' });
+  assert.equal(h.elements.date.textContent, '2026-10-19');
+  assert.equal(h.elements.status.textContent, '待更新');
+  h.emit('keydown', { key: 'ArrowRight' });
+  assert.equal(h.elements.date.textContent, '2026-10-20');
+  h.emit('keydown', { key: 'ArrowLeft' });
+  h.emit('keydown', { key: 'ArrowLeft' });
+  assert.equal(h.elements.date.textContent, '2026-10-16');
+  assert.equal(h.elements.value.textContent, '2.3000');
+  h.cleanup();
 });
 
 test('rendered public metadata drives pending inspection and an official update replaces the forecast in the tooltip', () => {

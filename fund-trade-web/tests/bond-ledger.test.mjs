@@ -4,6 +4,13 @@ import { calculateBondWorkbook } from '../scripts/bond-ledger.mjs';
 import { calculateBondHoldingDuration, normalizeBondHoldingLots } from '../src/bond-holding-duration.js';
 const row = (date, type, shares, amount) => ({ date, type, shares, amount, nav: 1, fee: 0, status: 'estimated' });
 const quote = { date: '2026-10-15', nav: 1.2 };
+
+test('transferred shares use their recorded cost and participate in subsequent FIFO sales', () => {
+  const rows = [row('2026-10-01', 'transfer-in', 10, 10), row('2026-10-02', 'sell', 4, 4)];
+  const result = calculateBondWorkbook('006663', rows, quote);
+  assert.deepEqual(result.entry, { code: '006663', marketValue: 7.2, holdingProfit: 1.2 });
+  assert.equal(result.holdingLots.lots[0].remainingShares, 6);
+});
 test('complete workbook rows feed FIFO remaining value and provisional order-date lots without changing inputs', () => {
   const rows = [row('2026-09-01', 'buy', 10, 10), row('2026-10-03', 'buy', 20, 20), row('2026-10-10', 'sell', 12, 12)];
   const before = structuredClone(rows);
@@ -29,4 +36,14 @@ test('incomplete fields, missing opening shares, later trades and invalid quotes
   assert.deepEqual(calculateBondWorkbook('006485', [...valid, { status: 'pending', date: '2026-10-19' }], quote), base);
   assert.equal(calculateBondWorkbook('006485', valid, { ...quote, nav: null }), null);
   assert.throws(() => normalizeBondHoldingLots({ '006485': { complete: true, lots: base.holdingLots.lots } }));
+});
+
+test('an order newer than the public valuation never erases the existing calculated holding', () => {
+  const original = [row('2026-10-01', 'buy', 5, 5)];
+  const newOrder = row('2026-10-16', 'buy', 2, 2);
+  const rows = [...original, newOrder];
+  assert.deepEqual(calculateBondWorkbook('006663', rows, quote), calculateBondWorkbook('006663', original, quote));
+  assert.equal(rows[1].status, 'estimated');
+  const published = calculateBondWorkbook('006663', rows, { date: '2026-10-16', nav: 1.2 });
+  assert.equal(published.entry.marketValue, 8.4);
 });

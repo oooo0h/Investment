@@ -19,7 +19,7 @@ import { REGION_DATA } from '../src/region-data.js';
 import { evaluateUsExposure } from '../src/us-exposure.js';
 import { calculateHoldingDuration, createHoldingDurationScale } from '../src/holding-duration.js';
 import { renderBondsPage } from '../src/bonds-view.js';
-import { calculateBondHoldingValue } from '../src/bond-model.js';
+import { calculateBondHoldingValue, addPendingPurchaseValue } from '../src/bond-model.js';
 import { calculatePortfolioAllocation, evaluateHoldingLimit } from '../src/portfolio-allocation.js';
 import { evaluateBondReserve, bondReserveTone } from '../src/bond-reserve.js';
 import { calculateBondHoldingDuration } from '../src/bond-holding-duration.js';
@@ -137,10 +137,10 @@ function harness(timestamp = '2026-01-08T02:00:00.000Z', options = {}) {
     };
   });
   const fetch = options.fetch || (async url => ({ ok: true, json: async () => ({ code: /([0-9]{6})\.json$/.exec(url)?.[1], history: [] }) }));
-  const api = new Function('describeModeEffect', 'recentNavPeriod', 'calculateLedger', 'estimateApplications', 'GUOFU_TRADING_DATES', 'createRefreshController', 'NAV_PERIODS', 'resolveNavRange', 'moveNavBoundary', 'summarizeNavRange', 'resolveNavSliderDomain', 'renderNavChart', 'buildTradeMarkers', 'calculateNavAnnualized', 'evaluateAnnualDiscipline', 'evaluateAddDiscipline', 'getNavDisciplineGap', 'setupNavChartInteractions', 'setupNavSliderInteractions', 'calculateTransactionPerformance', 'FUNDS', 'FUND_CODES', 'DISCIPLINE_ENTRIES', 'createDisciplineSync', 'REGION_DATA', 'evaluateUsExposure', 'calculateHoldingDuration', 'createHoldingDurationScale', 'openBondStore', 'renderBondsPage', 'calculateBondHoldingValue', 'evaluateBondReserve', 'bondReserveTone', 'calculatePortfolioAllocation', 'evaluateHoldingLimit', 'calculateBondHoldingDuration', 'getEstimateDates', 'getEstimateTargetDate', 'parseEstimatePercent', 'buildEstimatedNav', 'loadNavEstimates', 'saveNavEstimates', 'renderEstimatePanel', 'getDisciplineActions', 'adjustDisciplineRule', 'getNavChartDisplay', 'createFundViewportKeeper', 'document', 'location', 'window', 'matchMedia', 'localStorage', 'Date',
+  const api = new Function('addPendingPurchaseValue', 'describeModeEffect', 'recentNavPeriod', 'calculateLedger', 'estimateApplications', 'GUOFU_TRADING_DATES', 'createRefreshController', 'NAV_PERIODS', 'resolveNavRange', 'moveNavBoundary', 'summarizeNavRange', 'resolveNavSliderDomain', 'renderNavChart', 'buildTradeMarkers', 'calculateNavAnnualized', 'evaluateAnnualDiscipline', 'evaluateAddDiscipline', 'getNavDisciplineGap', 'setupNavChartInteractions', 'setupNavSliderInteractions', 'calculateTransactionPerformance', 'FUNDS', 'FUND_CODES', 'DISCIPLINE_ENTRIES', 'createDisciplineSync', 'REGION_DATA', 'evaluateUsExposure', 'calculateHoldingDuration', 'createHoldingDurationScale', 'openBondStore', 'renderBondsPage', 'calculateBondHoldingValue', 'evaluateBondReserve', 'bondReserveTone', 'calculatePortfolioAllocation', 'evaluateHoldingLimit', 'calculateBondHoldingDuration', 'getEstimateDates', 'getEstimateTargetDate', 'parseEstimatePercent', 'buildEstimatedNav', 'loadNavEstimates', 'saveNavEstimates', 'renderEstimatePanel', 'getDisciplineActions', 'adjustDisciplineRule', 'getNavChartDisplay', 'createFundViewportKeeper', 'document', 'location', 'window', 'matchMedia', 'localStorage', 'Date',
     'setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'scrollTo', 'scrollY', 'fetch', 'loadVault',
-    `${source}\nreturn { state, startSession, checkSession, lock, render, remainingTime, actionClick, unlock, saveCashFlow, saveNavEstimateEdits, refreshCurrentData, dataRefresh, disciplineSync, chartOverlays, navRangeControls, navContext, navSliderDomain, navVisualValues, valuation, ledger, navPanel, fundRegions, sparkline, estimateHomePanel, bondReserveCheck, portfolioAllocation, annualDisciplineAlert, handles: () => ({ sessionInterval, sessionTimeout, dailyCodeReader }) };`)(
-    describeModeEffect, recentNavPeriod, calculateLedger, estimateApplications, GUOFU_TRADING_DATES, createRefreshController, NAV_PERIODS, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain, renderNavChart, buildTradeMarkers, calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap, setupNavChartInteractions, setupNavSliderInteractions, calculateTransactionPerformance, FUNDS, FUND_CODES, DISCIPLINE_ENTRIES, createDisciplineSync, REGION_DATA, evaluateUsExposure, calculateHoldingDuration, createHoldingDurationScale, fakeBondOpen, renderBondsPage, calculateBondHoldingValue, evaluateBondReserve, bondReserveTone, calculatePortfolioAllocation, evaluateHoldingLimit, calculateBondHoldingDuration, getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav, loadNavEstimates, saveNavEstimates, renderEstimatePanel, getDisciplineActions, adjustDisciplineRule, getNavChartDisplay, createFundViewportKeeper, document, location, window, () => ({ matches: false }), localStorage, clock.Date,
+    `${source}\nreturn { state, startSession, checkSession, lock, render, remainingTime, actionClick, unlock, saveCashFlow, saveNavEstimateEdits, refreshCurrentData, dataRefresh, disciplineSync, chartOverlays, navRangeControls, navContext, navSliderDomain, navVisualValues, valuation, ledger, navPanel, navRangeProfit, updateNavMeasurement, bondPositions, equityHoldingDistribution, fundRegions, sparkline, estimateHomePanel, bondReserveCheck, portfolioAllocation, annualDisciplineAlert, handles: () => ({ sessionInterval, sessionTimeout, dailyCodeReader }) };`)(
+    addPendingPurchaseValue, describeModeEffect, recentNavPeriod, calculateLedger, estimateApplications, GUOFU_TRADING_DATES, createRefreshController, NAV_PERIODS, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain, renderNavChart, buildTradeMarkers, calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap, setupNavChartInteractions, setupNavSliderInteractions, calculateTransactionPerformance, FUNDS, FUND_CODES, DISCIPLINE_ENTRIES, createDisciplineSync, REGION_DATA, evaluateUsExposure, calculateHoldingDuration, createHoldingDurationScale, fakeBondOpen, renderBondsPage, calculateBondHoldingValue, evaluateBondReserve, bondReserveTone, calculatePortfolioAllocation, evaluateHoldingLimit, calculateBondHoldingDuration, getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav, loadNavEstimates, saveNavEstimates, renderEstimatePanel, getDisciplineActions, adjustDisciplineRule, getNavChartDisplay, createFundViewportKeeper, document, location, window, () => ({ matches: false }), localStorage, clock.Date,
     clock.setTimeout, clock.clear, clock.setInterval, clock.clear, settings => scrollCalls.push(settings), scrollY, fetch, loadVault,
   );
   function start() {
@@ -193,12 +193,22 @@ test('transaction cards retain compact details and pending status while every mu
   ]);
   const original = structuredClone(h.api.state.funds[code].transactions);
   assert.match(h.app.innerHTML, /transaction transaction-pending/);
-  assert.match(h.app.innerHTML, /表格净值待补全/);
+  assert.match(h.app.innerHTML, /等待成交确认，买入金额已计入市值/);
   assert.match(h.app.innerHTML, /transaction-profit-row|transaction-detail-metrics/);
   assert.doesNotMatch(h.app.innerHTML, /transaction-form|transaction-dialog|transaction-actions|登记交易|data-action="transaction-/);
   for (const action of ['transaction-new', 'transaction-edit', 'transaction-delete', 'transaction-delete-confirm', 'transaction-sip-toggle']) h.click(action, { id: 'sheet-buy' });
   assert.deepEqual(h.api.state.funds[code].transactions, original);
   assert.doesNotMatch(h.app.innerHTML, /transaction-form|transaction-dialog/);
+  h.api.lock();
+});
+
+test('transaction details omit supplementary dates and distinguish estimated shares from confirmed shares', () => {
+  const { h } = sourceTransactionHarness([
+    { id: 'estimated-source', type: 'buy', status: 'estimated', date: '2026-01-01', dateBasis: 'order', amount: 100, nav: 2, shares: 49.5, fee: 1, formulaAdjustment: 'purchase-net-shares' },
+  ]);
+  assert.match(h.app.innerHTML, /估算份额/);
+  assert.match(h.app.innerHTML, /data-formula-adjustment/);
+  assert.doesNotMatch(h.app.innerHTML, /交易日期沿用原始下单日期|原表未提供成交净值日期|录入日期：|来源备份净值日期|估值净值日期[^<]*含估算交易/);
   h.api.lock();
 });
 
@@ -3127,28 +3137,135 @@ test('automatic estimates update the home discipline fragments while retaining t
   h.api.lock();
 });
 
+test('interval profit includes in-range cash flows and fees without mistaking deposits or withdrawals for gains', () => {
+  const h = harness(); h.start();
+  const code = '005698';
+  const buy = (date, shares, nav, fee = 0) => ({ date, type: 'buy', status: 'confirmed', shares, nav, fee, amount: shares * nav + fee });
+  h.api.state.funds[code] = { mode: 'profit-first', incomplete: false, transactions: [
+    buy('2026-01-01', 100, 1, 1), buy('2026-01-04', 10, 1.1, 1),
+    { date: '2026-01-05', type: 'sell', status: 'confirmed', shares: 20, nav: 1.2, fee: .5, amount: 23.5 },
+    { date: '2026-01-06', type: 'dividend', status: 'confirmed', shares: 0, nav: 1.2, fee: 0, amount: 2 },
+    { date: '2026-01-06', type: 'buy', status: 'pending', amount: 999 },
+  ] };
+  const range = { startDate: '2026-01-03', endDate: '2026-01-06', startNav: 1.1, endNav: 1.2 };
+  assert.equal(h.api.navRangeProfit(code, range), 11.5);
+  h.api.state.funds[code].mode = 'principal-first';
+  assert.equal(h.api.navRangeProfit(code, range), 11.5);
+  h.api.state.funds[code].incomplete = true;
+  assert.equal(h.api.navRangeProfit(code, range), null);
+  h.api.state.funds[code].incomplete = false;
+  h.api.state.funds[code].transactions = [buy('2026-01-03', 100, 1.1, 1)];
+  assert.equal(h.api.navRangeProfit(code, range), 9);
+  assert.equal(h.api.navRangeProfit(code, { ...range, endDate: range.startDate, endNav: range.startNav }), -1);
+  h.api.lock();
+});
+
+test('interval profit headline follows the selected dates, hides private figures, and uses red gains and green losses', () => {
+  const h = harness(); h.start(); const fund = FUNDS.find(fund => fund.code === '005698');
+  h.api.state.funds[fund.code] = { mode: 'profit-first', incomplete: false, transactions: [{ date: '2026-01-01', type: 'buy', status: 'confirmed', shares: 100, nav: 1, fee: 0, amount: 100 }] };
+  h.api.state.nav[fund.code] = { history: [{ date: '2026-01-01', nav: 1 }, { date: '2026-01-03', nav: 1.1 }, { date: '2026-01-06', nav: 1.2 }] };
+  h.api.state.navRanges[fund.code] = { from: '2026-01-03', to: '2026-01-06' };
+  const hidden = h.api.navPanel(fund).split('<div id="nav-chart-')[0];
+  assert.match(hidden, /区间盈亏（元）/); assert.match(hidden, /data-nav-value><span class="masked"/);
+  assert.doesNotMatch(hidden, /\+10\.00/);
+  h.api.state.visible = true;
+  assert.match(h.api.navPanel(fund), /class="num positive"[^>]*data-nav-value>\+10\.00</);
+  h.api.state.nav[fund.code].history[2].nav = 1;
+  assert.match(h.api.navPanel(fund), /class="num negative"[^>]*data-nav-value>-10\.00</);
+  h.location.hash = `#/fund/${fund.code}`; const { fields } = installRangePanel(h);
+  h.click('nav-period', { fund: fund.code, period: 'all' });
+  assert.equal(fields.get('[data-nav-value]').innerHTML, '0.00');
+  h.api.state.funds[fund.code].incomplete = true;
+  assert.match(h.api.navPanel(fund), /data-nav-value>待核验</);
+  h.api.lock();
+});
+
+test('chart measurement updates headline profit and percentage live, resets on clear and honors privacy', () => {
+  const h = harness(); h.start(); const code = '005698';
+  h.api.state.visible = true;
+  h.api.state.funds[code] = { mode: 'profit-first', incomplete: false, transactions: [{ date: '2026-01-01', type: 'buy', status: 'confirmed', shares: 100, nav: 1, fee: 0, amount: 100 }] };
+  h.api.state.nav[code] = { history: [{ date: '2026-01-01', nav: 1 }, { date: '2026-01-03', nav: 1.1 }, { date: '2026-01-06', nav: 1.2 }] };
+  h.location.hash = `#/fund/${code}`;
+  const { fields } = installRangePanel(h), panel = h.app.querySelector(`.nav-panel[data-fund="${code}"]`);
+  panel.dataset = { fund: code };
+  const chart = { closest: () => panel }, start = { date: '2026-01-03', nav: 1.1 };
+  h.api.updateNavMeasurement({ chart, start, end: { date: '2026-01-06', nav: 1.2 } });
+  assert.equal(fields.get('[data-nav-value]').innerHTML, '+10.00');
+  assert.equal(fields.get('[data-nav-change]').textContent, '+9.09%');
+  h.api.updateNavMeasurement({ chart, start, end: { date: '2026-01-06', nav: 1 } });
+  assert.equal(fields.get('[data-nav-value]').innerHTML, '-10.00');
+  assert.match(fields.get('[data-nav-value]').className, /negative/);
+  h.api.state.visible = false;
+  h.api.updateNavMeasurement({ chart, start, end: { date: '2026-01-06', nav: 1.2 } });
+  assert.match(fields.get('[data-nav-value]').innerHTML, /masked/);
+  h.api.state.visible = true;
+  h.api.updateNavMeasurement({ chart, start: null, end: null });
+  assert.equal(fields.get('[data-nav-value]').innerHTML, '+20.00');
+  h.api.updateNavMeasurement({ chart, start, end: null, pending: true });
+  assert.equal(fields.get('[data-nav-value]').innerHTML, '待更新');
+  h.api.lock();
+});
+
+test('unconfirmed fund purchases increase only market value and leave profit, returns and shares unchanged', () => {
+  const h = harness(); h.start(); const code = '005698';
+  const transactions = [{ id: 'buy', date: '2026-01-01', type: 'buy', status: 'confirmed', amount: 100, nav: 1, shares: 100, fee: 0 }];
+  h.api.state.funds[code] = { mode: 'profit-first', incomplete: false, transactions };
+  h.api.state.nav[code] = { history: [{ date: '2026-01-06', nav: 1.1 }] };
+  const before = h.api.ledger(code).summary;
+  transactions.push({ id: 'pending-buy', date: '2026-01-07', type: 'buy', status: 'pending', sourceStatus: 'processing', amount: 30 });
+  const after = h.api.ledger(code).summary;
+  assert.equal(after.marketValue, before.marketValue + 30);
+  for (const field of ['shares', 'principal', 'holdingProfit', 'holdingReturn', 'totalProfit', 'totalReturn']) assert.equal(after[field], before[field]);
+  h.api.lock();
+});
+
+test('four-fund allocation fills the bar, labels each fund, respects privacy and never normalizes a partial total', () => {
+  const h = harness(); h.start();
+  const scope = h.app.innerHTML.match(/<article[^>]*data-discipline="equity-scope"[\s\S]*?<\/article>/)?.[0];
+  assert.ok(scope); assert.doesNotMatch(scope, /目前暂定/);
+  assert.match(scope, /基金持仓分布/);
+  for (const [index, fund] of FUNDS.entries()) {
+    h.api.state.funds[fund.code] = { mode: 'profit-first', incomplete: false, transactions: [{ date: '2026-01-01', type: 'buy', status: 'confirmed', shares: 1, nav: 1, amount: 1, fee: 0 }] };
+    h.api.state.nav[fund.code] = { history: [{ date: '2026-01-01', nav: 1 }, { date: '2026-01-06', nav: index + 1 }] };
+  }
+  const hidden = h.api.equityHoldingDistribution();
+  assert.match(hidden, /data-equity-allocation="available"/);
+  assert.equal((hidden.match(/class="masked"/g) || []).length, 4);
+  assert.equal([...hidden.matchAll(/style="width:([\d.]+)%"/g)].reduce((sum, match) => sum + Number(match[1]), 0), 100);
+  h.api.state.visible = true;
+  const visible = h.api.equityHoldingDistribution();
+  for (const fund of FUNDS) assert.ok(visible.includes(`href="#/fund/${fund.code}"`));
+  assert.match(visible, /40\.0%/); assert.match(visible, /4\.00<small>元/);
+  h.api.state.funds[FUNDS[0].code].incomplete = true;
+  const partial = h.api.equityHoldingDistribution();
+  assert.match(partial, /data-equity-allocation="unavailable"/);
+  assert.doesNotMatch(partial, /style="width:|合计 100%/);
+  h.api.lock();
+});
+
 test('the chart headline and dashed endpoint share the merged estimate while a historic selection remains official', () => {
   const h = harness();
   h.start();
   configureEstimateFixture(h);
   const fund = FUNDS.find(entry => entry.code === '005698');
   submitNavEstimates(h, { [fund.code]: '175' });
+  h.api.state.visible = true;
   const current = h.api.navPanel(fund);
-  assert.match(current, /data-nav-value>3\.3000</);
+  assert.match(current, /data-nav-value>\+2\.20</);
   assert.match(current, /data-nav-date>净值日期 2026-01-07</);
   assert.equal(chartAttribute(current, 'data-nav-points').find(point => point.estimated)?.nav, 3.3);
   assert.ok(current.includes(`data-nav-count>${chartAttribute(current, 'data-nav-points').length} 期<`));
   assert.doesNotMatch(current.split('<div id="nav-chart-')[0], /估算|预估/);
   h.api.state.navRanges[fund.code] = { from: '2024-01-01', to: '2025-01-01' };
   const historic = h.api.navPanel(fund);
-  assert.match(historic, /data-nav-value>1\.1000</);
+  assert.match(historic, /data-nav-value>0\.00</);
   assert.match(historic, /data-nav-date>净值日期 2025-01-01</);
   assert.ok(chartAttribute(historic, 'data-nav-points').every(point => !point.estimated));
   assert.doesNotMatch(historic, /nav-chart-estimated-curve|nav-chart-pending-region/);
   h.location.hash = `#/fund/${fund.code}`;
   const { fields } = installRangePanel(h);
   h.click('nav-period', { fund: fund.code, period: 'all' });
-  assert.equal(fields.get('[data-nav-value]').textContent, '3.3000');
+  assert.equal(fields.get('[data-nav-value]').innerHTML, '+2.20');
   assert.equal(fields.get('[data-nav-date]').textContent, '净值日期 2026-01-07');
   h.api.lock();
 });

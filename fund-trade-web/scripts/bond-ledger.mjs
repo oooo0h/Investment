@@ -5,16 +5,18 @@ const day = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(val
 const positive = value => typeof value === 'number' && Number.isFinite(value) && value > 0;
 const money = value => Math.round((value + Number.EPSILON) * 100) / 100;
 
-export function calculateBondWorkbook(code, rows, quote) {
-  if (!['006485', '006663'].includes(code) || !Array.isArray(rows) || !rows.length || !day(quote?.date) || !positive(quote?.nav)) return null;
+export function calculateBondWorkbook(code, rows, quote, { asOfDate = quote?.date } = {}) {
+  if (!['006485', '006663'].includes(code) || !Array.isArray(rows) || !rows.length || !day(quote?.date) || !positive(quote?.nav)
+    || !day(asOfDate) || asOfDate < quote.date) return null;
   const lots = [];
-  const active = rows.filter(row => row && !['pending', 'cancelled', 'canceled', 'failed', 'closed'].includes(row.status) && !['processing', 'draft'].includes(row.sourceStatus));
+  const active = rows.filter(row => row && !['pending', 'cancelled', 'canceled', 'failed', 'closed'].includes(row.status)
+    && !['processing', 'draft'].includes(row.sourceStatus) && !(day(row.date) && row.date > asOfDate));
   if (active.some(row => !day(row.date))) return null;
   for (const row of active.sort((a, b) => a.date.localeCompare(b.date))) {
-    if (!['confirmed', 'estimated'].includes(row.status) || !day(row.date) || row.date > quote.date
+    if (!['confirmed', 'estimated'].includes(row.status) || !day(row.date) || row.date > asOfDate
       || !positive(row.shares) || !positive(row.nav) || !positive(row.amount)
-      || !Number.isFinite(row.fee) || row.fee < 0 || !['buy', 'sell'].includes(row.type)) return null;
-    if (row.type === 'buy') {
+      || !Number.isFinite(row.fee) || row.fee < 0 || !['buy', 'sell', 'transfer-in'].includes(row.type)) return null;
+    if (['buy', 'transfer-in'].includes(row.type)) {
       lots.push({ shares: row.shares, cost: row.amount, orderDate: row.date,
         ...(day(row.confirmedDate) ? { confirmedDate: row.confirmedDate } : {}) });
     } else {

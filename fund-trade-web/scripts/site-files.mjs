@@ -11,7 +11,7 @@ const sourceFiles = [
   'ambient-scene.js', 'app.js', 'application-estimates.js',
   'bond-holding-duration.js', 'bond-model.js', 'bond-reserve.js', 'bond-store.js', 'bond-transactions.js', 'bonds-view.js',
   'discipline-actions.js', 'discipline-sync.js', 'discipline.js', 'engine.js',
-  'estimate-panel.js', 'funds.js', 'holding-duration.js', 'interface-motion.js',
+  'edge-navigation.js', 'estimate-panel.js', 'funds.js', 'holding-duration.js', 'interface-motion.js',
   'nav-annualized.js', 'nav-chart.js', 'nav-display.js', 'nav-estimate-store.js',
   'nav-estimates.js', 'nav-interaction.js', 'nav-range.js', 'nav-slider.js',
   'redesign.css', 'refresh-controller.js', 'region-data.js', 'styles.css',

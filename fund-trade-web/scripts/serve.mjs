@@ -10,6 +10,7 @@ import { createDisciplineSource } from './discipline-source.mjs';
 import { WORKSPACE_ROOT, staticSourcePath, isPublicAsset } from './site-files.mjs';
 import { syncLocalSources } from './local-bundle.mjs';
 import { siteTemporaryPath } from './project-paths.mjs';
+import { createLocalNavPolling } from './local-nav-polling.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 try { await syncLocalSources({ workspace: WORKSPACE_ROOT, root }); }
@@ -18,6 +19,7 @@ const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=
 const demoNotice = `<style>.gate .brand::after,.brand-copy>span:first-child::after{font:500 10px/1.5 "Microsoft YaHei",sans-serif;padding:2px 6px;border:1px solid var(--line);border-radius:4px;color:var(--muted);background:var(--paper-2)}.gate .brand::after{content:"测试数据"}.brand-copy>span:first-child::after{content:"测试";margin-left:7px}</style>`;
 const port = Number(process.env.PORT || 4186);
 const demo = process.argv.includes('--demo');
+const navPolling = demo ? null : createLocalNavPolling({ workspace: WORKSPACE_ROOT, pythonPath: process.env.FUND_PREVIEW_PYTHON });
 const disciplines = await createDisciplineSource({ workspace: WORKSPACE_ROOT, root });
 const tables = demo
   ? await (await import('./demo-tables.mjs')).createDemoTableStore({ directory: siteTemporaryPath(root, 'demo-tables') })
@@ -85,4 +87,8 @@ http.createServer(async (req, res) => {
     res.writeHead(dataRequest ? 503 : 404, { 'Content-Type': 'text/plain', 'Cache-Control': 'no-store' });
     res.end(dataRequest ? 'Local data unavailable' : 'Not found');
   }
-}).listen(port, '127.0.0.1', () => console.log(`Local ${demo ? 'demo' : 'live'}: http://127.0.0.1:${port}/`));
+}).listen(port, '127.0.0.1', () => {
+  console.log(`Local ${demo ? 'demo' : 'live'}: http://127.0.0.1:${port}/`);
+  void navPolling?.start();
+});
+process.once('exit', () => navPolling?.stop());

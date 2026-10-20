@@ -51,8 +51,11 @@ export const LOCAL_FILES = Object.freeze({
 /** Resolve a local file under root, falling back to the legacy workspace copy. */
 export async function readLocalFile({ root, workspace, name, legacy }) {
   const candidates = [];
+  // NAV updaters replace the canonical workspace index while the server stays
+  // open. A startup mirror must never pair stale index dates with new masters.
+  if (name === 'navIndex' && workspace && legacy) candidates.push(path.join(workspace, ...legacy.split('/')));
   if (root) candidates.push(path.join(root, ...LOCAL_FILES[name].split('/')));
-  if (workspace && legacy) candidates.push(path.join(workspace, ...legacy.split('/')));
+  if (name !== 'navIndex' && workspace && legacy) candidates.push(path.join(workspace, ...legacy.split('/')));
   for (const file of candidates) {
     const bytes = await readIfPresent(file);
     if (bytes) return { file, bytes };

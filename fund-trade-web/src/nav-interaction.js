@@ -1,4 +1,5 @@
 // Public NAVs and date/type/count trade summaries only. No monetary account data.
+import { createNavDateScale } from './nav-chart.js?v=20261020-trading-axis';
 const installations = new WeakMap();
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
 const validDate = value => {
@@ -57,19 +58,22 @@ function chartDomain(raw, points) {
   if (typeof raw !== 'string' || raw.length > 1000) return null;
   try {
     const domain = JSON.parse(raw);
-    if (!domain || Object.keys(domain).sort().join(',') !== 'end,lastPublished,left,right,start'
+    if (!domain || !['end,lastPublished,left,right,start', 'axis,end,lastPublished,left,right,start'].includes(Object.keys(domain).sort().join(','))
+      || ('axis' in domain && domain.axis !== 'valuation')
       || !validDate(domain.start) || !validDate(domain.end) || !validDate(domain.lastPublished)
       || domain.start !== points[0].date || domain.end <= domain.lastPublished
       || domain.lastPublished !== points.filter(point => !point.estimated).at(-1)?.date
       || points.at(-1).date > domain.end || !Number.isFinite(domain.left) || !Number.isFinite(domain.right)
       || domain.left < 0 || domain.right > 100 || domain.left >= domain.right) return null;
+    if (domain.axis === 'valuation') domain.scale = createNavDateScale(points.map(point => point.date), domain.end);
     return domain;
   } catch { return null; }
 }
 
 function pendingPoint(domain, date) {
   return { date, nav: null, change: null, pending: true, trades: null, y: 50,
-    x: domain.left + (dateStamp(date) - dateStamp(domain.start)) / (dateStamp(domain.end) - dateStamp(domain.start)) * (domain.right - domain.left) };
+    x: domain.left + (domain.scale ? domain.scale.project(date) / domain.scale.span
+      : (dateStamp(date) - dateStamp(domain.start)) / (dateStamp(domain.end) - dateStamp(domain.start))) * (domain.right - domain.left) };
 }
 
 function tradeSummaries(raw, points) {
@@ -113,7 +117,7 @@ function inspectionTimeline(points, trades) {
   return [...timeline.values()].sort((left, right) => left.date.localeCompare(right.date));
 }
 
-export function setupNavChartInteractions(root, { matchMedia = globalThis.matchMedia?.bind(globalThis) } = {}) {
+export function setupNavChartInteractions(root, { matchMedia = globalThis.matchMedia?.bind(globalThis), onMeasure } = {}) {
   if (!root || typeof root.addEventListener !== 'function') return () => {};
   installations.get(root)?.();
   const cache = new WeakMap();
@@ -170,13 +174,22 @@ export function setupNavChartInteractions(root, { matchMedia = globalThis.matchM
     const dates = scope.querySelector('.nav-measure-dates');
     const value = scope.querySelector('.nav-measure-value');
     const days = scope.querySelector('.nav-measure-days');
+    const caption = chart.querySelector('.nav-measure-caption');
     const band = chart.querySelector('.nav-measure-band');
-    const change = item ? measureNavChange(item.start, item.end) : null;
+    const [from, to] = item?.start && item?.end ? [item.start, item.end].sort((a, b) => a.date.localeCompare(b.date)) : [null, null];
+    const change = measureNavChange(from, to);
     if (panel) panel.hidden = change === null;
     if (result) result.hidden = change === null;
+    if (caption) {
+      caption.hidden = change === null;
+      if (change !== null) {
+        caption.textContent = `${Math.abs(dateStamp(to.date) - dateStamp(from.date)) / DAY} 天`;
+        caption.style.setProperty('--nav-measure-midpoint', `${(from.x + to.x) / 2}%`);
+      }
+    }
     if (change !== null) {
       if (days) days.textContent = `${Math.abs(dateStamp(item.end.date) - dateStamp(item.start.date)) / DAY} 天`;
-      if (dates) dates.textContent = `${item.start.date} → ${item.end.date}${item.start.estimated || item.end.estimated ? ' · 含估值' : ''}`;
+      if (dates) dates.textContent = `${from.date} → ${to.date}${from.estimated || to.estimated ? ' · 含估值' : ''}`;
       if (value) {
         value.textContent = `${change > 0 ? '+' : ''}${(change * 100).toFixed(2)}%`;
         value.className = `nav-measure-value num${change > 0 ? ' positive' : change < 0 ? ' negative' : ''}`;
@@ -200,6 +213,7 @@ export function setupNavChartInteractions(root, { matchMedia = globalThis.matchM
         band.style.width = `${Math.abs(item.start.x - item.end.x)}%`;
       }
     }
+    if (typeof onMeasure === 'function') onMeasure({ chart, start: item?.start || null, end: item?.end || null, pending: item?.pending === true });
   }
   function selectPoint(chart, point) {
     if (!canMeasure()) { measurements.delete(chart); measurementCharts.delete(chart); renderMeasurement(chart); return; }
@@ -319,7 +333,8 @@ export function setupNavChartInteractions(root, { matchMedia = globalThis.matchM
     if (domain) {
       const day = Math.round((dateStamp(domain.start) + clamp((x - domain.left) / (domain.right - domain.left), 0, 1)
         * (dateStamp(domain.end) - dateStamp(domain.start))) / DAY);
-      const date = new Date(day * DAY).toISOString().slice(0, 10);
+      const date = domain.scale ? domain.scale.dateAt(clamp((x - domain.left) / (domain.right - domain.left), 0, 1) * domain.scale.span)
+        : new Date(day * DAY).toISOString().slice(0, 10);
       if (date > domain.lastPublished) {
         return show(chart, points.find(point => point.date === date) || pendingPoint(domain, date));
       }
@@ -359,7 +374,9 @@ export function setupNavChartInteractions(root, { matchMedia = globalThis.matchM
     const current = indices.get(chart);
     const domain = cache.get(chart)?.domain;
     if (domain && current && ['ArrowLeft', 'ArrowRight'].includes(event.key) && current.date >= domain.lastPublished) {
-      const date = new Date(clamp(dateStamp(current.date) + (event.key === 'ArrowRight' ? DAY : -DAY), dateStamp(domain.start), dateStamp(domain.end))).toISOString().slice(0, 10);
+      const direction = event.key === 'ArrowRight' ? 1 : -1;
+      const date = domain.scale ? domain.scale.dateAt(domain.scale.project(current.date) + direction)
+        : new Date(clamp(dateStamp(current.date) + direction * DAY, dateStamp(domain.start), dateStamp(domain.end))).toISOString().slice(0, 10);
       if (date >= domain.lastPublished) {
         show(chart, points.find(point => point.date === date) || pendingPoint(domain, date));
         return;

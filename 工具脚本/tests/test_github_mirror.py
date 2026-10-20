@@ -8,6 +8,8 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
+import subprocess
 import zipfile
 
 SPEC=importlib.util.spec_from_file_location('github_mirror',Path(__file__).resolve().parents[1]/'github_mirror.py')
@@ -46,5 +48,21 @@ class MirrorTests(unittest.TestCase):
         with zipfile.ZipFile(raw,'w') as z:z.writestr('settings.json',json.dumps({'value':'ghp_'+'A'*40}))
         self.put('source.zip',raw.getvalue())
         with self.assertRaisesRegex(RuntimeError,'Credential pattern'):mirror.inventory(self.root)
+
+    def test_missing_git_metadata_is_detected_before_running_git_or_network_commands(self):
+        with patch.object(mirror,'ROOT',self.root), patch.object(mirror,'command') as command:
+            with self.assertRaisesRegex(RuntimeError,'Local Git metadata missing'):
+                mirror.verify_context()
+            command.assert_not_called()
+
+    def test_auth_expiration_is_distinct_from_permissions_and_network_failures(self):
+        for raw,category in [(b'HTTP 401: Bad credentials','authentication'),
+                             (b'RuntimeError: GitHub API failed: 401','authentication'),
+                             (b'gh auth login','authentication'),
+                             (b'HTTP 403 forbidden','permissions'),
+                             (b'connection timeout','network')]:
+            with patch.object(mirror.subprocess,'run',return_value=subprocess.CompletedProcess([],1,b'',raw)):
+                with self.assertRaisesRegex(RuntimeError,f'failed: {category}'):
+                    mirror.command(['gh','api','synthetic'])
 
 if __name__=='__main__':unittest.main()
