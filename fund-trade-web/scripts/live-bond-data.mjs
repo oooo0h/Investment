@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { adaptNav, createEnvelopeEncryptor, resolveFundPath } from './live-data.mjs';
 import { calculateBondWorkbook } from './bond-ledger.mjs';
 import { normalizeBondTransactions } from '../src/bond-transactions.js';
+import { readLocalFile } from './local-bundle.mjs';
 const CODES = ['006485', '006663'];
 const META = '公共资料/工具/tmp/债基截图接入_20261019/metadata.json';
 const reader = fileURLToPath(new URL('./local-workbooks.py', import.meta.url));
@@ -33,8 +34,11 @@ export async function createLiveBondDataStore({ workspace, root, pythonPath }) {
   let cached = null, signature = null, pending = null;
   async function snapshot() {
     try {
-      const metadataBytes = await readFile(path.join(workspace, META)), metadata = JSON.parse(metadataBytes);
-      const index = JSON.parse(await readFile(path.join(workspace, '公共资料/历史净值/全基金历史净值当前入口.json'), 'utf8'));
+      const metadataHit = await readLocalFile({ root, workspace, name: 'bondMetadata', legacy: META });
+      const indexHit = await readLocalFile({ root, workspace, name: 'navIndex', legacy: '公共资料/历史净值/全基金历史净值当前入口.json' });
+      if (!metadataHit || !indexHit) throw safeError();
+      const metadataBytes = metadataHit.bytes, metadata = JSON.parse(metadataBytes);
+      const index = JSON.parse(indexHit.bytes);
       const sources = CODES.map(code => {
         const entry = index.funds.find(fund => fund.code === code), details = metadata.funds.find(fund => fund.code === code);
         if (!entry || !details) throw safeError();
@@ -43,8 +47,8 @@ export async function createLiveBondDataStore({ workspace, root, pythonPath }) {
       });
       const navFiles = CODES.map(code => resolveFundPath(workspace, index.funds.find(fund => fund.code === code).json_path, code));
       const files = [...sources.map(source => resolveFundPath(workspace, source.path, source.code)), ...navFiles,
-        path.join(workspace, '公共资料/历史净值/全基金历史净值当前入口.json')];
-      const fingerprint = async () => (await Promise.all([...files, path.join(workspace, META)].map(async file => {
+        indexHit.file];
+      const fingerprint = async () => (await Promise.all([...files, metadataHit.file].map(async file => {
         const info = await stat(file, { bigint: true }); return `${info.size}:${info.mtimeNs}:${info.ctimeNs}`;
       }))).join('|');
       const before = await fingerprint();

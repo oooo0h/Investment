@@ -8,7 +8,9 @@ import { createDisciplineSource } from './discipline-source.mjs';
 import { createLiveDataStore } from './live-data.mjs';
 import { validateEncryptedEnvelope, validatePublicNav } from './publish-data.mjs';
 import { STATIC_FILE_SOURCES, DEPLOY_FILES, WORKSPACE_ROOT, staticSourcePath, isPublicAsset } from './site-files.mjs';
+import { syncLocalSources } from './local-bundle.mjs';
 const root = await realpath(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..'));
+await syncLocalSources({ workspace: WORKSPACE_ROOT, root });
 const dist = path.join(root, 'dist');
 if (path.dirname(path.resolve(dist)) !== root || path.basename(dist) !== 'dist') throw new Error('Unsafe build target');
 try {
@@ -35,7 +37,7 @@ for (const directory of ['assets']) {
   }
 }
 await mkdir(path.join(dist, 'data', 'nav'), { recursive: true });
-const disciplines = await (await createDisciplineSource({ workspace: WORKSPACE_ROOT })).snapshot();
+const disciplines = await (await createDisciplineSource({ workspace: WORKSPACE_ROOT, root })).snapshot();
 if (!disciplines.revision || disciplines.status !== 'valid') throw new Error('Discipline source unavailable');
 await writeFile(path.join(dist, 'data', 'discipline.json'), JSON.stringify(disciplines));
 for (const name of ['ledger', 'bonds']) {

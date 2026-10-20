@@ -6,6 +6,7 @@ import { spawn } from 'node:child_process';
 import { createHash, createCipheriv, createDecipheriv, pbkdf2Sync, randomBytes } from 'node:crypto';
 import { getDailyCode } from '../src/vault.js';
 import { FUND_CODES } from '../src/funds.js';
+import { readLocalFile } from './local-bundle.mjs';
 
 const INDEX = '公共资料/历史净值/全基金历史净值当前入口.json';
 const METADATA = '公共资料/工具/tmp/交易记录六列整理/metadata.json';
@@ -99,14 +100,17 @@ export async function createLiveDataStore({ workspace, root, pythonPath }) {
   }
   async function load() {
     try {
-      const indexBytes = await readFile(path.join(workspace, INDEX));
+      const indexHit = await readLocalFile({ root, workspace, name: 'navIndex', legacy: INDEX });
+      if (!indexHit) throw safeError();
+      const indexBytes = indexHit.bytes;
       const index = JSON.parse(indexBytes);
       if (index.schema !== 'all-fund-nav-current-v1' || !Array.isArray(index.funds) || !index.funds.length
         || new Set(index.funds.map(entry => entry.code)).size !== index.funds.length) throw safeError();
       index.funds = index.funds.filter(entry => FUND_CODES.includes(entry.code));
       if (index.funds.length !== FUND_CODES.length) throw safeError();
       let provenance = {};
-      try { provenance = JSON.parse(await readFile(path.join(workspace, METADATA), 'utf8')); } catch { /* Unknown provenance stays unverified. */ }
+      const metadataHit = await readLocalFile({ root, workspace, name: 'ledgerMetadata', legacy: METADATA });
+      try { if (metadataHit) provenance = JSON.parse(metadataHit.bytes); } catch { /* Unknown provenance stays unverified. */ }
       const sources = index.funds.map(entry => ({ code: entry.code,
         path: path.posix.join(path.posix.dirname(path.posix.dirname(entry.json_path)), `${entry.code}_交易记录.xlsx`),
         estimated: provenance.funds?.find(fund => fund.code === entry.code)?.source_estimates_retained !== false,
@@ -114,7 +118,7 @@ export async function createLiveDataStore({ workspace, root, pythonPath }) {
         row_provenance: provenance.funds?.find(fund => fund.code === entry.code)?.row_provenance }));
       const navFiles = index.funds.map(entry => resolveFundPath(workspace, entry.json_path, entry.code));
       const workbookFiles = sources.map(source => resolveFundPath(workspace, source.path, source.code));
-      const files = [path.join(workspace, INDEX), path.join(workspace, METADATA), ...navFiles, ...workbookFiles];
+      const files = [indexHit.file, ...(metadataHit ? [metadataHit.file] : []), ...navFiles, ...workbookFiles];
       const before = await fingerprint(files);
       if (cached && before === signature) return cached;
       const present = (await Promise.all(sources.map(async (source, index) => {

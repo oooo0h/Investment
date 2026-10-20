@@ -8,6 +8,7 @@ import { createLiveDataStore } from './live-data.mjs';
 import { createLiveBondDataStore } from './live-bond-data.mjs';
 import { validateEncryptedEnvelope } from './publish-data.mjs';
 import { PROJECT_ROOT, WORKSPACE_ROOT } from './site-files.mjs';
+import { syncLocalSources } from './local-bundle.mjs';
 import { FUND_CODES } from '../src/funds.js';
 
 const filenames = ['ledger.enc.json', 'bonds.enc.json'];
@@ -45,6 +46,7 @@ export async function prepareAccountData({
   };
   try {
     report('started');
+    try { await syncLocalSources({ workspace, root }); } catch { /* Keep existing local copies. */ }
     for (const file of files) originals.push(await io.readFile(file));
     const originalEnvelopes = originals.map(bytes => validateEncryptedEnvelope(JSON.parse(bytes.toString('utf8'))));
     const stores = await Promise.all([

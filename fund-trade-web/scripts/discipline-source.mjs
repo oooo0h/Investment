@@ -7,8 +7,15 @@ import { DISCIPLINE_ENTRIES, parseDisciplineMarkdown } from '../src/discipline.j
 const invalid = () => { throw new Error('Discipline source unavailable.'); };
 const signature = info => [info.size, info.mtimeNs, info.ctimeNs, info.ino].map(String).join(':');
 
-export async function createDisciplineSource({ workspace }) {
-  const source = path.join(path.resolve(workspace), '交易纪律.md');
+export async function createDisciplineSource({ workspace, root } = {}) {
+  const candidates = [];
+  if (root) candidates.push(path.join(path.resolve(root), 'local', 'discipline.md'));
+  if (workspace) candidates.push(path.join(path.resolve(workspace), '交易纪律.md'));
+  let source = candidates[0];
+  for (const candidate of candidates) {
+    try { if ((await lstat(candidate)).isFile()) { source = candidate; break; } }
+    catch { /* try the next candidate */ }
+  }
   let lastGood = { revision: null, entries: DISCIPLINE_ENTRIES };
   let goodSignature = null, failedSignature = null;
   let queue = Promise.resolve();
