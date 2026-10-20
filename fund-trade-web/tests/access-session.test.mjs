@@ -7,7 +7,7 @@ import { estimateApplications, GUOFU_TRADING_DATES } from '../src/application-es
 import { getDailyCode } from '../src/vault.js';
 import { createRefreshController } from '../src/refresh-controller.js';
 import { NAV_PERIODS, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain } from '../src/nav-range.js';
-import { renderNavChart } from '../src/nav-chart.js';
+import { renderNavChart, buildTradeMarkers } from '../src/nav-chart.js';
 import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap } from '../src/nav-annualized.js';
 import { setupNavChartInteractions } from '../src/nav-interaction.js';
 import { setupNavSliderInteractions } from '../src/nav-slider.js';
@@ -22,7 +22,7 @@ import { renderBondsPage } from '../src/bonds-view.js';
 import { calculateBondSummary } from '../src/bond-model.js';
 import { evaluateBondReserve } from '../src/bond-reserve.js';
 import { calculateBondHoldingDuration } from '../src/bond-holding-duration.js';
-import { getEstimateDates, parseEstimatePercent, buildEstimatedNav } from '../src/nav-estimates.js';
+import { getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav } from '../src/nav-estimates.js';
 import { loadNavEstimates, saveNavEstimates, NAV_ESTIMATE_STORAGE_KEY } from '../src/nav-estimate-store.js';
 import { renderEstimatePanel } from '../src/estimate-panel.js';
 import { getDisciplineActions, adjustDisciplineRule } from '../src/discipline-actions.js';
@@ -136,10 +136,10 @@ function harness(timestamp = '2026-01-08T02:00:00.000Z', options = {}) {
     };
   });
   const fetch = options.fetch || (async url => ({ ok: true, json: async () => ({ code: /([0-9]{6})\.json$/.exec(url)?.[1], history: [] }) }));
-  const api = new Function('requestJson', 'withTimeout', 'calculateLedger', 'estimateApplications', 'GUOFU_TRADING_DATES', 'createRefreshController', 'NAV_PERIODS', 'resolveNavRange', 'moveNavBoundary', 'summarizeNavRange', 'resolveNavSliderDomain', 'renderNavChart', 'calculateNavAnnualized', 'evaluateAnnualDiscipline', 'evaluateAddDiscipline', 'getNavDisciplineGap', 'setupNavChartInteractions', 'setupNavSliderInteractions', 'calculateTransactionPerformance', 'FUNDS', 'FUND_CODES', 'DISCIPLINE_ENTRIES', 'createDisciplineSync', 'REGION_DATA', 'evaluateUsExposure', 'calculateHoldingDuration', 'createHoldingDurationScale', 'openBondStore', 'renderBondsPage', 'calculateBondSummary', 'evaluateBondReserve', 'calculateBondHoldingDuration', 'getEstimateDates', 'parseEstimatePercent', 'buildEstimatedNav', 'loadNavEstimates', 'saveNavEstimates', 'renderEstimatePanel', 'getDisciplineActions', 'adjustDisciplineRule', 'getNavChartDisplay', 'createFundViewportKeeper', 'document', 'location', 'window', 'matchMedia', 'localStorage', 'Date',
+  const api = new Function('requestJson', 'withTimeout', 'calculateLedger', 'estimateApplications', 'GUOFU_TRADING_DATES', 'createRefreshController', 'NAV_PERIODS', 'resolveNavRange', 'moveNavBoundary', 'summarizeNavRange', 'resolveNavSliderDomain', 'renderNavChart', 'buildTradeMarkers', 'calculateNavAnnualized', 'evaluateAnnualDiscipline', 'evaluateAddDiscipline', 'getNavDisciplineGap', 'setupNavChartInteractions', 'setupNavSliderInteractions', 'calculateTransactionPerformance', 'FUNDS', 'FUND_CODES', 'DISCIPLINE_ENTRIES', 'createDisciplineSync', 'REGION_DATA', 'evaluateUsExposure', 'calculateHoldingDuration', 'createHoldingDurationScale', 'openBondStore', 'renderBondsPage', 'calculateBondSummary', 'evaluateBondReserve', 'calculateBondHoldingDuration', 'getEstimateDates', 'getEstimateTargetDate', 'parseEstimatePercent', 'buildEstimatedNav', 'loadNavEstimates', 'saveNavEstimates', 'renderEstimatePanel', 'getDisciplineActions', 'adjustDisciplineRule', 'getNavChartDisplay', 'createFundViewportKeeper', 'document', 'location', 'window', 'matchMedia', 'localStorage', 'Date',
     'setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'scrollTo', 'scrollY', 'fetch', 'loadVault',
     `${source}\nreturn { state, startSession, checkSession, lock, render, remainingTime, actionClick, unlock, saveCashFlow, saveNavEstimateEdits, refreshCurrentData, dataRefresh, disciplineSync, chartOverlays, navRangeControls, navContext, navSliderDomain, navVisualValues, valuation, ledger, navPanel, fundRegions, sparkline, estimateHomePanel, bondReserveCheck, annualDisciplineAlert, handles: () => ({ sessionInterval, sessionTimeout, dailyCodeReader }) };`)(
-    requestJson, withTimeout, calculateLedger, estimateApplications, GUOFU_TRADING_DATES, createRefreshController, NAV_PERIODS, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain, renderNavChart, calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap, setupNavChartInteractions, setupNavSliderInteractions, calculateTransactionPerformance, FUNDS, FUND_CODES, DISCIPLINE_ENTRIES, createDisciplineSync, REGION_DATA, evaluateUsExposure, calculateHoldingDuration, createHoldingDurationScale, fakeBondOpen, renderBondsPage, calculateBondSummary, evaluateBondReserve, calculateBondHoldingDuration, getEstimateDates, parseEstimatePercent, buildEstimatedNav, loadNavEstimates, saveNavEstimates, renderEstimatePanel, getDisciplineActions, adjustDisciplineRule, getNavChartDisplay, createFundViewportKeeper, document, location, window, () => ({ matches: false }), localStorage, clock.Date,
+    requestJson, withTimeout, calculateLedger, estimateApplications, GUOFU_TRADING_DATES, createRefreshController, NAV_PERIODS, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain, renderNavChart, buildTradeMarkers, calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap, setupNavChartInteractions, setupNavSliderInteractions, calculateTransactionPerformance, FUNDS, FUND_CODES, DISCIPLINE_ENTRIES, createDisciplineSync, REGION_DATA, evaluateUsExposure, calculateHoldingDuration, createHoldingDurationScale, fakeBondOpen, renderBondsPage, calculateBondSummary, evaluateBondReserve, calculateBondHoldingDuration, getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav, loadNavEstimates, saveNavEstimates, renderEstimatePanel, getDisciplineActions, adjustDisciplineRule, getNavChartDisplay, createFundViewportKeeper, document, location, window, () => ({ matches: false }), localStorage, clock.Date,
     clock.setTimeout, clock.clear, clock.setInterval, clock.clear, settings => scrollCalls.push(settings), scrollY, fetch, loadVault,
   );
   function start() {
@@ -2267,7 +2267,7 @@ test('the home estimate disclosure uses Beijing yesterday and exactly the four c
   h.start();
   configureEstimateFixture(h);
   const panel = estimatePanel(h);
-  assert.match(panel, /<h2>昨日估值<\/h2>/);
+  assert.match(panel, /<h2>最近工作日估值<\/h2>/);
   assert.match(panel, /datetime="2026-01-07"/);
   assert.equal(h.api.state.estimateDate, '2026-01-07');
   assert.equal((panel.match(/name="estimate-\d{6}"/g) || []).length, 4);

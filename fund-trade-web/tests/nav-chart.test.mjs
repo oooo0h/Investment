@@ -179,7 +179,7 @@ test('hover payload includes only public selected-date values and daily changes 
     { id: 'private-identifier', date: '2026-01-02', nav: 1.8, type: 'buy', amount: 'private-amount', shares: 'private-shares', note: 'private-note' },
   ] });
   const payload = hoverPoints(markup);
-  assert.match(markup, /tabindex="0" aria-label="净值图，使用左右方向键查看日期，回车选择起点或清空，Escape清除选点"/);
+  assert.match(markup, /tabindex="0" aria-label="净值图，使用左右方向键查看日期；电脑端可按回车选择区间起点或清空，Escape清除选点"/);
   assert.doesNotMatch(markup, /清除选点<\/button>|nav-measure-status|区间已固定/);
   assert.match(markup, /data-nav-points="\[\{&quot;date&quot;/);
   assert.deepEqual(payload.map(value => value.date), ['2026-01-02', '2026-01-11']);

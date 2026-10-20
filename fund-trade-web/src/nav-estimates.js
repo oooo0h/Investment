@@ -12,6 +12,10 @@ function validDate(value) {
 const validNav = value => typeof value === 'number' && Number.isFinite(value) && value > 0 && value <= MAX_NAV;
 const validChange = value => typeof value === 'number' && Number.isFinite(value) && value > -1;
 
+export function isEstimateDate(date) {
+  return validDate(date) && ![0, 6].includes(new Date(`${date}T00:00:00Z`).getUTCDay());
+}
+
 /** Beijing calendar dates, independent of the execution host's timezone. */
 export function getEstimateDates(now = new Date()) {
   const stamp = now instanceof Date ? now.getTime()
@@ -22,6 +26,15 @@ export function getEstimateDates(now = new Date()) {
   const today = todayDate.toISOString().slice(0, 10);
   const yesterday = yesterdayDate.toISOString().slice(0, 10);
   return validDate(today) && validDate(yesterday) ? { today, yesterday } : { today: null, yesterday: null };
+}
+
+/** Last completed weekday. This is not an exchange holiday calendar. */
+export function getEstimateTargetDate(now = new Date()) {
+  let date = getEstimateDates(now).yesterday;
+  while (date && !isEstimateDate(date)) {
+    date = new Date(Date.parse(`${date}T00:00:00Z`) - DAY_MS).toISOString().slice(0, 10);
+  }
+  return date;
 }
 
 /** Parse UI text in percent units: "-1.25%" becomes the ratio -0.0125. */
@@ -60,7 +73,7 @@ export function buildEstimatedNav(history, entries, options = {}) {
 
   const estimatesByDate = new Map();
   for (const entry of Array.isArray(entries) ? entries : []) {
-    if (!entry || !validDate(entry.date) || entry.date > yesterday || !validChange(entry.change)
+    if (!entry || !isEstimateDate(entry.date) || entry.date > yesterday || !validChange(entry.change)
       || (result.latestOfficialDate && entry.date <= result.latestOfficialDate)) continue;
     estimatesByDate.set(entry.date, { date: entry.date, change: entry.change || 0 });
   }

@@ -48,7 +48,7 @@ function harness(raw = JSON.stringify(publicPoints), dimensions = {}, trades = [
     listeners.get(name)?.(event);
     return event;
   }
-  const cleanup = setupNavChartInteractions(root);
+  const cleanup = setupNavChartInteractions(root, dimensions.interactions);
   return { root, chart, rect, elements, measurement, resting, marker, markerDot, emit, listeners, cleanup };
 }
 
@@ -80,6 +80,31 @@ function clearCaption(h, points) {
     assert.equal(inside(a) || inside(b) || corners.some((corner, index) => intersects(a, b, corner, corners[(index + 1) % 4])), false, 'caption does not cover any published or estimated curve segment');
   }
 }
+
+test('mobile taps inspect a single NAV without creating an interval; resizing clears desktop anchors', () => {
+  const changes = new Map();
+  const media = { matches: false, addEventListener: (name, fn) => changes.set(name, fn), removeEventListener: name => changes.delete(name) };
+  const h = harness(undefined, { interactions: { matchMedia: () => media } });
+  h.emit('click', { clientX: h.rect.left + 45 });
+  assert.equal(h.elements.tooltip.hidden, false);
+  assert.equal(h.measurement.panel.hidden, true);
+  h.emit('keydown', { key: 'Enter' });
+  h.emit('pointermove', { clientX: h.rect.left + 285 });
+  assert.equal(h.measurement.start.hidden, true);
+  assert.equal(h.measurement.panel.hidden, true);
+  media.matches = true;
+  changes.get('change')();
+  h.emit('click', { clientX: h.rect.left + 45 });
+  assert.equal(h.measurement.start.hidden, false);
+  h.emit('pointermove', { clientX: h.rect.left + 285 });
+  assert.equal(h.measurement.panel.hidden, false);
+  media.matches = false;
+  changes.get('change')();
+  assert.equal(h.measurement.panel.hidden, true);
+  assert.equal(h.measurement.start.hidden, true);
+  h.cleanup();
+  assert.equal(changes.size, 0);
+});
 
 test('first click anchors, hover updates returns and calendar days, second click clears and third restarts', () => {
   const h = harness();

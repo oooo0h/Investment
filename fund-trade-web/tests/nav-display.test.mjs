@@ -123,7 +123,7 @@ test('invalid or earlier domain days never make a future estimate visible', () =
 test('estimated data built by the existing estimator compounds correctly without changing official inputs', () => {
   const history = official.map(point => ({ ...point }));
   const original = structuredClone(history);
-  const estimatedData = buildEstimatedNav(history, [{ date: '2026-01-17', change: .1 }, { date: '2026-01-18', change: -.05 }], { now: new Date('2026-01-19T02:00:00Z') });
+  const estimatedData = buildEstimatedNav(history, [{ date: '2026-01-19', change: .1 }, { date: '2026-01-20', change: -.05 }], { now: new Date('2026-01-21T02:00:00Z') });
   const display = getNavChartDisplay({ points: history.slice(1), preset: '1m' }, estimatedData);
   assert.equal(display.summary.endNav, 2 * 1.1 * .95);
   assert.equal(display.summary.change, (2 * 1.1 * .95) / 1.5 - 1);

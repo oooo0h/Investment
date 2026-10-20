@@ -4,8 +4,8 @@ import assert from 'node:assert/strict';
 import { FUND_CODES } from '../src/funds.js';
 import { NAV_ESTIMATE_STORAGE_KEY, MAX_NAV_ESTIMATES, loadNavEstimates, saveNavEstimates } from '../src/nav-estimate-store.js';
 
-const now = new Date('2026-10-19T04:00:00Z');
-const entry = (code = FUND_CODES[0], date = '2026-10-18', change = .0125) => ({ code, date, change });
+const now = new Date('2026-10-21T04:00:00Z');
+const entry = (code = FUND_CODES[0], date = '2026-10-20', change = .0125) => ({ code, date, change });
 const payload = entries => JSON.stringify({ version: 1, entries });
 const unavailable = { entries: [], available: false };
 const empty = { entries: [], available: true };
@@ -24,11 +24,11 @@ function memoryStorage(initial = null) {
 
 test('saving and loading across independent reads preserve only public identities, dates and ratios', () => {
   const storage = memoryStorage();
-  const rows = [entry(FUND_CODES[1], '2026-10-17', -.015), entry()];
+  const rows = [entry(FUND_CODES[1], '2026-10-19', -.015), entry()];
   const before = structuredClone(rows);
   const saved = saveNavEstimates(rows, { storage, now });
   assert.deepEqual(rows, before);
-  assert.deepEqual(saved, [entry(), entry(FUND_CODES[1], '2026-10-17', -.015)]);
+  assert.deepEqual(saved, [entry(), entry(FUND_CODES[1], '2026-10-19', -.015)]);
   const persisted = JSON.parse(storage.readRaw());
   assert.deepEqual(persisted, { version: 1, entries: saved });
   assert.deepEqual(Object.keys(persisted).sort(), ['entries', 'version']);
@@ -45,11 +45,11 @@ test('loads filter invalid entries and keep the last valid duplicate for each fu
   const storage = memoryStorage(payload([
     valid, { ...valid, change: .03 }, { ...valid, change: NaN },
     { ...valid, arbitrary: 'synthetic-untrusted' }, null, [],
-    entry(FUND_CODES[1], '2026-10-17', 0), entry('000216'),
-    entry(FUND_CODES[2], '2026-10-19'), entry(FUND_CODES[2], '2026-02-30'),
+    entry(FUND_CODES[1], '2026-10-19', 0), entry('000216'),
+    entry(FUND_CODES[2], '2026-10-21'), entry(FUND_CODES[2], '2026-02-30'),
   ]));
   assert.deepEqual(loadNavEstimates({ storage, now }), {
-    entries: [{ ...valid, change: .03 }, entry(FUND_CODES[1], '2026-10-17', 0)], available: true,
+    entries: [{ ...valid, change: .03 }, entry(FUND_CODES[1], '2026-10-19', 0)], available: true,
   });
 });
 
@@ -58,7 +58,7 @@ test('bad JSON, wrong schemas and entirely invalid payloads remain available for
     JSON.stringify({ version: 2, entries: [] }), JSON.stringify({ version: '1', entries: [] }),
     JSON.stringify({ version: 1, entries: {}, extra: true }),
     JSON.stringify({ version: 1, entries: [], arbitrary: 'synthetic-untrusted' }),
-    payload([null, entry('000216'), entry(FUND_CODES[0], '2026-10-19')]),
+    payload([null, entry('000216'), entry(FUND_CODES[0], '2026-10-21')]),
   ]) {
     const storage = memoryStorage(raw);
     assert.deepEqual(loadNavEstimates({ storage, now }), empty);
@@ -81,10 +81,10 @@ test('writes fail with one fixed message when storage is inaccessible or quota i
 test('one invalid update row rejects the entire save before any write', () => {
   const invalidRows = [
     null, {}, [], { ...entry(), nav: 1 }, { ...entry(), arbitrary: 'synthetic-untrusted' },
-    { code: FUND_CODES[0], date: '2026-10-18' }, { ...entry(), code: 5698 }, entry('000216'),
-    entry(FUND_CODES[0], '2026-10-19'), entry(FUND_CODES[0], '2026-10-20'),
-    ...['2026-02-30', '2025-02-29', '2026-13-01', '2026-2-01', ' 2026-10-18', '2026-10-18T00:00:00Z', null, ''].map(date => entry(FUND_CODES[0], date)),
-    ...[NaN, Infinity, -Infinity, -1, -2, null, true, '.01'].map(change => entry(FUND_CODES[0], '2026-10-18', change)),
+    { code: FUND_CODES[0], date: '2026-10-20' }, { ...entry(), code: 5698 }, entry('000216'),
+    entry(FUND_CODES[0], '2026-10-21'), entry(FUND_CODES[0], '2026-10-22'),
+    ...['2026-02-30', '2025-02-29', '2026-13-01', '2026-2-01', ' 2026-10-20', '2026-10-20T00:00:00Z', null, ''].map(date => entry(FUND_CODES[0], date)),
+    ...[NaN, Infinity, -Infinity, -1, -2, null, true, '.01'].map(change => entry(FUND_CODES[0], '2026-10-20', change)),
   ];
   for (const invalid of invalidRows) {
     const storage = memoryStorage(payload([entry()]));
@@ -98,9 +98,9 @@ test('one invalid update row rejects the entire save before any write', () => {
 
 test('save deduplicates valid rows, permits deliberate zero or large positive rates and supports clearing', () => {
   const storage = memoryStorage();
-  const rows = [entry(), entry(FUND_CODES[0], '2026-10-18', -.01), entry(FUND_CODES[1], '2026-10-18', -0), entry(FUND_CODES[2], '2026-10-18', 12)];
+  const rows = [entry(), entry(FUND_CODES[0], '2026-10-20', -.01), entry(FUND_CODES[1], '2026-10-20', -0), entry(FUND_CODES[2], '2026-10-20', 12)];
   assert.deepEqual(saveNavEstimates(rows, { storage, now }), [
-    entry(FUND_CODES[0], '2026-10-18', -.01), entry(FUND_CODES[1], '2026-10-18', 0), entry(FUND_CODES[2], '2026-10-18', 12),
+    entry(FUND_CODES[0], '2026-10-20', -.01), entry(FUND_CODES[1], '2026-10-20', 0), entry(FUND_CODES[2], '2026-10-20', 12),
   ]);
   assert.deepEqual(saveNavEstimates([], { storage, now }), []);
   assert.deepEqual(JSON.parse(storage.readRaw()), { version: 1, entries: [] });
@@ -118,10 +118,10 @@ test('the entry limit rejects oversized loads and saves without truncating or wr
 test('Beijing midnight changes eligible yesterday and invalid clocks never persist data', () => {
   const rows = [entry()];
   const storage = memoryStorage(payload(rows));
-  const beforeMidnight = new Date('2026-10-18T15:59:59Z');
+  const beforeMidnight = new Date('2026-10-20T15:59:59Z');
   assert.deepEqual(loadNavEstimates({ storage, now: beforeMidnight }), empty);
   assert.throws(() => saveNavEstimates(rows, { storage, now: beforeMidnight }), fixedError);
-  assert.deepEqual(loadNavEstimates({ storage, now: new Date('2026-10-18T16:00:00Z') }).entries, rows);
+  assert.deepEqual(loadNavEstimates({ storage, now: new Date('2026-10-20T16:00:00Z') }).entries, rows);
   assert.deepEqual(loadNavEstimates({ storage, now: new Date('invalid') }), empty);
   assert.throws(() => saveNavEstimates(rows, { storage, now: new Date('invalid') }), fixedError);
 });
