@@ -111,6 +111,8 @@ def apply():
     paths=sorted(set(current)|tracked)
     pathfile=STATE/'reviewed-paths.nul'; pathfile.write_bytes(b'\0'.join(p.encode('utf-8') for p in paths)+b'\0')
     git('add','--all',f'--pathspec-from-file={pathfile}','--pathspec-file-nul')
+    # Re-read old tracked entries through the current byte-preserving attributes.
+    git('add','--renormalize','--','.')
     index={}
     for entry in command(['git','ls-files','--stage','-z']).decode('utf-8').split('\0'):
         if not entry: continue
@@ -120,9 +122,14 @@ def apply():
     require(index=={p:e['git_blob'] for p,e in current.items()},'Staged tree differs from reviewed file paths or bytes')
     if git('diff','--cached','--name-only'):
         git('commit','-m','Mirror the complete project layout and keep temporary files local')
-    # Normal push only: branch concurrency is checked by Git; never force.
-    git('-c','http.sslBackend=openssl','push','origin','main')
+    # Transfer the exact local commit through GitHub's official Git database API.
+    # The transport checks the parent and tree hash, then fast-forwards with
+    # force=false. This also works where Git's HTTPS endpoint is unreachable.
+    output=command([sys.executable,'-X','utf8','-B',str(ROOT/'工具脚本/github_api_transport.py')])
+    for line in output.decode('utf-8').splitlines():
+        print(line)
     verify(plan)
+    git('update-ref','refs/remotes/origin/main',git('rev-parse','HEAD'))
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)
