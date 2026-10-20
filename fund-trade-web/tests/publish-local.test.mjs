@@ -49,8 +49,8 @@ test('valid authentication builds and publishes without opening web login', () =
   assert.match(run.text, /Node.js：v24.16.0/);
   assert.match(run.text, /GitHub CLI：2.81.0/);
   assert.match(run.text, /阶段完成：发布到 GitHub Pages；exit=0；duration=\d+ms/);
-  assert.match(run.text, /提交：aaaaaaaaaaaa/);
-  assert.ok(run.output[0].startsWith('日志：'));
+  assert.match(run.text, /本次上传提交：a{40}/);
+  assert.match(run.output[0], /基金账本.*发布网站/);
 });
 
 test('failed auth opens inherited web login, rechecks status, then continues', () => {
@@ -246,7 +246,7 @@ test('fallback gh directory is added only to the child environment', () => {
 });
 
 test('publish metadata never forwards unknown JSON fields or untrusted URLs', () => {
-  const run = harness({ response(call) { if (isPublish(call)) return success({ stdout: JSON.stringify({ commit: 'PRIVATE_COMMIT', url: 'https://example.com/PRIVATE_URL', token: 'ghp_SYNTHETIC_SECRET', accountPayload: { amount: 'PRIVATE_AMOUNT' } }) }); } });
+  const run = harness({ response(call) { if (isPublish(call)) return success({ stdout: JSON.stringify({ commit: 'a'.repeat(40), url: 'https://example.com/PRIVATE_URL', token: 'ghp_SYNTHETIC_SECRET', accountPayload: { amount: 'PRIVATE_AMOUNT' } }) }); } });
   assert.equal(run.result.exitCode, 0);
   assert.match(run.text, /https:\/\/oooo0h.github.io\/Investment\//);
   assert.doesNotMatch(run.text, /PRIVATE_|SYNTHETIC_SECRET|example.com/);
@@ -311,6 +311,46 @@ test('Windows launcher keeps pause and the Node process exit status', () => {
   assert.match(script, /set "RESULT=%ERRORLEVEL%"/);
   assert.match(script, /pause >nul/);
   assert.match(script, /exit \/b %RESULT%/);
-  assert.match(script, /临时文件\\fund-trade-web\\logs\\publish-\*\.log/);
+  assert.match(script, /本次操作已结束/);
+  assert.match(script, /按任意键关闭/);
   assert.doesNotMatch(script, /publish-local\.mjs[^\r\n]*[12]?>/);
+});
+
+test('console shows numbered stages and final success while technical diagnostics stay in the log', () => {
+  const run = harness();
+  const consoleText = run.output.join('\n');
+  for (let step = 1; step <= 7; step++) assert.match(consoleText, new RegExp(`\\[${step}/7\\]`));
+  assert.match(consoleText, /发布成功/);
+  assert.match(consoleText, /本次版本已上线/);
+  assert.doesNotMatch(consoleText, /\[Prepare\]|\[Publish\]|GitHub GET|duration=|已省略|Node\.js/);
+  assert.match(run.records.join('\n'), /\[Publish\] GitHub GET/);
+  const verification = run.calls.find(call => call.args[0].endsWith('verify-pages.mjs'));
+  assert.ok(verification);
+  assert.equal(verification.options.stdio[1], 'inherit');
+});
+
+test('check-only completion cannot be mistaken for publication success', () => {
+  const run = harness({ args: ['--check'] });
+  assert.match(run.output.join('\n'), /\[4\/4\]/);
+  assert.match(run.output.join('\n'), /检查完成/);
+  assert.doesNotMatch(run.output.join('\n'), /发布成功/);
+});
+
+test('deployment verification timeout reports uploaded but unconfirmed instead of success', () => {
+  const run = harness({ response(call) {
+    if (call.args[0].endsWith('verify-pages.mjs')) return { status: 3 };
+  } });
+  assert.equal(run.result.exitCode, 3);
+  assert.match(run.output.join('\n'), /尚未确认上线/);
+  assert.match(run.output.join('\n'), /\[7\/7\]/);
+  assert.doesNotMatch(run.output.join('\n'), /发布成功/);
+});
+
+test('missing upload version never reports a successful live deployment', () => {
+  const run = harness({ response(call) {
+    if (isPublish(call)) return success({ stdout: '{}' });
+  } });
+  assert.equal(run.result.exitCode, 1);
+  assert.match(run.output.join('\n'), /无法识别本次版本/);
+  assert.doesNotMatch(run.output.join('\n'), /发布成功/);
 });

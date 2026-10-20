@@ -1,4 +1,4 @@
-import { calculateLedger } from './engine.js?v=20261019-estimated-chip';
+import { calculateLedger, describeModeEffect } from './engine.js?v=20261020-mode-explanation';
 import { createRefreshController } from './refresh-controller.js';
 import { unlockErrorMessage } from './unlock-errors.js';
 import { NAV_PERIODS, recentNavPeriod, resolveNavRange, moveNavBoundary, resolveNavSliderDomain } from './nav-range.js';
@@ -910,6 +910,9 @@ function fundPage(fund) {
   const book = getBook(fund.code);
   const result = ledger(fund.code);
   const { summary, errors } = result;
+  const alternate = calculateLedger(book.transactions, { mode: book.mode === 'principal-first' ? 'profit-first' : 'principal-first',
+    valuationNav: summary.valuationNav, valuationDate: summary.valuationDate });
+  const modeEffect = describeModeEffect(result, alternate, { incomplete: book.incomplete });
   const principalState = !book.transactions.length ? '暂无交易记录' : book.incomplete ? '成交资料待补全' : { empty: '当前无持仓', recovered: '本金已全部回收', invested: '仍有本金在持' }[summary.principalStatus] || '请先修正交易';
   const sixColumnSource = !book.transactions.length || book.transactions.every(tx => tx.dateBasis === 'order');
   const exposure = fundExposure(fund.code);
@@ -920,6 +923,7 @@ function fundPage(fund) {
     ${annualDisciplineAlert(fund.code)}${fundRegions(fund)}<div class="fund-layout">${navPanel(fund)}<div class="main-column"><details class="panel summary-panel panel-disclosure" data-panel="holdings" data-fund="${fund.code}" ${panelExpanded('holdings') ? 'open' : ''}><summary class="panel-toggle"><h2>持仓与收益</h2><span class="status-chip">${principalState}</span></summary><div class="panel-content">
       ${summary.lastDate ? `<p class="helper">最近交易日期 ${esc(summary.lastDate)}</p>` : ''}
       <div class="mode-control ${book.mode}" role="group" aria-label="卖出到账分配模式"><button data-action="mode" data-mode="profit-first" aria-pressed="${book.mode === 'profit-first'}">利润优先</button><button data-action="mode" data-mode="principal-first" aria-pressed="${book.mode === 'principal-first'}">本金优先</button></div>
+      <p class="mode-explanation" role="status" data-mode-effect="${modeEffect.kind}">${modeEffect.message}</p>
       ${errors.length ? `<div class="error-note" role="alert">第 ${errors[0].index} 笔交易待修正：${esc(errors[0].message)}<br>修正前暂停展示汇总结果。</div>` : ''}
       <div class="summary-main"><div><p class="card-label">当前市值（元）</p><p class="card-value num">${sensitive(summary.marketValue)}</p><p class="helper">估值净值日期 ${esc(summary.valuationDate || '尚无可用净值')}</p></div><div class="summary-return"><p class="card-label">持有收益率</p><span class="num ${signClass(summary.holdingReturn)}">${percent(summary.holdingReturn)}</span></div></div>
       <dl class="summary-grid">${metric('剩余本金（元）', summary.principal)}${metric('持有收益（元）', summary.holdingProfit, 2, signClass(summary.holdingProfit))}${metric('持有份额', summary.shares, 2)}${metric('累计投入（元）', summary.totalInvested)}${metric('累计到账（元）', summary.totalRecovered)}${metric('已提取利润（元）', summary.totalProfitWithdrawn)}${metric('累计收益（元）', summary.totalProfit, 2, signClass(summary.totalProfit))}<div><dt>累计收益率</dt><dd class="num ${signClass(summary.totalReturn)}">${percent(summary.totalReturn)}</dd></div>${metric('清仓损失（元）', summary.totalClosedLoss)}</dl>
