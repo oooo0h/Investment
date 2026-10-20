@@ -40,6 +40,14 @@ function recentMoveStart(history, rising) {
   return null;
 }
 
+export function recentNavPeriod(history) {
+  if (!history.length) return null;
+  const decline = recentMoveStart(history, false), rise = recentMoveStart(history, true);
+  if (decline === null && rise === null) return null;
+  const id = decline !== null && (rise === null || decline > rise) ? 'recent-decline' : 'recent-rise';
+  return NAV_PERIODS.find(period => period.id === id);
+}
+
 export function resolveNavRange(history, selection, { tradeDate = null } = {}) {
   if (!history.length) return {
     start: 0, end: 0, from: null, to: null, points: [], preset: selection ? selection.preset ?? null : '3m',
@@ -51,7 +59,7 @@ export function resolveNavRange(history, selection, { tradeDate = null } = {}) {
   const tradeStart = Number.isFinite(tradeStamp) && iso(new Date(tradeStamp)) === tradeDate
     ? history.findIndex(point => point.date >= tradeDate) : -1;
   const availability = { declineAvailable: declineStart !== null, riseAvailable: riseStart !== null, tradeAvailable: tradeStart >= 0 };
-  selection ||= { preset: availability.declineAvailable ? 'recent-decline' : availability.riseAvailable ? 'recent-rise' : '3m' };
+  selection ||= { preset: recentNavPeriod(history)?.id || '3m' };
   if (selection.preset === 'since-trade') {
     const end = history.length - 1;
     const start = tradeStart >= 0 ? tradeStart : end;
