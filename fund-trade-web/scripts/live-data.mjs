@@ -131,10 +131,11 @@ export async function createLiveDataStore({ workspace, root, pythonPath }) {
         path: transactionSourcePath(entry),
         estimated: provenance.funds?.find(fund => fund.code === entry.code)?.source_estimates_retained !== false,
         workbook_sha256: provenance.funds?.find(fund => fund.code === entry.code)?.workbook_sha256,
-        row_provenance: provenance.funds?.find(fund => fund.code === entry.code)?.row_provenance }));
+        row_provenance: provenance.funds?.find(fund => fund.code === entry.code)?.row_provenance,
+        allow_drafts: true }));
       const navFiles = index.funds.map(entry => resolveNavPath(workspace, entry.json_path, entry.code));
       const workbookFiles = sources.map(source => resolveFundPath(workspace, source.path, source.code));
-      const files = [indexHit.file, ...(metadataHit ? [metadataHit.file] : []), ...navFiles, ...workbookFiles];
+      const files = [indexHit.file, ...(metadataHit ? [metadataHit.file] : []), ...navFiles, ...workbookFiles, reader];
       const before = await fingerprint(files);
       if (cached && before === signature) return cached;
       const present = (await Promise.all(sources.map(async (source, index) => {
@@ -144,19 +145,30 @@ export async function createLiveDataStore({ workspace, root, pythonPath }) {
       const nav = Object.fromEntries(index.funds.map((entry, i) => [entry.code, adaptNav(JSON.parse(navBytes[i]), entry, index.updated_at)]));
       const funds = {}, sourceSummary = [];
       for (const entry of index.funds) {
-        const imported = books[entry.code], transactions = imported?.transactions || [];
+        const imported = books[entry.code];
+        const transactions = (imported?.transactions || []).map(tx => {
+          // A dated cash order beyond the last published NAV is still processing.
+          // It must not become a guessed fill or erase the confirmed history.
+          if (tx.status === 'pending' && tx.sourceStatus === 'incomplete'
+            && validDate(tx.date) && tx.date > nav[entry.code].lastDate
+            && ['buy', 'sell'].includes(tx.type) && Number.isFinite(tx.amount) && tx.amount > 0
+            && (tx.nav === null || tx.shares === null)) return { ...tx, sourceStatus: 'processing' };
+          return tx;
+        });
         const pendingBackupCount = provenance.funds?.find(fund => fund.code === entry.code)?.legacy_pending_records || 0;
-        const incomplete = transactions.some(tx => tx.status === 'pending');
+        const incomplete = transactions.some(tx => tx.status === 'pending' && tx.sourceStatus !== 'processing');
+        const processing = transactions.filter(tx => tx.status === 'pending' && tx.sourceStatus === 'processing').length;
         const estimated = transactions.some(tx => tx.status === 'estimated');
+        const formulaAdjusted = transactions.filter(tx => tx.formulaAdjustment).length;
         funds[entry.code] = { transactions, mode: 'profit-first', incomplete,
           sourceNote: imported
-            ? `来源：${entry.code}_交易记录.xlsx（六列），已核对原表和旧网站加密备份。交易日期为原始下单日期，不当作净值日期。${estimated ? '含历史估算，沿用来源记录，未重新核实成交。' : '确认状态沿用来源记录，未重新核实成交。'}${incomplete ? '成交资料待补全或存在来源差异，暂停账户汇总。' : ''}${pendingBackupCount ? `旧网站另有 ${pendingBackupCount} 笔待确认订单保留在加密备份中，未列为已成交。` : ''}`
+            ? `来源：${entry.code}_交易记录.xlsx（六列）。交易日期为原始下单日期，不当作净值日期。${estimated ? '含估算记录，未重新核实成交。' : '确认状态沿用来源记录，未重新核实成交。'}${formulaAdjusted ? `有 ${formulaAdjusted} 笔份额公式已按手续费口径重新估算，原表未改写，请核对实际确认份额。` : ''}${processing ? `有 ${processing} 笔进行中订单未计入持仓和收益。` : ''}${incomplete ? '成交资料待补全或存在来源差异，暂停账户汇总。' : ''}${pendingBackupCount ? `旧网站另有 ${pendingBackupCount} 笔待确认订单保留在加密备份中，未列为已成交。` : ''}`
             : '尚未提供六列交易记录表；不推断持仓。' };
         sourceSummary.push({ code: entry.code, nav: { kind: 'full-history', records: nav[entry.code].count },
           transactions: { kind: imported ? 'workbook' : 'absent', records: transactions.length, incomplete, estimated } });
       }
       if (before !== await fingerprint(files)) throw safeError();
-      const revision = digest(Buffer.concat([indexBytes, ...navBytes,
+      const revision = digest(Buffer.concat([indexBytes, ...navBytes, await readFile(reader),
         Buffer.from(JSON.stringify(provenance.funds?.filter(fund => FUND_CODES.includes(fund.code)) || [])),
         Buffer.from(JSON.stringify(present.map(source => [source.code, source.estimated, books[source.code].sha256])))]));
       const envelope = encrypt({ createdAt: new Date().toISOString(), funds });

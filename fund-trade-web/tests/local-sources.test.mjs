@@ -8,6 +8,7 @@ import { randomBytes, pbkdf2Sync, createCipheriv, createDecipheriv, createHash }
 import { adaptNav, createEnvelopeEncryptor, createLiveDataStore, resolveFundPath } from '../scripts/live-data.mjs';
 import { getDailyCode } from '../src/vault.js';
 import { FUND_CODES } from '../src/funds.js';
+import { calculateLedger } from '../src/engine.js';
 import { createLiveBondDataStore } from '../scripts/live-bond-data.mjs';
 
 const pythonPath = process.env.FUND_PREVIEW_PYTHON || path.join(os.homedir(), '.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe');
@@ -184,6 +185,29 @@ test('real loader reads only selected canonical files, retains nulls, refreshes 
   assert.equal(changed.transactions[0].fee, null);
   assert.equal(changed.transactions[0].status, 'pending');
   assert.equal(changed.incomplete, true);
+  // An appended order after the published NAV uses a General-format Excel
+  // serial date and has no confirmed NAV/shares yet. History stays usable.
+  makeBook(false);
+  const appendProcessing = String.raw`import sys,datetime,openpyxl
+from openpyxl.utils.datetime import to_excel
+b=openpyxl.load_workbook(sys.argv[1]);s=b['交易记录']
+s.append([to_excel(datetime.datetime(2024,1,4)),None,None,'买入',5,0])
+s['A3'].number_format='General';b.save(sys.argv[1])`;
+  assert.equal(spawnSync(pythonPath, ['-X', 'utf8', '-B', '-c', appendProcessing, workbook], { windowsHide: true }).status, 0);
+  const withOrder = fixture.decrypt((await store.snapshot()).envelope).funds['005698'];
+  assert.equal(withOrder.transactions[1].date, '2024-01-04');
+  assert.equal(withOrder.transactions[1].status, 'pending');
+  assert.equal(withOrder.transactions[1].sourceStatus, 'processing');
+  assert.equal(withOrder.incomplete, false);
+  const calculated = calculateLedger(withOrder.transactions);
+  assert.equal(calculated.summary.valid, true);
+  assert.equal(calculated.summary.shares, 9);
+  const appendDraft = String.raw`import sys,openpyxl
+b=openpyxl.load_workbook(sys.argv[1]);b['交易记录'].append([None,None,None,None,3,None]);b.save(sys.argv[1])`;
+  assert.equal(spawnSync(pythonPath, ['-X', 'utf8', '-B', '-c', appendDraft, workbook], { windowsHide: true }).status, 0);
+  const withDraft = fixture.decrypt((await store.snapshot()).envelope).funds['005698'];
+  assert.equal(withDraft.transactions[2].sourceStatus, 'draft');
+  assert.equal(withDraft.incomplete, true);
   // Bad headers are refused without exposing a bad row or using stale data as fresh.
   await writeFile(workbook, 'synthetic invalid workbook');
   await assert.rejects(store.snapshot(), { message: 'Local source validation failed.' });
