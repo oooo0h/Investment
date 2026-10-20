@@ -193,3 +193,20 @@ export function calculateLedger(transactions, {
   }
   return { rows, summary, errors };
 }
+
+/** Explain mode effects without exposing any account amounts or quantities. */
+export function describeModeEffect(current, alternate, { incomplete = false } = {}) {
+  const common = '两种模式只影响卖出到账的本金与利润分配，不改变份额、市值和累计总收益。';
+  if (incomplete || !current?.summary?.valid || !alternate?.summary?.valid) {
+    return { kind: 'unavailable', message: `交易资料待补全或修正，暂时无法完整比较。${common}` };
+  }
+  const sells = current.rows.filter(row => row.status === 'included' && row.type === 'sell');
+  if (!sells.length) return { kind: 'no-sells', message: `暂无已计入的卖出，切换模式暂不改变结果。${common}` };
+  const differs = current.rows.some((row, index) => row.status === 'included' && row.type === 'sell'
+    && ['principalRecovered', 'profitWithdrawn', 'principalAfter'].some(field => row[field] !== alternate.rows[index]?.[field]));
+  if (differs) return { kind: 'different', message: `当前两种模式分配不同，可对比剩余本金、已提取利润和持有收益率。${common}` };
+  if (sells.every(row => row.availableProfit === 0)) {
+    return { kind: 'same-no-profit', message: `当前已计入的卖出没有可优先提取的利润，到账均用于收回本金，因此切换后结果相同。${common}` };
+  }
+  return { kind: 'same', message: `当前已计入的卖出在两种模式下分配相同，因此展示结果不变。${common}` };
+}
