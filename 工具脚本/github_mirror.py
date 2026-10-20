@@ -26,7 +26,7 @@ def command(args, data=None):
                      env={**os.environ,'GIT_TERMINAL_PROMPT':'0','GIT_LITERAL_PATHSPECS':'1'})
     if p.returncode:
         error=p.stderr.decode('utf-8',errors='replace')
-        category='authentication' if re.search(r'HTTP\s+401|GitHub API failed:\s*401|bad credentials|gh auth login|not logged|requires authentication',error,re.I) else 'network' if re.search(r'reset|connect|timeout|schannel',error,re.I) else 'permissions' if re.search(r'denied|index.lock|permission|HTTP\s+403',error,re.I) else 'command_failed'
+        category='remote_changed' if re.search(r'non-fast-forward|fetch first|stale info',error,re.I) else 'authentication' if re.search(r'HTTP\s+401|GitHub API failed:\s*401|bad credentials|gh auth login|not logged|requires authentication|authentication failed',error,re.I) else 'network' if re.search(r'reset|connect|timeout|timed out|schannel|RPC failed|TLS|EOF|HTTP\s+50[234]',error,re.I) else 'permissions' if re.search(r'denied|index.lock|permission|HTTP\s+403',error,re.I) else 'command_failed'
         raise RuntimeError(f'{args[0]} failed: {category}')
     return p.stdout
 
@@ -74,15 +74,45 @@ def verify_context():
     require(git('branch','--show-current')=='main','Unexpected local branch')
     require(not git('diff','--cached','--name-only'),'Unreviewed staged changes; stop before preparing')
 
+def committed_files():
+    files={}
+    for item in command(['git','ls-tree','-r','-z','HEAD']).split(b'\0'):
+        if item:
+            metadata,name=item.split(b'\t',1)
+            files[name.decode('utf-8')]=metadata.split()[2].decode('ascii')
+    return files
+
+def reviewed_base(remote_commit):
+    """Accept only the remote HEAD or a previously reviewed unpublished chain."""
+    head=git('rev-parse','HEAD')
+    if head==remote_commit:return head
+    previous_path=STATE/'plan.json'
+    require(previous_path.is_file(),'Local HEAD and remote main differ; reconcile before mirroring')
+    previous=json.loads(previous_path.read_text(encoding='utf-8'))
+    require(previous.get('schema')=='project-full-mirror-v1' and previous.get('repository')==REPOSITORY
+            and previous.get('branch')=='main' and previous.get('remote_base_commit')==remote_commit,
+            'Local HEAD and remote main differ; reconcile before mirroring')
+    reviewed=previous.get('reviewed_local_head',remote_commit)
+    if head==reviewed:
+        require(previous.get('reviewed_head_tree')==git('rev-parse','HEAD^{tree}'),
+                'Local HEAD and remote main differ; reconcile before mirroring')
+    else:
+        require(git('show','-s','--format=%P','HEAD')==reviewed
+                and committed_files()=={entry['path']:entry['git_blob'] for entry in previous['files']},
+                'Local HEAD and remote main differ; reconcile before mirroring')
+    command(['git','merge-base','--is-ancestor',remote_commit,head])
+    return head
+
 def prepare():
     verify_context()
     STATE.mkdir(parents=True,exist_ok=True)
     files=inventory()
     commit,old=remote()
-    require(git('rev-parse','HEAD')==commit,'Local HEAD and remote main differ; reconcile before mirroring')
+    head=reviewed_base(commit)
     plan={'schema':'project-full-mirror-v1','repository':REPOSITORY,'branch':'main','excluded_directories':['.git','临时文件'],
           'raw_account_file_authorization':'2026-10-20 user explicitly allowed public original account files',
-          'remote_base_commit':commit,'files':list(files.values()),'delete_remote_paths':sorted(set(old)-set(files)),
+          'remote_base_commit':commit,'reviewed_local_head':head,'reviewed_head_tree':git('rev-parse','HEAD^{tree}'),
+          'files':list(files.values()),'delete_remote_paths':sorted(set(old)-set(files)),
           'changed_paths':sorted(p for p,e in files.items() if old.get(p)!=e['git_blob'])}
     (STATE/'plan.json').write_text(json.dumps(plan,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'reviewed_files':len(files),'changed_or_added':len(plan['changed_paths']),'old_remote_paths_to_remove':len(plan['delete_remote_paths']),'credential_scan_passed':True}))
@@ -100,6 +130,33 @@ def verify(plan):
     (STATE/'result.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps(result))
 
+def push_reviewed(plan, dry_run=False):
+    """Push the exact reviewed Git history normally, without forcing updates."""
+    verify_context()
+    expected={e['path']:e for e in plan['files']}
+    require(inventory()==expected,'Files changed after review; prepare again')
+    head=git('rev-parse','HEAD')
+    require(committed_files()=={p:e['git_blob'] for p,e in expected.items()},
+            'Committed tree differs from reviewed file paths or bytes')
+    current,_=remote()
+    if current==head:
+        verify(plan)
+        return
+    require(current==plan['remote_base_commit'],'Remote changed after review; stop')
+    reviewed=plan.get('reviewed_local_head',current)
+    require(head==reviewed or git('show','-s','--format=%P','HEAD')==reviewed,
+            'Local HEAD and remote main differ; reconcile before mirroring')
+    command(['git','merge-base','--is-ancestor',current,head])
+    args=['git','-c','http.version=HTTP/1.1','-c','credential.helper=',
+          '-c','credential.helper=!gh auth git-credential','push','--porcelain']
+    if dry_run:args.append('--dry-run')
+    print(json.dumps({'sync_stage':'push-dry-run' if dry_run else 'push'}),flush=True)
+    command(args+['origin','HEAD:refs/heads/main'])
+    if not dry_run:
+        print(json.dumps({'sync_stage':'verify'}),flush=True)
+        verify(plan)
+        git('update-ref','refs/remotes/origin/main',head)
+
 def apply():
     verify_context()
     plan=json.loads((STATE/'plan.json').read_text(encoding='utf-8'))
@@ -107,10 +164,12 @@ def apply():
     current=inventory()
     require(current=={e['path']:e for e in plan['files']},'Files changed after review; prepare again')
     commit,_=remote()
-    require(commit==plan['remote_base_commit']==git('rev-parse','HEAD'),'Remote changed after review; stop')
+    require(commit==plan['remote_base_commit'] and git('rev-parse','HEAD')==plan.get('reviewed_local_head',commit),
+            'Remote changed after review; stop')
     tracked=set(command(['git','ls-files','-z']).decode('utf-8').split('\0'))-{''}
     paths=sorted(set(current)|tracked)
     pathfile=STATE/'reviewed-paths.nul'; pathfile.write_bytes(b'\0'.join(p.encode('utf-8') for p in paths)+b'\0')
+    print(json.dumps({'sync_stage':'stage'}),flush=True)
     git('add','--all',f'--pathspec-from-file={pathfile}','--pathspec-file-nul')
     # Re-read old tracked entries through the current byte-preserving attributes.
     git('add','--renormalize','--','.')
@@ -122,15 +181,9 @@ def apply():
         index[name]=digest
     require(index=={p:e['git_blob'] for p,e in current.items()},'Staged tree differs from reviewed file paths or bytes')
     if git('diff','--cached','--name-only'):
+        print(json.dumps({'sync_stage':'commit'}),flush=True)
         git('commit','-m','Mirror the complete project layout and keep temporary files local')
-    # Transfer the exact local commit through GitHub's official Git database API.
-    # The transport checks the parent and tree hash, then fast-forwards with
-    # force=false. This also works where Git's HTTPS endpoint is unreachable.
-    output=command([sys.executable,'-X','utf8','-B',str(ROOT/'工具脚本/github_api_transport.py')])
-    for line in output.decode('utf-8').splitlines():
-        print(line)
-    verify(plan)
-    git('update-ref','refs/remotes/origin/main',git('rev-parse','HEAD'))
+    push_reviewed(plan)
 
 if __name__=='__main__':
     parser=argparse.ArgumentParser(description=__doc__)

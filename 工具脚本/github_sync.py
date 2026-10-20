@@ -267,6 +267,15 @@ class Progress:
     def event(self, event):
         if not isinstance(event, dict):
             return
+        stage = event.get('sync_stage')
+        if stage in ('stage', 'commit', 'push', 'push-dry-run', 'verify'):
+            if stage == 'verify':
+                self.step(4, '核验云端目录和每个文件的内容')
+            else:
+                self.say({'stage': '正在暂存本次已核验的正式文件。', 'commit': '正在生成本地提交。',
+                          'push': '正在通过标准 Git 推送上传，复用当前 GitHub 登录。',
+                          'push-dry-run': '正在检查标准 Git 推送连接，不上传。'}[stage])
+            return
         if all(type(event.get(key)) is int for key in ('reviewed_files', 'changed_or_added', 'old_remote_paths_to_remove')):
             self.say(f"已检查 {event['reviewed_files']} 个文件；新增或修改 {event['changed_or_added']} 个，云端旧路径删除 {event['old_remote_paths_to_remove']} 个。")
         elif all(type(event.get(key)) is int for key in ('tree_batch_verified', 'total_batches')):
@@ -305,10 +314,14 @@ def pending_plan(mirror):
                    and plan.get('branch') == 'main'
                    and plan.get('remote_base_commit') == remote,
                    'Local HEAD and remote main differ; reconcile before mirroring')
-    mirror.require(mirror.git('show', '-s', '--format=%P', 'HEAD') == remote,
+    reviewed = plan.get('reviewed_local_head', remote)
+    if head == reviewed:
+        mirror.require(plan.get('reviewed_head_tree') == mirror.git('rev-parse', 'HEAD^{tree}'),
+                       'Local HEAD and remote main differ; reconcile before mirroring')
+        return None
+    mirror.require(mirror.git('show', '-s', '--format=%P', 'HEAD') == reviewed,
                    'Local HEAD and remote main differ; reconcile before mirroring')
     expected = {entry['path']: entry for entry in plan['files']}
-    mirror.require(mirror.inventory() == expected, 'Files changed after review; prepare again')
     # NUL-delimited paths preserve Chinese names, spaces and quote characters.
     committed = {}
     for entry in mirror.command(['git', 'ls-tree', '-r', '-z', 'HEAD']).split(b'\0'):
@@ -317,26 +330,30 @@ def pending_plan(mirror):
             committed[name.decode('utf-8')] = metadata.split()[2].decode('ascii')
     mirror.require(committed == {p: e['git_blob'] for p, e in expected.items()},
                    'Staged tree differs from reviewed file paths or bytes')
+    if mirror.inventory() != expected:
+        # This is a new manual run: preserve the reviewed commit and scan the
+        # changed working files into a fresh plan. apply() still rejects any
+        # further change after this new review.
+        return None
     return plan
 
 
 def synchronize(mirror, progress, check=False):
     progress.step(2, '扫描正式文件并核对 GitHub 当前版本')
     plan = pending_plan(mirror)
+    resume = plan is not None
     if plan:
         progress.say('发现上次已提交但尚未完成上传的版本，可以安全继续。')
     else:
+        if mirror.git('rev-parse', 'HEAD') != mirror.remote()[0]:
+            progress.say('发现未上传提交及新的本地修改，保留已有提交并重新核验当前文件。')
         mirror.prepare()
         plan = json.loads((mirror.STATE / 'plan.json').read_text(encoding='utf-8'))
     if check:
         return
     progress.step(3, '提交并上传本地文件，请保持窗口打开')
-    if plan['remote_base_commit'] != mirror.git('rev-parse', 'HEAD'):
-        output = mirror.command([sys.executable, '-X', 'utf8', '-u', '-B', str(mirror.ROOT / '工具脚本/github_api_transport.py')])
-        progress.write(output.decode('utf-8'))
-        progress.step(4, '核验云端目录和每个文件的内容')
-        mirror.verify(plan)
-        mirror.git('update-ref', 'refs/remotes/origin/main', mirror.git('rev-parse', 'HEAD'))
+    if resume:
+        mirror.push_reviewed(plan)
     elif plan['changed_paths'] or plan['delete_remote_paths']:
         mirror.apply()
     else:
@@ -360,7 +377,7 @@ def error_message(error):
     if 'failed: authentication' in value: return 'GitHub 授权仍不可用，未确认同步成功；请核对登录状态后重新双击。'
     if 'staged changes' in value: return '发现已有暂存修改，请先核对暂存区，再重新同步。'
     if 'Files changed' in value or 'files changed' in value: return '文件在核验后又发生变化，已停止；请核对后重新运行。'
-    if 'HEAD and remote' in value or 'Remote changed' in value or 'Remote main' in value: return '本地与云端版本有变化或分叉，已停止；请先核对两端版本。'
+    if 'HEAD and remote' in value or 'Remote changed' in value or 'Remote main' in value or 'remote_changed' in value: return '本地与云端版本有变化或分叉，已停止；请先核对两端版本。'
     if 'Credential' in value: return '检测到凭据文件或疑似密钥，已停止上传；请将凭据移到临时目录。'
     if 'permissions' in value: return '文件、Git 或 GitHub 仓库的写入权限不足，已停止；请核对对应权限。'
     if 'network' in value: return '无法连接 GitHub，请检查网络后重试；不会将网络故障当成未登录。'

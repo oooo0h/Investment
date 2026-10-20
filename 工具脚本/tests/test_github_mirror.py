@@ -65,4 +65,63 @@ class MirrorTests(unittest.TestCase):
                 with self.assertRaisesRegex(RuntimeError,f'failed: {category}'):
                     mirror.command(['gh','api','synthetic'])
 
+    def test_native_push_uses_existing_gh_login_without_force_and_verifies_afterward(self):
+        entry={'path':'synthetic.txt','git_blob':'c'*40}
+        plan={'files':[entry],'remote_base_commit':'a'*40,'reviewed_local_head':'a'*40}
+        calls=[]
+        def git(*args):
+            if args==('rev-parse','HEAD'):return 'b'*40
+            if args[:1]==('show',):return 'a'*40
+            calls.append(args)
+            return ''
+        with patch.object(mirror,'verify_context'), patch.object(mirror,'inventory',return_value={'synthetic.txt':entry}), \
+             patch.object(mirror,'committed_files',return_value={'synthetic.txt':'c'*40}), \
+             patch.object(mirror,'remote',return_value=('a'*40,{})), patch.object(mirror,'git',side_effect=git), \
+             patch.object(mirror,'command',return_value=b'') as command, patch.object(mirror,'verify') as verify:
+            mirror.push_reviewed(plan)
+        push=[call.args[0] for call in command.call_args_list if 'push' in call.args[0]]
+        self.assertEqual(len(push),1)
+        self.assertIn('credential.helper=!gh auth git-credential',push[0])
+        self.assertEqual(push[0][-2:],['origin','HEAD:refs/heads/main'])
+        self.assertNotIn('--force',push[0])
+        self.assertNotIn('--force-with-lease',push[0])
+        verify.assert_called_once_with(plan)
+        self.assertIn(('update-ref','refs/remotes/origin/main','b'*40),calls)
+
+    def test_native_push_stops_on_remote_changes_and_dry_run_never_updates_refs(self):
+        entry={'path':'synthetic.txt','git_blob':'c'*40}
+        plan={'files':[entry],'remote_base_commit':'a'*40}
+        def git(*args):return 'b'*40 if args==('rev-parse','HEAD') else 'a'*40
+        with patch.object(mirror,'verify_context'), patch.object(mirror,'inventory',return_value={'synthetic.txt':entry}), \
+             patch.object(mirror,'committed_files',return_value={'synthetic.txt':'c'*40}), \
+             patch.object(mirror,'remote',return_value=('d'*40,{})), patch.object(mirror,'git',side_effect=git), \
+             patch.object(mirror,'command') as command:
+            with self.assertRaisesRegex(RuntimeError,'Remote changed'):
+                mirror.push_reviewed(plan)
+            command.assert_not_called()
+        with patch.object(mirror,'verify_context'), patch.object(mirror,'inventory',return_value={'synthetic.txt':entry}), \
+             patch.object(mirror,'committed_files',return_value={'synthetic.txt':'c'*40}), \
+             patch.object(mirror,'remote',return_value=('a'*40,{})), patch.object(mirror,'git',side_effect=git), \
+             patch.object(mirror,'command',return_value=b'') as command, patch.object(mirror,'verify') as verify:
+            mirror.push_reviewed(plan,dry_run=True)
+            push=[call.args[0] for call in command.call_args_list if 'push' in call.args[0]]
+            self.assertIn('--dry-run',push[0])
+            verify.assert_not_called()
+
+    def test_re_review_accepts_only_the_exact_prior_reviewed_commit_chain(self):
+        plan={'schema':'project-full-mirror-v1','repository':mirror.REPOSITORY,'branch':'main',
+              'remote_base_commit':'a'*40,'files':[{'path':'synthetic.txt','git_blob':'c'*40}]}
+        (self.root/'plan.json').write_text(json.dumps(plan),encoding='utf-8')
+        def git(*args):
+            if args==('rev-parse','HEAD'):return 'b'*40
+            if args[:1]==('show',):return 'a'*40
+            return 'e'*40
+        with patch.object(mirror,'STATE',self.root), patch.object(mirror,'git',side_effect=git), \
+             patch.object(mirror,'committed_files',return_value={'synthetic.txt':'c'*40}), patch.object(mirror,'command'):
+            self.assertEqual(mirror.reviewed_base('a'*40),'b'*40)
+        with patch.object(mirror,'STATE',self.root), patch.object(mirror,'git',side_effect=git), \
+             patch.object(mirror,'committed_files',return_value={'unreviewed.txt':'f'*40}):
+            with self.assertRaisesRegex(RuntimeError,'HEAD and remote'):
+                mirror.reviewed_base('a'*40)
+
 if __name__=='__main__':unittest.main()

@@ -1,4 +1,4 @@
-"""Transport the already-reviewed Git commit through GitHub's Git database API."""
+"""Legacy API transport. The manual sync entry now uses standard Git push."""
 from pathlib import Path
 import base64
 from concurrent.futures import ThreadPoolExecutor

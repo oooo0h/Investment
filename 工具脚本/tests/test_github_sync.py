@@ -67,6 +67,11 @@ class FakeMirror:
         self.calls.append('apply')
         self.verify({})
 
+    def push_reviewed(self, plan):
+        self.calls.append('transport')
+        self.cloud = self.head
+        self.verify(plan)
+
     def verify(self, plan):
         self.calls.append('verify')
         print(json.dumps({'path_sets_equal': True, 'file_hashes_equal': True}))
@@ -121,13 +126,14 @@ class SyncTests(unittest.TestCase):
         self.assertNotIn('apply', self.mirror.calls)
         self.assertEqual(self.mirror.cloud, self.mirror.head)
 
-    def test_resume_rejects_changed_files_or_a_changed_remote_parent(self):
+    def test_new_manual_run_reviews_new_files_without_discarding_pending_commit_and_rejects_remote_changes(self):
         self.mirror.prepare()
         self.mirror.head = 'b' * 40
-        self.mirror.files = {}
-        with self.assertRaisesRegex(RuntimeError, 'Files changed'):
-            self.run_sync()
+        self.mirror.files = {name: {**entry, 'git_blob': 'f' * 40} for name, entry in self.mirror.files.items()}
+        self.run_sync()
         self.assertNotIn('transport', self.mirror.calls)
+        self.assertIn('prepare', self.mirror.calls)
+        self.assertIn('apply', self.mirror.calls)
         self.mirror.files = {'说明 "示例".md': {'path': '说明 "示例".md', 'bytes': 4, 'sha256': 'invented', 'git_blob': 'c' * 40}}
         self.mirror.cloud = 'd' * 40
         with self.assertRaisesRegex(RuntimeError, 'HEAD and remote'):
