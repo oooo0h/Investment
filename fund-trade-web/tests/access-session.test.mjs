@@ -21,7 +21,7 @@ import { calculateHoldingDuration, createHoldingDurationScale } from '../src/hol
 import { renderBondsPage } from '../src/bonds-view.js';
 import { calculateBondHoldingValue } from '../src/bond-model.js';
 import { calculatePortfolioAllocation, evaluateHoldingLimit } from '../src/portfolio-allocation.js';
-import { evaluateBondReserve } from '../src/bond-reserve.js';
+import { evaluateBondReserve, bondReserveTone } from '../src/bond-reserve.js';
 import { calculateBondHoldingDuration } from '../src/bond-holding-duration.js';
 import { getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav } from '../src/nav-estimates.js';
 import { loadNavEstimates, saveNavEstimates, NAV_ESTIMATE_STORAGE_KEY } from '../src/nav-estimate-store.js';
@@ -137,10 +137,10 @@ function harness(timestamp = '2026-01-08T02:00:00.000Z', options = {}) {
     };
   });
   const fetch = options.fetch || (async url => ({ ok: true, json: async () => ({ code: /([0-9]{6})\.json$/.exec(url)?.[1], history: [] }) }));
-  const api = new Function('describeModeEffect', 'recentNavPeriod', 'calculateLedger', 'estimateApplications', 'GUOFU_TRADING_DATES', 'createRefreshController', 'NAV_PERIODS', 'resolveNavRange', 'moveNavBoundary', 'summarizeNavRange', 'resolveNavSliderDomain', 'renderNavChart', 'buildTradeMarkers', 'calculateNavAnnualized', 'evaluateAnnualDiscipline', 'evaluateAddDiscipline', 'getNavDisciplineGap', 'setupNavChartInteractions', 'setupNavSliderInteractions', 'calculateTransactionPerformance', 'FUNDS', 'FUND_CODES', 'DISCIPLINE_ENTRIES', 'createDisciplineSync', 'REGION_DATA', 'evaluateUsExposure', 'calculateHoldingDuration', 'createHoldingDurationScale', 'openBondStore', 'renderBondsPage', 'calculateBondHoldingValue', 'evaluateBondReserve', 'calculatePortfolioAllocation', 'evaluateHoldingLimit', 'calculateBondHoldingDuration', 'getEstimateDates', 'getEstimateTargetDate', 'parseEstimatePercent', 'buildEstimatedNav', 'loadNavEstimates', 'saveNavEstimates', 'renderEstimatePanel', 'getDisciplineActions', 'adjustDisciplineRule', 'getNavChartDisplay', 'createFundViewportKeeper', 'document', 'location', 'window', 'matchMedia', 'localStorage', 'Date',
+  const api = new Function('describeModeEffect', 'recentNavPeriod', 'calculateLedger', 'estimateApplications', 'GUOFU_TRADING_DATES', 'createRefreshController', 'NAV_PERIODS', 'resolveNavRange', 'moveNavBoundary', 'summarizeNavRange', 'resolveNavSliderDomain', 'renderNavChart', 'buildTradeMarkers', 'calculateNavAnnualized', 'evaluateAnnualDiscipline', 'evaluateAddDiscipline', 'getNavDisciplineGap', 'setupNavChartInteractions', 'setupNavSliderInteractions', 'calculateTransactionPerformance', 'FUNDS', 'FUND_CODES', 'DISCIPLINE_ENTRIES', 'createDisciplineSync', 'REGION_DATA', 'evaluateUsExposure', 'calculateHoldingDuration', 'createHoldingDurationScale', 'openBondStore', 'renderBondsPage', 'calculateBondHoldingValue', 'evaluateBondReserve', 'bondReserveTone', 'calculatePortfolioAllocation', 'evaluateHoldingLimit', 'calculateBondHoldingDuration', 'getEstimateDates', 'getEstimateTargetDate', 'parseEstimatePercent', 'buildEstimatedNav', 'loadNavEstimates', 'saveNavEstimates', 'renderEstimatePanel', 'getDisciplineActions', 'adjustDisciplineRule', 'getNavChartDisplay', 'createFundViewportKeeper', 'document', 'location', 'window', 'matchMedia', 'localStorage', 'Date',
     'setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'scrollTo', 'scrollY', 'fetch', 'loadVault',
     `${source}\nreturn { state, startSession, checkSession, lock, render, remainingTime, actionClick, unlock, saveCashFlow, saveNavEstimateEdits, refreshCurrentData, dataRefresh, disciplineSync, chartOverlays, navRangeControls, navContext, navSliderDomain, navVisualValues, valuation, ledger, navPanel, fundRegions, sparkline, estimateHomePanel, bondReserveCheck, portfolioAllocation, annualDisciplineAlert, handles: () => ({ sessionInterval, sessionTimeout, dailyCodeReader }) };`)(
-    describeModeEffect, recentNavPeriod, calculateLedger, estimateApplications, GUOFU_TRADING_DATES, createRefreshController, NAV_PERIODS, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain, renderNavChart, buildTradeMarkers, calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap, setupNavChartInteractions, setupNavSliderInteractions, calculateTransactionPerformance, FUNDS, FUND_CODES, DISCIPLINE_ENTRIES, createDisciplineSync, REGION_DATA, evaluateUsExposure, calculateHoldingDuration, createHoldingDurationScale, fakeBondOpen, renderBondsPage, calculateBondHoldingValue, evaluateBondReserve, calculatePortfolioAllocation, evaluateHoldingLimit, calculateBondHoldingDuration, getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav, loadNavEstimates, saveNavEstimates, renderEstimatePanel, getDisciplineActions, adjustDisciplineRule, getNavChartDisplay, createFundViewportKeeper, document, location, window, () => ({ matches: false }), localStorage, clock.Date,
+    describeModeEffect, recentNavPeriod, calculateLedger, estimateApplications, GUOFU_TRADING_DATES, createRefreshController, NAV_PERIODS, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain, renderNavChart, buildTradeMarkers, calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap, setupNavChartInteractions, setupNavSliderInteractions, calculateTransactionPerformance, FUNDS, FUND_CODES, DISCIPLINE_ENTRIES, createDisciplineSync, REGION_DATA, evaluateUsExposure, calculateHoldingDuration, createHoldingDurationScale, fakeBondOpen, renderBondsPage, calculateBondHoldingValue, evaluateBondReserve, bondReserveTone, calculatePortfolioAllocation, evaluateHoldingLimit, calculateBondHoldingDuration, getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav, loadNavEstimates, saveNavEstimates, renderEstimatePanel, getDisciplineActions, adjustDisciplineRule, getNavChartDisplay, createFundViewportKeeper, document, location, window, () => ({ matches: false }), localStorage, clock.Date,
     clock.setTimeout, clock.clear, clock.setInterval, clock.clear, settings => scrollCalls.push(settings), scrollY, fetch, loadVault,
   );
   function start() {
@@ -1656,6 +1656,9 @@ test('the discipline endpoint updates state and the home on its independent inte
 });
 
 test('live discipline revisions recalculate exposure warnings and clear them when the rule is missing or unrecognizable', async () => {
+  const exposureInterface = () => h.app.innerHTML
+    .replace(/<a\b[^>]*href="#\/bonds"[^>]*>[\s\S]*?<\/a>/g, '')
+    .replace(/<(details|article)\b[^>]*data-discipline="bond-reserve"[\s\S]*?<\/\1>/g, '');
   const fixture = disciplineSyncHarness();
   const { h } = fixture;
   const rules = (revision, detail) => ({ revision, entries: [
@@ -1674,7 +1677,7 @@ test('live discipline revisions recalculate exposure warnings and clear them whe
   h.clock.tick(5000);
   await h.api.disciplineSync.check();
   assert.match(h.app.innerHTML, /<article\b[^>]*data-discipline="us-exposure"/);
-  assert.doesNotMatch(h.app.innerHTML, /data-panel="discipline-us-exposure"|exposure-badge|美股占比均达标|exposure-nav-warning|未完全遵守|data-exposure-fund=/);
+  assert.doesNotMatch(exposureInterface(), /data-panel="discipline-us-exposure"|exposure-badge|美股占比均达标|exposure-nav-warning|未完全遵守|data-exposure-fund=/);
 
   fixture.setPayload(rules('synthetic-exposure-decimal', '如果美股含量低于46.655%，则立刻降低该基金持仓。'));
   h.clock.tick(5000);
@@ -1689,7 +1692,7 @@ test('live discipline revisions recalculate exposure warnings and clear them whe
   fixture.setPayload(rules('synthetic-exposure-unknown', '按定期报告复核美股含量。'));
   h.clock.tick(5000);
   await h.api.disciplineSync.check();
-  assert.doesNotMatch(h.app.innerHTML, /exposure-nav-warning|status-chip exposure-warning|region-us-below/);
+  assert.doesNotMatch(exposureInterface(), /exposure-nav-warning|status-chip exposure-warning|region-us-below/);
   h.location.hash = '#/';
   h.api.render();
   assert.match(h.app.innerHTML, /<article\b[^>]*data-discipline="us-exposure"/);
@@ -1699,7 +1702,7 @@ test('live discipline revisions recalculate exposure warnings and clear them whe
   fixture.setPayload(rules('synthetic-exposure-removed', null));
   h.clock.tick(5000);
   await h.api.disciplineSync.check();
-  assert.doesNotMatch(h.app.innerHTML, /data-discipline="us-exposure"|exposure-nav-warning|未完全遵守/);
+  assert.doesNotMatch(exposureInterface(), /data-discipline="us-exposure"|exposure-nav-warning|未完全遵守/);
   assert.deepEqual(h.api.state.funds, funds);
   assert.equal(h.api.state.deadline, deadline);
   h.api.lock();
@@ -1927,7 +1930,7 @@ test('normal unlock opens the masked bond page with six navigation entries and t
     assert.ok(nav);
     assert.equal((nav.match(/<a /g) || []).length, 6);
     assert.equal((nav.match(/aria-current="page"/g) || []).length, 1);
-    assert.match(nav, /href="#\/bonds" class="active(?: [^"]*)?"\s+aria-current="page"/);
+    assert.match(nav, /href="#\/bonds" class="active(?: [^"]*)?"[^>]*aria-current="page"/);
   }
   assert.doesNotMatch(h.app.innerHTML, /annual-discipline-alert|id="bond-edit-form"/);
   assertBondDeadline(h, deadline);
@@ -1982,21 +1985,29 @@ function configureReserveFixture(h, { equityShares = 1000, bonds = syntheticBond
   h.api.render();
 }
 
-test('cash participates in reserve compliance and saving or clearing recalculates immediately', async () => {
+test('cash changes trigger red, yellow and green reserve notices immediately and clear safely', async () => {
   const { h } = bondsHarness();
   await h.submit();
-  configureReserveFixture(h);
-  assert.equal(h.api.bondReserveCheck().status, 'below');
-  assert.match(h.api.bondReserveCheck().message, /含自由现金流.*低于下限 1\/6.*替代条件也未满足/);
-  assert.match(reserveRule(h), /未完全遵守 · 比例偏低/);
+  configureReserveFixture(h, { equityShares: 50_000 });
+  assert.equal(h.api.bondReserveCheck().tone, 'red');
+  assert.match(reserveRule(h), /钱不多了/);
   showBonds(h);
   const save = value => h.api.saveCashFlow({ preventDefault() {}, target: { elements: { freeCashFlow: { value } } } });
   h.click('cash-edit');
-  await save('670');
+  await save('49670');
   assert.equal(h.api.bondReserveCheck().status, 'met');
+  assert.equal(h.api.bondReserveCheck().tone, 'yellow');
+  assert.equal(h.api.bondReserveCheck().notice, 'none');
   assert.equal(h.api.bondReserveCheck().ratio, .2);
   assert.equal(h.api.portfolioAllocation().shares[FUND_CODES[0]], .2);
   assert.match(h.app.innerHTML, /data-bond-reserve-share>20%/);
+  assert.doesNotMatch(h.app.innerHTML, /可以花钱了|钱不多了/);
+  h.click('cash-edit');
+  await save('249670');
+  assert.equal(h.api.bondReserveCheck().tone, 'green');
+  assert.equal(h.api.bondReserveCheck().notice, 'spend');
+  assert.match(h.app.innerHTML, /可以花钱了/);
+  assert.match(h.app.innerHTML, /class="bond-total-progress" data-bond-total-tone="green"/);
   h.api.state.cashUnavailable = true;
   assert.equal(h.api.bondReserveCheck().status, 'unknown');
   assert.match(h.api.bondReserveCheck().message, /自由现金流记录暂不可用/);
@@ -2004,28 +2015,40 @@ test('cash participates in reserve compliance and saving or clearing recalculate
   h.api.state.cashUnavailable = false;
   h.click('cash-edit');
   await save('');
-  assert.equal(h.api.bondReserveCheck().status, 'below');
+  assert.equal(h.api.bondReserveCheck().tone, 'red');
+  assert.match(h.app.innerHTML, /钱不多了/);
   h.api.lock();
 });
 
-test('reserve warnings distinguish high ratios, inclusive boundaries and the alternative absolute condition', () => {
+test('reserve colors trigger spending or low-cash reminders and keep both yellow boundaries quiet', () => {
   const h = harness();
   h.start();
   configureReserveFixture(h, { equityShares: 100 });
   assert.equal(h.api.bondReserveCheck().reason, 'share-high');
-  assert.match(h.api.bondReserveCheck().message, /高于上限 1\/3.*替代条件也未满足/);
-  assert.match(reserveRule(h), /未完全遵守 · 比例偏高/);
-  for (const [equity, cash] of [[500, 70], [200, 70]]) {
+  assert.match(reserveRule(h), /钱不多了/);
+  configureReserveFixture(h, { equityShares: 165 });
+  assert.equal(h.api.bondReserveCheck().status, 'met');
+  assert.equal(h.api.bondReserveCheck().notice, 'low-cash');
+  assert.match(reserveRule(h), /钱不多了/);
+  for (const [equity, cash] of [[62_500, 49_670], [25_000, 49_670]]) {
     configureReserveFixture(h, { equityShares: equity });
     h.api.state.freeCashFlow = cash;
     h.api.render();
     assert.equal(h.api.bondReserveCheck().status, 'met');
-    assert.doesNotMatch(reserveRule(h), /未完全遵守|待核验/);
+    assert.equal(h.api.bondReserveCheck().tone, 'yellow');
+    assert.match(reserveRule(h), /^<article\b/);
+    assert.doesNotMatch(reserveRule(h), /钱不多了|可以花钱了|待核验/);
   }
-  h.api.state.freeCashFlow = 50_000;
+  h.api.state.freeCashFlow = 100_000;
   h.api.render();
   assert.equal(h.api.bondReserveCheck().reason, 'absolute-threshold');
-  assert.doesNotMatch(reserveRule(h), /未完全遵守|比例偏高/);
+  assert.equal(h.api.bondReserveCheck().tone, 'green');
+  assert.match(reserveRule(h), /可以花钱了/);
+  for (const name of ['desktop-nav', 'bottom-nav']) {
+    const nav = h.app.innerHTML.match(new RegExp(`<nav class="${name}"[\\s\\S]*?<\\/nav>`))[0];
+    assert.match(nav, /bond-nav-spend/);
+    assert.match(nav, /data-bond-reserve-notice="spend"/);
+  }
   h.api.state.freeCashFlow = -331;
   h.api.render();
   assert.equal(h.api.bondReserveCheck().status, 'unknown');
@@ -2045,7 +2068,7 @@ test('the third home rule exposes only a failed reserve check and a link to the 
   assert.match(rule, /data-panel="discipline-bond-reserve"/);
   assert.match(rule, /data-bond-reserve-status="below"/);
   assert.match(rule, /discipline-entry-warning/);
-  assert.match(rule, /未完全遵守/);
+  assert.match(rule, /钱不多了/);
   assert.match(rule, /href="#\/bonds\?section=bond-reserve"/);
   assert.doesNotMatch(rule, /110\.00|220\.00|330\.00|4,000\.00|持有份额|成交净值/);
   assert.doesNotMatch(rule.slice(0, rule.indexOf('>')), /\sopen(?:\s|$|=)/);
@@ -2062,7 +2085,9 @@ test('the third home rule exposes only a failed reserve check and a link to the 
 test('a reserve within the allowed proportion has no extra compliance badge or disclosure', () => {
   const h = harness();
   h.start();
-  configureReserveFixture(h, { equityShares: 165 });
+  configureReserveFixture(h, { equityShares: 50_000 });
+  h.api.state.freeCashFlow = 49_670;
+  h.api.render();
   const rule = reserveRule(h);
   assert.match(rule, /^<article\b/);
   assert.match(rule, /1\/6/);
@@ -2081,6 +2106,7 @@ for (const [label, mutate] of [
   const h = harness();
   h.start();
   configureReserveFixture(h);
+  h.api.state.freeCashFlow = 49_670;
   mutate(h);
   h.api.render();
   const rule = reserveRule(h);
@@ -2101,8 +2127,9 @@ test('the independent absolute reserve condition can pass even when the equity a
   h.api.state.bonds[1].marketValue += 1;
   h.api.state.funds['005698'].incomplete = true;
   h.api.render();
-  assert.match(reserveRule(h), /^<article\b/);
-  assert.doesNotMatch(reserveRule(h), /待核验|未完全遵守|badge|data-panel=/);
+  assert.equal(h.api.bondReserveCheck().tone, 'unknown');
+  assert.match(reserveRule(h), /待核验/);
+  assert.doesNotMatch(reserveRule(h), /钱不多了|可以花钱了/);
   h.api.lock();
 });
 
@@ -2144,27 +2171,29 @@ test('bond reserve reason routes focus their summary once and return to the expa
   h.api.lock();
 });
 
-test('a quote refresh recalculates reserve compliance while retaining the original deadline', async () => {
+test('a quote refresh triggers a green spending reminder from a quiet yellow reserve without extending the session', async () => {
   const fixture = refreshingHarness();
   const { h } = fixture;
   await h.submit();
   await flushMicrotasks();
   await h.api.dataRefresh.check();
   h.api.state.bonds = [
-    { code: '006485', marketValue: 1, holdingProfit: 0 },
-    { code: '006663', marketValue: 1, holdingProfit: 0 },
+    { code: '006485', marketValue: 25_000, holdingProfit: 0 },
+    { code: '006663', marketValue: 25_000, holdingProfit: 0 },
   ];
+  for (const code of FUND_CODES) h.api.state.nav[code] = { history: [{ date: '2026-01-07', nav: 50_000 }] };
   h.api.state.bondUnavailable = false;
   h.api.render();
   assert.match(reserveRule(h), /^<article\b/);
-  assert.doesNotMatch(reserveRule(h), /未完全遵守|待核验/);
+  assert.equal(h.api.bondReserveCheck().tone, 'yellow');
+  assert.doesNotMatch(reserveRule(h), /钱不多了|可以花钱了|待核验/);
   const deadline = h.api.state.deadline;
   h.clock.advanceWithoutCallbacks(7000);
   fixture.setSnapshot('synthetic-reserve-new-quotes');
-  fixture.setQuoteReader(code => ({ code, history: [{ date: '2026-01-07', nav: 20 }] }));
+  fixture.setQuoteReader(code => ({ code, history: [{ date: '2026-01-07', nav: 200_000 }] }));
   await h.api.dataRefresh.check();
-  assert.match(reserveRule(h), /data-bond-reserve-status="below"/);
-  assert.match(reserveRule(h), /未完全遵守/);
+  assert.equal(h.api.bondReserveCheck().tone, 'green');
+  assert.match(reserveRule(h), /可以花钱了/);
   assertBondDeadline(h, deadline);
   h.api.lock();
 });

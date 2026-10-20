@@ -8,6 +8,48 @@ const entries = () => [
   { code: '006663', marketValue: 220, holdingProfit: 20 },
 ];
 
+const progress = html => html.match(/<div class="bond-total-progress"[\s\S]*?<p class="bond-total-progress-note">[\s\S]*?<\/p>\s*<\/div>/)?.[0] || '';
+
+test('total progress uses signed cash and prioritizes red below the exact threshold', () => {
+  for (const [cash, tone] of [[49_669.99, 'red'], [49_670, 'yellow'], [49_670.01, 'yellow']]) {
+    const html = progress(renderBondsPage({ entries: entries(), freeCashFlow: cash, reserve: { ratio: .25 } }));
+    assert.match(html, new RegExp(`data-bond-total-tone="${tone}"`));
+    assert.match(html, /role="progressbar"[^>]*aria-valuenow="25"/);
+    assert.match(html, /style="width:25%"/);
+    assert.doesNotMatch(html, /49,?6|50,?000|data-(?:amount|value|cost)=/);
+  }
+  assert.match(progress(renderBondsPage({ entries: entries(), reserve: { ratio: .25 } })), /data-bond-total-tone="red"/);
+});
+
+test('total progress uses inclusive ratio boundaries before rounding and green for other known ratios', () => {
+  for (const [ratio, tone] of [[0, 'green'], [1 / 6 - .000001, 'green'], [1 / 6, 'yellow'], [.25, 'yellow'], [1 / 3, 'yellow'], [1 / 3 + .000001, 'green'], [1, 'green']]) {
+    const html = progress(renderBondsPage({ entries: entries(), freeCashFlow: 49_670, reserve: { ratio } }));
+    assert.match(html, new RegExp(`data-bond-total-tone="${tone}"`));
+    assert.match(html, new RegExp(`aria-valuenow="${Math.round(ratio * 100)}"`));
+  }
+});
+
+test('unavailable totals or shares keep a neutral track without fabricated percentages or amounts', () => {
+  for (const options of [{ cashUnavailable: true, reserve: { ratio: .25 } }, { reserve: { ratio: null } }, { reserve: { ratio: NaN } }, { reserve: { ratio: -1 } }, { reserve: { ratio: 2 } }]) {
+    const html = progress(renderBondsPage({ entries: entries(), freeCashFlow: 49_670, ...options }));
+    assert.match(html, /data-bond-total-tone="unknown"/);
+    assert.match(html, /占比待核验/);
+    assert.doesNotMatch(html, /aria-valuenow|style="width:|role="progressbar"/);
+  }
+});
+
+test('reserve notes are conditional: red warns about cash, green invites spending, yellow stays quiet', () => {
+  for (const [cash, ratio, expected] of [[0, .25, '钱不多了'], [49_670, .5, '可以花钱了'], [49_670, .25, null]]) {
+    const html = renderBondsPage({ entries: entries(), freeCashFlow: cash, reserve: { ratio, status: 'met', message: 'SYNTHETIC_NOTICE' } });
+    const overview = html.match(/aria-label="债基合计"[\s\S]*?<\/section>/)[0];
+    if (expected) {
+      assert.ok(overview.includes(expected));
+      assert.match(overview, /SYNTHETIC_NOTICE/);
+      assert.match(overview, /href="#\/\?section=bond-reserve"/);
+    } else assert.doesNotMatch(overview, /bond-reserve-note|SYNTHETIC_NOTICE/);
+  }
+});
+
 test('partial screenshot records render both ledgers without inventing account totals or returns', () => {
   const transactions = { '006485': [{ id: 'synthetic-pending', date: '2024-01-02', type: 'buy', amount: 1,
     shares: null, nav: null, fee: null, status: 'pending', sourceStatus: 'unverified' }], '006663': [] };
@@ -16,7 +58,7 @@ test('partial screenshot records render both ledgers without inventing account t
   const overview = html.match(/<section[^>]*aria-label="债基合计"[\s\S]*?<\/section>/)[0];
   assert.match(overview, /合计持仓金额（元）/);
   assert.match(overview, /占总持仓比例（含自由现金流）/);
-  assert.equal((overview.match(/待核验/g) || []).length, 2);
+  assert.equal((overview.match(/<dl>[\s\S]*?<\/dl>/)[0].match(/待核验/g) || []).length, 2);
   assert.doesNotMatch(html, /交易记录已接入|暂不展示账户汇总|class="bonds-summary-return|1\.00/);
 });
 
@@ -79,7 +121,7 @@ test('the overview adds signed cash, preserves fund returns, and withholds unava
   }
   const html = renderBondsPage({ entries: entries(), cashUnavailable: true, visible: true, reserve: { ratio: .25 } });
   const overview = html.match(/aria-label="债基合计"[\s\S]*?<\/section>/)[0];
-  assert.equal((overview.match(/待核验/g) || []).length, 2);
+  assert.equal((overview.match(/<dl>[\s\S]*?<\/dl>/)[0].match(/待核验/g) || []).length, 2);
   assert.equal((html.match(/class="panel bond-card"/g) || []).length, 2);
 });
 

@@ -1,10 +1,21 @@
 // All values below are synthetic. No account files, storage or network are read.
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { BOND_RESERVE_RULE, evaluateBondReserve } from '../src/bond-reserve.js';
+import { BOND_RESERVE_RULE, evaluateBondReserve, bondReserveTone } from '../src/bond-reserve.js';
 
 const check = (equityValue, bondValue, complete = true) => evaluateBondReserve({ equityValue, bondValue, complete });
 const unknown = { status: 'unknown', ratio: null, reason: 'unavailable' };
+
+test('color notices prioritize low cash, keep the inclusive share range quiet and otherwise invite spending', () => {
+  for (const ratio of [0, 1 / 6, .25, 1 / 3, 1, null]) assert.equal(bondReserveTone(49_999.99, ratio), 'red');
+  for (const ratio of [1 / 6, .25, 1 / 3]) assert.equal(bondReserveTone(50_000, ratio), 'yellow');
+  for (const ratio of [0, 1 / 6 - .000001, 1 / 3 + .000001, 1]) assert.equal(bondReserveTone(50_000, ratio), 'green');
+  for (const value of [null, NaN, Infinity, -1, '50000']) assert.equal(bondReserveTone(value, .25), 'unknown');
+  for (const ratio of [null, NaN, Infinity, -1, 2, '.25']) assert.equal(bondReserveTone(50_000, ratio), 'unknown');
+  // Reaching the old either/or rule does not suppress the user's low-cash reminder.
+  assert.equal(check(150, 50).status, 'met');
+  assert.equal(bondReserveTone(50, .25), 'red');
+});
 
 test('the public rule exposes the inclusive share range and strict absolute threshold', () => {
   assert.deepEqual(BOND_RESERVE_RULE, { minRatio: 1 / 6, maxRatio: 1 / 3, absoluteThreshold: 50000 });

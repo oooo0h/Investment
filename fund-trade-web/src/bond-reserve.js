@@ -8,6 +8,15 @@ export const BOND_RESERVE_RULE = Object.freeze({
 const validValue = value => typeof value === 'number' && Number.isFinite(value) && value >= 0;
 const unavailable = () => ({ status: 'unknown', ratio: null, reason: 'unavailable' });
 
+// Display reminders follow the user's color priority, independently of rule compliance.
+// Inputs remain in memory; return only the presentation state.
+export function bondReserveTone(bondValue, ratio) {
+  if (!validValue(bondValue)) return 'unknown';
+  if (bondValue < BOND_RESERVE_RULE.absoluteThreshold) return 'red';
+  if (!validValue(ratio) || ratio > 1) return 'unknown';
+  return ratio >= BOND_RESERVE_RULE.minRatio && ratio <= BOND_RESERVE_RULE.maxRatio ? 'yellow' : 'green';
+}
+
 function decimal(value) {
   const [coefficient, power = '0'] = value.toString().split('e');
   const [whole, fraction = ''] = coefficient.split('.');

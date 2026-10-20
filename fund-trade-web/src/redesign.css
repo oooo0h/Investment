@@ -573,8 +573,24 @@ summary:active { background-color: color-mix(in srgb, var(--blue) 9%, transparen
 .bond-return { margin-top: 23px; padding-top: 19px; }
 .bond-return > strong { font-size: 24px; }
 .bond-form-error[hidden] { display: none; }
-.bond-holding-duration { --bond-recent: #b84445; --bond-middle: #8a6200; --bond-middle-fill: #e2bc47; --bond-mature: #28795e; margin-top: 17px; padding-top: 14px; border-top: 1px solid var(--line); }
-[data-theme="dark"] .bond-holding-duration { --bond-recent: #f29b9e; --bond-middle: #f2cd72; --bond-middle-fill: #e3ba4b; --bond-mature: #78d6b0; }
+.bond-holding-duration, .bond-total-progress { --bond-recent: #b84445; --bond-middle: #8a6200; --bond-middle-fill: #e2bc47; --bond-mature: #28795e; margin-top: 17px; padding-top: 14px; border-top: 1px solid var(--line); }
+[data-theme="dark"] .bond-holding-duration, [data-theme="dark"] .bond-total-progress { --bond-recent: #f29b9e; --bond-middle: #f2cd72; --bond-middle-fill: #e3ba4b; --bond-mature: #78d6b0; }
+.bond-total-progress { margin-block: 22px 16px; }
+.bond-total-progress-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 5px 12px; color: var(--muted); font-size: 12px; line-height: 1.7; }
+.bond-total-progress-status { font-weight: 600; font-variant-numeric: tabular-nums; }
+.bond-total-progress-legend { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; font-size: 12px; line-height: 1.7; }
+.bond-total-progress-legend > span { display: flex; align-items: baseline; gap: 6px; }
+.bond-total-progress-legend > span::before { content: ''; flex: 0 0 6px; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+.bond-total-progress-legend > :nth-child(2) { justify-content: center; }
+.bond-total-progress-legend > :last-child { justify-content: flex-end; }
+.bond-total-red, [data-bond-total-tone="red"] .bond-total-progress-status { color: var(--bond-recent); }
+.bond-total-yellow, [data-bond-total-tone="yellow"] .bond-total-progress-status { color: var(--bond-middle); }
+.bond-total-green, [data-bond-total-tone="green"] .bond-total-progress-status { color: var(--bond-mature); }
+.bond-total-progress-track > .bond-total-progress-fill { animation: none; }
+[data-bond-total-tone="red"] .bond-total-progress-fill { background: var(--bond-recent); }
+[data-bond-total-tone="yellow"] .bond-total-progress-fill { background: var(--bond-middle-fill); }
+[data-bond-total-tone="green"] .bond-total-progress-fill { background: var(--bond-mature); }
+.bond-total-progress-note { margin-top: 8px; color: var(--muted); font-size: 12px; line-height: 1.7; }
 .bond-duration-heading, .bond-duration-labels { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; color: var(--muted); font-size: 10px; line-height: 1.7; }
 .bond-duration-status { font-size: 10px; }
 .bond-duration-track { display: flex; height: 8px; margin-block: 9px 8px; overflow: hidden; border-radius: 8px; background: var(--line); }
@@ -649,8 +665,14 @@ summary:active { background-color: color-mix(in srgb, var(--blue) 9%, transparen
 .estimate-actions { display: flex; justify-content: flex-end; margin-top: 16px; padding-top: 18px; border-top: 1px solid var(--line); }
 .estimate-actions .button { min-width: 112px; }
 #bonds-reserve-summary { scroll-margin-top: 16px; }
-#bonds-reserve-summary[data-bond-reserve-status="below"] { border-color: color-mix(in srgb, var(--danger) 38%, var(--line)); background-color: color-mix(in srgb, var(--danger) 4%, var(--surface-glass)); }
-#bonds-reserve-summary[data-bond-reserve-status="unknown"] { border-color: var(--line); background-color: var(--surface-glass); }
+#bonds-reserve-summary[data-bond-reserve-tone="red"] { border-color: color-mix(in srgb, var(--danger) 38%, var(--line)); background-color: color-mix(in srgb, var(--danger) 4%, var(--surface-glass)); }
+#bonds-reserve-summary[data-bond-reserve-tone="unknown"] { border-color: var(--line); background-color: var(--surface-glass); }
+.bond-nav-spend, .bond-reserve-spend, .discipline-entry-spend, [data-bond-reserve-tone="green"] { --bond-spend: #28795e; }
+[data-theme="dark"] :is(.bond-nav-spend, .bond-reserve-spend, .discipline-entry-spend, [data-bond-reserve-tone="green"]) { --bond-spend: #78d6b0; }
+.desktop-nav a.bond-nav-spend, .bottom-nav a.bond-nav-spend { color: var(--bond-spend); }
+.bond-nav-spend .exposure-nav-dot { background: var(--bond-spend); }
+.bond-reserve-spend { color: var(--bond-spend); border-color: color-mix(in srgb, var(--bond-spend) 30%, var(--line)); background: color-mix(in srgb, var(--bond-spend) 8%, var(--paper)); }
+.discipline-home .discipline-entry-spend, #bonds-reserve-summary[data-bond-reserve-tone="green"] { border-color: color-mix(in srgb, var(--bond-spend) 38%, var(--line)); background-color: color-mix(in srgb, var(--bond-spend) 4%, var(--surface-glass)); }
 .bond-reserve-note { display: flex; align-items: flex-start; gap: 9px; margin-top: 20px; padding: 13px 15px; border: 1px solid var(--line); border-radius: 12px; background: var(--paper-2); color: var(--muted); font-size: 12px; line-height: 1.85; overflow-wrap: anywhere; }
 .bonds-summary > .bond-reserve-note:first-child { margin: 0 0 22px; }
 .bonds-state > .bond-reserve-note:first-child { margin-top: 0; }
@@ -663,7 +685,8 @@ summary:active { background-color: color-mix(in srgb, var(--blue) 9%, transparen
 .bond-reserve-note > .icon { width: 17px; height: 17px; margin-top: 3px; }
 .bond-reserve-note a { display: inline; margin-left: 8px; color: var(--blue); text-decoration: underline; text-underline-offset: 4px; }
 .bond-reserve-note a:focus-visible { outline: none; border-radius: 3px; background: var(--blue-tint); text-decoration-thickness: 2px; }
-[data-bond-reserve-status="below"] .bond-reserve-note { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 16%, var(--line)); background: color-mix(in srgb, var(--danger) 5%, var(--paper)); }
+[data-bond-reserve-tone="red"] .bond-reserve-note { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 16%, var(--line)); background: color-mix(in srgb, var(--danger) 5%, var(--paper)); }
+[data-bond-reserve-tone="green"] .bond-reserve-note { color: var(--bond-spend); border-color: color-mix(in srgb, var(--bond-spend) 16%, var(--line)); background: color-mix(in srgb, var(--bond-spend) 5%, var(--paper)); }
 .bond-reserve-share { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin-top: 18px; color: var(--muted); font-size: 12px; line-height: 1.85; overflow-wrap: anywhere; }
 .bond-reserve-share [data-bond-reserve-share] { color: var(--blue); font-size: 21px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
 [data-bond-reserve-status="below"] .bond-reserve-share [data-bond-reserve-share] { color: var(--danger); }
