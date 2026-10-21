@@ -14,17 +14,21 @@ import { REGION_DATA } from './region-data.js';
 import { evaluateUsExposure } from './us-exposure.js';
 import { calculatePortfolioAllocation, evaluateHoldingLimit } from './portfolio-allocation.js?v=20261020-cash-in-holdings';
 import { calculateHoldingDuration, createHoldingDurationScale } from './holding-duration.js';
-import { openBondStore } from './bond-store.js?v=20261020-pending-source-fix';
-import { calculateBondHoldingValue, addPendingPurchaseValue } from './bond-model.js?v=20261020-pending-purchases';
+import { openBondStore } from './bond-store.js?v=20261021-third-bond';
+import { calculateBondHoldingValue, addPendingPurchaseValue, BOND_CODES } from './bond-model.js?v=20261021-third-bond';
 import { evaluateBondReserve, bondReserveTone } from './bond-reserve.js?v=20261020-bond-color-notices';
-import { calculateBondHoldingDuration } from './bond-holding-duration.js?v=20261020-short-bond-seven-days';
-import { renderBondsPage } from './bonds-view.js?v=20261020-total-holding-label';
+import { calculateBondHoldingDuration } from './bond-holding-duration.js?v=20261021-third-bond';
+import { renderBondsPage } from './bonds-view.js?v=20261021-third-bond';
 import { getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav } from './nav-estimates.js?v=20261020-nav-dates-trades';
 import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js?v=20261020-nav-dates-trades';
 import { renderEstimatePanel } from './estimate-panel.js?v=20261020-nav-dates-trades';
 import { getDisciplineActions, adjustDisciplineRule } from './discipline-actions.js?v=20261019-sheet-discipline';
 import { getNavChartDisplay } from './nav-display.js';
 import { createFundViewportKeeper } from './viewport-anchor.js?v=20261019-flow-header';
+import { navDateForOrder } from './trading-calendar.js';
+import { buyFee } from './fee-rules.js?v=20261021-fee-rules';
+import { parseTransactionDate } from './transaction-date.js';
+import { renderTradeDialog, renderReviewDialog, TRADE_FUNDS } from './trade-dialog.js?v=20261022-card-board-v3';
 const TYPE_NAMES = { buy: '买入', sip: '定投', sell: '卖出', reinvest: '红利再投', dividend: '现金分红', 'transfer-in': '转入' };
 const STATUS_NAMES = { confirmed: '已确认', estimated: '历史估算', pending: '待确认', cancelled: '撤单', failed: '交易失败', closed: '交易关闭' };
 const state = { unlocked: false, visible: false, funds: {}, nav: {}, disciplines: DISCIPLINE_ENTRIES, bonds: [], freeCashFlow: null, cashEditing: false, cashDraft: null, cashBusy: false, cashError: '', bondUnavailable: true, bondUpdatedAt: null, navPreset: null, navCycles: { months: '1m', years: '1y' }, navRanges: {}, navDomains: {}, navVisuals: {}, expandedPanels: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null, deadline: 0, dayDeadline: 0, sessionDay: null };
@@ -84,7 +88,387 @@ if (typeof history !== 'undefined' && 'scrollRestoration' in history) {
   try { history.scrollRestoration = 'manual'; } catch { /* Older browsers keep their default restoration. */ }
 }
 const estimateSaveTimers = new Map();
+const beijingToday = () => new Date(Date.now() + 8 * 3600000).toISOString().slice(0, 10);
+const tradeFundLabel = code => TRADE_FUNDS.find(fund => fund.code === code)?.label || code;
+let localModePromise = null;
+let tradeEffects = null;
+let tradeEffectsLoading = null;
+
+function destroyTradeEffects() {
+  tradeEffects?.destroy();
+  tradeEffects = null;
+}
+
+async function ensureTradeEffects() {
+  if (!state.localMode || tradeEffects || tradeEffectsLoading) return tradeEffectsLoading;
+  if (typeof document.createElement !== 'function' || typeof window.WebGLRenderingContext === 'undefined') return null;
+  tradeEffectsLoading = import('./trade-effects.js?v=20261022-card-board-v3').then(({ createTradeEffects }) => {
+    if (!state.tradeOpen || !state.tradeDraft) return null;
+    tradeEffects = createTradeEffects({
+      theme: currentTheme() === 'dark' ? 'dark' : 'light',
+      reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches,
+    });
+    tradeEffects.start();
+    return tradeEffects;
+  }).catch(() => null).finally(() => { tradeEffectsLoading = null; });
+  const created = await tradeEffectsLoading;
+  if (created && state.tradeOpen) {
+    created.mount(app.querySelector('.trade-board'));
+    created.setMode(state.tradeDraft?.mode);
+    created.sync();
+  }
+  return created;
+}
+
+function probeLocalMode() {
+  if (localModePromise) return localModePromise;
+  localModePromise = fetch('./__local/health', { cache: 'no-store' })
+    .then(response => response.ok ? response.json() : null)
+    .then(payload => { state.localMode = payload?.mode === 'live'; return state.localMode; })
+    .catch(() => { state.localMode = false; localModePromise = null; return false; });
+  return localModePromise;
+}
+
+function defaultTradeDraft() {
+  return { mode: 'buy', code: '005698', targetCode: '016701', date: beijingToday(), cutoff: 'before', amount: '', outShares: '', fee: '' };
+}
+
+function tradeNavPreview(draft) {
+  const parsed = parseTransactionDate(draft.date || '');
+  if (parsed.error) return { error: parsed.error };
+  try { return { date: navDateForOrder(parsed.date, draft.cutoff), orderDate: parsed.date }; }
+  catch { return { error: '交易日历暂未覆盖该日期，请改用手工登记。' }; }
+}
+
+function pendingSellShares(code) {
+  const rows = BOND_CODES.includes(code) ? state.bondTransactions?.[code] || [] : state.funds[code]?.transactions || [];
+  return rows.filter(transaction => transaction.type === 'sell' && transaction.status === 'pending' && Number.isFinite(Number(transaction.shares)))
+    .reduce((sum, transaction) => sum + Number(transaction.shares), 0);
+}
+
+function currentFundShares(code) {
+  if (BOND_CODES.includes(code)) {
+    const lots = state.bondHoldingLots?.[code];
+    if (!lots || !Array.isArray(lots.lots)) return null;
+    const total = lots.lots.reduce((sum, lot) => {
+      const value = Number(lot.remainingShares ?? lot.shares);
+      return sum + (Number.isFinite(value) ? value : 0);
+    }, 0);
+    return Math.max(0, total - pendingSellShares(code));
+  }
+  const result = ledger(code);
+  if (result.errors.length || result.summary.valid !== true || getBook(code).incomplete) return null;
+  if (!Number.isFinite(result.summary.shares)) return null;
+  return Math.max(0, result.summary.shares - pendingSellShares(code));
+}
+
+function workbookTransaction(code, row) {
+  const id = `${code}-workbook-${row}`;
+  return state.funds[code]?.transactions?.find(transaction => transaction.id === id)
+    || state.bondTransactions?.[code]?.find(transaction => transaction.id === id)
+    || null;
+}
+
+function reviewRows() {
+  return Object.fromEntries(state.transfers.filter(record => record.status === 'filled').map(record => {
+    const out = workbookTransaction(record.outCode, record.outRow);
+    const inside = workbookTransaction(record.inCode, record.inRow);
+    return [record.id, {
+      out, in: inside,
+      outAmount: out?.amount ?? out?.confirmedAmount ?? null,
+      inAmount: inside?.amount ?? inside?.confirmedAmount ?? null,
+      outShares: out?.shares ?? null, inShares: inside?.shares ?? null,
+      outFee: out?.fee ?? null, inFee: inside?.fee ?? null,
+    }];
+  }));
+}
+
+async function syncTransfers({ reconcile = false, quiet = false } = {}) {
+  if (!state.localMode || state.transferBusy || !state.unlocked) return;
+  state.transferBusy = true;
+  let updated = 0;
+  try {
+    if (reconcile) {
+      try {
+        const response = await fetch('./__local/transfers/reconcile', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
+        if (response.ok) { const payload = await response.json(); updated = payload.updated || 0; }
+      } catch { /* The reminder keeps its previous state. */ }
+    }
+    const response = await fetch('./__local/transfers', { cache: 'no-store' });
+    if (!response.ok || !state.unlocked) return;
+    const payload = await response.json();
+    if (Array.isArray(payload.records)) state.transfers = payload.records;
+    if (payload.counts) state.transferCounts = payload.counts;
+    if (!quiet && !state.tradeOpen && !state.reviewId) {
+      const position = scrollY;
+      render();
+      scrollTo({ top: position, behavior: 'instant' });
+    }
+    if (updated) dataRefresh.check();
+  } finally { state.transferBusy = false; }
+}
+
+function focusDialog() {
+  window.requestAnimationFrame(() => {
+    const target = state.tradeOpen
+      ? app.querySelector?.('.trade-dialog [name="date"]')
+      : app.querySelector?.('.trade-dialog [name="outAmount"]') || app.querySelector?.('.trade-dialog .trade-dialog-close');
+    if (typeof target?.focus === 'function') target.focus({ preventScroll: true });
+  });
+}
+
+function tradeDialogHtml() {
+  if (!state.tradeOpen || !state.tradeDraft) return '';
+  const sharesByCode = Object.fromEntries(TRADE_FUNDS.map(fund => [fund.code, currentFundShares(fund.code)]));
+  return renderTradeDialog({
+    draft: state.tradeDraft,
+    navPreview: tradeNavPreview(state.tradeDraft),
+    currentShares: state.tradeDraft.mode !== 'buy' ? currentFundShares(state.tradeDraft.code) : null,
+    sharesByCode,
+    busy: state.tradeBusy,
+    error: state.tradeError,
+    visible: state.visible,
+  });
+}
+
+function refreshTradeDialog(focusSelector = '') {
+  if (!state.tradeOpen || !state.tradeDraft) return;
+  if (typeof app.insertAdjacentHTML !== 'function') { render(); return; }
+  const current = app.querySelector('.trade-register-backdrop');
+  const markup = tradeDialogHtml();
+  if (current && 'outerHTML' in current) current.outerHTML = markup;
+  else app.insertAdjacentHTML('beforeend', markup);
+  document.body?.classList?.add('trade-dialog-open');
+  tradeEffects?.mount(app.querySelector('.trade-board'));
+  tradeEffects?.setMode(state.tradeDraft.mode);
+  tradeEffects?.setTheme(currentTheme() === 'dark' ? 'dark' : 'light');
+  tradeEffects?.sync();
+  if (focusSelector) app.querySelector(focusSelector)?.focus?.({ preventScroll: true });
+}
+
+function openTradeDialog() {
+  if (!state.localMode) { toast('交易登记仅在本地模式可用。'); return; }
+  if (!state.unlocked || !checkSession()) return;
+  state.tradeOpen = true;
+  state.tradeMode = 'buy';
+  const code = selectedCode() || '005698';
+  state.tradeDraft = { ...defaultTradeDraft(), code, targetCode: code === '016701' ? '005698' : '016701' };
+  state.tradeError = '';
+  state.tradeBusy = false;
+  if (typeof app.insertAdjacentHTML === 'function') {
+    app.querySelector('.trade-register-backdrop')?.remove();
+    app.insertAdjacentHTML('beforeend', tradeDialogHtml());
+    document.body?.classList?.add('trade-dialog-open');
+    focusDialog();
+  } else {
+    render();
+    focusDialog();
+  }
+  void ensureTradeEffects();
+}
+
+function closeTradeDialog() {
+  if (state.tradeBusy) return;
+  state.tradeOpen = false;
+  state.tradeDraft = null;
+  state.tradeError = '';
+  const dialog = app.querySelector?.('.trade-register-backdrop');
+  if (dialog?.remove) {
+    dialog.remove();
+    document.body?.classList?.toggle('trade-dialog-open', Boolean(state.reviewId || state.reviewResult));
+    destroyTradeEffects();
+    app.querySelector('[data-action="trade-open"]')?.focus?.({ preventScroll: true });
+    return;
+  }
+  render();
+}
+
+function tradeFundPool(side) {
+  if (!state.tradeDraft) return TRADE_FUNDS;
+  if (side === 'out') return TRADE_FUNDS.filter(fund => fund.code !== state.tradeDraft.targetCode);
+  if (side === 'in') return TRADE_FUNDS.filter(fund => fund.code !== state.tradeDraft.code);
+  return TRADE_FUNDS;
+}
+
+function focusTradeCarousel(side) {
+  window.requestAnimationFrame(() => {
+    app.querySelector?.(`.fund-carousel[data-carousel="${side}"]`)?.focus?.({ preventScroll: true });
+  });
+}
+
+function setTradeFund(side, code) {
+  const draft = state.tradeDraft;
+  if (!draft || !TRADE_FUNDS.some(fund => fund.code === code)) return;
+  if (side === 'in') draft.targetCode = code;
+  else draft.code = code;
+  state.tradeError = '';
+  refreshTradeDialog();
+  tradeEffects?.pulse('wheel');
+  focusTradeCarousel(side);
+}
+
+function stepTradeFund(side, direction) {
+  const draft = state.tradeDraft;
+  if (!draft || !Number.isFinite(direction) || direction === 0) return;
+  const pool = tradeFundPool(side);
+  if (pool.length < 2) return;
+  const current = side === 'in' ? draft.targetCode : draft.code;
+  const index = Math.max(0, pool.findIndex(fund => fund.code === current));
+  const next = pool[(index + direction + pool.length) % pool.length];
+  setTradeFund(side, next.code);
+}
+
+let tradeWheelAt = 0;
+function useTradeWheel(event) {
+  if (!state.tradeOpen || !state.tradeDraft || !state.unlocked || state.tradeBusy) return;
+  const carousel = event.target.closest?.('.fund-carousel');
+  if (!carousel || event.target.closest?.('input, textarea, select, button')) return;
+  event.preventDefault();
+  const now = Date.now();
+  if (now - tradeWheelAt < 180) return;
+  tradeWheelAt = now;
+  stepTradeFund(carousel.dataset.carousel, event.deltaY > 0 ? 1 : -1);
+}
+
+function useTradeCarouselKey(event) {
+  if (!state.tradeOpen || !state.tradeDraft || state.tradeBusy) return;
+  if (!['ArrowUp', 'ArrowDown'].includes(event.key)) return;
+  const carousel = event.target.closest?.('.fund-carousel');
+  if (!carousel || event.target.closest?.('input, textarea, select, button')) return;
+  event.preventDefault();
+  stepTradeFund(carousel.dataset.carousel, event.key === 'ArrowDown' ? 1 : -1);
+}
+
+function reverseTradeFunds() {
+  const draft = state.tradeDraft;
+  if (!draft || draft.mode !== 'transfer' || state.tradeBusy) return;
+  [draft.code, draft.targetCode] = [draft.targetCode, draft.code];
+  draft.outShares = '';
+  state.tradeError = '';
+  refreshTradeDialog();
+  tradeEffects?.pulse('reverse');
+  focusTradeCarousel('out');
+}
+
+function openReviewDialog(id = null) {
+  if (!state.localMode || state.reviewBusy) return;
+  const filled = state.transfers.filter(record => record.status === 'filled');
+  const record = filled.find(item => item.id === id) || filled[0] || null;
+  if (!record) { toast('暂无待二次核对的转换记录。'); return; }
+  const rows = reviewRows()[record.id] || {};
+  state.reviewId = record.id;
+  state.reviewDraft = {
+    outAmount: Number.isFinite(rows.outAmount) ? String(rows.outAmount) : '',
+    inAmount: Number.isFinite(rows.inAmount) ? String(rows.inAmount) : '',
+    outFee: Number.isFinite(rows.outFee) ? String(rows.outFee) : '0',
+    inFee: Number.isFinite(rows.inFee) ? String(rows.inFee) : '0',
+    inShares: '',
+  };
+  state.reviewError = '';
+  state.reviewResult = null;
+  render();
+  focusDialog();
+}
+
+function closeReviewDialog() {
+  if (state.reviewBusy) return;
+  state.reviewId = null;
+  state.reviewDraft = null;
+  state.reviewError = '';
+  state.reviewResult = null;
+  render();
+}
+
+async function submitTrade() {
+  if (!state.tradeDraft || state.tradeBusy) return;
+  const draft = state.tradeDraft;
+  const parsed = parseTransactionDate(draft.date || '');
+  if (parsed.error) { state.tradeError = parsed.error; refreshTradeDialog('[name="date"]'); return; }
+  const payload = { mode: draft.mode, date: parsed.date, cutoff: draft.cutoff };
+  if (draft.mode === 'buy') {
+    payload.code = draft.code;
+    payload.amount = draft.amount;
+  } else {
+    if (draft.mode === 'transfer' && draft.code === draft.targetCode) { state.tradeError = '转出基金和转入基金不能相同。'; refreshTradeDialog(); return; }
+    const available = currentFundShares(draft.code);
+    const outShares = Number(draft.outShares);
+    const label = draft.mode === 'sell' ? '卖出' : '转出';
+    if (!Number.isFinite(available)) { state.tradeError = `当前持仓份额待核验，暂不能登记${label}。`; refreshTradeDialog(); return; }
+    if (!Number.isFinite(outShares) || outShares <= 0) { state.tradeError = `请填写有效的${label}份额。`; refreshTradeDialog('[name="outShares"]'); return; }
+    if (outShares > available + 0.000001) { state.tradeError = `${label}份额不能超过当前持有份额。`; refreshTradeDialog('[name="outShares"]'); return; }
+    payload.code = draft.code;
+    payload.outShares = draft.outShares;
+    if (draft.mode === 'transfer') payload.targetCode = draft.targetCode;
+  }
+  state.tradeBusy = true;
+  state.tradeError = '';
+  refreshTradeDialog();
+  try {
+    const response = await fetch('./__local/transactions', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || '登记未完成，请稍后重试。');
+    state.tradeOpen = false;
+    state.tradeDraft = null;
+    toast(draft.mode === 'transfer' ? '转换已登记，净值公布后提醒核对'
+      : draft.mode === 'sell' && result.awaiting ? '卖出已登记，净值公布后回填到账金额' : '交易已写入交易记录表');
+    await syncTransfers({ reconcile: draft.mode !== 'buy', quiet: true });
+    dataRefresh.check();
+  } catch (error) {
+    state.tradeError = error?.message || '登记未完成，请稍后重试。';
+  } finally {
+    state.tradeBusy = false;
+    if (state.tradeOpen) refreshTradeDialog();
+    else if (state.unlocked) render();
+  }
+}
+
+async function submitReview() {
+  if (!state.reviewId || !state.reviewDraft || state.reviewBusy) return;
+  state.reviewBusy = true;
+  state.reviewError = '';
+  render();
+  try {
+    const response = await fetch('./__local/transfers/review', { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: state.reviewId, ...state.reviewDraft }) });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || '核对未完成，请稍后重试。');
+    state.reviewResult = { id: state.reviewId, difference: result.difference ?? 0 };
+    state.reviewId = null;
+    state.reviewDraft = null;
+    toast('转换已核对，交易表已更新');
+    await syncTransfers({ quiet: true });
+    dataRefresh.check();
+  } catch (error) {
+    state.reviewError = error?.message || '核对未完成，请稍后重试。';
+  } finally {
+    state.reviewBusy = false;
+    if (state.unlocked) render();
+  }
+}
+
+async function applyReviewCash() {
+  if (!state.reviewResult || state.reviewBusy) return;
+  if (!bondStore || state.cashUnavailable) { state.reviewError = '自由现金流暂不可用，请先解锁债基数据后重试。'; render(); return; }
+  if (!Number.isFinite(state.freeCashFlow)) { state.reviewError = '请先在债基页填写自由现金流，再确认差额。'; render(); return; }
+  const next = state.freeCashFlow + state.reviewResult.difference;
+  state.reviewBusy = true;
+  try {
+    const saved = await bondStore.saveFreeCashFlow(next);
+    state.freeCashFlow = Number.isFinite(saved.freeCashFlow) ? saved.freeCashFlow : next;
+    toast('差额已计入自由现金流');
+    state.reviewResult = null;
+    state.reviewError = '';
+  } catch {
+    state.reviewError = '自由现金流保存未成功，请重试。';
+  } finally {
+    state.reviewBusy = false;
+    if (state.unlocked) render();
+  }
+}
 Object.assign(state, { bondHoldingLots: {}, bondTransactions: {}, bondExpanded: {}, cashUnavailable: false });
+Object.assign(state, { localMode: false, tradeOpen: false, tradeMode: 'buy', tradeDraft: null, tradeBusy: false, tradeError: '',
+  transfers: [], transferCounts: { awaiting: 0, review: 0, reviewed: 0, total: 0 }, transferBusy: false,
+  reviewId: null, reviewDraft: null, reviewBusy: false, reviewError: '', reviewResult: null });
 const holdingFractions = new Map();
 const dataRefresh = createRefreshController({
   readVersion: async () => {
@@ -157,6 +541,7 @@ function animateChange(update) {
 function setTheme(theme) {
   document.documentElement.dataset.theme = theme;
   document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#101825' : '#245bdc';
+  tradeEffects?.setTheme(theme);
 }
 try { setTheme(localStorage.getItem('fund-ledger-theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')); }
 catch { setTheme(matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); }
@@ -260,6 +645,10 @@ async function unlock(event) {
     render();
     disciplineSync.start();
     if (vaultSession) dataRefresh.start();
+    void probeLocalMode().then(mode => {
+      if (!mode || !state.unlocked || !checkSession()) return;
+      void syncTransfers({ reconcile: true, quiet: true }).then(() => { if (state.unlocked) render(); });
+    });
   } catch (error) {
     password = '';
     openedSession?.close();
@@ -316,6 +705,20 @@ function lock(reason = 'manual') {
   state.filter = 'all';
   state.statusFilter = 'all';
   state.expandedPanels = {};
+  state.tradeOpen = false;
+  destroyTradeEffects();
+  state.tradeDraft = null;
+  state.tradeBusy = false;
+  state.tradeError = '';
+  state.transfers = [];
+  state.transferCounts = { awaiting: 0, review: 0, reviewed: 0, total: 0 };
+  state.transferBusy = false;
+  state.reviewId = null;
+  state.reviewDraft = null;
+  state.reviewBusy = false;
+  state.reviewError = '';
+  state.reviewResult = null;
+  document.body?.classList?.remove('trade-dialog-open');
   state.navEstimateEntries = [];
   state.estimateDrafts = {};
   state.estimateDirections = {};
@@ -465,6 +868,7 @@ async function refreshCurrentData(version) {
   app.querySelectorAll('.transaction-detail').forEach(detail => { if (expanded.includes(detail.dataset.id)) detail.open = true; });
   scrollTo({ top: position, behavior: 'instant' });
   toast('数据已更新');
+  void syncTransfers({ reconcile: true, quiet: true });
 }
 
 async function loadPublicNav() {
@@ -650,7 +1054,7 @@ function portfolioAllocation() {
     const result = ledger(fund.code);
     return { code: fund.code, marketValue: result.summary.valid === true && !result.errors.length && !getBook(fund.code).incomplete ? result.summary.marketValue : null };
   });
-  return calculatePortfolioAllocation([...positions, ...(!state.bondUnavailable && !state.cashUnavailable ? bondPositions() : [])], [...FUND_CODES, '006485', '006663'], state.freeCashFlow);
+  return calculatePortfolioAllocation([...positions, ...(!state.bondUnavailable && !state.cashUnavailable ? bondPositions() : [])], [...FUND_CODES, ...BOND_CODES], state.freeCashFlow);
 }
 
 // Account values remain in memory. Purchases, withdrawals and dividends inside
@@ -710,6 +1114,7 @@ function exposureNavTitle(fund, check) {
 function bondReserveCheck() {
   let bondValue = null, equityValue = 0;
   const missing = [];
+  const missingBonds = BOND_CODES.filter(code => !state.bonds.some(entry => entry.code === code));
   if (!state.bondUnavailable && !state.cashUnavailable) {
     try { bondValue = calculateBondHoldingValue(bondPositions(), state.freeCashFlow); } catch { /* Unavailable is never zero. */ }
   }
@@ -730,7 +1135,9 @@ function bondReserveCheck() {
       ? `债基总持仓（含自由现金流）已不低于5万元，当前占总持仓约 ${number(check.ratio * 100, 0)}%，在1/6～1/3区间之外，可按计划花钱。`
     : tone === 'unknown'
       ? state.cashUnavailable ? '自由现金流记录暂不可用，无法核验债基总持仓与配置比例。'
-        : bondValue === null ? '债基数据暂不可用，无法核验配置。'
+        : bondValue === null ? !state.bondUnavailable && missingBonds.length
+          ? `${missingBonds.join('、')}持仓资料待补全，暂无法核验债基总持仓与配置比例。`
+          : '债基数据暂不可用，无法核验配置。'
         : bondValue < 0 ? '债基与自由现金流合计为负，配置比例待核验。'
         : missing.length ? `${missing.join('、')}持仓资料不完整，暂无法核验债基占比。`
           : '总持仓暂无有效估值，无法核验债基占比。'
@@ -751,14 +1158,22 @@ function bondNavMarkup(active, check, mobile = false) {
 
 function header(code, reserve) {
   const bonds = selectedBonds(), home = !code && !bonds;
+  const review = state.transferCounts.review || 0;
   return `<header class="site-header"><div class="header-inner">
     <a href="#/" class="brand" aria-label="基金账本首页"><span class="brand-mark">${icon('book')}</span><span class="brand-copy"><span>基金账本</span><span id="session-timer" class="session-timer" role="timer" aria-label="本次解锁剩余时间" aria-live="off">剩余 ${remainingTime()}</span></span></a>
     <nav class="desktop-nav" aria-label="主要导航"><a href="#/" class="${home ? 'active' : ''}" ${home ? 'aria-current="page"' : ''}>交易纪律</a>${FUNDS.map(fund => {
       const check = fundExposure(fund.code), below = check.status === 'below';
       return `<a href="#/fund/${fund.code}" class="${code === fund.code ? 'active' : ''}${below ? ' exposure-nav-warning' : ''}" ${code === fund.code ? 'aria-current="page"' : ''} title="${esc(exposureNavTitle(fund, check))}"${below ? ` aria-label="${esc(fund.navLabel)}，美股含量未达标"` : ''}>${fund.navLabel}${below ? '<span class="exposure-nav-dot" aria-hidden="true"></span>' : ''}</a>`;
     }).join('')}${bondNavMarkup(bonds, reserve)}</nav>
+    ${state.localMode ? `<button type="button" class="nav-add" data-action="trade-open" aria-label="同步交易记录${review ? `，${review} 笔转换待核对` : ''}" title="同步交易记录"><span class="nav-add-plus" aria-hidden="true">+</span><span class="nav-add-text">同步交易记录</span>${review ? `<span class="nav-add-badge" aria-hidden="true">${review}</span>` : ''}</button>` : ''}
     <div class="header-actions"><button type="button" class="icon-button" data-action="privacy" aria-label="${state.visible ? '隐藏' : '显示'}金额和份额" title="${state.visible ? '隐藏' : '显示'}金额和份额" aria-pressed="${state.visible}">${icon(state.visible ? 'eye' : 'eye-off')}</button>${themeButton()}<button type="button" class="icon-button" data-action="lock" aria-label="加锁账本" title="加锁账本">${icon('lock')}</button></div>
   </div></header>`;
+}
+
+function transferBanner() {
+  const review = state.transferCounts.review || 0;
+  if (!state.localMode || !review) return '';
+  return `<button type="button" class="transfer-banner" data-action="transfer-review"><span class="transfer-banner-dot" aria-hidden="true"></span><span class="transfer-banner-copy"><strong>${review} 笔转换待二次核对</strong><small>双方真实净值已更新，点击核对实际金额与退回现金。</small></span>${icon('arrow')}</button>`;
 }
 
 function bottomNav(code, reserve) {
@@ -804,8 +1219,27 @@ function render() {
   if (locate && fund && section === 'us-exposure') state.expandedPanels['fund-basics'] = true;
   const bonds = selectedBonds();
   const reserve = bondReserveCheck();
+  const reviewRecords = state.transfers.filter(record => record.status === 'filled');
+  if (state.reviewId && !reviewRecords.some(record => record.id === state.reviewId)) {
+    state.reviewId = null;
+    state.reviewDraft = null;
+  }
+  const tradeMarkup = tradeDialogHtml();
+  const reviewMarkup = state.reviewId || state.reviewResult ? renderReviewDialog({
+    records: reviewRecords, rows: reviewRows(), reviewId: state.reviewId, draft: state.reviewDraft,
+    fundName: tradeFundLabel, busy: state.reviewBusy, error: state.reviewError, result: state.reviewResult,
+  }) : '';
   document.title = fund ? `${fund.short}账本 · 基金账本` : bonds ? '债基 · 基金账本' : '交易纪律 · 基金账本';
-  app.innerHTML = `${header(fund?.code, reserve)}${fund ? fundPage(fund) : bonds ? renderBondsPage({ entries: state.bonds, valuationDate: state.bondValuationDate, visible: state.visible, transactions: state.bondTransactions, expandedByCode: { ...(desktopPanelsOpen() ? { "006485": true, "006663": true } : {}), ...state.bondExpanded }, holdingByCode: bondHoldingPeriods(), unavailable: state.bondUnavailable, reserve, locateReserve: section === 'bond-reserve', freeCashFlow: state.freeCashFlow, cashEditing: state.cashEditing, cashDraft: state.cashDraft, cashError: state.cashError, cashBusy: state.cashBusy, cashUnavailable: state.cashUnavailable }) : homePage(reserve)}${bottomNav(fund?.code, reserve)}`;
+  app.innerHTML = `${header(fund?.code, reserve)}${transferBanner()}${fund ? fundPage(fund) : bonds ? renderBondsPage({ entries: state.bonds, valuationDate: state.bondValuationDate, visible: state.visible, transactions: state.bondTransactions, expandedByCode: { ...(desktopPanelsOpen() ? Object.fromEntries(BOND_CODES.map(code => [code, true])) : {}), ...state.bondExpanded }, holdingByCode: bondHoldingPeriods(), unavailable: state.bondUnavailable, reserve, locateReserve: section === 'bond-reserve', freeCashFlow: state.freeCashFlow, cashEditing: state.cashEditing, cashDraft: state.cashDraft, cashError: state.cashError, cashBusy: state.cashBusy, cashUnavailable: state.cashUnavailable }) : homePage(reserve)}${bottomNav(fund?.code, reserve)}${tradeMarkup}${reviewMarkup}`;
+  document.body?.classList?.toggle('trade-dialog-open', Boolean(state.tradeOpen || state.reviewId || state.reviewResult));
+  if (state.tradeOpen) {
+    tradeEffects?.mount(app.querySelector('.trade-board'));
+    tradeEffects?.setMode(state.tradeDraft?.mode);
+    tradeEffects?.setTheme(currentTheme() === 'dark' ? 'dark' : 'light');
+    tradeEffects?.sync();
+  } else {
+    destroyTradeEffects();
+  }
   app.querySelectorAll('.nav-periods').forEach(periods => { periods.scrollLeft = 0; });
   // Reveal a horizontally clipped tab without scrollIntoView moving the document.
   app.querySelectorAll('.desktop-nav, .bottom-nav').forEach(nav => {
@@ -1241,10 +1675,13 @@ function transactionCard(row, book, performance = {}) {
   const out = row.type === 'sell' || row.type === 'dividend';
   const label = included ? estimated ? '估算成交' : '已确认'
     : row.status === 'excluded' ? ['cancelled', '撤单'].includes(tx.status) || tx.sourceStatus === 'cancelled' ? '已撤单' : STATUS_NAMES[tx.status] || '未计入'
-    : row.status === 'pending' ? tx.sourceStatus === 'processing' ? '进行中' : ['unverified', 'incomplete'].includes(tx.sourceStatus) ? '资料待补全' : '待确认'
+    : row.status === 'pending' ? tx.transferStatus === 'awaiting' ? '转换待净值' : tx.transferStatus === 'review' ? '转换待核对' : tx.registrationStatus === 'awaiting' ? '卖出待净值' : tx.sourceStatus === 'processing' ? '进行中' : ['unverified', 'incomplete'].includes(tx.sourceStatus) ? '资料待补全' : '待确认'
     : row.status === 'error' ? '待修正' : '前序待修正';
   const hasNote = tx.note !== undefined && tx.note !== null && String(tx.note).trim() !== '';
-  const displayDate = tx.dateBasis === 'order' ? `交易日期（下单） ${esc(tx.submittedAt || row.date)}` : included && row.date ? `${estimated ? '估算净值日期' : '净值日期'} ${esc(row.date)}` : tx.submittedAt ? `申请日期 ${esc(tx.submittedAt)}` : esc(row.date || '净值日期待填');
+  const orderSuffix = tx.orderDate && tx.orderDate !== row.date ? ` · 下单日 ${esc(tx.orderDate)}` : '';
+  const displayDate = tx.dateBasis === 'order' ? `成交日期（下单） ${esc(tx.submittedAt || row.date)}`
+    : row.date ? `${included ? (estimated ? '估算净值日期' : '净值日期') : '计划净值日'} ${esc(row.date)}${orderSuffix}`
+    : tx.submittedAt ? `申请日期 ${esc(tx.submittedAt)}` : '净值日期待填';
   const detailMetrics = [
     `<div><dt>成交净值</dt><dd class="num">${number(values.nav, 4)}</dd></div>`,
     metric(estimated ? '估算份额' : '确认份额', values.shares, 2), metric('实际手续费', values.fee),
@@ -1253,7 +1690,10 @@ function transactionCard(row, book, performance = {}) {
     ...(performance.kind === 'lot' ? [metric('本笔剩余份额', performance.remainingShares, 2), metric('本笔剩余成本', performance.remainingCost), metric('本笔卖出回款', performance.proceeds), metric('本笔分红', performance.cashDividends), metric('本笔已实现盈亏', performance.realizedProfit, 2, signClass(performance.realizedProfit)), metric('本笔未实现盈亏', performance.unrealizedProfit, 2, signClass(performance.unrealizedProfit))] : []),
   ];
   const profitLabel = performance.kind === 'sell' ? performance.estimated ? '本笔已实现盈亏（估算）' : '本笔已实现盈亏' : performance.kind === 'dividend' ? '本笔分红收益' : performance.estimated ? '本笔累计盈亏（估算）' : '本笔累计盈亏';
-  const pendingHint = tx.sourceStatus === 'processing' ? ['buy', 'sip'].includes(tx.type) ? '等待成交确认，买入金额已计入市值' : '等待成交确认，份额与收益暂不计入' : Number.isFinite(tx.nav) && tx.nav > 0 ? '表格资料待补全' : '表格净值待补全';
+  const pendingHint = tx.transferStatus === 'awaiting' ? '转换待两端净值公布；金额、份额与收益暂不计入'
+    : tx.transferStatus === 'review' ? '转换待二次核对；核对前两端暂不计入'
+    : tx.registrationStatus === 'awaiting' ? '卖出待净值公布；份额已登记，到账金额与收益暂不计入'
+    : tx.sourceStatus === 'processing' ? ['buy', 'sip'].includes(tx.type) ? '等待成交确认，买入金额已计入市值' : '等待成交确认，份额与收益暂不计入' : Number.isFinite(tx.nav) && tx.nav > 0 ? '表格资料待补全' : '表格净值待补全';
   const profitSummary = pending
     ? `<span class="transaction-pending-hint">${pendingHint}</span>`
     : `<span class="transaction-profit-summary"><span class="transaction-profit-label">${profitLabel}</span><span class="transaction-profit-values"><strong class="transaction-profit-value num ${signClass(performance.profit)}">${sensitive(performance.profit)}</strong>${performance.kind === 'dividend' ? '' : `<span class="transaction-profit-rate num ${signClass(performance.returnRate)}">${percent(performance.returnRate)}</span>`}</span></span>`;
@@ -1282,6 +1722,8 @@ app.addEventListener('submit', event => {
     return;
   }
   if (event.target.id === 'cash-flow-form') return saveCashFlow(event);
+  if (event.target.id === 'trade-form') { event.preventDefault(); void submitTrade(); return; }
+  if (event.target.id === 'review-form') { event.preventDefault(); void submitReview(); return; }
 });
 app.addEventListener('change', event => {
   if (!state.unlocked || !checkSession()) return;
@@ -1300,6 +1742,8 @@ app.addEventListener('change', event => {
     scrollTo({ top: position, behavior: 'instant' });
   }
 });
+app.addEventListener('wheel', useTradeWheel, { passive: false });
+app.addEventListener('keydown', useTradeCarouselKey);
 function setEstimateDirection(code, direction, source = null) {
   state.estimateDirections[code] = direction;
   const row = source?.closest?.('.estimate-row') || app.querySelector(`[data-estimate-fund="${code}"]`);
@@ -1316,6 +1760,31 @@ function setEstimateDirection(code, direction, source = null) {
 
 app.addEventListener('input', event => {
   const input = event.target;
+  if (input.closest?.('#trade-form') && state.tradeDraft) {
+    if (['date', 'amount', 'outShares'].includes(input.name)) state.tradeDraft[input.name] = input.value;
+    if (input.name === 'date') {
+      const preview = tradeNavPreview(state.tradeDraft);
+      const node = input.closest('#trade-form').querySelector('[data-trade-nav-preview]');
+      if (node) node.innerHTML = preview.error
+        ? `<span class="trade-preview-error">${esc(preview.error)}</span>`
+        : `预计净值日 <strong>${esc(preview.date)}</strong>${preview.orderDate && preview.date !== preview.orderDate ? `（下单日 ${esc(preview.orderDate)}，已顺延）` : ''}`;
+    }
+    if (input.name === 'amount' && state.tradeDraft.mode === 'buy') {
+      const feeInfo = Number(input.value) > 0 ? buyFee(state.tradeDraft.code, Number(input.value)) : null;
+      const node = input.closest('#trade-form').querySelector('[data-trade-fee]');
+      if (node) node.textContent = feeInfo
+        ? `预计手续费 ${number(feeInfo.fee, 2)} 元${feeInfo.rate !== null ? `（费率 ${(feeInfo.rate * 100).toFixed(3)}%）` : '（固定 1000 元）'}`
+        : '按买入金额和费率档位自动计算手续费。';
+    }
+    return;
+  }
+  if (input.closest?.('#review-form') && state.reviewDraft) {
+    if (['outAmount', 'inAmount', 'outFee', 'inFee', 'inShares'].includes(input.name)) state.reviewDraft[input.name] = input.value;
+    const out = Number(state.reviewDraft.outAmount), inside = Number(state.reviewDraft.inAmount);
+    const node = input.closest('#review-form').querySelector('[data-review-difference]');
+    if (node) node.textContent = state.reviewDraft.outAmount !== '' && state.reviewDraft.inAmount !== '' && Number.isFinite(out) && Number.isFinite(inside) ? number(out - inside, 2) : '—';
+    return;
+  }
   if (input.closest?.('#nav-estimate-form')) {
     if (state.unlocked && checkSession() && /^estimate-\d{6}$/.test(input.name)) {
       const code = input.name.slice(9);
@@ -1338,6 +1807,11 @@ app.addEventListener('input', event => {
 });
 function actionClick(event) {
   if (state.unlocked && !checkSession()) { event.preventDefault(); return; }
+  if (event.target.matches?.('.trade-dialog-backdrop') || event.target.dataset?.tradeBackdrop !== undefined) {
+    if (state.tradeOpen) closeTradeDialog();
+    else if (state.reviewId || state.reviewResult) closeReviewDialog();
+    return;
+  }
   if (event.target.closest('.skip-link')) {
     event.preventDefault();
     const main = document.querySelector('main');
@@ -1357,6 +1831,43 @@ function actionClick(event) {
     return;
   }
   if (!state.unlocked) return;
+  if (action === 'trade-open') { openTradeDialog(); return; }
+  if (action === 'trade-close') { closeTradeDialog(); return; }
+  if (action === 'trade-mode' && state.tradeDraft && ['buy', 'sell', 'transfer'].includes(target.dataset.mode)) {
+    state.tradeDraft.mode = target.dataset.mode;
+    if (state.tradeDraft.mode === 'transfer' && state.tradeDraft.code === state.tradeDraft.targetCode) {
+      state.tradeDraft.targetCode = TRADE_FUNDS.find(fund => fund.code !== state.tradeDraft.code)?.code || state.tradeDraft.targetCode;
+    }
+    state.tradeError = '';
+    refreshTradeDialog();
+    tradeEffects?.setMode(state.tradeDraft.mode);
+    focusTradeCarousel(state.tradeDraft.mode === 'transfer' ? 'out' : 'fund');
+    return;
+  }
+  if (action === 'trade-cutoff' && state.tradeDraft) {
+    state.tradeDraft.cutoff = state.tradeDraft.cutoff === 'after' ? 'before' : 'after';
+    state.tradeError = '';
+    refreshTradeDialog('[data-action="trade-cutoff"]');
+    return;
+  }
+  if (action === 'trade-fund-step') { stepTradeFund(target.dataset.side, Number(target.dataset.step)); return; }
+  if (action === 'trade-reverse') { reverseTradeFunds(); return; }
+  if (action === 'trade-fill-shares' && state.tradeDraft && state.tradeDraft.mode !== 'buy') {
+    const value = currentFundShares(state.tradeDraft.code);
+    if (Number.isFinite(value)) {
+      state.tradeDraft.outShares = String(Number(value.toFixed(6)));
+      refreshTradeDialog('[name="outShares"]');
+    }
+    return;
+  }
+  if (action === 'trade-submit') { void submitTrade(); return; }
+  if (action === 'transfer-review') { openReviewDialog(); return; }
+  if (action === 'review-open') { openReviewDialog(target.dataset.id); return; }
+  if (action === 'review-close') { closeReviewDialog(); return; }
+  if (action === 'review-cancel') { state.reviewId = null; state.reviewDraft = null; state.reviewError = ''; render(); return; }
+  if (action === 'review-submit') { void submitReview(); return; }
+  if (action === 'review-cash-confirm') { void applyReviewCash(); return; }
+  if (action === 'review-cash-skip') { state.reviewResult = null; state.reviewError = ''; render(); return; }
   if (action === 'estimate-direction' && FUND_CODES.includes(target.dataset.code)) {
     setEstimateDirection(target.dataset.code, target.dataset.direction === 'down' ? 'up' : 'down', target);
     queueEstimateSave(target.dataset.code);
@@ -1426,4 +1937,10 @@ window.addEventListener('hashchange', () => {
 window.addEventListener('pageshow', event => { if (event.persisted) lock(); });
 document.addEventListener('visibilitychange', () => { if (checkSession()) dataRefresh.check(); });
 window.addEventListener('focus', () => { if (checkSession()) dataRefresh.check(); });
+document.addEventListener('keydown', event => {
+  if (event.key !== 'Escape') return;
+  if (state.tradeOpen) closeTradeDialog();
+  else if (state.reviewId || state.reviewResult) closeReviewDialog();
+});
+void probeLocalMode();
 renderGate();

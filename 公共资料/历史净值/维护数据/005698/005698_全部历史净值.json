@@ -11,8 +11,8 @@
   "field_notes": "日期为净值日期；nav 与 accumulated_nav 保留来源小数精度；daily_growth_pct 为百分数数值（-3.13 表示 -3.13%）。",
   "schema": "public-fund-nav-v1",
   "first_date": "2018-04-17",
-  "last_date": "2026-10-16",
-  "count": 1980,
+  "last_date": "2026-10-20",
+  "count": 1982,
   "rows": [
     {
       "date": "2018-04-17",
@@ -15853,26 +15853,31 @@
       "daily_growth_pct": "-3.13",
       "event": "",
       "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-10-19",
+      "nav": "2.2348",
+      "accumulated_nav": "2.2348",
+      "daily_growth_pct": "0.50",
+      "event": "",
+      "source": "天天基金 f10/lsjz（公开第三方）"
+    },
+    {
+      "date": "2026-10-20",
+      "nav": "2.2322",
+      "accumulated_nav": "2.2322",
+      "daily_growth_pct": "-0.12",
+      "event": "",
+      "source": "天天基金 f10/lsjz（公开第三方）"
     }
   ],
   "storage_policy": "本文件为该份额唯一全历史净值主档；更新时合并新日期、按日期去重，原子替换同名文件。",
   "validation": {
-    "unique_date_count": 1980,
-    "duplicate_dates": 0,
-    "prior_full_history_dates_preserved": true,
-    "missing_accumulated_nav_count": 0,
-    "source_verification": {
-      "api_total_count": 1980,
-      "pages_fetched": 1,
-      "unique_date_count": 1980,
-      "latest_source_date": "2026-10-16",
-      "all_pages_pinned_end_date": "2026-10-16",
-      "source_first_page_stable": true,
-      "full_history_refetched_this_run": false,
-      "official_independent_full_validation": false,
-      "missing_source_dates_preserved": [],
-      "note": "公开第三方接口，与管理人官网独立核验不等同。"
-    }
+    "mode": "incremental_recent_window",
+    "passed": true,
+    "total_rows": 1982,
+    "source_first_page_stable": true,
+    "full_history_refetched_this_run": false
   },
   "last_update": {
     "checked_at": "2026-10-19T23:36:09+08:00",
@@ -15903,5 +15908,37 @@
       "full_history_refetched": false,
       "status": "updated"
     }
-  ]
+  ],
+  "incremental_update": {
+    "checked_at": "2026-10-21T20:49:51+08:00",
+    "query_end_date": "2026-10-21",
+    "query_start_date": "2026-10-12",
+    "added_dates": [
+      "2026-10-19",
+      "2026-10-20"
+    ],
+    "revisions": [],
+    "previous_json_sha256": "b0ecd193da0fae70909e4371008fccb9c97e1742d72fd96f4310d96e8498936e",
+    "raw_evidence_path": "临时文件/净值更新/20261021_204950_874830/005698",
+    "full_history_refetched": false,
+    "third_party_supplement_merged": false
+  },
+  "prior_validation": {
+    "unique_date_count": 1980,
+    "duplicate_dates": 0,
+    "prior_full_history_dates_preserved": true,
+    "missing_accumulated_nav_count": 0,
+    "source_verification": {
+      "api_total_count": 1980,
+      "pages_fetched": 1,
+      "unique_date_count": 1980,
+      "latest_source_date": "2026-10-16",
+      "all_pages_pinned_end_date": "2026-10-16",
+      "source_first_page_stable": true,
+      "full_history_refetched_this_run": false,
+      "official_independent_full_validation": false,
+      "missing_source_dates_preserved": [],
+      "note": "公开第三方接口，与管理人官网独立核验不等同。"
+    }
+  }
 }

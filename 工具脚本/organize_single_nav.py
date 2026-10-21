@@ -37,7 +37,7 @@ def verify(doc, workbook):
     assert (dates[0], dates[-1]) == (doc['first_date'], doc['last_date'])
     wb = openpyxl.load_workbook(workbook, read_only=True, data_only=True)
     sources = [('全部历史净值', doc['rows'])] + ([('待官网复核', doc['supplementary_rows'])] if doc.get('supplementary_rows') else [])
-    assert wb.sheetnames == [n for n, _ in sources]
+    assert all(name in wb.sheetnames for name, _ in sources)
     for name, source in sources:
         rows = list(wb[name].values)
         assert rows[0] == ('日期', '净值', '日增长率')
@@ -173,7 +173,14 @@ def refresh():
     oldentries={e['code']:e for e in idx['funds']}
     for folder in sorted((ROOT/'基金').glob('*/*')):
         if not folder.is_dir() or not re.match(r'^\d{6}_',folder.name): continue
-        code=folder.name[:6]; jp=CENTRAL/code/f'{code}_全部历史净值.json'; cp=jp.with_suffix('.csv'); xp=folder/f'{code}_全部历史净值.xlsx'
+        code=folder.name[:6]; jp=CENTRAL/code/f'{code}_全部历史净值.json'; cp=jp.with_suffix('.csv')
+        combined=folder/f'{code}_交易记录.xlsx'; legacy=folder/f'{code}_全部历史净值.xlsx'
+        has_combined_nav=False
+        if combined.exists():
+            probe=openpyxl.load_workbook(combined, read_only=True, data_only=True)
+            has_combined_nav='全部历史净值' in probe.sheetnames
+            probe.close()
+        xp=combined if has_combined_nav else legacy
         d=load(jp); verify(d,xp)
         with cp.open(encoding='utf-8-sig', newline='') as handle:
             saved=list(csv.reader(handle))
@@ -181,12 +188,15 @@ def refresh():
         assert saved[0]==['日期','净值','日增长率'] and len(saved)==len(d['rows'])+1
         for actual,row in zip(saved[1:],d['rows']):
             assert actual==[row['date'],str(row['nav']),'' if row.get('daily_growth_pct') in (None,'') else str(row['daily_growth_pct'])+'%']
-        assert list(folder.glob(code+'_全部历史净值*'))==[xp]
+        if xp==combined:
+            assert list(folder.glob(code+'_全部历史净值*'))==[]
+        else:
+            assert list(folder.glob(code+'_全部历史净值*'))==[legacy]
         assert not (folder/'历史净值').exists()
         e=dict(oldentries.get(code,{})); e.update(code=code,name=d['name'],records=d['count'],first_date=d['first_date'],last_date=d['last_date'],source=d.get('source',d.get('source_type')),json_path=rel(jp),csv_path=rel(cp),xlsx_path=rel(xp),json_sha256=sha(jp),csv_sha256=sha(cp),xlsx_sha256=sha(xp))
         entries.append(e)
     now=datetime.now(timezone(timedelta(hours=8))).isoformat(timespec='seconds')
-    policy='基金根目录直接保留一份固定名称的完整历史净值Excel，不另建历史净值文件夹；机器读取的JSON/CSV和公开核验证据集中保存在公共资料/历史净值/维护数据/，不在基金目录生成重复格式或日期快照。'
+    policy='基金根目录只保留一份交易记录工作簿，历史净值放在同一文件的「全部历史净值」sheet；机器读取的JSON/CSV和公开核验证据集中保存在公共资料/历史净值/维护数据/，不在基金目录生成重复格式或日期快照。'
     idx.update(updated_at=now,storage_policy=policy,funds=entries)
     save(INDEX,idx)
     text='# 全基金历史净值当前入口\n\n'+policy+'\n\nPDF定期报告按报告所属年份归档，其他公告、合同和招募说明书按文件年份归档。更新日期与实际净值日期分开。\n\n|代码|基金|历史条数|首日|末日|完整表格|\n|---|---|---:|---|---|---|\n'

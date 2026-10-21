@@ -263,8 +263,8 @@
   ],
   "schema": "public-fund-nav-v1",
   "first_date": "2010-08-18",
-  "last_date": "2026-10-16",
-  "count": 3894,
+  "last_date": "2026-10-20",
+  "count": 3896,
   "rows": [
     {
       "date": "2010-08-18",
@@ -35311,23 +35311,33 @@
       "previous_nav": 5.933,
       "previous_accumulated_nav": 6.372,
       "previous_nav_date": "2026-10-15"
+    },
+    {
+      "date": "2026-10-19",
+      "nav": "5.8671",
+      "accumulated_nav": "6.3061",
+      "daily_growth_pct": "0.77",
+      "previous_nav": "5.8224",
+      "previous_accumulated_nav": "6.2614",
+      "previous_nav_date": "2026-10-16"
+    },
+    {
+      "date": "2026-10-20",
+      "nav": "5.8037",
+      "accumulated_nav": "6.2427",
+      "daily_growth_pct": "-1.08",
+      "previous_nav": "5.8671",
+      "previous_accumulated_nav": "6.3061",
+      "previous_nav_date": "2026-10-19"
     }
   ],
   "storage_policy": "本文件为该份额唯一全历史净值主档；更新时合并新日期、按日期去重，原子替换同名文件。",
   "validation": {
+    "mode": "incremental_recent_window",
     "passed": true,
-    "scope": "管理人官网最近窗口增量；既有全历史主序列保留，第三方待复核记录不合并",
-    "query_window_rows": 6,
-    "query_window_pages": 1,
-    "date_unique": true,
-    "dates_ascending": true,
-    "first_page_stable": true,
-    "empty_tail": true,
-    "all_rows_match_code_and_share_class": true,
-    "unresolved_window_gaps": [],
-    "removed_dates": [],
-    "historical_full_archive_rechecked": false,
-    "csv_pending_when_changed": false
+    "total_rows": 3896,
+    "source_first_page_stable": true,
+    "full_history_refetched_this_run": false
   },
   "supplementary_rows": [
     {
@@ -35517,78 +35527,23 @@
   ],
   "supplementary_note": "待官网复核的第三方记录，不混入rows主序列、主CSV或主表；不据此填补或推算官方净值。",
   "incremental_update": {
-    "previous_json_path": "基金/270023_广发全球精选股票_QDII_人民币A/历史净值/270023_全部历史净值.json",
-    "previous_json_sha256": "2665636981affefa7daf0ab184bc195836ddc310956083f1783711a1afade292",
-    "execution_date": "2026-10-19",
-    "query_start_date": "2026-10-09",
-    "query_end_date": "2026-10-19",
+    "checked_at": "2026-10-21T22:09:58+08:00",
+    "query_end_date": "2026-10-21",
+    "query_start_date": "2026-10-13",
     "added_dates": [
-      "2026-10-16"
+      "2026-10-20"
     ],
     "revisions": [],
+    "previous_json_sha256": "a2b0d7ba95aebf7b5e66a7eb0add16fe7485787ac77fc4342c3f0e69897d9bb5",
+    "raw_evidence_path": "临时文件/净值更新/20261021_220957_514619/270023",
     "full_history_refetched": false,
-    "third_party_supplement_merged": false,
-    "source": "广发基金管理人官网公开历史净值接口",
-    "query_window_rows": 6,
-    "query_window_pages": 1,
-    "prior_full_history_validation": {
-      "unique_date_count": 3893,
-      "duplicate_dates": 0,
-      "prior_full_history_dates_preserved": true,
-      "missing_accumulated_nav_count": 0,
-      "source_verification": {
-        "passed": true,
-        "issues": [],
-        "official_total_rows": 3893,
-        "official_total_pages": 195,
-        "reported_page_size": 20,
-        "merged_row_count": 3893,
-        "unique_date_count": 3893,
-        "all_page_row_counts_match": true,
-        "tail_page": 196,
-        "tail_row_count": 0,
-        "first_page_stable_during_capture": true,
-        "all_rows_match_code_and_share_class": true,
-        "historical_release_timestamps_available": false
-      }
-    },
-    "source_decimal_text": [
-      {
-        "date": "2026-10-09",
-        "nav": "6.3671",
-        "accumulated_nav": "6.8061",
-        "daily_growth_pct": "0.14"
-      },
-      {
-        "date": "2026-10-12",
-        "nav": "6.2734",
-        "accumulated_nav": "6.7124",
-        "daily_growth_pct": "-1.47"
-      },
-      {
-        "date": "2026-10-13",
-        "nav": "6.2013",
-        "accumulated_nav": "6.6403",
-        "daily_growth_pct": "-1.15"
-      },
-      {
-        "date": "2026-10-14",
-        "nav": "6.0497",
-        "accumulated_nav": "6.4887",
-        "daily_growth_pct": "-2.44"
-      },
-      {
-        "date": "2026-10-15",
-        "nav": "5.9330",
-        "accumulated_nav": "6.3720",
-        "daily_growth_pct": "-1.93"
-      },
-      {
-        "date": "2026-10-16",
-        "nav": "5.8224",
-        "accumulated_nav": "6.2614",
-        "daily_growth_pct": "-1.86"
-      }
-    ]
+    "third_party_supplement_merged": false
+  },
+  "prior_validation": {
+    "mode": "incremental_recent_window",
+    "passed": true,
+    "total_rows": 3895,
+    "source_first_page_stable": true,
+    "full_history_refetched_this_run": false
   }
 }

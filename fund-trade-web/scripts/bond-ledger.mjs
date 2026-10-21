@@ -1,12 +1,13 @@
 // Pure in-memory calculations from completed workbook rows, with no inferred
 // fees, shares, opening balance, or confirmation date.
+import { BOND_CODES } from '../src/bond-model.js';
 const day = value => typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)
   && Number.isFinite(Date.parse(`${value}T00:00:00Z`)) && new Date(`${value}T00:00:00Z`).toISOString().slice(0, 10) === value;
 const positive = value => typeof value === 'number' && Number.isFinite(value) && value > 0;
 const money = value => Math.round((value + Number.EPSILON) * 100) / 100;
 
 export function calculateBondWorkbook(code, rows, quote, { asOfDate = quote?.date } = {}) {
-  if (!['006485', '006663'].includes(code) || !Array.isArray(rows) || !rows.length || !day(quote?.date) || !positive(quote?.nav)
+  if (!BOND_CODES.includes(code) || !Array.isArray(rows) || !rows.length || !day(quote?.date) || !positive(quote?.nav)
     || !day(asOfDate) || asOfDate < quote.date) return null;
   const lots = [];
   const active = rows.filter(row => row && !['pending', 'cancelled', 'canceled', 'failed', 'closed'].includes(row.status)

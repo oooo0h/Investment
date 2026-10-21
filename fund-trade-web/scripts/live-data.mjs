@@ -7,6 +7,8 @@ import { createHash, createCipheriv, createDecipheriv, pbkdf2Sync, randomBytes }
 import { getDailyCode } from '../src/vault.js';
 import { FUND_CODES } from '../src/funds.js';
 import { readLocalFile } from './local-bundle.mjs';
+import { readTransferRecords, applyTransferStates } from './transfer-records.mjs';
+import { readRegistrationRecords, applyRegistrationStates } from './registration-records.mjs';
 
 const INDEX = '公共资料/历史净值/全基金历史净值当前入口.json';
 const METADATA = 'fund-trade-web/local/ledger-metadata.json';
@@ -62,7 +64,7 @@ export function adaptNav(document, entry, verifiedAt) {
 
 function readWorkbooks(pythonPath, workspace, sources) {
   return new Promise((resolve, reject) => {
-    const child = spawn(pythonPath, ['-X', 'utf8', reader], { windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'] });
+    const child = spawn(pythonPath, ['-B', '-X', 'utf8', reader], { windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'] });
     let output = '', bytes = 0, settled = false;
     const fail = () => { if (!settled) { settled = true; output = ''; reject(safeError()); } };
     const timeout = setTimeout(() => { child.kill(); fail(); }, 30000);
@@ -79,6 +81,32 @@ function readWorkbooks(pythonPath, workspace, sources) {
     });
     child.stdin.on('error', fail);
     child.stdin.end(JSON.stringify({ workspace, sources }));
+  });
+}
+
+// A dated order that already has cash but no confirmed NAV/shares stays in
+// progress at the frontier of the confirmed ledger. Comparing against the
+// latest published NAV would turn it into a blocking gap as soon as that NAV
+// catches up, even though no confirmation data exists yet. Rows before the
+// last confirmed trade remain genuine historical gaps and still block.
+export function classifyPendingOrders(transactions = []) {
+  const rows = Array.isArray(transactions) ? transactions : [];
+  const lastConfirmedDate = rows
+    .filter(tx => tx && tx.status !== 'pending' && validDate(tx.date))
+    .map(tx => tx.date)
+    .sort()
+    .at(-1) ?? null;
+  if (lastConfirmedDate === null) return rows;
+  return rows.map(tx => {
+    const atFrontier = tx && validDate(tx.date) && tx.date >= lastConfirmedDate;
+    const order = atFrontier && tx.status === 'pending' && ['incomplete', 'formula-calculated'].includes(tx.sourceStatus)
+      && ['buy', 'sell', 'transfer-in'].includes(tx.type)
+      && Number.isFinite(tx.amount) && tx.amount > 0
+      && (tx.nav === null || tx.shares === null);
+    // A partially filled new row (date/amount but no type yet) is a draft, not
+    // a broken ledger. Keep it visible at the frontier without pausing the fund.
+    const draft = atFrontier && tx.status === 'pending' && tx.sourceStatus === 'draft';
+    return order || draft ? { ...tx, sourceStatus: 'processing' } : tx;
   });
 }
 
@@ -127,6 +155,11 @@ export async function createLiveDataStore({ workspace, root, pythonPath }) {
       let provenance = {};
       const metadataHit = await readLocalFile({ root, workspace, name: 'ledgerMetadata', legacy: METADATA });
       try { if (metadataHit) provenance = JSON.parse(metadataHit.bytes); } catch { /* Unknown provenance stays unverified. */ }
+      const transferFile = path.join(root, 'local/transfer-records.json');
+      const registrationFile = path.join(root, 'local/registration-records.json');
+      let transferRecords = [], registrationRecords = [];
+      try { transferRecords = await readTransferRecords({ root }); } catch { transferRecords = []; }
+      try { registrationRecords = await readRegistrationRecords({ root }); } catch { registrationRecords = []; }
       const sources = index.funds.map(entry => ({ code: entry.code,
         path: transactionSourcePath(entry),
         estimated: provenance.funds?.find(fund => fund.code === entry.code)?.source_estimates_retained !== false,
@@ -135,7 +168,7 @@ export async function createLiveDataStore({ workspace, root, pythonPath }) {
         allow_drafts: true }));
       const navFiles = index.funds.map(entry => resolveNavPath(workspace, entry.json_path, entry.code));
       const workbookFiles = sources.map(source => resolveFundPath(workspace, source.path, source.code));
-      const files = [indexHit.file, ...(metadataHit ? [metadataHit.file] : []), ...navFiles, ...workbookFiles, reader];
+      const files = [indexHit.file, ...(metadataHit ? [metadataHit.file] : []), ...navFiles, ...workbookFiles, reader, transferFile, registrationFile];
       const before = await fingerprint(files);
       if (cached && before === signature) return cached;
       const present = (await Promise.all(sources.map(async (source, index) => {
@@ -146,15 +179,9 @@ export async function createLiveDataStore({ workspace, root, pythonPath }) {
       const funds = {}, sourceSummary = [];
       for (const entry of index.funds) {
         const imported = books[entry.code];
-        const transactions = (imported?.transactions || []).map(tx => {
-          // A dated cash order beyond the last published NAV is still processing.
-          // It must not become a guessed fill or erase the confirmed history.
-          if (tx.status === 'pending' && tx.sourceStatus === 'incomplete'
-            && validDate(tx.date) && tx.date > nav[entry.code].lastDate
-            && ['buy', 'sell', 'transfer-in'].includes(tx.type) && Number.isFinite(tx.amount) && tx.amount > 0
-            && (tx.nav === null || tx.shares === null)) return { ...tx, sourceStatus: 'processing' };
-          return tx;
-        });
+        const transactions = applyTransferStates(
+          applyRegistrationStates(classifyPendingOrders(imported?.transactions || []), entry.code, registrationRecords),
+          entry.code, transferRecords);
         const pendingBackupCount = provenance.funds?.find(fund => fund.code === entry.code)?.legacy_pending_records || 0;
         const incomplete = transactions.some(tx => tx.status === 'pending' && tx.sourceStatus !== 'processing');
         const processing = transactions.filter(tx => tx.status === 'pending' && tx.sourceStatus === 'processing').length;
@@ -162,7 +189,7 @@ export async function createLiveDataStore({ workspace, root, pythonPath }) {
         const formulaAdjusted = transactions.filter(tx => tx.formulaAdjustment).length;
         funds[entry.code] = { transactions, mode: 'profit-first', incomplete,
           sourceNote: imported
-            ? `来源：${entry.code}_交易记录.xlsx（六列）。交易日期为原始下单日期，不当作净值日期。${estimated ? '含估算记录，未重新核实成交。' : '确认状态沿用来源记录，未重新核实成交。'}${formulaAdjusted ? `有 ${formulaAdjusted} 笔份额公式已按手续费口径重新估算，原表未改写，请核对实际确认份额。` : ''}${processing ? `有 ${processing} 笔进行中订单尚未确认份额与收益；买入金额先计入市值。` : ''}${incomplete ? '成交资料待补全或存在来源差异，暂停账户汇总。' : ''}${pendingBackupCount ? `旧网站另有 ${pendingBackupCount} 笔待确认订单保留在加密备份中，未列为已成交。` : ''}`
+            ? `来源：${entry.code}_交易记录.xlsx（六列）。表格 A 列按既有记录保留；网页新登记行写入净值日，真实下单日另存本地元数据。${estimated ? '含估算记录，未重新核实成交。' : '确认状态沿用来源记录，未重新核实成交。'}${formulaAdjusted ? `有 ${formulaAdjusted} 笔份额公式已按手续费口径重新估算，原表未改写，请核对实际确认份额。` : ''}${processing ? `有 ${processing} 笔进行中订单尚未确认份额与收益；买入金额先计入市值。` : ''}${incomplete ? '成交资料待补全或存在来源差异，暂停账户汇总。' : ''}${pendingBackupCount ? `旧网站另有 ${pendingBackupCount} 笔待确认订单保留在加密备份中，未列为已成交。` : ''}`
             : '尚未提供六列交易记录表；不推断持仓。' };
         sourceSummary.push({ code: entry.code, nav: { kind: 'full-history', records: nav[entry.code].count },
           transactions: { kind: imported ? 'workbook' : 'absent', records: transactions.length, incomplete, estimated } });
@@ -170,6 +197,8 @@ export async function createLiveDataStore({ workspace, root, pythonPath }) {
       if (before !== await fingerprint(files)) throw safeError();
       const revision = digest(Buffer.concat([indexBytes, ...navBytes, await readFile(reader),
         Buffer.from(JSON.stringify(provenance.funds?.filter(fund => FUND_CODES.includes(fund.code)) || [])),
+        Buffer.from(JSON.stringify(transferRecords)),
+        Buffer.from(JSON.stringify(registrationRecords)),
         Buffer.from(JSON.stringify(present.map(source => [source.code, source.estimated, books[source.code].sha256])))]));
       const envelope = encrypt({ createdAt: new Date().toISOString(), funds });
       cached = { revision, status: 'valid', nav, envelope, sourceSummary };

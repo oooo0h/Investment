@@ -11,8 +11,8 @@
   "field_notes": "日期为净值日期；nav 与 accumulated_nav 保留来源小数精度；daily_growth_pct 为百分数数值（-3.13 表示 -3.13%）。",
   "schema": "public-fund-nav-v1",
   "first_date": "2018-12-05",
-  "last_date": "2026-10-19",
-  "count": 1898,
+  "last_date": "2026-10-21",
+  "count": 1900,
   "rows": [
     {
       "date": "2018-12-05",
@@ -15197,10 +15197,33 @@
       "daily_growth_pct": "0.01",
       "event": "",
       "source": "天天基金 f10/lsjz"
+    },
+    {
+      "date": "2026-10-20",
+      "nav": "1.0130",
+      "accumulated_nav": "1.1835",
+      "daily_growth_pct": "0.01",
+      "event": "",
+      "source": "天天基金 f10/lsjz（公开第三方）"
+    },
+    {
+      "date": "2026-10-21",
+      "nav": "1.0131",
+      "accumulated_nav": "1.1836",
+      "daily_growth_pct": "0.01",
+      "event": "",
+      "source": "天天基金 f10/lsjz（公开第三方）"
     }
   ],
   "storage_policy": "本文件为该份额唯一全历史净值主档；更新时合并新日期、按日期去重，原子替换同名文件。",
   "validation": {
+    "mode": "incremental_recent_window",
+    "passed": true,
+    "total_rows": 1900,
+    "source_first_page_stable": true,
+    "full_history_refetched_this_run": false
+  },
+  "prior_validation": {
     "unique_date_count": 1898,
     "duplicate_dates": 0,
     "prior_full_history_dates_preserved": true,
@@ -15218,27 +15241,6 @@
       "note": "公开第三方接口，与管理人官网独立核验不等同。"
     }
   },
-  "prior_validation": [
-    {
-      "replaced_at": "2026-10-19T23:47:37+08:00",
-      "validation": {
-        "unique_date_count": 1897,
-        "duplicate_dates": 0,
-        "prior_full_history_dates_preserved": true,
-        "missing_accumulated_nav_count": 0,
-        "source_verification": {
-          "api_total_count": 1896,
-          "unique_date_count": 1896,
-          "duplicate_dates": 0,
-          "sample_rows_checked": 56,
-          "earliest_date_checked": "2018-12-05",
-          "latest_pinned_date": "2026-10-15",
-          "missing_accumulated_nav_count": 0,
-          "note": "走势与F10为同一供应商的不同接口，属于同源交叉核验；不填充自然日，不插值，不把未披露日期视为缺失。"
-        }
-      }
-    }
-  ],
   "last_update": {
     "checked_at": "2026-10-19T23:47:37+08:00",
     "execution_date": "2026-10-19",
@@ -15268,5 +15270,19 @@
       "full_history_refetched": false,
       "status": "updated"
     }
-  ]
+  ],
+  "incremental_update": {
+    "checked_at": "2026-10-21T20:50:11+08:00",
+    "query_end_date": "2026-10-21",
+    "query_start_date": "2026-10-13",
+    "added_dates": [
+      "2026-10-20",
+      "2026-10-21"
+    ],
+    "revisions": [],
+    "previous_json_sha256": "f826d0a5a64a9ca141bd49878833c569594d1b288e53f0e52305e93c1fba4bc9",
+    "raw_evidence_path": "临时文件/净值更新/20261021_205010_777661/006663",
+    "full_history_refetched": false,
+    "third_party_supplement_merged": false
+  }
 }

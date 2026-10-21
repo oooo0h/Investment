@@ -70,6 +70,10 @@
 
 ## 债基流水推算
 
+2026-10-21新增004103（中信保诚稳悦债券C）。身份核对采用[管理人产品页](https://www.citicprufunds.com.cn/pc/productDetail?fundcode=004103)，费率核对采用[管理人编制的C类产品资料概要](https://pdf.dfcfw.com/pdf/H2_AN202411291641112361_1.pdf)及管理人2026年9月公开产品说明：申购0%，赎回未满7天1.5%、7～29天0.1%、满30天0%。只用于普通申赎说明，实际交易费用仍以六列表格已填字段为准，不推定转换费用。
+
+004103全历史净值来自天天基金公开分页接口，固定末日后检查总条数、日期唯一性、首日及重复首屏的一致性；未声称完成管理人官网全历史独立核验。完整JSON、CSV及原始公开响应位于 `公共资料/历史净值/维护数据/004103/`；基金根目录只保留唯一完整净值Excel、六列交易主表及净值更新入口。
+
 用户于2026-10-19授权用金额与对应净值推算缺失份额。两基金的稳定计算CSV位于各自 `历史净值/<代码>_债基持有期计算净值.csv`，每行保存基金代码、净值日、单位净值和官网来源URL。当前窗口2026-06-01至10-16各93条，与沪深交易日历核对无内部缺口；10/19尚未披露，不为进行中申请补造净值。
 
 - [广发基金官网净值接口](https://www.gffunds.com.cn/apistore/JsonService?service=MarketPerformance&method=NAV&op=queryNAVByFundcode&fundcode=006485&startdate=20260601&enddate=20261019&curpage=1&orderby=NAVDATE_DESC&pagelines=20)、[易方达官网净值数据](https://cdn.efunds.com.cn/market/2.0/006663_1y.js)：仅获取公开基金净值，查询不含账户资料。

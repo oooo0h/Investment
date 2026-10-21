@@ -5,7 +5,7 @@ import os from 'node:os';
 import { spawnSync } from 'node:child_process';
 import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import { randomBytes, pbkdf2Sync, createCipheriv, createDecipheriv, createHash } from 'node:crypto';
-import { adaptNav, createEnvelopeEncryptor, createLiveDataStore, resolveFundPath } from '../scripts/live-data.mjs';
+import { adaptNav, classifyPendingOrders, createEnvelopeEncryptor, createLiveDataStore, resolveFundPath } from '../scripts/live-data.mjs';
 import { getDailyCode } from '../src/vault.js';
 import { FUND_CODES } from '../src/funds.js';
 import { calculateLedger } from '../src/engine.js';
@@ -139,6 +139,27 @@ print(json.dumps(rows))
   }
 });
 
+test('pending orders stay in progress at the confirmed frontier while earlier gaps still block', () => {
+  const confirmed = (date, status = 'estimated') => ({ status, date, type: 'buy', nav: 1, shares: 1, amount: 10, fee: 0, sourceStatus: 'historical-estimate' });
+  const order = (date = '2026-10-20', extra = {}) => ({ status: 'pending', date, type: 'buy', nav: null, shares: null, amount: 10, fee: 0, sourceStatus: 'incomplete', ...extra });
+  // An order on the newest confirmed date is awaiting confirmation, not a gap.
+  assert.equal(classifyPendingOrders([confirmed('2026-10-20'), order('2026-10-20')])[1].sourceStatus, 'processing');
+  // The rule is the confirmed frontier, so a later published NAV cannot demote it.
+  assert.equal(classifyPendingOrders([confirmed('2026-10-18'), order('2026-10-20')])[1].sourceStatus, 'processing');
+  // A missing historical record followed by later confirmed trades remains blocking.
+  assert.equal(classifyPendingOrders([confirmed('2026-10-01'), order('2026-10-10'), confirmed('2026-10-20')])[1].sourceStatus, 'incomplete');
+  // Without confirmed history there is no frontier to attach an order to.
+  assert.equal(classifyPendingOrders([order('2024-01-02')])[0].sourceStatus, 'incomplete');
+  // Formula-driven rows without cached confirmation values follow the same frontier.
+  assert.equal(classifyPendingOrders([confirmed('2026-10-20'), order('2026-10-20', { sourceStatus: 'formula-calculated' })])[1].sourceStatus, 'processing');
+  // A partially filled new row at the frontier stays visible without pausing the fund.
+  assert.equal(classifyPendingOrders([confirmed('2026-10-20'), order('2026-10-21', { sourceStatus: 'draft', type: 'unknown' })])[1].sourceStatus, 'processing');
+  assert.equal(classifyPendingOrders([confirmed('2026-10-20'), order('2026-10-19', { sourceStatus: 'draft', type: 'unknown' })])[1].sourceStatus, 'draft');
+  // Conflicts and drafts without a dated frontier stay unrelabelled.
+  assert.equal(classifyPendingOrders([confirmed('2026-10-20'), order('2026-10-20', { sourceStatus: 'unverified' })])[1].sourceStatus, 'unverified');
+  assert.equal(classifyPendingOrders([confirmed('2026-10-20'), order(null, { sourceStatus: 'draft' })])[1].sourceStatus, 'draft');
+});
+
 test('live encryption retains credentials and session key across source updates', () => {
   const fixture = encryptionFixture(), encrypt = createEnvelopeEncryptor(fixture.original);
   const first = encrypt({ funds: { synthetic: { transactions: [] } } });
@@ -158,15 +179,16 @@ test('bond tables alone control row counts, retain unfinished drafts and never a
   await writeFile(path.join(root, 'data/bonds.enc.json'), JSON.stringify(encrypt({ funds: {}, transactions: {
     '006485': [{ id: 'legacy-pending', sourceStatus: 'processing', status: 'pending', type: 'buy', date: '2024-01-04', amount: 3 }],
   } })));
-  const entries = ['006485', '006663'].map(entry);
+  const entries = ['006485', '006663', '004103'].map(entry);
   const indexFile = path.join(workspace, '公共资料/历史净值/全基金历史净值当前入口.json');
   await mkdir(path.dirname(indexFile), { recursive: true });
   await writeFile(indexFile, JSON.stringify({ schema: 'all-fund-nav-current-v1', updated_at: '2024-01-05', funds: entries }));
-  const checksums = [];
+  const checksums = [], workbooks = {};
   for (const item of entries) {
     const target = path.join(workspace, item.json_path); await mkdir(path.dirname(target), { recursive: true });
     await writeFile(target, JSON.stringify(nav(item.code)));
     const workbook = path.join(path.dirname(path.dirname(target)), `${item.code}_交易记录.xlsx`);
+    workbooks[item.code] = workbook;
     const script = `import sys,openpyxl\nb=openpyxl.Workbook()\ns=b.active\ns.title='交易记录'\ns.append(['交易日期','成交净值','确认份额','交易类型','金额','手续费（元）'])\ns.append(['2024-01-02',1,10,'买入',10,0])\ns.append([None,None,2.345678,'卖出',None,None])\nb.save(sys.argv[1])`;
     assert.equal(spawnSync(pythonPath, ['-X', 'utf8', '-c', script, workbook], { windowsHide: true }).status, 0);
     checksums.push([workbook, hash(await readFile(workbook))]);
@@ -174,9 +196,10 @@ test('bond tables alone control row counts, retain unfinished drafts and never a
   const metadataFile = path.join(workspace, 'fund-trade-web/local/bond-metadata.json');
   await mkdir(path.dirname(metadataFile), { recursive: true });
   await writeFile(metadataFile, JSON.stringify({ funds: entries.map(item => ({ code: item.code, workbook_sha256: 'prior-source' })) }));
-  const snapshot = await (await createLiveBondDataStore({ workspace, root, pythonPath })).snapshot();
+  const store = await createLiveBondDataStore({ workspace, root, pythonPath });
+  const snapshot = await store.snapshot();
   const payload = fixture.decrypt(snapshot.envelope);
-  assert.equal(payload.bonds.length, 2);
+  assert.equal(payload.bonds.length, 3);
   for (const item of entries) {
     assert.equal(payload.transactions[item.code].length, 2);
     assert.equal(payload.transactions[item.code].some(row => row.id === 'legacy-pending'), false);
@@ -185,6 +208,17 @@ test('bond tables alone control row counts, retain unfinished drafts and never a
     assert.equal(payload.transactions[item.code][1].shares, 2.345678);
   }
   for (const [file, checksum] of checksums) assert.equal(hash(await readFile(file)), checksum);
+  // Clearing the six-column table is a verified zero holding, so the other
+  // cards and the aggregate stay usable instead of waiting for data.
+  const emptyScript = `import sys,openpyxl\nb=openpyxl.Workbook()\ns=b.active\ns.title='交易记录'\ns.append(['交易日期','成交净值','确认份额','交易类型','金额','手续费（元）'])\nb.save(sys.argv[1])`;
+  assert.equal(spawnSync(pythonPath, ['-X', 'utf8', '-c', emptyScript, workbooks['004103']], { windowsHide: true }).status, 0);
+  const refreshed = fixture.decrypt((await store.snapshot()).envelope);
+  assert.equal(refreshed.bonds.length, 3);
+  const zero = refreshed.bonds.find(entry => entry.code === '004103');
+  assert.equal(zero.marketValue, 0);
+  assert.equal(zero.holdingProfit, 0);
+  assert.deepEqual(refreshed.holdingLots['004103'], { complete: true, lots: [] });
+  assert.equal(refreshed.transactions['004103'].length, 0);
 });
 
 test('real loader reads only selected canonical files, retains nulls, refreshes safely and never rewrites originals', async t => {
@@ -239,19 +273,31 @@ test('real loader reads only selected canonical files, retains nulls, refreshes 
   assert.equal(changed.transactions[0].fee, null);
   assert.equal(changed.transactions[0].status, 'pending');
   assert.equal(changed.incomplete, true);
+  // An order dated on the newest published NAV still awaits its confirmation
+  // fields; the published date alone must not turn it into a blocking gap.
+  makeBook(false);
+  const appendSameDayOrder = String.raw`import sys,datetime,openpyxl
+from openpyxl.utils.datetime import to_excel
+b=openpyxl.load_workbook(sys.argv[1]);s=b['交易记录']
+s.append([to_excel(datetime.datetime(2024,1,3)),None,None,'买入',5,0])
+s['A3'].number_format='General';b.save(sys.argv[1])`;
+  assert.equal(spawnSync(pythonPath, ['-X', 'utf8', '-B', '-c', appendSameDayOrder, workbook], { windowsHide: true }).status, 0);
+  const withSameDayOrder = fixture.decrypt((await store.snapshot()).envelope).funds['005698'];
+  assert.equal(withSameDayOrder.transactions[1].date, '2024-01-03');
+  assert.equal(withSameDayOrder.transactions[1].sourceStatus, 'processing');
+  assert.equal(withSameDayOrder.incomplete, false);
   // An appended order after the published NAV uses a General-format Excel
   // serial date and has no confirmed NAV/shares yet. History stays usable.
-  makeBook(false);
   const appendProcessing = String.raw`import sys,datetime,openpyxl
 from openpyxl.utils.datetime import to_excel
 b=openpyxl.load_workbook(sys.argv[1]);s=b['交易记录']
 s.append([to_excel(datetime.datetime(2024,1,4)),None,None,'买入',5,0])
-s['A3'].number_format='General';b.save(sys.argv[1])`;
+s['A4'].number_format='General';b.save(sys.argv[1])`;
   assert.equal(spawnSync(pythonPath, ['-X', 'utf8', '-B', '-c', appendProcessing, workbook], { windowsHide: true }).status, 0);
   const withOrder = fixture.decrypt((await store.snapshot()).envelope).funds['005698'];
-  assert.equal(withOrder.transactions[1].date, '2024-01-04');
-  assert.equal(withOrder.transactions[1].status, 'pending');
-  assert.equal(withOrder.transactions[1].sourceStatus, 'processing');
+  assert.equal(withOrder.transactions.at(-1).date, '2024-01-04');
+  assert.equal(withOrder.transactions.at(-1).status, 'pending');
+  assert.equal(withOrder.transactions.at(-1).sourceStatus, 'processing');
   assert.equal(withOrder.incomplete, false);
   const calculated = calculateLedger(withOrder.transactions);
   assert.equal(calculated.summary.valid, true);
@@ -260,7 +306,7 @@ s['A3'].number_format='General';b.save(sys.argv[1])`;
 b=openpyxl.load_workbook(sys.argv[1]);b['交易记录'].append([None,None,None,None,3,None]);b.save(sys.argv[1])`;
   assert.equal(spawnSync(pythonPath, ['-X', 'utf8', '-B', '-c', appendDraft, workbook], { windowsHide: true }).status, 0);
   const withDraft = fixture.decrypt((await store.snapshot()).envelope).funds['005698'];
-  assert.equal(withDraft.transactions[2].sourceStatus, 'draft');
+  assert.equal(withDraft.transactions.at(-1).sourceStatus, 'draft');
   assert.equal(withDraft.incomplete, true);
   // Bad headers are refused without exposing a bad row or using stale data as fresh.
   await writeFile(workbook, 'synthetic invalid workbook');

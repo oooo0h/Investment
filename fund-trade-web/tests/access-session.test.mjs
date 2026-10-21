@@ -5,8 +5,9 @@ import { readFile } from 'node:fs/promises';
 import { calculateLedger, describeModeEffect } from '../src/engine.js';
 import { estimateApplications, GUOFU_TRADING_DATES } from '../src/application-estimates.js';
 import { getDailyCode } from '../src/vault.js';
+import { unlockErrorMessage } from '../src/unlock-errors.js';
 import { createRefreshController } from '../src/refresh-controller.js';
-import { NAV_PERIODS, recentNavPeriod, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain } from '../src/nav-range.js';
+import { NAV_PERIODS, recentNavPeriod, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain, latestCoveredTradeDate } from '../src/nav-range.js';
 import { renderNavChart, buildTradeMarkers } from '../src/nav-chart.js';
 import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap } from '../src/nav-annualized.js';
 import { setupNavChartInteractions } from '../src/nav-interaction.js';
@@ -19,7 +20,7 @@ import { REGION_DATA } from '../src/region-data.js';
 import { evaluateUsExposure } from '../src/us-exposure.js';
 import { calculateHoldingDuration, createHoldingDurationScale } from '../src/holding-duration.js';
 import { renderBondsPage } from '../src/bonds-view.js';
-import { calculateBondHoldingValue, addPendingPurchaseValue } from '../src/bond-model.js';
+import { calculateBondHoldingValue, addPendingPurchaseValue, BOND_CODES } from '../src/bond-model.js';
 import { calculatePortfolioAllocation, evaluateHoldingLimit } from '../src/portfolio-allocation.js';
 import { evaluateBondReserve, bondReserveTone } from '../src/bond-reserve.js';
 import { calculateBondHoldingDuration } from '../src/bond-holding-duration.js';
@@ -29,6 +30,10 @@ import { renderEstimatePanel } from '../src/estimate-panel.js';
 import { getDisciplineActions, adjustDisciplineRule } from '../src/discipline-actions.js';
 import { getNavChartDisplay } from '../src/nav-display.js';
 import { createFundViewportKeeper } from '../src/viewport-anchor.js';
+import { navDateForOrder } from '../src/trading-calendar.js';
+import { parseTransactionDate } from '../src/transaction-date.js';
+import { renderTradeDialog, renderReviewDialog, TRADE_FUNDS } from '../src/trade-dialog.js';
+import { buyFee } from '../src/fee-rules.js';
 
 
 const source = (await readFile(new URL('../src/app.js', import.meta.url), 'utf8'))
@@ -129,7 +134,7 @@ function harness(timestamp = '2026-01-08T02:00:00.000Z', options = {}) {
   const loadVault = options.loadVault || (async () => ({ getDailyCode: day, unlockVault: async () => ({ funds: {} }) }));
   const fakeBondOpen = options.openBondStore || (async () => {
     let closed = false;
-    let snapshot = { bonds: [{ code: '006485', marketValue: 110, holdingProfit: 10 }, { code: '006663', marketValue: 220, holdingProfit: 20 }], updatedAt: '2026-01-08T02:00:00.000Z' };
+    let snapshot = { bonds: [{ code: '006485', marketValue: 110, holdingProfit: 10 }, { code: '006663', marketValue: 220, holdingProfit: 20 }, { code: '004103', marketValue: 0, holdingProfit: 0 }], updatedAt: '2026-01-08T02:00:00.000Z' };
     return {
       getSnapshot() { if (closed) throw new Error('closed'); return structuredClone(snapshot); },
       async save(bonds) { if (closed) throw new Error('closed'); snapshot = { bonds: structuredClone(bonds), updatedAt: new RealDate(clock.now).toISOString() }; return structuredClone(snapshot); },
@@ -137,10 +142,10 @@ function harness(timestamp = '2026-01-08T02:00:00.000Z', options = {}) {
     };
   });
   const fetch = options.fetch || (async url => ({ ok: true, json: async () => ({ code: /([0-9]{6})\.json$/.exec(url)?.[1], history: [] }) }));
-  const api = new Function('addPendingPurchaseValue', 'describeModeEffect', 'recentNavPeriod', 'calculateLedger', 'estimateApplications', 'GUOFU_TRADING_DATES', 'createRefreshController', 'NAV_PERIODS', 'resolveNavRange', 'moveNavBoundary', 'summarizeNavRange', 'resolveNavSliderDomain', 'renderNavChart', 'buildTradeMarkers', 'calculateNavAnnualized', 'evaluateAnnualDiscipline', 'evaluateAddDiscipline', 'getNavDisciplineGap', 'setupNavChartInteractions', 'setupNavSliderInteractions', 'calculateTransactionPerformance', 'FUNDS', 'FUND_CODES', 'DISCIPLINE_ENTRIES', 'createDisciplineSync', 'REGION_DATA', 'evaluateUsExposure', 'calculateHoldingDuration', 'createHoldingDurationScale', 'openBondStore', 'renderBondsPage', 'calculateBondHoldingValue', 'evaluateBondReserve', 'bondReserveTone', 'calculatePortfolioAllocation', 'evaluateHoldingLimit', 'calculateBondHoldingDuration', 'getEstimateDates', 'getEstimateTargetDate', 'parseEstimatePercent', 'buildEstimatedNav', 'loadNavEstimates', 'saveNavEstimates', 'renderEstimatePanel', 'getDisciplineActions', 'adjustDisciplineRule', 'getNavChartDisplay', 'createFundViewportKeeper', 'document', 'location', 'window', 'matchMedia', 'localStorage', 'Date',
+  const api = new Function('BOND_CODES', 'addPendingPurchaseValue', 'describeModeEffect', 'recentNavPeriod', 'calculateLedger', 'estimateApplications', 'GUOFU_TRADING_DATES', 'createRefreshController', 'NAV_PERIODS', 'resolveNavRange', 'latestCoveredTradeDate', 'moveNavBoundary', 'summarizeNavRange', 'resolveNavSliderDomain', 'renderNavChart', 'buildTradeMarkers', 'calculateNavAnnualized', 'evaluateAnnualDiscipline', 'evaluateAddDiscipline', 'getNavDisciplineGap', 'setupNavChartInteractions', 'setupNavSliderInteractions', 'calculateTransactionPerformance', 'FUNDS', 'FUND_CODES', 'DISCIPLINE_ENTRIES', 'createDisciplineSync', 'REGION_DATA', 'evaluateUsExposure', 'calculateHoldingDuration', 'createHoldingDurationScale', 'openBondStore', 'renderBondsPage', 'calculateBondHoldingValue', 'evaluateBondReserve', 'bondReserveTone', 'calculatePortfolioAllocation', 'evaluateHoldingLimit', 'calculateBondHoldingDuration', 'getEstimateDates', 'getEstimateTargetDate', 'parseEstimatePercent', 'buildEstimatedNav', 'loadNavEstimates', 'saveNavEstimates', 'renderEstimatePanel', 'getDisciplineActions', 'adjustDisciplineRule', 'getNavChartDisplay', 'createFundViewportKeeper', 'unlockErrorMessage', 'navDateForOrder', 'parseTransactionDate', 'renderTradeDialog', 'renderReviewDialog', 'TRADE_FUNDS', 'buyFee', 'document', 'location', 'window', 'matchMedia', 'localStorage', 'Date',
     'setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'scrollTo', 'scrollY', 'fetch', 'loadVault',
     `${source}\nreturn { state, startSession, checkSession, lock, render, remainingTime, actionClick, unlock, saveCashFlow, saveNavEstimateEdits, refreshCurrentData, dataRefresh, disciplineSync, chartOverlays, navRangeControls, navContext, navSliderDomain, navVisualValues, valuation, ledger, navPanel, navRangeProfit, updateNavMeasurement, bondPositions, equityHoldingDistribution, fundRegions, sparkline, estimateHomePanel, bondReserveCheck, portfolioAllocation, annualDisciplineAlert, handles: () => ({ sessionInterval, sessionTimeout, dailyCodeReader }) };`)(
-    addPendingPurchaseValue, describeModeEffect, recentNavPeriod, calculateLedger, estimateApplications, GUOFU_TRADING_DATES, createRefreshController, NAV_PERIODS, resolveNavRange, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain, renderNavChart, buildTradeMarkers, calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap, setupNavChartInteractions, setupNavSliderInteractions, calculateTransactionPerformance, FUNDS, FUND_CODES, DISCIPLINE_ENTRIES, createDisciplineSync, REGION_DATA, evaluateUsExposure, calculateHoldingDuration, createHoldingDurationScale, fakeBondOpen, renderBondsPage, calculateBondHoldingValue, evaluateBondReserve, bondReserveTone, calculatePortfolioAllocation, evaluateHoldingLimit, calculateBondHoldingDuration, getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav, loadNavEstimates, saveNavEstimates, renderEstimatePanel, getDisciplineActions, adjustDisciplineRule, getNavChartDisplay, createFundViewportKeeper, document, location, window, () => ({ matches: false }), localStorage, clock.Date,
+    BOND_CODES, addPendingPurchaseValue, describeModeEffect, recentNavPeriod, calculateLedger, estimateApplications, GUOFU_TRADING_DATES, createRefreshController, NAV_PERIODS, resolveNavRange, latestCoveredTradeDate, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain, renderNavChart, buildTradeMarkers, calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap, setupNavChartInteractions, setupNavSliderInteractions, calculateTransactionPerformance, FUNDS, FUND_CODES, DISCIPLINE_ENTRIES, createDisciplineSync, REGION_DATA, evaluateUsExposure, calculateHoldingDuration, createHoldingDurationScale, fakeBondOpen, renderBondsPage, calculateBondHoldingValue, evaluateBondReserve, bondReserveTone, calculatePortfolioAllocation, evaluateHoldingLimit, calculateBondHoldingDuration, getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav, loadNavEstimates, saveNavEstimates, renderEstimatePanel, getDisciplineActions, adjustDisciplineRule, getNavChartDisplay, createFundViewportKeeper, unlockErrorMessage, navDateForOrder, parseTransactionDate, renderTradeDialog, renderReviewDialog, TRADE_FUNDS, buyFee, document, location, window, () => ({ matches: false }), localStorage, clock.Date,
     clock.setTimeout, clock.clear, clock.setInterval, clock.clear, settings => scrollCalls.push(settings), scrollY, fetch, loadVault,
   );
   function start() {
@@ -1800,7 +1805,7 @@ for (const stage of ['response', 'json']) test(`an old discipline ${stage} compl
 // Bond-page regression fixtures contain synthetic numbers only.
 const syntheticBondEntries = () => [
   { code: '006485', marketValue: 110, holdingProfit: 10 },
-  { code: '006663', marketValue: 220, holdingProfit: 20 },
+  { code: '006663', marketValue: 220, holdingProfit: 20 }, { code: '004103', marketValue: 0, holdingProfit: 0 },
 ];
 
 function bondsHarness(options = {}) {
@@ -1842,6 +1847,20 @@ function showBonds(h) {
   h.windowEvents.get('hashchange')();
 }
 
+test('004103 missing history names the missing fund while preserving existing bond cards and privacy', async () => {
+  const { h } = bondsHarness();
+  await h.submit();
+  h.api.state.bonds = h.api.state.bonds.filter(entry => entry.code !== '004103');
+  showBonds(h);
+  assert.match(h.app.innerHTML, /004103持仓资料待补全/);
+  assert.match(h.app.innerHTML, /bond-title-004103/);
+  assert.match(h.app.innerHTML, /bond-title-006485/);
+  assert.match(h.app.innerHTML, /bond-title-006663/);
+  assert.match(h.app.innerHTML, /data-bond-reserve-share>待核验/);
+  assert.doesNotMatch(h.app.innerHTML, /110\.00|220\.00|330\.00/);
+  h.api.lock();
+});
+
 function assertBondDeadline(h, deadline, dayDeadline = deadline) {
   assert.equal(h.api.state.deadline, deadline);
   assert.equal(h.api.state.dayDeadline, dayDeadline);
@@ -1870,7 +1889,7 @@ test('a version refresh applies table bond snapshots and transactions with quote
     openBondStore: async () => ({ getSnapshot: () => structuredClone(bond), refresh: async () => structuredClone(bond), close() {} }),
   });
   await h.submit(); await h.api.dataRefresh.check(); showBonds(h); const deadline = h.api.state.deadline;
-  bond = { ...bond, bonds: [{ code: '006485', marketValue: 150, holdingProfit: 10 }, syntheticBondEntries()[1]], transactions: { '006485': [{ id: 'refreshed-source-bond', type: 'buy', amount: 1, status: 'pending', date: '2026-01-07' }] } };
+  bond = { ...bond, bonds: [{ code: '006485', marketValue: 150, holdingProfit: 10 }, syntheticBondEntries()[1], syntheticBondEntries()[2]], transactions: { '006485': [{ id: 'refreshed-source-bond', type: 'buy', amount: 1, status: 'pending', date: '2026-01-07' }] } };
   revision = 'b'; await h.api.dataRefresh.check();
   assert.equal(h.api.state.bonds[0].marketValue, 150); assert.match(h.app.innerHTML, /bond-refreshed-source-bond/);
   assert.equal(h.api.state.freeCashFlow, -12.35); assertBondDeadline(h, deadline); h.api.lock();
@@ -1879,7 +1898,7 @@ test('a version refresh applies table bond snapshots and transactions with quote
 test('a source version changing during unlock refreshes bond and equity snapshots before exposing either', async () => {
   let versions = 0, bondRefreshes = 0, h;
   const before = { bonds: syntheticBondEntries(), transactions: {}, holdingLots: {}, freeCashFlow: null, updatedAt: '2026-01-08T02:00:00Z' };
-  const after = { ...before, bonds: [{ code: '006485', marketValue: 150, holdingProfit: 10 }, syntheticBondEntries()[1]], transactions: { '006485': [{ id: 'initial-latest-bond', type: 'buy', status: 'pending', amount: 1 }] } };
+  const after = { ...before, bonds: [{ code: '006485', marketValue: 150, holdingProfit: 10 }, syntheticBondEntries()[1], syntheticBondEntries()[2]], transactions: { '006485': [{ id: 'initial-latest-bond', type: 'buy', status: 'pending', amount: 1 }] } };
   h = harness(undefined, {
     fetch: async url => ({ ok: true, json: async () => url.endsWith('version.json') ? { revision: ++versions === 1 ? 'a' : 'b' } : { code: /\d{6}/.exec(url)[0], history: [{ date: '2026-01-07', nav: 2 }] } }),
     loadVault: async () => ({ getDailyCode: () => h.day(), unlockVault: async (_password, { onSession }) => { onSession({ close() {}, refresh: async () => syntheticVault('b') }); return syntheticVault('a'); } }),
@@ -2132,6 +2151,7 @@ test('the independent absolute reserve condition can pass even when the equity a
   configureReserveFixture(h, { bonds: [
     { code: '006485', marketValue: 25000, holdingProfit: 0 },
     { code: '006663', marketValue: 25000, holdingProfit: 0 },
+    { code: '004103', marketValue: 0, holdingProfit: 0 },
   ] });
   assert.match(reserveRule(h), /data-bond-reserve-status="below"/, 'the absolute threshold is strictly greater and the proportion is too high');
   h.api.state.bonds[1].marketValue += 1;
@@ -2190,6 +2210,7 @@ test('a quote refresh triggers a green spending reminder from a quiet yellow res
   h.api.state.bonds = [
     { code: '006485', marketValue: 25_000, holdingProfit: 0 },
     { code: '006663', marketValue: 25_000, holdingProfit: 0 },
+    { code: '004103', marketValue: 0, holdingProfit: 0 },
   ];
   for (const code of FUND_CODES) h.api.state.nav[code] = { history: [{ date: '2026-01-07', nav: 50_000 }] };
   h.api.state.bondUnavailable = false;
@@ -3431,6 +3452,45 @@ test('a US exposure deep link opens closed basic information after capturing old
   assert.equal(calls.length, 2);
   assert.deepEqual(h.scrollCalls, []);
   assertBondDeadline(h, deadline);
+  h.api.lock();
+});
+
+test('local mode exposes the + registration button, three modes and the transfer review banner', () => {
+  const h = harness();
+  h.api.state.localMode = true;
+  h.start();
+  assert.match(h.app.innerHTML, /data-action="trade-open"/);
+  assert.match(h.app.innerHTML, /同步交易记录/);
+  h.click('trade-open');
+  assert.match(h.app.innerHTML, /id="trade-form"/);
+  assert.match(h.app.innerHTML, /data-mode="buy"/);
+  assert.match(h.app.innerHTML, /data-mode="sell"/);
+  assert.match(h.app.innerHTML, /data-mode="transfer"/);
+  h.click('trade-mode', { mode: 'transfer' });
+  assert.match(h.app.innerHTML, /name="outShares"/);
+  assert.match(h.app.innerHTML, /name="targetCode"/);
+  assert.match(h.app.innerHTML, /class="trade-board"/);
+  assert.match(h.app.innerHTML, /class="fund-carousel"/);
+  assert.match(h.app.innerHTML, /data-action="trade-reverse"/);
+  const beforeStep = h.api.state.tradeDraft.code;
+  h.click('trade-fund-step', { side: 'out', step: '1' });
+  assert.notEqual(h.api.state.tradeDraft.code, beforeStep);
+  const beforeWheel = h.api.state.tradeDraft.code;
+  const carousel = { dataset: { carousel: 'out' } };
+  h.documentEvents.get('wheel')({ target: { closest: selector => selector === '.fund-carousel' ? carousel : null }, deltaY: 1, preventDefault() {} });
+  assert.notEqual(h.api.state.tradeDraft.code, beforeWheel);
+  const outCode = h.api.state.tradeDraft.code, inCode = h.api.state.tradeDraft.targetCode;
+  h.api.state.tradeDraft.outShares = '10';
+  h.click('trade-reverse');
+  assert.equal(h.api.state.tradeDraft.code, inCode);
+  assert.equal(h.api.state.tradeDraft.targetCode, outCode);
+  assert.equal(h.api.state.tradeDraft.outShares, '');
+  h.api.state.transferCounts = { awaiting: 0, review: 1, reviewed: 0, total: 1 };
+  h.api.state.tradeOpen = false;
+  h.api.state.tradeDraft = null;
+  h.api.render();
+  assert.match(h.app.innerHTML, /transfer-banner/);
+  assert.match(h.app.innerHTML, /1 笔转换待二次核对/);
   h.api.lock();
 });
 

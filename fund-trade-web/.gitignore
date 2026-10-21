@@ -1,2 +1,5 @@
 # Temporary builds, logs, caches and dependencies live in ../临时文件/.
-# All files remaining in this project directory are synchronized.
+# Website mirror files in local/ are regenerated from the workspace; the
+# transfer and registration pairing state is machine-local and contains no amounts.
+/local/transfer-records.json
+/local/registration-records.json

@@ -3,6 +3,10 @@ chcp 65001 >nul
 setlocal
 set "PYTHONIOENCODING=utf-8"
 set "PYTHONDONTWRITEBYTECODE=1"
+if defined FUND_NAV_PYTHON (
+  set "NAV_PYTHON=%FUND_NAV_PYTHON%"
+  goto run
+)
 set "NAV_PYTHON=%USERPROFILE%\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe"
 if exist "%NAV_PYTHON%" goto run
 where python >nul 2>nul

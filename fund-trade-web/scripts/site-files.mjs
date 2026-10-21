@@ -16,6 +16,7 @@ const sourceFiles = [
   'nav-estimates.js', 'nav-interaction.js', 'nav-range.js', 'nav-slider.js',
   'redesign.css', 'refresh-controller.js', 'region-data.js', 'styles.css',
   'transaction-date.js', 'transaction-model.js', 'transaction-performance.js', 'transaction-store.js', 'transaction-view.js',
+  'trade-dialog.js', 'trade-effects.js', 'trading-calendar.js', 'fee-rules.js',
   'unlock-errors.js', 'us-exposure.js', 'portfolio-allocation.js', 'vault.js', 'viewport-anchor.js', 'visual-runtime.js',
 ];
 const vendorFiles = [

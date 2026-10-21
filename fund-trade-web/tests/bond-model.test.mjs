@@ -6,6 +6,7 @@ import { BOND_FUNDS, normalizeBondEntries, normalizeFreeCashFlow, calculateBondS
 const entries = (first = {}, second = {}) => [
   { code: '006485', marketValue: 120, holdingProfit: 20, ...first },
   { code: '006663', marketValue: 45, holdingProfit: -5, ...second },
+  { code: '004103', marketValue: 0, holdingProfit: 0 },
 ];
 const close = (actual, expected) => assert.ok(Math.abs(actual - expected) < 1e-12);
 
@@ -23,10 +24,11 @@ test('bond allocation includes signed cash exactly once without changing fund re
   assert.throws(() => calculateBondHoldingValue([], 12), /Invalid bond entries/);
 });
 
-test('only the two requested public bond identities are exposed', () => {
+test('only the three requested public bond identities are exposed', () => {
   assert.deepEqual(BOND_FUNDS, [
     { code: '006485', name: '广发中债1-3年国开行债券指数C' },
     { code: '006663', name: '易方达安悦超短债债券C' },
+    { code: '004103', name: '中信保诚稳悦债券C' },
   ]);
   assert.ok(Object.isFrozen(BOND_FUNDS));
   assert.ok(BOND_FUNDS.every(Object.isFrozen));
@@ -39,6 +41,7 @@ test('normalization rounds to cents, orders by the catalogue, and keeps payload 
   assert.deepEqual(normalized, [
     { code: '006485', marketValue: 2.68, holdingProfit: 1.01 },
     { code: '006663', marketValue: 5.01, holdingProfit: -1.01 },
+    { code: '004103', marketValue: 0, holdingProfit: 0 },
   ]);
   assert.deepEqual(source, before);
   assert.deepEqual(normalizeBondEntries(normalized), normalized);
@@ -47,8 +50,8 @@ test('normalization rounds to cents, orders by the catalogue, and keeps payload 
 
 test('each return uses its cost rather than market value and the total uses total cost', () => {
   const summary = calculateBondSummary(entries());
-  assert.deepEqual(summary.holdings.map(row => row.cost), [100, 50]);
-  assert.deepEqual(summary.holdings.map(row => row.returnRate), [0.2, -0.1]);
+  assert.deepEqual(summary.holdings.map(row => row.cost), [100, 50, 0]);
+  assert.deepEqual(summary.holdings.map(row => row.returnRate), [0.2, -0.1, null]);
   assert.equal(summary.marketValue, 165);
   assert.equal(summary.holdingProfit, 15);
   assert.equal(summary.cost, 150);
@@ -79,7 +82,7 @@ test('small scientific-notation values round safely and cannot erase positive co
 
 test('unknown, missing, duplicate, extra-field or nonnumeric input fails without guessed holdings', () => {
   const bad = [
-    null, [], entries().slice(0, 1), [...entries(), entries()[0]],
+    null, [], [...entries(), entries()[0]],
     entries({ code: '000000' }), entries({}, { code: '006485' }),
     entries({ marketValue: null }), entries({ holdingProfit: null }),
     entries({ marketValue: '' }), entries({ marketValue: '120' }), entries({ holdingProfit: '-5' }),

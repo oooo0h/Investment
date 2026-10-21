@@ -7,6 +7,7 @@ import { calculateBondHoldingDuration } from '../src/bond-holding-duration.js';
 const entries = () => [
   { code: '006485', marketValue: 110, holdingProfit: 10 },
   { code: '006663', marketValue: 220, holdingProfit: 20 },
+  { code: '004103', marketValue: 0, holdingProfit: 0 },
 ];
 
 const progress = html => html.match(/<div class="bond-total-progress"[\s\S]*?<p class="bond-total-progress-note">[\s\S]*?<\/p>\s*<\/div>/)?.[0] || '';
@@ -94,11 +95,11 @@ test('reserve notes are conditional: red warns about cash, green invites spendin
   }
 });
 
-test('partial screenshot records render both ledgers without inventing account totals or returns', () => {
+test('partial screenshot records render all ledgers without inventing account totals or returns', () => {
   const transactions = { '006485': [{ id: 'synthetic-pending', date: '2024-01-02', type: 'buy', amount: 1,
     shares: null, nav: null, fee: null, status: 'pending', sourceStatus: 'unverified' }], '006663': [] };
   const html = renderBondsPage({ entries: [], transactions });
-  assert.equal((html.match(/class="panel bond-card"/g) || []).length, 2);
+  assert.equal((html.match(/class="panel bond-card"/g) || []).length, 3);
   const overview = html.match(/<section[^>]*aria-label="债基合计"[\s\S]*?<\/section>/)[0];
   assert.match(overview, /合计持仓金额（元）/);
   assert.match(overview, /占总持仓比例（含自由现金流）/);
@@ -108,8 +109,8 @@ test('partial screenshot records render both ledgers without inventing account t
 
 test('bond cards and totals mask amounts by default while showing cost-based rates', () => {
   const html = renderBondsPage({ entries: entries() });
-  assert.equal((html.match(/class="panel bond-card"/g) || []).length, 2);
-  assert.equal((html.match(/class="masked" aria-label="已隐藏"/g) || []).length, 5);
+  assert.equal((html.match(/class="panel bond-card"/g) || []).length, 3);
+  assert.equal((html.match(/class="masked" aria-label="已隐藏"/g) || []).length, 7);
   assert.equal((html.match(/\+10\.00%/g) || []).length, 2);
   assert.match(html, /006485/);
   assert.match(html, /006663/);
@@ -128,7 +129,7 @@ test('the explicit visible mode reveals formatted amounts without enabling posit
 test('free cash flow masks by default, reveals a signed amount, and edits with the same privacy rule', () => {
   const hidden = renderBondsPage({ entries: entries(), freeCashFlow: 123.45 });
   assert.match(hidden, /自由现金流/);
-  assert.equal((hidden.match(/class="masked" aria-label="已隐藏"/g) || []).length, 6);
+  assert.equal((hidden.match(/class="masked" aria-label="已隐藏"/g) || []).length, 8);
   assert.doesNotMatch(hidden, /123\.45/);
   const visible = renderBondsPage({ entries: entries(), freeCashFlow: 123.45, visible: true });
   assert.match(visible, /\+123\.45/);
@@ -166,7 +167,7 @@ test('the overview adds signed cash, preserves fund returns, and withholds unava
   const html = renderBondsPage({ entries: entries(), cashUnavailable: true, visible: true, reserve: { ratio: .25 } });
   const overview = html.match(/aria-label="债基合计"[\s\S]*?<\/section>/)[0];
   assert.equal((overview.match(/<dl>[\s\S]*?<\/dl>/)[0].match(/待核验/g) || []).length, 2);
-  assert.equal((html.match(/class="panel bond-card"/g) || []).length, 2);
+  assert.equal((html.match(/class="panel bond-card"/g) || []).length, 3);
 });
 
 test('a verified maturity distribution places recent holdings in red left and mature holdings in green right', () => {

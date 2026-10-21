@@ -3,12 +3,11 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import assert from 'node:assert/strict';
 import { fileURLToPath } from 'node:url';
-import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
+import { resolveArtifactTool } from './nav_runtime.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const runtime = createRequire(path.join(root, '临时文件/entry.mjs'));
-const { Workbook, SpreadsheetFile, FileBlob } = await import(pathToFileURL(runtime.resolve('@oai/artifact-tool')).href);
+const { Workbook, SpreadsheetFile, FileBlob } = await import(pathToFileURL(resolveArtifactTool({ root })).href);
 const indexPath = path.join(root, '公共资料/历史净值/全基金历史净值当前入口.json');
 const outputDir = process.argv.find(a => a.startsWith('--output-dir='))?.slice(13);
 const input = process.argv.find(a => a.startsWith('--input='))?.slice(8);
@@ -27,10 +26,26 @@ for (const entry of index.funds) {
   assert.equal(doc.code, entry.code);
   assert.equal(doc.count, doc.rows.length);
   assert.equal(new Set(doc.rows.map(r => r.date)).size, doc.count);
-  const book = Workbook.create();
+  // A fund workbook may also carry the transaction sheet. Rebuild only the NAV
+  // sheets and keep everything else (transactions, formulas, parameters) intact.
+  const targetPath = entry.xlsx_path ? path.join(root, entry.xlsx_path) : null;
+  const targetExists = targetPath ? await fs.stat(targetPath).then(() => true, () => false) : false;
+  let book, combined = false;
+  if (targetExists) {
+    book = await SpreadsheetFile.importXlsx(await FileBlob.load(targetPath));
+    for (let i = 0; i < book.worksheets.getSheetCount(); i++) {
+      if (book.worksheets.getItemAt(i).name === '交易记录') combined = true;
+    }
+    for (const name of ['全部历史净值', '待官网复核']) {
+      try { book.worksheets.getItem(name).delete(); } catch { /* sheet absent */ }
+    }
+  } else {
+    book = Workbook.create();
+  }
   const sources = [['全部历史净值', doc.rows], ...(doc.supplementary_rows?.length ? [['待官网复核', doc.supplementary_rows]] : [])];
   for (const [name, rows] of sources) {
     const sheet = book.worksheets.add(name);
+    if (combined) sheet.index = name === '全部历史净值' ? 1 : 2;
     const last = rows.length + 1;
     sheet.showGridLines = false;
     sheet.getRange(`A1:C${last}`).values = [['日期', '净值', '日增长率'], ...rows.map(r => [new Date(r.date + 'T00:00:00Z'), Number(r.nav), r.daily_growth_pct == null || r.daily_growth_pct === '' ? null : Number(r.daily_growth_pct) / 100])];
@@ -52,7 +67,7 @@ for (const entry of index.funds) {
     const blob = await book.render({ sheetName: name, range: 'A1:C6', scale: 1.5, format: 'png' });
     await fs.writeFile(path.join(stage, `${entry.code}_${name}.png`), new Uint8Array(await blob.arrayBuffer()));
   }
-  const output = path.join(stage, `${entry.code}_全部历史净值.xlsx`);
+  const output = path.join(stage, `${entry.code}_${combined ? '交易记录' : '全部历史净值'}.xlsx`);
   await (await SpreadsheetFile.exportXlsx(book)).save(output);
   // Reimport the actual exported bytes, including the Excel date serialization.
   const saved = await SpreadsheetFile.importXlsx(await FileBlob.load(output));

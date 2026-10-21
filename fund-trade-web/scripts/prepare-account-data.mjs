@@ -10,6 +10,7 @@ import { validateEncryptedEnvelope } from './publish-data.mjs';
 import { PROJECT_ROOT, WORKSPACE_ROOT } from './site-files.mjs';
 import { syncLocalSources } from './local-bundle.mjs';
 import { FUND_CODES } from '../src/funds.js';
+import { BOND_CODES } from '../src/bond-model.js';
 import { siteTemporaryPath } from './project-paths.mjs';
 
 const filenames = ['ledger.enc.json', 'bonds.enc.json'];
@@ -67,7 +68,7 @@ export async function prepareAccountData({
     const envelopes = [ledger.envelope, bonds.envelope].map(validateEncryptedEnvelope);
     if (envelopes.some((envelope, index) => !sameKeys(originalEnvelopes[index].keys, envelope.keys))) throw preparationError();
     const bytes = envelopes.map(envelope => Buffer.from(JSON.stringify(envelope), 'utf8'));
-    const workbookCount = FUND_CODES.length + 2;
+    const workbookCount = FUND_CODES.length + BOND_CODES.length;
     report('complete');
     output(`[Prepare] Validated ${workbookCount} workbook sources; encryptedFiles=2; mode=${checkOnly ? 'check' : 'refresh'}.`);
     if (checkOnly) return { checkOnly: true, workbookCount, encryptedFileCount: 2 };

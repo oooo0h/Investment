@@ -259,6 +259,11 @@ def stream(command, log, env=None):
 
 
 def runtime_node():
+    configured = os.environ.get('FUND_NAV_NODE')
+    if configured:
+        found = configured if Path(configured).is_file() else shutil.which(configured)
+        require(found, 'FUND_NAV_NODE 指向的Node.js不可用')
+        return str(found)
     candidate = RUNTIME / 'node/bin/node.exe'
     found = str(candidate) if candidate.is_file() else shutil.which('node')
     require(found, '未找到Node.js运行环境')
@@ -314,9 +319,11 @@ def update(folder, directory, asof, check_only, log):
     index = load(INDEX)
     entry = next(e for e in index['funds'] if e['code'] == code)
     targets = {kind: (ROOT / entry[kind + '_path']).resolve() for kind in ('json', 'csv', 'xlsx')}
+    combined_xlsx = (folder / f'{code}_交易记录.xlsx').resolve()
+    legacy_xlsx = (folder / f'{code}_全部历史净值.xlsx').resolve()
     require(targets['json'] == ARCHIVE / '维护数据' / code / f'{code}_全部历史净值.json'
             and targets['csv'] == targets['json'].with_suffix('.csv')
-            and targets['xlsx'] == folder / f'{code}_全部历史净值.xlsx', '索引路径不符合当前基金目录')
+            and targets['xlsx'] in (combined_xlsx, legacy_xlsx), '索引路径不符合当前基金目录')
     for kind, target in targets.items():
         require(sha(target) == entry[kind + '_sha256'], f'{kind}主档哈希变化，请核对当前入口')
     old = load(targets['json'])
@@ -358,7 +365,7 @@ def update(folder, directory, asof, check_only, log):
         log(f'{code} 正在生成并逐行核验完整Excel：新增 {len(added)} 条，修订 {len(revisions)} 条')
         command = [runtime_node(), str(ROOT / '工具脚本/export_single_nav_workbook.mjs'), '--stage', f'--codes={code}', f'--input={staged_json}', f'--output-dir={directory}']
         require(stream(command, log) == 0, 'Excel生成或复读核验失败，原文件保留')
-        staged_xlsx = directory / f'{code}_全部历史净值.xlsx'
+        staged_xlsx = directory / targets['xlsx'].name
         archive_tool.verify(doc, staged_xlsx)
         # Capture and guard every index before replacing any of the three masters.
         pointers = sorted(ARCHIVE.glob('*基金历史净值当前入口.*'))

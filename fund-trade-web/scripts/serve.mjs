@@ -11,6 +11,7 @@ import { WORKSPACE_ROOT, staticSourcePath, isPublicAsset } from './site-files.mj
 import { syncLocalSources } from './local-bundle.mjs';
 import { siteTemporaryPath } from './project-paths.mjs';
 import { createLocalNavPolling } from './local-nav-polling.mjs';
+import { createLocalTransactionStore, RegistrationError } from './local-transactions.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 try { await syncLocalSources({ workspace: WORKSPACE_ROOT, root }); }
@@ -19,25 +20,91 @@ const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css; charset=
 const demoNotice = `<style>.gate .brand::after,.brand-copy>span:first-child::after{font:500 10px/1.5 "Microsoft YaHei",sans-serif;padding:2px 6px;border:1px solid var(--line);border-radius:4px;color:var(--muted);background:var(--paper-2)}.gate .brand::after{content:"测试数据"}.brand-copy>span:first-child::after{content:"测试";margin-left:7px}</style>`;
 const port = Number(process.env.PORT || 4186);
 const demo = process.argv.includes('--demo');
-const navPolling = demo ? null : createLocalNavPolling({ workspace: WORKSPACE_ROOT, pythonPath: process.env.FUND_PREVIEW_PYTHON });
+const pythonPath = process.env.FUND_PREVIEW_PYTHON || path.join(os.homedir(), '.cache', 'codex-runtimes', 'codex-primary-runtime', 'dependencies', 'python', 'python.exe');
+const navPolling = demo ? null : createLocalNavPolling({ workspace: WORKSPACE_ROOT, pythonPath });
 const disciplines = await createDisciplineSource({ workspace: WORKSPACE_ROOT, root });
 const tables = demo
   ? await (await import('./demo-tables.mjs')).createDemoTableStore({ directory: siteTemporaryPath(root, 'demo-tables') })
-  : await createLiveDataStore({
-    workspace: WORKSPACE_ROOT, root,
-    pythonPath: process.env.FUND_PREVIEW_PYTHON || path.join(os.homedir(), '.cache', 'codex-runtimes', 'codex-primary-runtime', 'dependencies', 'python', 'python.exe'),
-  });
-const bondTables = demo ? null : await createLiveBondDataStore({ workspace: WORKSPACE_ROOT, root,
-  pythonPath: process.env.FUND_PREVIEW_PYTHON || path.join(os.homedir(), '.cache', 'codex-runtimes', 'codex-primary-runtime', 'dependencies', 'python', 'python.exe') });
+  : await createLiveDataStore({ workspace: WORKSPACE_ROOT, root, pythonPath });
+const bondTables = demo ? null : await createLiveBondDataStore({ workspace: WORKSPACE_ROOT, root, pythonPath });
+const transactionWriter = demo ? null : createLocalTransactionStore({ workspace: WORKSPACE_ROOT, root, pythonPath });
 // Verify real sources before listening; failure must never fall back to test data.
 try { await tables.snapshot(); if (bondTables) await bondTables.snapshot(); }
 catch { console.error('Local data unavailable.'); process.exit(1); }
+
+function readJson(req, limit = 65536) {
+  return new Promise((resolve, reject) => {
+    let size = 0;
+    const chunks = [];
+    req.on('data', chunk => {
+      size += chunk.length;
+      if (size > limit) { reject(new Error('too-large')); req.destroy(); return; }
+      chunks.push(chunk);
+    });
+    req.on('end', () => {
+      try { resolve(JSON.parse(Buffer.concat(chunks).toString('utf8'))); }
+      catch { reject(new Error('invalid')); }
+    });
+    req.on('error', reject);
+  });
+}
+
+function sameOrigin(req) {
+  const allowed = new Set([`http://127.0.0.1:${port}`, `http://localhost:${port}`]);
+  const origin = req.headers.origin;
+  if (origin && !allowed.has(origin)) return false;
+  const site = req.headers['sec-fetch-site'];
+  if (!origin && site && site !== 'same-origin') return false;
+  return true;
+}
+
+function json(res, status, payload) {
+  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
+  res.end(JSON.stringify(payload));
+}
+
+async function handleLocalApi(req, res, relative) {
+  if (!transactionWriter) return json(res, 404, { error: 'Not found' });
+  if (!sameOrigin(req)) return json(res, 403, { error: '请求来源无效。' });
+  if (relative === '__local/transfers' && req.method === 'GET') {
+    try { return json(res, 200, await transactionWriter.list()); }
+    catch { return json(res, 503, { error: '转换记录暂不可用。' }); }
+  }
+  if (req.method !== 'POST') return json(res, 405, { error: 'Method not allowed' });
+  if (!String(req.headers['content-type'] || '').toLowerCase().startsWith('application/json')) return json(res, 415, { error: 'Unsupported media type' });
+  let body;
+  try { body = await readJson(req); }
+  catch { return json(res, 400, { error: '请求内容无效。' }); }
+  try {
+    let result;
+    if (relative === '__local/transactions') result = await transactionWriter.create(body);
+    else if (relative === '__local/transfers/reconcile') result = await transactionWriter.reconcile();
+    else if (relative === '__local/transfers/review') result = await transactionWriter.review(body);
+    else return json(res, 404, { error: 'Not found' });
+    // A historical conversion whose NAVs are already published can be filled
+    // immediately; pending ones stay in the awaiting state for later review.
+    if (result?.mode === 'transfer') { try { await transactionWriter.reconcile(); } catch { /* Awaiting state remains. */ } }
+    return json(res, 200, result);
+  } catch (error) {
+    if (error instanceof RegistrationError) return json(res, 400, { error: error.message, code: error.code });
+    return json(res, 500, { error: '登记未完成，请稍后重试。' });
+  }
+}
+
 http.createServer(async (req, res) => {
   res.setHeader('X-Fund-Trade-Web', demo ? 'demo' : 'live');
   let dataRequest = false;
   try {
     const url = new URL(req.url, 'http://localhost');
     const relative = decodeURIComponent(url.pathname).replace(/^\//, '') || 'index.html';
+    if (relative.startsWith('__local/') && relative !== '__local/health') {
+      return await handleLocalApi(req, res, relative);
+    }
+    if (req.method !== 'GET' && req.method !== 'HEAD') {
+      res.writeHead(405, { 'Content-Type': 'text/plain', 'Cache-Control': 'no-store' });
+      res.end('Method not allowed');
+      return;
+    }
     dataRequest = ['__local/health', 'data/discipline.json', 'data/version.json', 'data/ledger.enc.json', 'data/bonds.enc.json'].includes(relative)
       || /^data\/nav\/\d{6}\.json$/.test(relative);
     let bytes;

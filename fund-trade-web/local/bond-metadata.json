@@ -287,6 +287,13 @@
       "processing_records": 1,
       "cancelled_records": 1,
       "workbook_sha256": "4a22d3c260db9aee079a064490599477d5b4f3a02574fc81ce19a7bf37e876d8"
+    },
+    {
+      "code": "004103",
+      "rows": 0,
+      "output": "基金/持仓基金/004103_中信保诚稳悦债券C/004103_交易记录.xlsx",
+      "row_provenance": [],
+      "workbook_sha256": "08386321cc5e32b3264d86bd6fcce25c05f024000b4e29ab8e2c3de24085933b"
     }
   ]
 }

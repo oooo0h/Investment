@@ -22,7 +22,7 @@ test('a completed workbook sale remains usable when public prices lag its date',
 });
 
 test('complete six-column display does not demand nonexistent application or confirmation fields', () => {
-  const html = renderBondsPage({ entries: [{ code: '006485', marketValue: 110, holdingProfit: 10 }, { code: '006663', marketValue: 220, holdingProfit: 20 }],
+  const html = renderBondsPage({ entries: [{ code: '006485', marketValue: 110, holdingProfit: 10 }, { code: '006663', marketValue: 220, holdingProfit: 20 }, { code: '004103', marketValue: 0, holdingProfit: 0 }],
     transactions: { '006663': [{ id: 'filled-sale', date: '2026-10-20', type: 'sell', amount: 12, confirmedAmount: 12, nav: 1.2, shares: 10, fee: 0, status: 'confirmed', sourceStatus: 'calculated', sharesBasis: 'reported' }] } });
   const article = html.match(/<article class="transaction bond-transaction"[\s\S]*?<\/article>/)?.[0];
   assert.ok(article); assert.match(article, /表格已填写|表格资料/);
@@ -39,7 +39,7 @@ test('only unconfirmed purchases add cash to market value, once, without guessin
 });
 
 test('bond pending buy cash changes displayed holdings and totals while preserving earnings and rates', () => {
-  const entries = [{ code: '006485', marketValue: 110, holdingProfit: 10 }, { code: '006663', marketValue: 220, holdingProfit: 20 }];
+  const entries = [{ code: '006485', marketValue: 110, holdingProfit: 10 }, { code: '006663', marketValue: 220, holdingProfit: 20 }, { code: '004103', marketValue: 0, holdingProfit: 0 }];
   const html = renderBondsPage({ entries, visible: true, transactions: { '006663': [{ id: 'pending-buy', date: '2026-10-21', type: 'buy', status: 'pending', sourceStatus: 'processing', amount: 30 }] } });
   assert.match(html, /360\.00/); assert.match(html, /250\.00/);
   assert.match(html, /20\.00/); assert.match(html, /10\.00%/);

@@ -17,6 +17,17 @@ def history(code='005698'):
 
 
 class NavTests(unittest.TestCase):
+    def test_explicit_node_path_survives_a_moved_project(self):
+        with tempfile.TemporaryDirectory(dir=nav.TEMP) as directory:
+            node = Path(directory) / 'Other Device Tools' / 'node.exe'
+            node.parent.mkdir()
+            node.write_bytes(b'synthetic runtime')
+            with patch.dict(nav.os.environ, {'FUND_NAV_NODE': str(node)}):
+                self.assertEqual(nav.runtime_node(), str(node))
+            with patch.dict(nav.os.environ, {'FUND_NAV_NODE': str(node) + '.missing'}):
+                with self.assertRaisesRegex(RuntimeError, 'FUND_NAV_NODE'):
+                    nav.runtime_node()
+
     def test_gap_is_filled_without_losing_old_rows(self):
         old = history()
         fresh = copy.deepcopy(old['rows'][-5:]) + [dict(old['rows'][-1], date='2026-10-08'), dict(old['rows'][-1], date='2026-10-09')]

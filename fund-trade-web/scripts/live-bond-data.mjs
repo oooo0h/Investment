@@ -8,13 +8,16 @@ import { adaptNav, createEnvelopeEncryptor, resolveFundPath, resolveNavPath, tra
 import { calculateBondWorkbook } from './bond-ledger.mjs';
 import { normalizeBondTransactions } from '../src/bond-transactions.js';
 import { readLocalFile } from './local-bundle.mjs';
-const CODES = ['006485', '006663'];
+import { BOND_CODES } from '../src/bond-model.js';
+import { readTransferRecords, applyTransferStates } from './transfer-records.mjs';
+import { readRegistrationRecords, applyRegistrationStates } from './registration-records.mjs';
+const CODES = BOND_CODES;
 const META = 'fund-trade-web/local/bond-metadata.json';
 const reader = fileURLToPath(new URL('./local-workbooks.py', import.meta.url));
 const safeError = () => new Error('Bond source validation failed.');
 function readBooks(pythonPath, workspace, sources) {
   return new Promise((resolve, reject) => {
-    const child = spawn(pythonPath, ['-X', 'utf8', reader], { windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'] });
+    const child = spawn(pythonPath, ['-B', '-X', 'utf8', reader], { windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'] });
     let output = '', done = false;
     const fail = () => { if (!done) { done = true; output = ''; reject(safeError()); } };
     const timer = setTimeout(() => { child.kill(); fail(); }, 30000);
@@ -30,6 +33,11 @@ export function prepareBondWorkbookRows(rows, asOfDate) {
   return rows.map(row => row.date && row.date > asOfDate && !['cancelled', 'canceled', 'failed', 'closed'].includes(row.status)
     ? { ...row, status: 'pending', sourceStatus: 'processing' } : { ...row });
 }
+// An empty six-column table is the user's verified statement of no holding.
+export function emptyBondResult(code, valuationDate) {
+  return { entry: { code, marketValue: 0, holdingProfit: 0 }, valuationDate,
+    holdingLots: { complete: true, lots: [] } };
+}
 export async function createLiveBondDataStore({ workspace, root, pythonPath, now = () => new Date() }) {
   let original;
   try { original = JSON.parse(await readFile(path.join(root, 'data/bonds.enc.json'), 'utf8')); }
@@ -44,6 +52,11 @@ export async function createLiveBondDataStore({ workspace, root, pythonPath, now
       if (!metadataHit || !indexHit) throw safeError();
       const metadataBytes = metadataHit.bytes, metadata = JSON.parse(metadataBytes);
       const index = JSON.parse(indexHit.bytes);
+      const transferFile = path.join(root, 'local/transfer-records.json');
+      const registrationFile = path.join(root, 'local/registration-records.json');
+      let transferRecords = [], registrationRecords = [];
+      try { transferRecords = await readTransferRecords({ root }); } catch { transferRecords = []; }
+      try { registrationRecords = await readRegistrationRecords({ root }); } catch { registrationRecords = []; }
       const sources = CODES.map(code => {
         const entry = index.funds.find(fund => fund.code === code), details = metadata.funds.find(fund => fund.code === code);
         if (!entry || !details) throw safeError();
@@ -52,9 +65,10 @@ export async function createLiveBondDataStore({ workspace, root, pythonPath, now
       });
       const navFiles = CODES.map(code => resolveNavPath(workspace, index.funds.find(fund => fund.code === code).json_path, code));
       const files = [...sources.map(source => resolveFundPath(workspace, source.path, source.code)), ...navFiles,
-        indexHit.file];
+        indexHit.file, transferFile, registrationFile];
       const fingerprint = async () => asOfDate + '|' + (await Promise.all([...files, metadataHit.file].map(async file => {
-        const info = await stat(file, { bigint: true }); return `${info.size}:${info.mtimeNs}:${info.ctimeNs}`;
+        try { const info = await stat(file, { bigint: true }); return `${info.size}:${info.mtimeNs}:${info.ctimeNs}`; }
+        catch (error) { if (error.code === 'ENOENT') return 'absent'; throw safeError(); }
       }))).join('|');
       const before = await fingerprint();
       if (cached && before === signature) return cached;
@@ -65,8 +79,16 @@ export async function createLiveBondDataStore({ workspace, root, pythonPath, now
         const nav = adaptNav(JSON.parse(navBytes[indexOfCode]), entry, index.updated_at);
         // A stale public price does not invalidate a completed workbook record.
         // Only future-dated orders and genuinely incomplete rows remain pending.
-        books[code].transactions = prepareBondWorkbookRows(books[code].transactions, asOfDate);
-        calculated.push(calculateBondWorkbook(code, books[code].transactions, nav.history.at(-1), { asOfDate }));
+        books[code].transactions = applyTransferStates(applyRegistrationStates(prepareBondWorkbookRows(books[code].transactions, asOfDate), code, registrationRecords), code, transferRecords);
+        const result = calculateBondWorkbook(code, books[code].transactions, nav.history.at(-1), { asOfDate });
+        if (result) calculated.push(result);
+        // A newly registered buy/transfer can be the first pending row in an
+        // otherwise empty bond table. Keep the card usable as a zero holding
+        // while the pending purchase value is added by the browser.
+        else if (!books[code].transactions.length
+          || books[code].transactions.every(row => row.status === 'pending')) {
+          calculated.push(emptyBondResult(code, nav.lastDate));
+        }
       }
       for (const source of sources) {
         const book = books[source.code], matched = book.sha256 === source.workbook_sha256;
@@ -81,6 +103,8 @@ export async function createLiveBondDataStore({ workspace, root, pythonPath, now
             nav: row.nav, shares: row.shares, navDate: matched ? row.navDate : null, fee: row.fee, confirmedDate: null,
             status: confirmed || computed ? 'confirmed' : 'pending', sourceStatus: confirmed ? 'confirmed' : computed ? 'calculated' : row.sourceStatus === 'processing' ? 'processing' : 'unverified',
             sharesBasis: row.sourceStatus === 'formula-calculated' ? 'calculated' : 'reported',
+            transferId: row.transferId, transferStatus: row.transferStatus, dateBasis: row.dateBasis,
+            orderDate: row.orderDate, registrationId: row.registrationId, registrationStatus: row.registrationStatus,
             note: confirmed ? '按截图确认字段登记；未用完成时限推断确认日。' : computed ? '按已填写六列表格登记；估值使用最新公布净值，未推定确认日期或净值日期。' : row.sourceStatus === 'processing' ? '表格日期尚未到达，暂不计入份额与收益；原表字段保留。' : '截图或表格未提供完整成交字段，未推算份额、净值或费用。' };
         });
         // The workbook is the sole record source. Legacy encrypted backups are
@@ -89,14 +113,16 @@ export async function createLiveBondDataStore({ workspace, root, pythonPath, now
       }
       const normalized = normalizeBondTransactions(transactions);
       if (before !== await fingerprint()) throw safeError();
-      const hash = createHash('sha256').update('20261020-complete-workbook-v3').update(asOfDate).update(metadataBytes).update(JSON.stringify(CODES.map(code => books[code].sha256)));
+      const hash = createHash('sha256').update('20261020-complete-workbook-v3').update(asOfDate).update(metadataBytes).update(JSON.stringify(CODES.map(code => books[code].sha256))).update(JSON.stringify(transferRecords)).update(JSON.stringify(registrationRecords));
       for (const bytes of navBytes) hash.update(bytes);
       const revision = hash.digest('hex');
       const updatedAt = new Date().toISOString();
-      const usable = calculated.every(Boolean);
-      const bonds = usable ? calculated.map(item => item.entry) : [];
-      const holdingLots = usable ? Object.fromEntries(calculated.map(item => [item.entry.code, item.holdingLots])) : {};
-      const valuationDate = usable ? calculated.map(item => item.valuationDate).sort()[0] : null;
+      // A newly registered fund may have no trades yet. Keep other funds'
+      // verified calculations usable; the client requires all codes for totals.
+      const usable = calculated.filter(Boolean);
+      const bonds = usable.map(item => item.entry);
+      const holdingLots = Object.fromEntries(usable.map(item => [item.entry.code, item.holdingLots]));
+      const valuationDate = usable.length ? usable.map(item => item.valuationDate).sort()[0] : null;
       const envelope = encrypt({ funds: {}, bonds, freeCashFlow: null, holdingLots, valuationDate, transactions: normalized, updatedAt });
       cached = { status: 'live', revision, envelope, sourceSummary: CODES.map(code => ({ code, records: normalized[code].length, kind: 'workbook' })) };
       signature = before;

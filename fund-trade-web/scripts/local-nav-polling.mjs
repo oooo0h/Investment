@@ -4,19 +4,12 @@ import { spawn } from 'node:child_process';
 import path from 'node:path';
 import os from 'node:os';
 
+import { isLocalTradingDay } from '../src/trading-calendar.js';
 const DAY = 86400000;
 export const NAV_POLL_INTERVAL = 3 * 60 * 1000;
 // SSE's published 2026 market closures, including weekends (not makeup workdays).
 // https://www.sse.com.cn/disclosure/dealinstruc/closed/c/c_20251222_10802510.shtml
-const CLOSURES_2026 = [['01-01', '01-03'], ['02-15', '02-23'], ['04-04', '04-06'], ['05-01', '05-05'], ['06-19', '06-21'], ['09-25', '09-27'], ['10-01', '10-07']];
-export function isLocalTradingDay(date) {
-  const stamp = Date.parse(`${date}T00:00:00Z`);
-  if (!Number.isFinite(stamp) || new Date(stamp).toISOString().slice(0, 10) !== date) throw new Error('Trading calendar unavailable.');
-  // The only prior-year lookup needed by the 2026 calendar is December 31.
-  if (!date.startsWith('2026-') && date !== '2025-12-31') throw new Error('Trading calendar unavailable.');
-  if ([0, 6].includes(new Date(stamp).getUTCDay())) return false;
-  return !date.startsWith('2026-') || !CLOSURES_2026.some(([from, to]) => date.slice(5) >= from && date.slice(5) <= to);
-}
+export { isLocalTradingDay };
 export function expectedNavDate(day, qdii, tradingDay = isLocalTradingDay) {
   let stamp = Date.parse(`${day}T00:00:00Z`) - (qdii ? DAY : 0);
   for (let attempt = 0; attempt < 370; attempt++, stamp -= DAY) {

@@ -47,7 +47,7 @@ test('refresh prepares both workbook envelopes before replacing either and prese
     writes.push(file);
     return fs.writeFile(file, bytes, flags);
   } } });
-  assert.deepEqual(result, { checkOnly: false, workbookCount: 6, encryptedFileCount: 2 });
+  assert.deepEqual(result, { checkOnly: false, workbookCount: 7, encryptedFileCount: 2 });
   assert.equal(writes.length, 2);
   assert.equal(f.factoryArgs.length, 2);
   for (const args of f.factoryArgs) assert.deepEqual(args, { workspace: f.options.workspace, root: f.root, pythonPath: 'synthetic-python' });
@@ -55,7 +55,7 @@ test('refresh prepares both workbook envelopes before replacing either and prese
   assert.deepEqual(saved, f.next);
   assert.deepEqual(saved.map(item => item.keys), f.originals.map(item => item.keys));
   assert.doesNotMatch(f.output.join('\n'), /ciphertext|salt|PRIVATE|funds|password/);
-  assert.match(f.output.join('\n'), /Validated 6 workbook sources; encryptedFiles=2; mode=refresh/);
+  assert.match(f.output.join('\n'), /Validated 7 workbook sources; encryptedFiles=2; mode=refresh/);
   await f.assertNoTemporary();
 });
 

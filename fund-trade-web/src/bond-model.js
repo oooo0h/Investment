@@ -2,7 +2,9 @@
 export const BOND_FUNDS = Object.freeze([
   Object.freeze({ code: '006485', name: '广发中债1-3年国开行债券指数C' }),
   Object.freeze({ code: '006663', name: '易方达安悦超短债债券C' }),
+  Object.freeze({ code: '004103', name: '中信保诚稳悦债券C' }),
 ]);
+export const BOND_CODES = Object.freeze(BOND_FUNDS.map(fund => fund.code));
 
 const MAX_CENTS = BigInt(Number.MAX_SAFE_INTEGER);
 const invalid = () => { throw new Error('Invalid bond entries.'); };
@@ -30,7 +32,7 @@ function money(value) {
 }
 
 function normalized(entries) {
-  if (!Array.isArray(entries) || entries.length !== BOND_FUNDS.length) invalid();
+  if (!Array.isArray(entries) || !entries.length || entries.length > BOND_FUNDS.length) invalid();
   const byCode = new Map();
   for (const entry of entries) {
     if (!entry || typeof entry !== 'object' || Array.isArray(entry)
@@ -40,15 +42,15 @@ function normalized(entries) {
     const marketValue = cents(entry.marketValue);
     const holdingProfit = cents(entry.holdingProfit);
     const cost = marketValue - holdingProfit;
-    if (cost <= 0n || cost > MAX_CENTS) invalid();
+    if (cost < 0n || cost > MAX_CENTS || (cost === 0n && (entry.marketValue !== 0 || entry.holdingProfit !== 0))) invalid();
     // Validate that every returned amount can preserve the exact cent values.
     money(marketValue); money(holdingProfit); money(cost);
     byCode.set(entry.code, { code: entry.code, marketValue, holdingProfit, cost });
   }
-  return BOND_FUNDS.map(fund => byCode.get(fund.code) || invalid());
+  return BOND_FUNDS.filter(fund => byCode.has(fund.code)).map(fund => byCode.get(fund.code));
 }
 
-/** Exactly one entry per known fund; amounts are numbers rounded to cents. */
+/** Known supplied entries only; absent holdings are never filled with zero. */
 export function normalizeBondEntries(entries) {
   try {
     return normalized(entries).map(({ code, marketValue, holdingProfit }) => ({
@@ -87,6 +89,7 @@ export function normalizeFreeCashFlow(value) {
 export function calculateBondHoldingValue(entries, freeCashFlow = null) {
   try {
     const rows = normalized(entries);
+    if (rows.length !== BOND_FUNDS.length) invalid();
     const cash = normalizeFreeCashFlow(freeCashFlow);
     return money(rows.reduce((sum, row) => sum + row.marketValue, 0n) + (cash === null ? 0n : cents(cash)));
   } catch { invalid(); }
@@ -96,13 +99,13 @@ export function calculateBondHoldingValue(entries, freeCashFlow = null) {
 export function calculateBondSummary(entries) {
   try {
     const rows = normalized(entries);
-    const holdings = rows.map(({ code, marketValue, holdingProfit, cost }, index) => ({
+    const holdings = rows.map(({ code, marketValue, holdingProfit, cost }) => ({
       code,
-      name: BOND_FUNDS[index].name,
+      name: BOND_FUNDS.find(fund => fund.code === code).name,
       marketValue: money(marketValue),
       holdingProfit: money(holdingProfit),
       cost: money(cost),
-      returnRate: Number(holdingProfit) / Number(cost) || 0,
+      returnRate: cost === 0n ? null : Number(holdingProfit) / Number(cost) || 0,
     }));
     const total = rows.reduce((sum, row) => ({
       marketValue: sum.marketValue + row.marketValue,
@@ -111,10 +114,10 @@ export function calculateBondSummary(entries) {
     }), { marketValue: 0n, holdingProfit: 0n, cost: 0n });
     return {
       holdings,
-      marketValue: money(total.marketValue),
-      holdingProfit: money(total.holdingProfit),
-      cost: money(total.cost),
-      returnRate: Number(total.holdingProfit) / Number(total.cost) || 0,
+      marketValue: rows.length === BOND_FUNDS.length ? money(total.marketValue) : null,
+      holdingProfit: rows.length === BOND_FUNDS.length ? money(total.holdingProfit) : null,
+      cost: rows.length === BOND_FUNDS.length ? money(total.cost) : null,
+      returnRate: rows.length === BOND_FUNDS.length && total.cost > 0n ? Number(total.holdingProfit) / Number(total.cost) || 0 : null,
     };
   } catch { invalid(); }
 }
