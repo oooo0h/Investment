@@ -2,7 +2,8 @@
 // the display result exposes dates, counts and proportions, never lot balances.
 const DAY_MS = 86400000;
 const MATURITY_DAYS = 30;
-const CODES = new Set(['006485', '006663']);
+import { BOND_CODES } from './bond-model.js';
+const CODES = new Set(BOND_CODES);
 const IGNORED_STATUSES = new Set(['pending', 'cancelled', 'failed', 'closed']);
 
 const freezeFee = (redemption) => Object.freeze({
@@ -12,6 +13,11 @@ const freezeFee = (redemption) => Object.freeze({
 
 /** User-supplied ordinary buy/redemption fees, not actual conversion charges. */
 export const BOND_FEE_RULES = Object.freeze({
+  '004103': freezeFee([
+    { minDays: 0, maxDaysExclusive: 7, rate: .015 },
+    { minDays: 7, maxDaysExclusive: 30, rate: .001 },
+    { minDays: 30, maxDaysExclusive: null, rate: 0 },
+  ]),
   '006485': freezeFee([
     { minDays: 0, maxDaysExclusive: 7, rate: .015 },
     { minDays: 7, maxDaysExclusive: 30, rate: .001 },

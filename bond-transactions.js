@@ -1,8 +1,10 @@
 // Imported records are for display, never a reconstruction of current holdings.
-const CODES = ['006485', '006663'];
+import { BOND_CODES } from './bond-model.js';
+const CODES = BOND_CODES;
 const TYPES = new Set(['buy', 'sell', 'transfer-in', 'transfer-out']);
 const CANCELLED = new Set(['cancelled', 'canceled', '撤单', '已撤单', '已撤销']);
-const FIELDS = new Set(['id', 'submittedAt', 'date', 'type', 'amount', 'shares', 'sharesBasis', 'requestedShares', 'confirmedAmount', 'confirmedDate', 'nav', 'navDate', 'fee', 'status', 'sourceStatus', 'note']);
+const FIELDS = new Set(['id', 'submittedAt', 'date', 'type', 'amount', 'shares', 'sharesBasis', 'requestedShares', 'confirmedAmount', 'confirmedDate', 'nav', 'navDate', 'fee', 'status', 'sourceStatus', 'note', 'dateBasis', 'transferId', 'transferStatus', 'orderDate', 'registrationId', 'registrationStatus']);
+const TRANSFER_STATUSES = new Set(['awaiting', 'review', 'reviewed', 'partial']);
 const invalid = () => { throw new Error('Invalid bond transactions.'); };
 const object = value => value && typeof value === 'object' && !Array.isArray(value);
 function date(value) {
@@ -41,7 +43,19 @@ export function normalizeBondTransactions(value) {
       if (status === 'confirmed' && (!(shares > 0) || !(nav > 0))) invalid();
       const note = row.note ?? null;
       if (note !== null && (typeof note !== 'string' || note.length > 4000 || /\u0000/.test(note))) invalid();
-      return [{ id: row.id, submittedAt, date: date(row.date), type: row.type, amount: numeric(row.amount), shares, sharesBasis, requestedShares: numeric(row.requestedShares), confirmedAmount: numeric(row.confirmedAmount), confirmedDate: date(row.confirmedDate), nav, navDate: date(row.navDate), fee: numeric(row.fee), status, sourceStatus, note }];
+      const dateBasis = row.dateBasis ?? 'order';
+      if (!['order', 'nav'].includes(dateBasis)) invalid();
+      const transferId = row.transferId ?? null;
+      if (transferId !== null && (typeof transferId !== 'string' || transferId.length > 120)) invalid();
+      const transferStatus = row.transferStatus ?? null;
+      if (transferStatus !== null && !TRANSFER_STATUSES.has(transferStatus)) invalid();
+      const orderDate = row.orderDate ?? null;
+      if (orderDate !== null && date(orderDate) !== orderDate) invalid();
+      const registrationId = row.registrationId ?? null;
+      if (registrationId !== null && (typeof registrationId !== 'string' || registrationId.length > 120)) invalid();
+      const registrationStatus = row.registrationStatus ?? null;
+      if (registrationStatus !== null && !['filled', 'awaiting'].includes(registrationStatus)) invalid();
+      return [{ id: row.id, submittedAt, date: date(row.date), type: row.type, amount: numeric(row.amount), shares, sharesBasis, requestedShares: numeric(row.requestedShares), confirmedAmount: numeric(row.confirmedAmount), confirmedDate: date(row.confirmedDate), nav, navDate: date(row.navDate), fee: numeric(row.fee), status, sourceStatus, note, dateBasis, transferId, transferStatus, orderDate, registrationId, registrationStatus }];
     })];
   }));
 }

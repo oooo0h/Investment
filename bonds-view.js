@@ -1,5 +1,5 @@
-import { calculateBondSummary, calculateBondHoldingValue, addPendingPurchaseValue, BOND_FUNDS } from './bond-model.js?v=20261020-pending-purchases';
-import { BOND_FEE_RULES } from './bond-holding-duration.js?v=20261020-short-bond-seven-days';
+import { calculateBondSummary, calculateBondHoldingValue, addPendingPurchaseValue, BOND_FUNDS } from './bond-model.js?v=20261021-third-bond';
+import { BOND_FEE_RULES } from './bond-holding-duration.js?v=20261021-third-bond';
 import { bondReserveTone, BOND_RESERVE_RULE } from './bond-reserve.js?v=20261020-bond-color-notices';
 
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
@@ -60,7 +60,7 @@ function holdingDuration(entry, duration, visible) {
     && duration.under7Ratio >= 0 && duration.sevenTo29Ratio >= 0
     && Math.abs(duration.under7Ratio + duration.sevenTo29Ratio - duration.recentRatio) < 0.00001;
   // Keep legacy two-band inputs usable without inventing an unreported 7-day split.
-  const threeTiers = code === '006485' && (!known || validTiers);
+  const threeTiers = ['006485', '004103'].includes(code) && (!known || validTiers);
   const segments = threeTiers ? [
     { kind: 'recent', title: '未满7天', ratio: duration?.under7Ratio },
     { kind: 'middle', title: '7～29天', ratio: duration?.sevenTo29Ratio },
@@ -100,7 +100,7 @@ function bondTransaction(row, visible) {
 }
 function bondCard(entry, options) {
   const rows = (Array.isArray(options.transactions?.[entry.code]) ? options.transactions[entry.code] : []).filter(row => !cancelled(row)).slice().reverse();
-  return `<details class="panel bond-card" data-bond-ledger="${escapeHtml(entry.code)}" aria-labelledby="bond-title-${escapeHtml(entry.code)}"${options.expandedByCode?.[entry.code] ? ' open' : ''}><summary class="bond-card-toggle"><header class="bond-card-heading"><div><p class="bond-code num">${escapeHtml(entry.code)}</p><h2 id="bond-title-${escapeHtml(entry.code)}">${escapeHtml(entry.name)}</h2></div><span class="bond-ledger-hint">${rows.length} 笔<span class="bond-ledger-chevron" aria-hidden="true">⌄</span></span></header><dl class="bond-metrics"><div><dt>当前持仓（元）</dt><dd class="num">${privateValue(addPendingPurchaseValue(entry.marketValue, rows), options.visible)}</dd></div><div><dt>持有收益（元）</dt><dd class="num ${options.visible ? signClass(entry.holdingProfit) : ''}">${privateValue(entry.holdingProfit, options.visible)}</dd></div></dl><div class="bond-return"><span>持有收益率</span><strong class="num ${signClass(entry.returnRate)}">${percentage(entry.returnRate)}</strong></div>${holdingDuration(entry, options.holdingByCode?.[entry.code], options.visible)}</summary><section class="bond-transactions-panel" aria-label="${escapeHtml(entry.name)}逐笔交易"><h3>逐笔交易<span class="fund-code">${rows.length} 笔</span></h3><div class="transaction-list">${rows.length ? rows.map(row => bondTransaction(row, options.visible)).join('') : '<p class="helper">暂无交易记录</p>'}</div></section></details>`;
+  return `<details class="panel bond-card" data-bond-ledger="${escapeHtml(entry.code)}" aria-labelledby="bond-title-${escapeHtml(entry.code)}"${options.expandedByCode?.[entry.code] ? ' open' : ''}><summary class="bond-card-toggle"><header class="bond-card-heading"><div><p class="bond-code num">${escapeHtml(entry.code)}</p><h2 id="bond-title-${escapeHtml(entry.code)}">${escapeHtml(entry.name)}</h2></div><span class="bond-ledger-hint">${rows.length} 笔<span class="bond-ledger-chevron" aria-hidden="true">⌄</span></span></header><dl class="bond-metrics"><div><dt>当前持仓（元）</dt><dd class="num">${privateValue(addPendingPurchaseValue(entry.marketValue, rows), options.visible)}</dd></div><div><dt>持有收益（元）</dt><dd class="num ${options.visible ? signClass(entry.holdingProfit) : ''}">${privateValue(entry.holdingProfit, options.visible)}</dd></div></dl><div class="bond-return"><span>持有收益率</span><strong class="num ${signClass(entry.returnRate)}">${percentage(entry.returnRate)}</strong></div>${!Number.isFinite(entry.marketValue) ? '<p class="helper">持仓待核验，请补全交易记录。</p>' : ''}${holdingDuration(entry, options.holdingByCode?.[entry.code], options.visible)}</summary><section class="bond-transactions-panel" aria-label="${escapeHtml(entry.name)}逐笔交易"><h3>逐笔交易<span class="fund-code">${rows.length} 笔</span></h3><div class="transaction-list">${rows.length ? rows.map(row => bondTransaction(row, options.visible)).join('') : '<p class="helper">暂无交易记录</p>'}</div></section></details>`;
 }
 
 function reserveNote(reserve) {
@@ -199,7 +199,7 @@ export function renderBondsPage({ entries = [], valuationDate = null, visible = 
   return `<main id="main" class="workspace bonds-page">${heading}
     ${overview}
     ${cashFlowPanel({ freeCashFlow, visible: options.visible, editing: cashEditing, draft: cashDraft, error: cashError, busy: cashBusy, unavailable: cashUnavailable })}
-    <div class="bonds-grid">${summary.holdings.map(entry => bondCard(entry, options)).join('')}</div>
+    <div class="bonds-grid">${BOND_FUNDS.map(fund => bondCard(summary.holdings.find(entry => entry.code === fund.code) || fund, options)).join('')}</div>
     <p class="helper bonds-rate-note">${hasPending ? '收益率按已确认持仓计算；待确认买入只计入市值。' : '收益率＝持有收益 ÷（当前持仓金额－持有收益）'}</p>
   </main>`;
 }
