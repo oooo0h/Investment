@@ -5,7 +5,7 @@ import { NAV_PERIODS, recentNavPeriod, resolveNavRange, moveNavBoundary, resolve
 import { renderNavChart, buildTradeMarkers } from './nav-chart.js?v=20261020-interval-days-caption';
 import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap } from './nav-annualized.js?v=20261019-sheet-discipline';
 import { setupNavChartInteractions } from './nav-interaction.js?v=20261020-interval-days-caption';
-import { setupNavSliderInteractions } from './nav-slider.js';
+import { setupNavSliderInteractions } from './nav-slider.js?v=20261022-range-wheel';
 import { calculateTransactionPerformance } from './transaction-performance.js';
 import { FUNDS, FUND_CODES } from './funds.js?v=20261019-collapsible-panels';
 import { DISCIPLINE_ENTRIES } from './discipline.js?v=20261019-sheet-discipline';
@@ -28,10 +28,10 @@ import { createFundViewportKeeper } from './viewport-anchor.js?v=20261019-flow-h
 import { navDateForOrder } from './trading-calendar.js';
 import { buyFee } from './fee-rules.js?v=20261021-fee-rules';
 import { parseTransactionDate } from './transaction-date.js';
-import { renderTradeDialog, renderReviewDialog, TRADE_FUNDS } from './trade-dialog.js?v=20261022-card-board-v3';
+import { renderTradeDialog, renderReviewDialog, TRADE_FUNDS, TRADE_OPTIONS, CASH_CODE, inferTradeMode } from './trade-dialog.js?v=20261022-fullscreen-v17';
 const TYPE_NAMES = { buy: '买入', sip: '定投', sell: '卖出', reinvest: '红利再投', dividend: '现金分红', 'transfer-in': '转入' };
 const STATUS_NAMES = { confirmed: '已确认', estimated: '历史估算', pending: '待确认', cancelled: '撤单', failed: '交易失败', closed: '交易关闭' };
-const state = { unlocked: false, visible: false, funds: {}, nav: {}, disciplines: DISCIPLINE_ENTRIES, bonds: [], freeCashFlow: null, cashEditing: false, cashDraft: null, cashBusy: false, cashError: '', bondUnavailable: true, bondUpdatedAt: null, navPreset: null, navCycles: { months: '1m', years: '1y' }, navRanges: {}, navDomains: {}, navVisuals: {}, expandedPanels: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null, deadline: 0, dayDeadline: 0, sessionDay: null };
+const state = { unlocked: false, visible: false, funds: {}, nav: {}, disciplines: DISCIPLINE_ENTRIES, bonds: [], freeCashFlow: null, cashEditing: false, cashDraft: null, cashBusy: false, cashError: '', bondUnavailable: true, bondUpdatedAt: null, navPreset: null, navCustomRange: null, navCycles: { months: '1m', years: '1y' }, navRanges: {}, navDomains: {}, navVisuals: {}, expandedPanels: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null, deadline: 0, dayDeadline: 0, sessionDay: null };
 const app = document.querySelector('#app');
 const fundViewport = createFundViewportKeeper({ root: app, view: window });
 Object.assign(state, { navEstimateEntries: [], estimateDrafts: {}, estimateDirections: {}, estimateErrors: {}, estimateStorageAvailable: true, estimateDate: null, estimateLoaded: false });
@@ -66,6 +66,11 @@ const selectedCode = () => fundCodeFromHash(location.hash);
 const routeSection = () => sectionFromHash(location.hash);
 const selectedFund = () => FUNDS.find(fund => fund.code === selectedCode());
 const selectedBonds = () => /^#\/bonds(?:\?[^#]*)?$/.test(location.hash);
+const routeScrollKey = hash => {
+  const code = fundCodeFromHash(hash);
+  if (code) return `fund:${code}`;
+  return /^#\/bonds(?:\?[^#]*)?$/.test(String(hash || '')) ? 'bonds' : 'home';
+};
 const getBook = code => state.funds[code] ||= { transactions: [], mode: 'profit-first', rate: FUNDS.find(fund => fund.code === code).rate, incomplete: false, sourceNote: '' };
 const currentTheme = () => document.documentElement.dataset.theme;
 const desktopPanelsOpen = () => matchMedia('(min-width: 761px)').matches;
@@ -83,6 +88,8 @@ let dataVersionBaseline = null;
 let navSliders = null;
 let locatedRoute = null;
 let lastRenderedRoute = location.hash;
+const scrollMemory = new Map();
+let pendingRouteScroll = null;
 // Fund pages restore their scroll position explicitly, so history traversal must not override it.
 if (typeof history !== 'undefined' && 'scrollRestoration' in history) {
   try { history.scrollRestoration = 'manual'; } catch { /* Older browsers keep their default restoration. */ }
@@ -102,7 +109,7 @@ function destroyTradeEffects() {
 async function ensureTradeEffects() {
   if (!state.localMode || tradeEffects || tradeEffectsLoading) return tradeEffectsLoading;
   if (typeof document.createElement !== 'function' || typeof window.WebGLRenderingContext === 'undefined') return null;
-  tradeEffectsLoading = import('./trade-effects.js?v=20261022-card-board-v3').then(({ createTradeEffects }) => {
+  tradeEffectsLoading = import('./trade-effects.js?v=20261022-fullscreen-v17').then(({ createTradeEffects }) => {
     if (!state.tradeOpen || !state.tradeDraft) return null;
     tradeEffects = createTradeEffects({
       theme: currentTheme() === 'dark' ? 'dark' : 'light',
@@ -130,7 +137,7 @@ function probeLocalMode() {
 }
 
 function defaultTradeDraft() {
-  return { mode: 'buy', code: '005698', targetCode: '016701', date: beijingToday(), cutoff: 'before', amount: '', outShares: '', fee: '' };
+  return { mode: 'buy', code: CASH_CODE, targetCode: '005698', date: beijingToday(), cutoff: 'before', amount: '', outShares: '', fee: '' };
 }
 
 function tradeNavPreview(draft) {
@@ -211,7 +218,7 @@ async function syncTransfers({ reconcile = false, quiet = false } = {}) {
 function focusDialog() {
   window.requestAnimationFrame(() => {
     const target = state.tradeOpen
-      ? app.querySelector?.('.trade-dialog [name="date"]')
+      ? app.querySelector?.('.trade-calendar .is-selected') || app.querySelector?.('.trade-calendar')
       : app.querySelector?.('.trade-dialog [name="outAmount"]') || app.querySelector?.('.trade-dialog .trade-dialog-close');
     if (typeof target?.focus === 'function') target.focus({ preventScroll: true });
   });
@@ -223,11 +230,12 @@ function tradeDialogHtml() {
   return renderTradeDialog({
     draft: state.tradeDraft,
     navPreview: tradeNavPreview(state.tradeDraft),
-    currentShares: state.tradeDraft.mode !== 'buy' ? currentFundShares(state.tradeDraft.code) : null,
+    currentShares: state.tradeDraft.code !== CASH_CODE ? currentFundShares(state.tradeDraft.code) : null,
     sharesByCode,
     busy: state.tradeBusy,
     error: state.tradeError,
     visible: state.visible,
+    calendar: { month: state.tradeCalendarMonth },
   });
 }
 
@@ -251,8 +259,8 @@ function openTradeDialog() {
   if (!state.unlocked || !checkSession()) return;
   state.tradeOpen = true;
   state.tradeMode = 'buy';
-  const code = selectedCode() || '005698';
-  state.tradeDraft = { ...defaultTradeDraft(), code, targetCode: code === '016701' ? '005698' : '016701' };
+  state.tradeDraft = { ...defaultTradeDraft(), code: CASH_CODE, targetCode: selectedCode() || '005698' };
+  state.tradeCalendarMonth = state.tradeDraft.date.replaceAll('/', '-').slice(0, 7);
   state.tradeError = '';
   state.tradeBusy = false;
   if (typeof app.insertAdjacentHTML === 'function') {
@@ -283,24 +291,41 @@ function closeTradeDialog() {
   render();
 }
 
-function tradeFundPool(side) {
-  if (!state.tradeDraft) return TRADE_FUNDS;
-  if (side === 'out') return TRADE_FUNDS.filter(fund => fund.code !== state.tradeDraft.targetCode);
-  if (side === 'in') return TRADE_FUNDS.filter(fund => fund.code !== state.tradeDraft.code);
-  return TRADE_FUNDS;
-}
-
 function focusTradeCarousel(side) {
   window.requestAnimationFrame(() => {
-    app.querySelector?.(`.fund-carousel[data-carousel="${side}"]`)?.focus?.({ preventScroll: true });
+    app.querySelector?.(`.trade-stack[data-stack="${side}"]`)?.focus?.({ preventScroll: true });
   });
+}
+
+function focusTradeCalendar() {
+  window.requestAnimationFrame(() => {
+    const target = app.querySelector?.('.trade-calendar .is-selected') || app.querySelector?.('.trade-calendar');
+    target?.focus?.({ preventScroll: true });
+  });
+}
+
+function moveTradeCalendar(step) {
+  const match = String(state.tradeCalendarMonth || state.tradeDraft?.date || '').match(/^(\d{4})-(\d{2})/);
+  if (!match) return;
+  const date = new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1 + step, 1));
+  const month = `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}`;
+  state.tradeCalendarMonth = month < '2026-01' ? '2026-01' : month > '2026-12' ? '2026-12' : month;
+  refreshTradeDialog();
+  focusTradeCalendar();
 }
 
 function setTradeFund(side, code) {
   const draft = state.tradeDraft;
-  if (!draft || !TRADE_FUNDS.some(fund => fund.code === code)) return;
-  if (side === 'in') draft.targetCode = code;
-  else draft.code = code;
+  if (!draft || !TRADE_OPTIONS.some(option => option.code === code)) return;
+  const current = side === 'left' ? draft.code : draft.targetCode;
+  if (current === code) return;
+  if (side === 'left') draft.code = code;
+  else draft.targetCode = code;
+  if (draft.code === CASH_CODE && draft.targetCode === CASH_CODE) {
+    if (side === 'left') draft.targetCode = '005698';
+    else draft.code = '005698';
+  }
+  draft.mode = inferTradeMode(draft);
   state.tradeError = '';
   refreshTradeDialog();
   tradeEffects?.pulse('wheel');
@@ -310,44 +335,44 @@ function setTradeFund(side, code) {
 function stepTradeFund(side, direction) {
   const draft = state.tradeDraft;
   if (!draft || !Number.isFinite(direction) || direction === 0) return;
-  const pool = tradeFundPool(side);
-  if (pool.length < 2) return;
-  const current = side === 'in' ? draft.targetCode : draft.code;
-  const index = Math.max(0, pool.findIndex(fund => fund.code === current));
-  const next = pool[(index + direction + pool.length) % pool.length];
+  const current = side === 'right' ? draft.targetCode : draft.code;
+  const index = Math.max(0, TRADE_OPTIONS.findIndex(option => option.code === current));
+  const next = TRADE_OPTIONS[(index + direction + TRADE_OPTIONS.length) % TRADE_OPTIONS.length];
   setTradeFund(side, next.code);
 }
 
 let tradeWheelAt = 0;
 function useTradeWheel(event) {
   if (!state.tradeOpen || !state.tradeDraft || !state.unlocked || state.tradeBusy) return;
-  const carousel = event.target.closest?.('.fund-carousel');
-  if (!carousel || event.target.closest?.('input, textarea, select, button')) return;
+  const stack = event.target.closest?.('.trade-stack');
+  if (!stack || event.target.closest?.('input, textarea, select, button')) return;
   event.preventDefault();
   const now = Date.now();
   if (now - tradeWheelAt < 180) return;
   tradeWheelAt = now;
-  stepTradeFund(carousel.dataset.carousel, event.deltaY > 0 ? 1 : -1);
+  stepTradeFund(stack.dataset.stack, event.deltaY > 0 ? 1 : -1);
 }
 
 function useTradeCarouselKey(event) {
   if (!state.tradeOpen || !state.tradeDraft || state.tradeBusy) return;
   if (!['ArrowUp', 'ArrowDown'].includes(event.key)) return;
-  const carousel = event.target.closest?.('.fund-carousel');
-  if (!carousel || event.target.closest?.('input, textarea, select, button')) return;
+  const stack = event.target.closest?.('.trade-stack');
+  if (!stack || event.target.closest?.('input, textarea, select, button')) return;
   event.preventDefault();
-  stepTradeFund(carousel.dataset.carousel, event.key === 'ArrowDown' ? 1 : -1);
+  stepTradeFund(stack.dataset.stack, event.key === 'ArrowDown' ? 1 : -1);
 }
 
 function reverseTradeFunds() {
   const draft = state.tradeDraft;
-  if (!draft || draft.mode !== 'transfer' || state.tradeBusy) return;
+  if (!draft || state.tradeBusy) return;
   [draft.code, draft.targetCode] = [draft.targetCode, draft.code];
   draft.outShares = '';
+  if (draft.code === CASH_CODE && draft.targetCode === CASH_CODE) draft.code = '005698';
+  draft.mode = inferTradeMode(draft);
   state.tradeError = '';
   refreshTradeDialog();
   tradeEffects?.pulse('reverse');
-  focusTradeCarousel('out');
+  focusTradeCarousel('left');
 }
 
 function openReviewDialog(id = null) {
@@ -384,21 +409,24 @@ async function submitTrade() {
   const draft = state.tradeDraft;
   const parsed = parseTransactionDate(draft.date || '');
   if (parsed.error) { state.tradeError = parsed.error; refreshTradeDialog('[name="date"]'); return; }
-  const payload = { mode: draft.mode, date: parsed.date, cutoff: draft.cutoff };
-  if (draft.mode === 'buy') {
-    payload.code = draft.code;
+  const mode = inferTradeMode(draft);
+  if (mode === 'invalid') { state.tradeError = '两侧不能都是自由现金流。'; refreshTradeDialog(); return; }
+  draft.mode = mode;
+  const payload = { mode, date: parsed.date, cutoff: draft.cutoff };
+  if (mode === 'buy') {
+    payload.code = draft.targetCode;
     payload.amount = draft.amount;
   } else {
-    if (draft.mode === 'transfer' && draft.code === draft.targetCode) { state.tradeError = '转出基金和转入基金不能相同。'; refreshTradeDialog(); return; }
+    if (mode === 'transfer' && draft.code === draft.targetCode) { state.tradeError = '转出基金和转入基金不能相同。'; refreshTradeDialog(); return; }
     const available = currentFundShares(draft.code);
     const outShares = Number(draft.outShares);
-    const label = draft.mode === 'sell' ? '卖出' : '转出';
+    const label = mode === 'sell' ? '卖出' : '转出';
     if (!Number.isFinite(available)) { state.tradeError = `当前持仓份额待核验，暂不能登记${label}。`; refreshTradeDialog(); return; }
     if (!Number.isFinite(outShares) || outShares <= 0) { state.tradeError = `请填写有效的${label}份额。`; refreshTradeDialog('[name="outShares"]'); return; }
     if (outShares > available + 0.000001) { state.tradeError = `${label}份额不能超过当前持有份额。`; refreshTradeDialog('[name="outShares"]'); return; }
     payload.code = draft.code;
     payload.outShares = draft.outShares;
-    if (draft.mode === 'transfer') payload.targetCode = draft.targetCode;
+    if (mode === 'transfer') payload.targetCode = draft.targetCode;
   }
   state.tradeBusy = true;
   state.tradeError = '';
@@ -409,9 +437,9 @@ async function submitTrade() {
     if (!response.ok) throw new Error(result.error || '登记未完成，请稍后重试。');
     state.tradeOpen = false;
     state.tradeDraft = null;
-    toast(draft.mode === 'transfer' ? '转换已登记，净值公布后提醒核对'
-      : draft.mode === 'sell' && result.awaiting ? '卖出已登记，净值公布后回填到账金额' : '交易已写入交易记录表');
-    await syncTransfers({ reconcile: draft.mode !== 'buy', quiet: true });
+    toast(mode === 'transfer' ? '转换已登记，净值公布后提醒核对'
+      : mode === 'sell' && result.awaiting ? '卖出已登记，净值公布后回填到账金额' : '交易已写入交易记录表');
+    await syncTransfers({ reconcile: mode !== 'buy', quiet: true });
     dataRefresh.check();
   } catch (error) {
     state.tradeError = error?.message || '登记未完成，请稍后重试。';
@@ -466,7 +494,7 @@ async function applyReviewCash() {
   }
 }
 Object.assign(state, { bondHoldingLots: {}, bondTransactions: {}, bondExpanded: {}, cashUnavailable: false });
-Object.assign(state, { localMode: false, tradeOpen: false, tradeMode: 'buy', tradeDraft: null, tradeBusy: false, tradeError: '',
+Object.assign(state, { localMode: false, tradeOpen: false, tradeMode: 'buy', tradeDraft: null, tradeBusy: false, tradeError: '', tradeCalendarMonth: null,
   transfers: [], transferCounts: { awaiting: 0, review: 0, reviewed: 0, total: 0 }, transferBusy: false,
   reviewId: null, reviewDraft: null, reviewBusy: false, reviewError: '', reviewResult: null });
 const holdingFractions = new Map();
@@ -1165,7 +1193,7 @@ function header(code, reserve) {
       const check = fundExposure(fund.code), below = check.status === 'below';
       return `<a href="#/fund/${fund.code}" class="${code === fund.code ? 'active' : ''}${below ? ' exposure-nav-warning' : ''}" ${code === fund.code ? 'aria-current="page"' : ''} title="${esc(exposureNavTitle(fund, check))}"${below ? ` aria-label="${esc(fund.navLabel)}，美股含量未达标"` : ''}>${fund.navLabel}${below ? '<span class="exposure-nav-dot" aria-hidden="true"></span>' : ''}</a>`;
     }).join('')}${bondNavMarkup(bonds, reserve)}</nav>
-    ${state.localMode ? `<button type="button" class="nav-add" data-action="trade-open" aria-label="同步交易记录${review ? `，${review} 笔转换待核对` : ''}" title="同步交易记录"><span class="nav-add-plus" aria-hidden="true">+</span><span class="nav-add-text">同步交易记录</span>${review ? `<span class="nav-add-badge" aria-hidden="true">${review}</span>` : ''}</button>` : ''}
+    ${state.localMode ? `<div class="nav-local-actions"><button type="button" class="nav-add" data-action="trade-open" aria-label="同步交易记录" title="同步交易记录"><span class="nav-add-plus" aria-hidden="true">+</span><span class="nav-add-text">同步交易记录</span></button><button type="button" class="nav-todo" data-action="todo-open" aria-label="待办${review ? `，${review} 笔转换待核对` : ''}" title="待办"><span class="nav-todo-icon" aria-hidden="true">✓</span><span class="nav-todo-text">待办</span>${review ? `<span class="nav-todo-badge" aria-hidden="true">${review}</span>` : ''}</button></div>` : ''}
     <div class="header-actions"><button type="button" class="icon-button" data-action="privacy" aria-label="${state.visible ? '隐藏' : '显示'}金额和份额" title="${state.visible ? '隐藏' : '显示'}金额和份额" aria-pressed="${state.visible}">${icon(state.visible ? 'eye' : 'eye-off')}</button>${themeButton()}<button type="button" class="icon-button" data-action="lock" aria-label="加锁账本" title="加锁账本">${icon('lock')}</button></div>
   </div></header>`;
 }
@@ -1174,6 +1202,20 @@ function transferBanner() {
   const review = state.transferCounts.review || 0;
   if (!state.localMode || !review) return '';
   return `<button type="button" class="transfer-banner" data-action="transfer-review"><span class="transfer-banner-dot" aria-hidden="true"></span><span class="transfer-banner-copy"><strong>${review} 笔转换待二次核对</strong><small>双方真实净值已更新，点击核对实际金额与退回现金。</small></span>${icon('arrow')}</button>`;
+}
+
+function openTodo() {
+  const review = state.transferCounts.review || 0;
+  if (!review) { toast('当前没有待办。'); return; }
+  const banner = app.querySelector('.transfer-banner');
+  if (!banner) { toast('待办位置暂不可用，请刷新页面。'); return; }
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (typeof banner.scrollIntoView === 'function') banner.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'center' });
+  banner.classList.remove('is-shaking');
+  void banner.offsetWidth;
+  banner.classList.add('is-shaking');
+  window.setTimeout(() => banner.classList.remove('is-shaking'), 700);
+  if (typeof banner.focus === 'function') banner.focus({ preventScroll: true });
 }
 
 function bottomNav(code, reserve) {
@@ -1230,7 +1272,7 @@ function render() {
     fundName: tradeFundLabel, busy: state.reviewBusy, error: state.reviewError, result: state.reviewResult,
   }) : '';
   document.title = fund ? `${fund.short}账本 · 基金账本` : bonds ? '债基 · 基金账本' : '交易纪律 · 基金账本';
-  app.innerHTML = `${header(fund?.code, reserve)}${transferBanner()}${fund ? fundPage(fund) : bonds ? renderBondsPage({ entries: state.bonds, valuationDate: state.bondValuationDate, visible: state.visible, transactions: state.bondTransactions, expandedByCode: { ...(desktopPanelsOpen() ? Object.fromEntries(BOND_CODES.map(code => [code, true])) : {}), ...state.bondExpanded }, holdingByCode: bondHoldingPeriods(), unavailable: state.bondUnavailable, reserve, locateReserve: section === 'bond-reserve', freeCashFlow: state.freeCashFlow, cashEditing: state.cashEditing, cashDraft: state.cashDraft, cashError: state.cashError, cashBusy: state.cashBusy, cashUnavailable: state.cashUnavailable }) : homePage(reserve)}${bottomNav(fund?.code, reserve)}${tradeMarkup}${reviewMarkup}`;
+  app.innerHTML = `${header(fund?.code, reserve)}${transferBanner()}${fund ? fundPage(fund) : bonds ? renderBondsPage({ entries: state.bonds, valuationDate: state.bondValuationDate, visible: state.visible, transactions: state.bondTransactions, expandedByCode: { ...state.bondExpanded }, holdingByCode: bondHoldingPeriods(), unavailable: state.bondUnavailable, reserve, locateReserve: section === 'bond-reserve', freeCashFlow: state.freeCashFlow, cashEditing: state.cashEditing, cashDraft: state.cashDraft, cashError: state.cashError, cashBusy: state.cashBusy, cashUnavailable: state.cashUnavailable }) : homePage(reserve)}${bottomNav(fund?.code, reserve)}${tradeMarkup}${reviewMarkup}`;
   document.body?.classList?.toggle('trade-dialog-open', Boolean(state.tradeOpen || state.reviewId || state.reviewResult));
   if (state.tradeOpen) {
     tradeEffects?.mount(app.querySelector('.trade-board'));
@@ -1251,6 +1293,14 @@ function render() {
   });
   locatedRoute = location.hash;
   lastRenderedRoute = location.hash;
+  const renderedRoute = location.hash;
+  if (locate || viewport) {
+    pendingRouteScroll = null;
+  } else if (pendingRouteScroll?.key === routeScrollKey(renderedRoute)) {
+    const snapshot = pendingRouteScroll.snapshot;
+    pendingRouteScroll = null;
+    fundViewport.restore(snapshot, { isCurrent: () => state.unlocked && location.hash === renderedRoute });
+  }
   if (locate) {
     const target = section === 'add-discipline'
       ? document.querySelector(fund ? `#fund-${fund.code}-add-discipline` : '[data-discipline="add-discipline"]')
@@ -1445,7 +1495,7 @@ function navContext(code) {
 }
 
 function navSelection(code) {
-  return state.navRanges[code] || (state.navPreset ? { preset: state.navPreset } : undefined);
+  return state.navRanges[code] || state.navCustomRange || (state.navPreset ? { preset: state.navPreset } : undefined);
 }
 
 function selectedNavRange(code, history) {
@@ -1580,11 +1630,15 @@ function updateNavRange(code, selection, interaction = {}) {
   const sameDates = previous?.from === range.from && previous?.to === range.to;
   if (selection.preset) {
     state.navPreset = selection.preset;
+    state.navCustomRange = null;
     syncNavCycle(selection.preset);
     state.navRanges = {};
     state.navDomains = {};
     state.navVisuals = {};
-  } else state.navRanges[code] = selection;
+  } else {
+    state.navCustomRange = { from: selection.from, to: selection.to };
+    state.navRanges = {};
+  }
   const domain = navSliderDomain(code, history, range, interaction);
   const display = getNavChartDisplay(range, estimatedNav(code));
   const { summary } = display;
@@ -1832,27 +1886,29 @@ function actionClick(event) {
   }
   if (!state.unlocked) return;
   if (action === 'trade-open') { openTradeDialog(); return; }
+  if (action === 'todo-open') { openTodo(); return; }
   if (action === 'trade-close') { closeTradeDialog(); return; }
-  if (action === 'trade-mode' && state.tradeDraft && ['buy', 'sell', 'transfer'].includes(target.dataset.mode)) {
-    state.tradeDraft.mode = target.dataset.mode;
-    if (state.tradeDraft.mode === 'transfer' && state.tradeDraft.code === state.tradeDraft.targetCode) {
-      state.tradeDraft.targetCode = TRADE_FUNDS.find(fund => fund.code !== state.tradeDraft.code)?.code || state.tradeDraft.targetCode;
+  if (action === 'trade-calendar-month') { moveTradeCalendar(Number(target.dataset.step) || 0); return; }
+  if (action === 'trade-calendar-pick' && state.tradeDraft) {
+    const date = String(target.dataset.date || '');
+    if (/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      state.tradeDraft.date = date.replaceAll('-', '/');
+      state.tradeError = '';
+      refreshTradeDialog();
+      focusTradeCalendar();
+      tradeEffects?.pulse('wheel');
     }
-    state.tradeError = '';
-    refreshTradeDialog();
-    tradeEffects?.setMode(state.tradeDraft.mode);
-    focusTradeCarousel(state.tradeDraft.mode === 'transfer' ? 'out' : 'fund');
     return;
   }
+  if (action === 'trade-pick') { setTradeFund(target.dataset.side, target.dataset.code); return; }
   if (action === 'trade-cutoff' && state.tradeDraft) {
     state.tradeDraft.cutoff = state.tradeDraft.cutoff === 'after' ? 'before' : 'after';
     state.tradeError = '';
     refreshTradeDialog('[data-action="trade-cutoff"]');
     return;
   }
-  if (action === 'trade-fund-step') { stepTradeFund(target.dataset.side, Number(target.dataset.step)); return; }
   if (action === 'trade-reverse') { reverseTradeFunds(); return; }
-  if (action === 'trade-fill-shares' && state.tradeDraft && state.tradeDraft.mode !== 'buy') {
+  if (action === 'trade-fill-shares' && state.tradeDraft && state.tradeDraft.mode !== 'buy' && state.tradeDraft.code !== CASH_CODE) {
     const value = currentFundShares(state.tradeDraft.code);
     if (Number.isFinite(value)) {
       state.tradeDraft.outShares = String(Number(value.toFixed(6)));
@@ -1919,20 +1975,46 @@ navSliders = setupNavSliderInteractions(app, { onUpdate(update) {
   updateNavRange(update.code, { from: history[start].date, to: history[end].date }, { visualDomain: update.domain, visualValues: update.values });
 } });
 document.addEventListener('click', actionClick);
+document.addEventListener('click', event => {
+  if (!state.tradeOpen || state.tradeBusy) return;
+  if (!event.target.closest?.('.trade-register-backdrop')) return;
+  if (event.target.closest?.('.trade-stack-card, .trade-center, .trade-dialog-heading, .trade-dialog-close')) return;
+  closeTradeDialog();
+});
 window.addEventListener('hashchange', () => {
   if (!state.unlocked || !checkSession()) return;
   const previousFund = fundCodeFromHash(lastRenderedRoute);
   const nextFund = selectedCode();
   const section = routeSection();
+  const anchorSection = ['us-exposure', 'bond-reserve', 'add-discipline'].includes(section);
   // A lateral fund switch keeps the comparison viewport and the panel choices.
   const preserveFundView = Boolean(previousFund && nextFund && previousFund !== nextFund && !section);
+  const previousKey = routeScrollKey(lastRenderedRoute);
+  const nextKey = routeScrollKey(location.hash);
+  let remembered = null;
+  if (previousKey !== nextKey) {
+    if (previousKey.startsWith('fund:')) {
+      const snapshot = app.querySelector('.fund-page') ? fundViewport.capture() : null;
+      scrollMemory.set(previousKey, snapshot || { scroll: window.scrollY || 0 });
+    } else {
+      scrollMemory.set(previousKey, { scroll: window.scrollY || 0 });
+    }
+    if (!preserveFundView && !anchorSection) {
+      remembered = scrollMemory.get(nextKey) || null;
+      pendingRouteScroll = remembered ? { key: nextKey, snapshot: remembered } : null;
+    } else {
+      pendingRouteScroll = null;
+    }
+  } else {
+    pendingRouteScroll = null;
+  }
   state.limit = 25;
   state.filter = 'all';
   state.statusFilter = 'all';
   if (preserveFundView) recordPanelState(previousFund);
   else state.expandedPanels = {};
   render();
-  if (!preserveFundView && !['us-exposure', 'bond-reserve', 'add-discipline'].includes(section)) scrollTo({ top: 0, behavior: 'instant' });
+  if (!preserveFundView && !remembered && !anchorSection) scrollTo({ top: 0, behavior: 'instant' });
 });
 window.addEventListener('pageshow', event => { if (event.persisted) lock(); });
 document.addEventListener('visibilitychange', () => { if (checkSession()) dataRefresh.check(); });

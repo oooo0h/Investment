@@ -123,7 +123,7 @@ export function createTradeEffects({ theme = 'dark', reducedMotion = false } = {
   function cardCenters() {
     if (!host) return [];
     const board = host.getBoundingClientRect();
-    return [...host.querySelectorAll('.trade-fund-card.active, .cash-card')].map(element => {
+    return [...host.querySelectorAll('.trade-stack-card.is-selected')].map(element => {
       const rect = element.getBoundingClientRect();
       return new THREE.Vector3(rect.left + rect.width / 2 - board.left, height - (rect.top + rect.height / 2 - board.top), 0);
     });

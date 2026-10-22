@@ -2,6 +2,8 @@ import { calculateBondSummary, calculateBondHoldingValue, addPendingPurchaseValu
 import { BOND_FEE_RULES } from './bond-holding-duration.js?v=20261021-third-bond';
 import { bondReserveTone, BOND_RESERVE_RULE } from './bond-reserve.js?v=20261020-bond-color-notices';
 
+const MIN_GREEN_AVAILABLE_CENTS = 500_000n;
+
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
 }[character]));
@@ -109,32 +111,35 @@ function reserveNote(reserve) {
   return `<div class="bond-reserve-note"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7v1"/></svg><p><strong>${title}</strong>：${escapeHtml(reserve.message)}<a href="#/?section=bond-reserve">查看首页规则与原因</a></p></div>`;
 }
 
+function totalBandAmounts(holdingValue, ratio) {
+  const knownValue = Number.isFinite(holdingValue) && holdingValue >= 0;
+  const knownRatio = knownValue && Number.isFinite(ratio) && ratio >= 0 && ratio <= 1;
+  const total = knownRatio && ratio > 0 ? holdingValue / ratio : null;
+  const knownTotal = Number.isFinite(total) && total > 0;
+  if (!knownTotal && !(knownRatio && holdingValue === 0)) return null;
+  const { absoluteThreshold, maxRatio } = BOND_RESERVE_RULE;
+  const cents = marketValueCents(holdingValue);
+  const threshold = marketValueCents(absoluteThreshold);
+  const upper = knownTotal ? marketValueCents(total * maxRatio) : 0n;
+  const red = cents < threshold ? cents : threshold;
+  const capacity = upper > threshold ? upper - threshold : 0n;
+  const yellow = cents - red < capacity ? cents - red : capacity;
+  return [red, yellow, cents - red - yellow];
+}
+
 function totalHoldingProgress(holdingValue, ratio, visible) {
   const knownValue = Number.isFinite(holdingValue) && holdingValue >= 0;
   const knownRatio = knownValue && Number.isFinite(ratio) && ratio >= 0 && ratio <= 1;
   const tone = bondReserveTone(holdingValue, ratio);
   const percent = knownRatio ? Math.round(ratio * 100) : null;
-  const total = knownRatio && ratio > 0 ? holdingValue / ratio : null;
-  const knownTotal = Number.isFinite(total) && total > 0;
-  const { absoluteThreshold, maxRatio } = BOND_RESERVE_RULE;
-  const knownAmounts = knownTotal || knownRatio && holdingValue === 0;
-  let amounts = null;
-  if (knownAmounts) {
-    const cents = marketValueCents(holdingValue);
-    const threshold = marketValueCents(absoluteThreshold);
-    const upper = knownTotal ? marketValueCents(total * maxRatio) : 0n;
-    const red = cents < threshold ? cents : threshold;
-    const capacity = upper > threshold ? upper - threshold : 0n;
-    const yellow = cents - red < capacity ? cents - red : capacity;
-    amounts = [red, yellow, cents - red - yellow];
-  }
+  const amounts = totalBandAmounts(holdingValue, ratio);
   const amount = index => amounts ? `${allocatedValue(amounts[index], visible)}<small>元</small>` : '—';
   const status = knownRatio ? `约${percent}%` : '占比待核验';
   return `<div class="bond-total-progress" data-bond-total-tone="${tone}">
     <div class="bond-total-progress-heading"><span>持仓区间金额</span><span class="bond-total-progress-status">${status}</span></div>
     <div class="bond-duration-track bond-total-progress-track" role="img" aria-label="红、黄、绿持仓区间，${knownRatio ? `当前占比约${percent}%` : '当前占比待核验'}"><span class="bond-total-segment-red"></span><span class="bond-total-segment-yellow"></span><span class="bond-total-segment-green"></span></div>
     <div class="bond-total-progress-legend"><span class="bond-total-red"><span class="num">${amount(0)}</span></span><span class="bond-total-yellow"><span class="num">${amount(1)}</span></span><span class="bond-total-green"><span class="num">${amount(2)}</span></span></div>
-    <p class="bond-total-progress-note">${knownAmounts ? '三段金额合计为当前持仓，含自由现金流。' : '总持仓待核验，分段金额暂不可用。'}</p>
+    <p class="bond-total-progress-note">${amounts ? '三段金额合计为当前持仓，含自由现金流。' : '总持仓待核验，分段金额暂不可用。'}</p>
   </div>`;
 }
 
@@ -182,10 +187,15 @@ export function renderBondsPage({ entries = [], valuationDate = null, visible = 
   }
   const tone = bondReserveTone(holdingValue, reserve?.ratio);
   if (reserve) reserve = { ...reserve, tone };
+  const bandAmounts = totalBandAmounts(holdingValue, reserve?.ratio);
+  const available = bandAmounts ? (bandAmounts[2] >= MIN_GREEN_AVAILABLE_CENTS
+    ? { amount: bandAmounts[2], tone: 'green' }
+    : { amount: bandAmounts[1], tone: 'yellow' }) : null;
   reserveAttributes += ` data-bond-reserve-tone="${tone}"`;
   const overview = `<section ${reserveAttributes} class="panel bonds-summary bonds-summary-overview${locationClass}" aria-label="债基合计">${summary ? reserveNote(reserve) : ''}<dl>
     <div><dt>合计持仓金额（元）</dt><dd class="num${holdingValue === null ? ' bonds-summary-pending' : ''}">${holdingValue !== null ? privateValue(holdingValue, Boolean(visible)) : '待核验'}</dd></div>
     <div><dt>占总持仓比例（含自由现金流）</dt><dd class="num${holdingValue !== null && Number.isFinite(reserve?.ratio) ? '' : ' bonds-summary-pending'}" data-bond-reserve-share>${holdingValue !== null && Number.isFinite(reserve?.ratio) ? `${Math.round(reserve.ratio * 100)}%` : '待核验'}</dd></div>
+    <div data-bond-available="${available?.tone || 'unknown'}"><dt>可用金额（元）</dt><dd class="num bond-available-amount${available ? ` is-${available.tone}` : ' bonds-summary-pending'}">${available ? `${allocatedValue(available.amount, Boolean(visible))}<small>元</small>` : '待核验'}</dd></div>
   </dl>${totalHoldingProgress(holdingValue, reserve?.ratio, Boolean(visible))}</section>`;
   if (!summary) {
     const hasRecords = !unavailable && BOND_FUNDS.some(fund => transactions?.[fund.code]?.length);
