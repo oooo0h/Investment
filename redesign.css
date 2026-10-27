@@ -1284,7 +1284,33 @@ input, select, textarea { background-color: color-mix(in srgb, var(--paper) 80%,
 body.trade-dialog-open { overflow: hidden; }
 .trade-dialog-backdrop { position: fixed; inset: 0; z-index: 120; display: grid; place-items: center; padding: 20px; background: #0c1c175c; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); overflow-y: auto; overscroll-behavior: contain; }
 .trade-dialog { width: min(560px, 100%); max-height: calc(100dvh - 40px); overflow-y: auto; padding: 24px; border: 1px solid var(--line); border-radius: 22px; background: var(--paper); color: var(--text); box-shadow: 0 30px 90px #0a1f172e; }
-.trade-review-dialog { width: min(640px, 100%); }
+.trade-review-dialog { width: min(720px, 100%); padding: 20px; }
+.trade-review-dialog .trade-dialog-heading { margin-bottom: 10px; }
+.trade-review-dialog .trade-dialog-heading h2 { font-size: 24px; }
+.trade-review-dialog .trade-dialog-heading .helper { margin-top: 5px; font-size: 13px; line-height: 1.6; }
+.trade-review-dialog .trade-dialog-close { width: 40px; height: 40px; font-size: 23px; }
+.trade-review-dialog .transfer-review-card { padding: 14px 16px; }
+.trade-review-dialog .transfer-review-head strong { font-size: 15px; }
+.trade-review-dialog .transfer-review-head small { margin-top: 3px; font-size: 12px; }
+.trade-review-dialog .transfer-review-head .button { min-height: 36px; font-size: 12px; }
+.trade-review-dialog .status-chip { font-size: 12px; }
+.trade-review-dialog .transfer-review-values { gap: 8px 16px; margin-top: 8px; }
+.trade-review-dialog .transfer-review-values dt { font-size: 11px; }
+.trade-review-dialog .transfer-review-values dd { margin-top: 2px; font-size: 14px; }
+.trade-review-dialog .transfer-review-form { gap: 10px; margin-top: 12px; padding-top: 12px; }
+.trade-review-dialog .transfer-review-form .helper { font-size: 13px; }
+.trade-review-dialog .trade-row { gap: 14px; }
+.trade-review-dialog .trade-field { gap: 5px; font-size: 13px; line-height: 1.5; }
+.trade-review-dialog .trade-field small { font-size: 12px; }
+.trade-review-dialog .trade-field input { min-height: 46px; font-size: 15px; }
+.trade-review-dialog .transfer-difference { padding: 11px 13px; font-size: 14px; }
+.trade-review-dialog .transfer-difference strong { font-size: 18px; }
+.trade-review-dialog .trade-error { font-size: 12px; }
+.trade-review-dialog .trade-error:empty { display: none; }
+.trade-review-dialog .trade-actions { padding-top: 12px; }
+.trade-review-dialog .trade-actions .button { min-height: 46px; font-size: 14px; }
+.trade-review-dialog .transfer-result p { font-size: 14px; }
+.trade-review-dialog .transfer-result .helper { font-size: 13px; }
 .trade-dialog-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; margin-bottom: 18px; }
 .trade-dialog-heading h2 { margin: 0; font-size: 20px; letter-spacing: -.01em; }
 .trade-dialog-heading .helper { margin: 5px 0 0; color: var(--muted); font-size: 11px; line-height: 1.7; }
@@ -1345,6 +1371,8 @@ body.trade-dialog-open { overflow: hidden; }
   .transfer-banner { width: calc(100% - 24px); margin-top: 12px; padding: 12px 14px; }
   .trade-dialog-backdrop { padding: 10px; align-items: end; }
   .trade-dialog { width: 100%; max-height: calc(100dvh - 20px); padding: 20px 16px; border-radius: 20px; }
+  .trade-review-dialog { padding: 22px 18px; }
+  .trade-review-dialog .transfer-review-card { padding: 16px; }
   .trade-row { grid-template-columns: 1fr; }
   .transfer-review-values { grid-template-columns: 1fr; }
   .trade-dialog-heading h2 { font-size: 18px; }

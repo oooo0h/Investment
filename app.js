@@ -18,7 +18,7 @@ import { openBondStore } from './bond-store.js?v=20261021-third-bond';
 import { calculateBondHoldingValue, addPendingPurchaseValue, BOND_CODES } from './bond-model.js?v=20261021-third-bond';
 import { evaluateBondReserve, bondReserveTone } from './bond-reserve.js?v=20261020-bond-color-notices';
 import { calculateBondHoldingDuration } from './bond-holding-duration.js?v=20261021-third-bond';
-import { renderBondsPage } from './bonds-view.js?v=20261021-third-bond';
+import { renderBondsPage } from './bonds-view.js?v=20261023-transfer-label';
 import { getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav } from './nav-estimates.js?v=20261020-nav-dates-trades';
 import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js?v=20261020-nav-dates-trades';
 import { renderEstimatePanel } from './estimate-panel.js?v=20261020-nav-dates-trades';
@@ -28,7 +28,7 @@ import { createFundViewportKeeper } from './viewport-anchor.js?v=20261019-flow-h
 import { navDateForOrder } from './trading-calendar.js';
 import { buyFee } from './fee-rules.js?v=20261021-fee-rules';
 import { parseTransactionDate } from './transaction-date.js';
-import { renderTradeDialog, renderReviewDialog, TRADE_FUNDS, TRADE_OPTIONS, CASH_CODE, inferTradeMode } from './trade-dialog.js?v=20261022-fullscreen-v17';
+import { renderTradeDialog, renderReviewDialog, TRADE_FUNDS, TRADE_OPTIONS, CASH_CODE, inferTradeMode } from './trade-dialog.js?v=20261023-review-font-v19';
 const TYPE_NAMES = { buy: '买入', sip: '定投', sell: '卖出', reinvest: '红利再投', dividend: '现金分红', 'transfer-in': '转入' };
 const STATUS_NAMES = { confirmed: '已确认', estimated: '历史估算', pending: '待确认', cancelled: '撤单', failed: '交易失败', closed: '交易关闭' };
 const state = { unlocked: false, visible: false, funds: {}, nav: {}, disciplines: DISCIPLINE_ENTRIES, bonds: [], freeCashFlow: null, cashEditing: false, cashDraft: null, cashBusy: false, cashError: '', bondUnavailable: true, bondUpdatedAt: null, navPreset: null, navCustomRange: null, navCycles: { months: '1m', years: '1y' }, navRanges: {}, navDomains: {}, navVisuals: {}, expandedPanels: {}, limit: 25, filter: 'all', statusFilter: 'all', gateBusy: false, createdAt: null, deadline: 0, dayDeadline: 0, sessionDay: null };
@@ -109,7 +109,7 @@ function destroyTradeEffects() {
 async function ensureTradeEffects() {
   if (!state.localMode || tradeEffects || tradeEffectsLoading) return tradeEffectsLoading;
   if (typeof document.createElement !== 'function' || typeof window.WebGLRenderingContext === 'undefined') return null;
-  tradeEffectsLoading = import('./trade-effects.js?v=20261022-fullscreen-v17').then(({ createTradeEffects }) => {
+  tradeEffectsLoading = import('./trade-effects.js?v=20261023-review-font-v19').then(({ createTradeEffects }) => {
     if (!state.tradeOpen || !state.tradeDraft) return null;
     tradeEffects = createTradeEffects({
       theme: currentTheme() === 'dark' ? 'dark' : 'light',

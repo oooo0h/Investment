@@ -81,13 +81,15 @@ function holdingDuration(entry, duration, visible) {
   return `<section class="bond-holding-duration${threeTiers ? ' bond-duration-three-tiers' : ''}" data-bond-duration-status="${known ? calculated ? 'calculated' : 'known' : duration?.status === 'empty' ? 'empty' : 'unknown'}" aria-label="持有期分布"><div class="bond-duration-heading"><span>持有期分布</span>${known ? calculated ? '<span class="bond-duration-status">按所提供流水推算</span>' : '' : `<span class="bond-duration-status">${duration?.status === 'empty' ? '暂无持仓' : '待核验'}</span>`}</div><div class="bond-duration-track" role="img" aria-label="${label}">${known ? segments.map((segment, index) => `<span class="bond-duration-${segment.kind}" style="width:${percents[index]}%"></span>`).join('') : ''}</div><div class="bond-duration-labels">${segments.map(segmentLabel).join('')}</div>${calculated ? `<p class="bond-duration-note">${duration.dateBasis === 'order' ? '持有天数按交易日推算；实际确认日待补全。' : '按所提供流水推算，未核验期初持仓'}</p>` : ''}${fee ? `<p class="bond-fee-rule">买入 ${fee.purchaseRate * 100}% · 卖出 ${feeRanges}</p>` : ''}</section>`;
 }
 
-const BOND_TYPES = { buy: '买入', sell: '卖出', 'transfer-in': '转入', 'transfer-out': '转换转出' };
+const BOND_TYPES = { buy: '买入', sell: '卖出', 'transfer-in': '转入', 'transfer-out': '转出' };
 const cancelled = row => ['cancelled', 'canceled', '撤单', '已撤单', '已撤销'].includes(row?.status) || ['cancelled', 'canceled'].includes(row?.sourceStatus);
 function bondTransaction(row, visible) {
   const pending = row.status !== 'confirmed';
   const calculated = row.sharesBasis === 'calculated' || row.sourceStatus === 'calculated';
   const recorded = !pending && row.sourceStatus === 'calculated' && row.sharesBasis !== 'calculated';
-  const name = BOND_TYPES[row.type] || '交易';
+  const name = row.transferId && row.type === 'sell' ? '转出'
+    : row.transferId && row.type === 'buy' ? '转入'
+    : BOND_TYPES[row.type] || '交易';
   const amount = Number.isFinite(row.confirmedAmount) ? row.confirmedAmount : row.amount;
   const shares = Number.isFinite(row.shares) ? row.shares : row.requestedShares;
   const sharesOnly = !Number.isFinite(amount) && Number.isFinite(shares);
