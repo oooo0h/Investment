@@ -70,7 +70,7 @@ def authentication_state():
     if result.returncode == 0:
         return 'authenticated'
     error = result.stderr.decode('utf-8', errors='replace')
-    if re.search(r'HTTP\s+401|bad credentials|gh auth login|not logged|requires authentication', error, re.I):
+    if re.search(r'HTTP\s+401|bad credentials|gh auth login|not logged|requires authentication|(?:token|authorization).{0,40}(?:expired|invalid)', error, re.I):
         return 'required'
     if re.search(r'connect|timeout|timed out|network|TLS|resolve|no such host|EOF|HTTP\s+50[234]', error, re.I):
         return 'network'
@@ -124,7 +124,13 @@ def synchronize_with_login(mirror, progress, check=False, interactive=None):
                 restore_repository(mirror, progress)
             return synchronize(mirror, progress, check)
         except RuntimeError as error:
-            if attempt or 'failed: authentication' not in str(error):
+            reason = str(error)
+            expired = 'failed: authentication' in reason
+            # Some Git/credential-helper failures omit HTTP status and even an
+            # auth message. Probe again before deciding to offer browser login.
+            if not attempt and reason in ('git failed: command_failed', 'gh failed: command_failed'):
+                expired = authentication_state() == 'required'
+            if attempt or not expired:
                 raise
             progress.say('同步时 GitHub 授权已失效，完成登录后将重新核验并继续。')
             ensure_authenticated(progress, interactive)
@@ -375,6 +381,8 @@ def error_message(error):
     if value == 'github_auth_permissions': return 'GitHub 拒绝当前授权访问，请核对账户授权或组织访问限制。'
     if value == 'github_auth_unavailable': return '无法核验 GitHub 登录状态，已保留本地资料；请检查 GitHub CLI 后重试。'
     if 'failed: authentication' in value: return 'GitHub 授权仍不可用，未确认同步成功；请核对登录状态后重新双击。'
+    if 'failed: ignored_paths' in value: return '正式文件被 Git 忽略规则排除，暂存未完成；请核对忽略规则后继续。已有暂存内容会保留。'
+    if value == 'git failed: command_failed': return 'Git 命令未完成，已保留本地提交和暂存内容；请核对 Git 环境及项目状态后重试。'
     if 'staged changes' in value: return '发现已有暂存修改，请先核对暂存区，再重新同步。'
     if 'Files changed' in value or 'files changed' in value: return '文件在核验后又发生变化，已停止；请核对后重新运行。'
     if 'HEAD and remote' in value or 'Remote changed' in value or 'Remote main' in value or 'remote_changed' in value: return '本地与云端版本有变化或分叉，已停止；请先核对两端版本。'

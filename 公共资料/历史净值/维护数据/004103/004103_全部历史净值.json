@@ -5,14 +5,14 @@
   "source": "天天基金 f10/lsjz（公开第三方，非管理人官网独立核验）",
   "downloaded_at": "2026-10-21T12:52:08.841Z",
   "first_date": "2017-02-10",
-  "last_date": "2026-10-21",
-  "count": 2355,
+  "last_date": "2026-10-27",
+  "count": 2359,
   "validation": {
-    "mode": "full_history_pinned_pagination",
-    "api_total_count": 2355,
+    "mode": "incremental_recent_window",
+    "passed": true,
+    "total_rows": 2359,
     "source_first_page_stable": true,
-    "duplicate_dates": 0,
-    "official_independent_full_validation": false
+    "full_history_refetched_this_run": false
   },
   "rows": [
     {
@@ -18854,6 +18854,58 @@
       "daily_growth_pct": "-0.17",
       "event": "",
       "source": "天天基金 f10/lsjz（公开第三方）"
+    },
+    {
+      "date": "2026-10-22",
+      "nav": "1.1706",
+      "accumulated_nav": "1.4246",
+      "daily_growth_pct": "-0.16",
+      "event": "",
+      "source": "天天基金 f10/lsjz（公开第三方）"
+    },
+    {
+      "date": "2026-10-23",
+      "nav": "1.1702",
+      "accumulated_nav": "1.4242",
+      "daily_growth_pct": "-0.03",
+      "event": "",
+      "source": "天天基金 f10/lsjz（公开第三方）"
+    },
+    {
+      "date": "2026-10-26",
+      "nav": "1.1715",
+      "accumulated_nav": "1.4255",
+      "daily_growth_pct": "0.11",
+      "event": "",
+      "source": "天天基金 f10/lsjz（公开第三方）"
+    },
+    {
+      "date": "2026-10-27",
+      "nav": "1.1762",
+      "accumulated_nav": "1.4302",
+      "daily_growth_pct": "0.40",
+      "event": "",
+      "source": "天天基金 f10/lsjz（公开第三方）"
     }
-  ]
+  ],
+  "incremental_update": {
+    "checked_at": "2026-10-27T20:05:17+08:00",
+    "query_end_date": "2026-10-27",
+    "query_start_date": "2026-10-20",
+    "added_dates": [
+      "2026-10-27"
+    ],
+    "revisions": [],
+    "previous_json_sha256": "985d9349b9c1df04287432c3ec7ef440023f1e93440ad35dfc7ce12507a729d9",
+    "raw_evidence_path": "临时文件/净值更新/20261027_200516_317334/004103",
+    "full_history_refetched": false,
+    "third_party_supplement_merged": false
+  },
+  "prior_validation": {
+    "mode": "incremental_recent_window",
+    "passed": true,
+    "total_rows": 2358,
+    "source_first_page_stable": true,
+    "full_history_refetched_this_run": false
+  }
 }

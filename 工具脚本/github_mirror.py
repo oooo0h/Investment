@@ -17,16 +17,21 @@ STATE=ROOT/'临时文件/GitHub完整同步'
 REPOSITORY='oooo0h/Investment'
 EXCLUDED={'.git','临时文件'}
 TOKEN=re.compile(rb'(?:gh[pousr]_[A-Za-z0-9_]{30,}|github_pat_[A-Za-z0-9_]{30,}|sk-(?:proj-)?[A-Za-z0-9_-]{32,}|-----BEGIN (?:RSA |OPENSSH |EC )?PRIVATE KEY-----)')
+AUTH_ERROR=re.compile(r'HTTP\s+401|GitHub API failed:\s*401|bad credentials|gh auth login|not logged|requires authentication|authentication failed|(?:token|authorization).{0,40}(?:expired|invalid)|could not read (?:Username|Password)|terminal prompts disabled',re.I)
 
 def require(condition,message):
     if not condition: raise RuntimeError(message)
 
 def command(args, data=None):
+    # Partial clones may fetch missing objects during otherwise local Git
+    # commands, including staging. Use the same CLI login for those requests.
+    if args[0]=='git' and 'credential.helper=!gh auth git-credential' not in args:
+        args=[args[0],'-c','credential.helper=','-c','credential.helper=!gh auth git-credential',*args[1:]]
     p=subprocess.run(args,cwd=ROOT,input=data,stdout=subprocess.PIPE,stderr=subprocess.PIPE,
                      env={**os.environ,'GIT_TERMINAL_PROMPT':'0','GIT_LITERAL_PATHSPECS':'1'})
     if p.returncode:
         error=p.stderr.decode('utf-8',errors='replace')
-        category='remote_changed' if re.search(r'non-fast-forward|fetch first|stale info',error,re.I) else 'authentication' if re.search(r'HTTP\s+401|GitHub API failed:\s*401|bad credentials|gh auth login|not logged|requires authentication|authentication failed',error,re.I) else 'network' if re.search(r'reset|connect|timeout|timed out|schannel|RPC failed|TLS|EOF|HTTP\s+50[234]',error,re.I) else 'permissions' if re.search(r'denied|index.lock|permission|HTTP\s+403',error,re.I) else 'command_failed'
+        category='remote_changed' if re.search(r'non-fast-forward|fetch first|stale info',error,re.I) else 'authentication' if AUTH_ERROR.search(error) else 'ignored_paths' if re.search(r'ignored by one of your .gitignore files',error,re.I) else 'network' if re.search(r'reset|connect|timeout|timed out|schannel|RPC failed|TLS|EOF|HTTP\s+50[234]',error,re.I) else 'permissions' if re.search(r'denied|index.lock|permission|HTTP\s+403',error,re.I) else 'command_failed'
         raise RuntimeError(f'{args[0]} failed: {category}')
     return p.stdout
 
@@ -72,7 +77,31 @@ def verify_context():
     require((ROOT/'.git').exists(),'Local Git metadata missing; restore repository metadata before mirroring')
     require(git('remote','get-url','origin')==f'https://github.com/{REPOSITORY}.git','Unexpected Git destination')
     require(git('branch','--show-current')=='main','Unexpected local branch')
-    require(not git('diff','--cached','--name-only'),'Unreviewed staged changes; stop before preparing')
+    if not git('diff','--cached','--name-only'):return None
+    # A failed add can leave part of the reviewed tree staged. Resume only
+    # bytes from that plan (or its recorded, already reviewed index snapshot).
+    path=STATE/'plan.json'
+    require(path.is_file(),'Unreviewed staged changes; stop before preparing')
+    plan=json.loads(path.read_text(encoding='utf-8'))
+    require(plan.get('schema')=='project-full-mirror-v1' and plan.get('repository')==REPOSITORY
+            and plan.get('branch')=='main'
+            and git('rev-parse','HEAD')==plan.get('reviewed_local_head',plan.get('remote_base_commit')),
+            'Unreviewed staged changes; stop before preparing')
+    raw=command(['git','ls-files','--stage','-z'])
+    digest=hashlib.sha256(raw).hexdigest()
+    if digest==plan.get('reviewed_index_sha256'):return digest
+    expected={entry['path']:entry['git_blob'] for entry in plan['files']}
+    head=committed_files()
+    index={}
+    for entry in raw.split(b'\0'):
+        if not entry:continue
+        metadata,name=entry.split(b'\t',1);mode,sha,stage=metadata.split()
+        require(stage==b'0' and mode in (b'100644',b'100755'),'Unreviewed staged changes; stop before preparing')
+        index[name.decode('utf-8')]=sha.decode('ascii')
+    require(all(index.get(p)==head.get(p) or index.get(p)==expected.get(p)
+                for p in set(index)|set(head)),
+            'Unreviewed staged changes; stop before preparing')
+    return digest
 
 def committed_files():
     files={}
@@ -104,7 +133,7 @@ def reviewed_base(remote_commit):
     return head
 
 def prepare():
-    verify_context()
+    reviewed_index=verify_context()
     STATE.mkdir(parents=True,exist_ok=True)
     files=inventory()
     commit,old=remote()
@@ -114,6 +143,7 @@ def prepare():
           'remote_base_commit':commit,'reviewed_local_head':head,'reviewed_head_tree':git('rev-parse','HEAD^{tree}'),
           'files':list(files.values()),'delete_remote_paths':sorted(set(old)-set(files)),
           'changed_paths':sorted(p for p,e in files.items() if old.get(p)!=e['git_blob'])}
+    if reviewed_index:plan['reviewed_index_sha256']=reviewed_index
     (STATE/'plan.json').write_text(json.dumps(plan,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
     print(json.dumps({'reviewed_files':len(files),'changed_or_added':len(plan['changed_paths']),'old_remote_paths_to_remove':len(plan['delete_remote_paths']),'credential_scan_passed':True}))
 

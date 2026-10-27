@@ -1,0 +1,16 @@
+{
+  "version": 1,
+  "records": [
+    {
+      "id": "registration-1ffa74fc-ddf7-4607-a172-f529c6e9e8db",
+      "code": "006373",
+      "row": 29,
+      "mode": "buy",
+      "orderDate": "2026-10-22",
+      "navDate": "2026-10-22",
+      "cutoff": "before",
+      "status": "filled",
+      "createdAt": "2026-10-22T13:04:32.978Z"
+    }
+  ]
+}

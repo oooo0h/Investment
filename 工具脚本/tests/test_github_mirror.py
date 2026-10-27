@@ -59,11 +59,69 @@ class MirrorTests(unittest.TestCase):
         for raw,category in [(b'HTTP 401: Bad credentials','authentication'),
                              (b'RuntimeError: GitHub API failed: 401','authentication'),
                              (b'gh auth login','authentication'),
+                             (b"fatal: could not read Username for 'https://github.com': terminal prompts disabled",'authentication'),
+                             (b'token expired','authentication'),
+                             (b'The following paths are ignored by one of your .gitignore files:','ignored_paths'),
                              (b'HTTP 403 forbidden','permissions'),
                              (b'connection timeout','network')]:
             with patch.object(mirror.subprocess,'run',return_value=subprocess.CompletedProcess([],1,b'',raw)):
                 with self.assertRaisesRegex(RuntimeError,f'failed: {category}'):
                     mirror.command(['gh','api','synthetic'])
+
+    def test_staging_and_lazy_fetches_share_the_existing_cli_login(self):
+        with patch.object(mirror.subprocess,'run',return_value=subprocess.CompletedProcess([],0,b'',b'')) as run:
+            mirror.command(['git','add','--all'])
+        args=run.call_args.args[0]
+        self.assertIn('credential.helper=',args)
+        self.assertIn('credential.helper=!gh auth git-credential',args)
+        self.assertEqual(args[-2:],['add','--all'])
+
+    def test_interrupted_staging_resumes_only_previously_reviewed_bytes(self):
+        (self.root/'.git').mkdir()
+        plan={'schema':'project-full-mirror-v1','repository':mirror.REPOSITORY,'branch':'main',
+              'remote_base_commit':'a'*40,'reviewed_local_head':'a'*40,
+              'files':[{'path':'changed.txt','git_blob':'c'*40},{'path':'rest.txt','git_blob':'d'*40}]}
+        (self.root/'plan.json').write_text(json.dumps(plan),encoding='utf-8')
+        staged=b'100644 '+b'c'*40+b' 0\tchanged.txt\0'
+        def git(*args):
+            if args[:2]==('remote','get-url'):return f'https://github.com/{mirror.REPOSITORY}.git'
+            if args[:1]==('branch',):return 'main'
+            if args[:1]==('diff',):return 'changed.txt'
+            return 'a'*40
+        with patch.object(mirror,'ROOT',self.root), patch.object(mirror,'STATE',self.root), \
+             patch.object(mirror,'git',side_effect=git), patch.object(mirror,'command',return_value=staged), \
+             patch.object(mirror,'committed_files',return_value={'changed.txt':'b'*40}):
+            digest=mirror.verify_context()
+            self.assertEqual(digest,hashlib.sha256(staged).hexdigest())
+            # A fresh review can record this validated index while reviewing
+            # newer working files. Later index edits must still be rejected.
+            plan['reviewed_index_sha256']=digest
+            plan['files'][0]['git_blob']='e'*40
+            (self.root/'plan.json').write_text(json.dumps(plan),encoding='utf-8')
+            self.assertEqual(mirror.verify_context(),digest)
+        for raw in (staged.replace(b'c'*40,b'f'*40),staged+b'100644 '+b'f'*40+b' 0\tunreviewed.txt\0',
+                    staged.replace(b' 0\t',b' 2\t')):
+            with patch.object(mirror,'ROOT',self.root), patch.object(mirror,'STATE',self.root), \
+                 patch.object(mirror,'git',side_effect=git), patch.object(mirror,'command',return_value=raw), \
+                 patch.object(mirror,'committed_files',return_value={'changed.txt':'b'*40}):
+                with self.assertRaisesRegex(RuntimeError,'Unreviewed staged'):
+                    mirror.verify_context()
+
+    def test_reviewed_staging_is_rejected_after_head_changes(self):
+        (self.root/'.git').mkdir()
+        plan={'schema':'project-full-mirror-v1','repository':mirror.REPOSITORY,'branch':'main',
+              'remote_base_commit':'a'*40,'files':[],'reviewed_index_sha256':'synthetic'}
+        (self.root/'plan.json').write_text(json.dumps(plan),encoding='utf-8')
+        def git(*args):
+            if args[:1]==('remote',):return f'https://github.com/{mirror.REPOSITORY}.git'
+            if args[:1]==('branch',):return 'main'
+            if args[:1]==('diff',):return 'changed.txt'
+            return 'b'*40
+        with patch.object(mirror,'ROOT',self.root), patch.object(mirror,'STATE',self.root), \
+             patch.object(mirror,'git',side_effect=git), patch.object(mirror,'command') as command:
+            with self.assertRaisesRegex(RuntimeError,'Unreviewed staged'):
+                mirror.verify_context()
+            command.assert_not_called()
 
     def test_native_push_uses_existing_gh_login_without_force_and_verifies_afterward(self):
         entry={'path':'synthetic.txt','git_blob':'c'*40}

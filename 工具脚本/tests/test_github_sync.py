@@ -245,6 +245,7 @@ class SyncTests(unittest.TestCase):
 
     def test_auth_probe_classifies_failures_without_printing_raw_cli_data(self):
         for code, error, state in [(0, b'', 'authenticated'), (1, b'HTTP 401: Bad credentials', 'required'),
+                                   (1, b'token expired', 'required'),
                                    (1, b'gh auth login', 'required'), (1, b'connection timeout', 'network'),
                                    (1, b'HTTP 403 forbidden', 'permissions'), (1, b'synthetic-private-body', 'unavailable')]:
             with patch.object(sync.subprocess, 'run', return_value=subprocess.CompletedProcess([], code, b'', error)):
@@ -252,6 +253,35 @@ class SyncTests(unittest.TestCase):
         self.assertNotIn('synthetic-private-body', self.console.getvalue())
         with patch.object(sync.subprocess, 'run', side_effect=subprocess.TimeoutExpired('gh', 30)):
             self.assertEqual(sync.authentication_state(), 'network')
+
+    def test_unclassified_command_failure_rechecks_login_before_recovering_once(self):
+        with patch.object(sync, 'ensure_authenticated') as auth, \
+             patch.object(sync, 'authentication_state', return_value='required'), \
+             patch.object(sync, 'synchronize', side_effect=[RuntimeError('git failed: command_failed'), None]) as run:
+            sync.synchronize_with_login(self.mirror, self.progress, interactive=True)
+        self.assertEqual(auth.call_count, 2)
+        self.assertEqual(run.call_count, 2)
+        for state in ('authenticated', 'network', 'permissions'):
+            with self.subTest(state=state), patch.object(sync, 'ensure_authenticated') as auth, \
+                 patch.object(sync, 'authentication_state', return_value=state), \
+                 patch.object(sync, 'synchronize', side_effect=RuntimeError('git failed: command_failed')) as run:
+                with self.assertRaisesRegex(RuntimeError, 'command_failed'):
+                    sync.synchronize_with_login(self.mirror, self.progress, interactive=True)
+                self.assertEqual(auth.call_count, 1)
+                self.assertEqual(run.call_count, 1)
+
+    def test_repeated_auth_failure_stops_after_one_recovery(self):
+        with patch.object(sync, 'ensure_authenticated') as auth, \
+             patch.object(sync, 'synchronize', side_effect=RuntimeError('git failed: authentication')) as run:
+            with self.assertRaisesRegex(RuntimeError, 'authentication'):
+                sync.synchronize_with_login(self.mirror, self.progress, interactive=True)
+        self.assertEqual(auth.call_count, 2)
+        self.assertEqual(run.call_count, 2)
+
+    def test_ignored_files_have_a_specific_private_error_message(self):
+        message = sync.error_message(RuntimeError('git failed: ignored_paths'))
+        self.assertIn('忽略规则', message)
+        self.assertNotIn('登录', message)
 
     def test_missing_repository_has_its_own_explanation(self):
         message = sync.error_message(RuntimeError('Local Git metadata missing; restore repository metadata before mirroring'))

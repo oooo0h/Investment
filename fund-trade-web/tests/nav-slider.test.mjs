@@ -307,6 +307,19 @@ test('replacing the range element cancels pending animation and releases pointer
   h.handle.destroy();
 });
 
+test('wheel pans the selected interval while preserving its width', () => {
+  const h = domHarness();
+  h.inputs.end.value = '90';
+  assert.equal(h.dispatch('wheel', { deltaY: 100 }), true);
+  assert.deepEqual(h.latest.range, { start: 61, end: 91 });
+  assert.deepEqual(h.latest.domain, { min: 50, max: 100 });
+  h.dispatch('wheel', { deltaY: -100 });
+  assert.deepEqual(h.latest.range, { start: 60, end: 90 });
+  h.dispatch('wheel', { deltaY: 100, shiftKey: true });
+  assert.deepEqual(h.latest.range, { start: 65, end: 95 });
+  assert.equal(h.handle.cancel(), undefined);
+});
+
 test('cancel stops an active drag and destroy removes every listener exactly once', () => {
   const h = domHarness();
   h.dispatch('pointerdown');
@@ -317,7 +330,7 @@ test('cancel stops an active drag and destroy removes every listener exactly onc
   assert.equal(h.updates.length, count);
   assert.deepEqual(h.released, [1]);
   assert.equal(h.clock.pending.size, 0);
-  assert.equal(h.listeners.size, 6);
+  assert.equal(h.listeners.size, 7);
   h.handle.destroy();
   h.handle.destroy();
   assert.equal(h.listeners.size, 0);
@@ -330,7 +343,7 @@ test('Node setup works without browser window or animation-frame globals', () =>
     removeEventListener(name) { listeners.delete(name); },
   };
   const handle = setupNavSliderInteractions(root);
-  assert.equal(listeners.size, 6);
+  assert.equal(listeners.size, 7);
   handle.cancel();
   handle.destroy();
   assert.equal(listeners.size, 0);

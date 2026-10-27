@@ -1,6 +1,6 @@
 {
   "schema": "six-fund-public-nav-current-v1",
-  "updated_at": "2026-10-21T22:36:26+08:00",
+  "updated_at": "2026-10-27T21:15:19+08:00",
   "scope": [
     "270023",
     "005698",
@@ -20,13 +20,13 @@
     {
       "code": "005698",
       "name": "华夏全球科技先锋混合(QDII)A(人民币)",
-      "records": 1982,
+      "records": 1986,
       "first_date": "2018-04-17",
-      "last_date": "2026-10-20",
+      "last_date": "2026-10-26",
       "json_path": "公共资料/历史净值/维护数据/005698/005698_全部历史净值.json",
       "csv_path": "公共资料/历史净值/维护数据/005698/005698_全部历史净值.csv",
-      "json_sha256": "6fcf56ae03f8374b44fae1307868ce325002496d7cdce9fbf8be02d26c6cf317",
-      "csv_sha256": "fa3f3ee8216437951b07102be67af5cbd4c31dddff93a0b9114f2dbed28106ca",
+      "json_sha256": "b73d2d86291ca5059129ca521d05b2f6d1bbbf8161a90f05670896f3d068ddb1",
+      "csv_sha256": "814a8ea9036bd8ca689d080b43eb13487a085e37bae9b970acd267030719e9a5",
       "source": "天天基金 f10/lsjz（公开第三方，非管理人官网独立核验）",
       "checked_dates": [
         "2026-10-12",
@@ -38,18 +38,18 @@
       "verification_path": "公共资料/历史净值/维护数据/005698/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/005698_增量复核结果.json",
       "verification_sha256": "b72c84e2a555821f04e545e14d8a9a4f2e6ec938cf5471fdb2a3531f4fba25e5",
       "xlsx_path": "基金/持仓基金/005698_华夏全球科技先锋混合_QDII_A人民币/005698_交易记录.xlsx",
-      "xlsx_sha256": "63a1f601a9172815f184b296db763628f9cc5cf94ad4087bedc7bf85ddc42069"
+      "xlsx_sha256": "4f1af2abc9fce2b736b42ea0d187e986730e99e843cd7870cce0a26aa65282d2"
     },
     {
       "code": "006373",
       "name": "国富全球科技互联混合(QDII)人民币A",
-      "records": 1908,
+      "records": 1912,
       "first_date": "2018-11-20",
-      "last_date": "2026-10-20",
+      "last_date": "2026-10-26",
       "json_path": "公共资料/历史净值/维护数据/006373/006373_全部历史净值.json",
       "csv_path": "公共资料/历史净值/维护数据/006373/006373_全部历史净值.csv",
-      "json_sha256": "121cfd572c9fcb6fa97de7ce01410c91e4a3af16fe39e5d648f76003a1f743b1",
-      "csv_sha256": "decf685381ef9ef82a082d95042ca9e3f6a52a3ca67fd56114013d9dbeba3fe0",
+      "json_sha256": "0ed0008c1cd3f2fa00d73437c4a07853ab7ab5074497ae4984301e62b4527325",
+      "csv_sha256": "8607a02099178139d8c49c6764c810fc9aa7be78e0601dde7347c5da19fc4321",
       "source": "天天基金 f10/lsjz（公开第三方，非管理人官网独立核验）",
       "checked_dates": [
         "2026-10-12",
@@ -61,18 +61,18 @@
       "verification_path": "公共资料/历史净值/维护数据/006373/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006373_增量复核结果.json",
       "verification_sha256": "6b3580bb3964448e8b059f25402a1664a17d66f3a3264620c2e73a0a400edaba",
       "xlsx_path": "基金/持仓基金/006373_国富全球科技互联混合_QDII_人民币A/006373_交易记录.xlsx",
-      "xlsx_sha256": "375ee58be6e1f2a11e1f41bf62ba92310706489f42290fdeb3f4e56a29fe9743"
+      "xlsx_sha256": "a7c8910fe7c9e1f64cb616d2da40f118fc40f90754e691dcae5efc7b4d65832d"
     },
     {
       "code": "006485",
       "name": "广发中债1-3年国开债指数C",
-      "records": 1926,
+      "records": 1930,
       "first_date": "2018-11-14",
-      "last_date": "2026-10-21",
+      "last_date": "2026-10-27",
       "json_path": "公共资料/历史净值/维护数据/006485/006485_全部历史净值.json",
       "csv_path": "公共资料/历史净值/维护数据/006485/006485_全部历史净值.csv",
-      "json_sha256": "af2dd1fa3b9fcafb684d913c5c53a0148d1faa1b64dd61b4812129f0c720cfc1",
-      "csv_sha256": "450b15286cc4b12f0015dc108a86982a1a3e883b82c11adf6811b63989822e80",
+      "json_sha256": "edf29b1d3c083d53a70826dc3d7205784724ffc1fdf0e37c083e2a7cbda9ab54",
+      "csv_sha256": "e52eb9fa23b280a7b46fcd885736f7e1139b672046aee1d1faf50082c4d99d58",
       "source": "天天基金 f10/lsjz（公开第三方，非管理人官网独立核验）",
       "checked_dates": [
         "2026-10-13",
@@ -84,18 +84,18 @@
       "verification_path": "公共资料/历史净值/维护数据/006485/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006485_增量复核结果.json",
       "verification_sha256": "35280282075db1212645d8f28c88db9da8dcd87c2c789a5bc9a0ca9d65691f7e",
       "xlsx_path": "基金/持仓基金/006485_广发中债1-3年国开行债券指数C/006485_交易记录.xlsx",
-      "xlsx_sha256": "d5f6f546cc13dd64a3f68407af636aadbf2c144b51d7ef0dcacc299c949aa823"
+      "xlsx_sha256": "b199c84743ee36c8ea2792e11dfd3d721b122e1ea080698ea073bee78fa7e69a"
     },
     {
       "code": "006663",
       "name": "易方达安悦超短债C",
-      "records": 1900,
+      "records": 1904,
       "first_date": "2018-12-05",
-      "last_date": "2026-10-21",
+      "last_date": "2026-10-27",
       "json_path": "公共资料/历史净值/维护数据/006663/006663_全部历史净值.json",
       "csv_path": "公共资料/历史净值/维护数据/006663/006663_全部历史净值.csv",
-      "json_sha256": "11082fde0a270607c24df0dffd8956fb146690e04ef73094074d6fb1511c59c9",
-      "csv_sha256": "136e1d649910c7a9349c1a405943ffa76730623e0986860ed5c1cfd0a7759477",
+      "json_sha256": "cce52fa0b3fb757a7d1d7586697ec9b6f458e57cdbeb94f07d86c4529b09eb9c",
+      "csv_sha256": "5430442fdceaea9831445bd8c371ca9d90f637b8959fc0ad9dcf3cf4b1325e5b",
       "source": "天天基金 f10/lsjz（公开第三方，非管理人官网独立核验）",
       "checked_dates": [
         "2026-10-13",
@@ -107,18 +107,18 @@
       "verification_path": "公共资料/历史净值/维护数据/006663/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/006663_增量复核结果.json",
       "verification_sha256": "39d078129f715ee9bf5932ea8241dda8f0a54f711c6077448d05744e6f445440",
       "xlsx_path": "基金/持仓基金/006663_易方达安悦超短债C/006663_交易记录.xlsx",
-      "xlsx_sha256": "c3b24803150b266f7bc880d169f483772d8399ba0024c4dfd6ba50281923db81"
+      "xlsx_sha256": "d0784acb3a14624feb3fc22d2d952d691d32acbac3593bcef5fb58510cd080a8"
     },
     {
       "code": "016701",
       "name": "银华海外数字经济量化选股混合发起_QDII_A",
-      "records": 781,
+      "records": 785,
       "first_date": "2023-03-15",
-      "last_date": "2026-10-20",
+      "last_date": "2026-10-26",
       "json_path": "公共资料/历史净值/维护数据/016701/016701_全部历史净值.json",
       "csv_path": "公共资料/历史净值/维护数据/016701/016701_全部历史净值.csv",
-      "json_sha256": "708038891aa053f9d7b78f94561230c765e06a1d46b777bcb511babc4bbaae9e",
-      "csv_sha256": "c95869afaa51c2767ebc984b18279385bdf36e3cd117112a06d9dad4d4646142",
+      "json_sha256": "3750983e362656a8da1078d98f59ffcf4fcae22a80b6de66e140df5ebaf8eefb",
+      "csv_sha256": "26597a93d9eb52759c4933689851cfd8343432f5ca2aaaf5669ebaa3803f0ecc",
       "source": "天天基金 f10/lsjz（公开第三方，非管理人官网独立核验）",
       "checked_dates": [
         "2026-10-12",
@@ -130,18 +130,18 @@
       "verification_path": "公共资料/历史净值/维护数据/016701/原始数据/六基金增量核验_2026-10-20/20261020T011132220Z/016701_增量复核结果.json",
       "verification_sha256": "759067396e713d8b70175c679ce232430fc69ea40ee10c1e13db1beb91b77302",
       "xlsx_path": "基金/持仓基金/016701_银华海外数字经济量化选股混合发起_QDII_A/016701_交易记录.xlsx",
-      "xlsx_sha256": "48bffaf8f93a98266a6c30664383a1d7e367c6815ea13f50f1a0c8b5b6ef78c2"
+      "xlsx_sha256": "a8197c1349c2b719cc1e62fd06c4742504070cd0405462cffd9dc5a26c08ddf5"
     },
     {
       "code": "270023",
       "name": "广发全球精选股票（QDII）人民币A",
-      "records": 3896,
+      "records": 3900,
       "first_date": "2010-08-18",
-      "last_date": "2026-10-20",
+      "last_date": "2026-10-26",
       "json_path": "公共资料/历史净值/维护数据/270023/270023_全部历史净值.json",
       "csv_path": "公共资料/历史净值/维护数据/270023/270023_全部历史净值.csv",
-      "json_sha256": "9be6df9dee3eb1e8e19e4ab0679d4e027a0c507fc741e01c7465feeb96d62fcf",
-      "csv_sha256": "238fae199c6affe08823694608402209e28014351ae36c34037f22bc7f7cca99",
+      "json_sha256": "fa3b5dd798059da87f11fa6012914df0e590d8f023b66fa5a697be4ba6e88c68",
+      "csv_sha256": "6c168f8066342c34e5534f9b247579a246790c3696faca963bb717d03f63b959",
       "source": "fund_manager_official_public_API",
       "checked_dates": [
         "2026-10-12",
@@ -153,7 +153,7 @@
       "verification_path": "公共资料/历史净值/维护数据/270023/原始数据/日常增量核验_2026-10-20_20261020091210730/270023_增量核验结果.json",
       "verification_sha256": "e60f2eb258adaf1d7cf55b21562da88a2003cf2d235d8fbe38c6803e6811c499",
       "xlsx_path": "基金/持仓基金/270023_广发全球精选股票_QDII_人民币A/270023_交易记录.xlsx",
-      "xlsx_sha256": "cdc62762f161318aa06e531d3207f336217c21766030263692e41f5734dc00b9"
+      "xlsx_sha256": "d0e341fdbd176d1c882aae29c4c60a670523d6416377120502ef65b006cfbac8"
     }
   ]
 }

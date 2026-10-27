@@ -225,8 +225,36 @@ export function setupNavSliderInteractions(root, { onUpdate = () => {}, requestF
     controller.key({ ...options, key: event.key });
   }
 
-  const listeners = { pointerdown, pointermove, pointerup, pointercancel, lostpointercapture: pointercancel, keydown };
-  for (const [name, handler] of Object.entries(listeners)) root.addEventListener(name, handler);
+  function wheel(event) {
+    if (destroyed) return;
+    const slider = event.target?.closest?.('.nav-range-slider');
+    if (!slider) return;
+    const input = slider.querySelector?.('[data-nav-boundary="start"]') || event.target?.closest?.('[data-nav-boundary]');
+    const options = input ? read(input) : null;
+    if (!options || input.disabled || options.domain.max <= options.domain.min) return;
+    const delta = Number(event.deltaY) || Number(event.deltaX) || 0;
+    if (!delta) return;
+    event.preventDefault();
+    const step = event.shiftKey ? 5 : 1;
+    const direction = delta > 0 ? 1 : -1;
+    const span = Math.max(0, Math.round(options.range.end) - Math.round(options.range.start));
+    if (span >= options.domain.max) return;
+    let start = Math.round(options.range.start) + direction * step;
+    let end = Math.round(options.range.end) + direction * step;
+    if (start < 0) { start = 0; end = span; }
+    if (end > options.domain.max) { end = options.domain.max; start = end - span; }
+    if (start === Math.round(options.range.start) && end === Math.round(options.range.end)) return;
+    onUpdate({
+      code: options.code,
+      boundary: options.boundary,
+      domain: { min: Math.min(options.domain.min, start), max: options.domain.max },
+      range: { start, end },
+      values: { start, end },
+    });
+  }
+
+  const listeners = { pointerdown, pointermove, pointerup, pointercancel, lostpointercapture: pointercancel, keydown, wheel };
+  for (const [name, handler] of Object.entries(listeners)) root.addEventListener(name, handler, name === 'wheel' ? { passive: false } : undefined);
   function destroy() {
     if (destroyed) return;
     destroyed = true;

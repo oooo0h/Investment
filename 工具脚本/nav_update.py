@@ -324,8 +324,11 @@ def update(folder, directory, asof, check_only, log):
     require(targets['json'] == ARCHIVE / '维护数据' / code / f'{code}_全部历史净值.json'
             and targets['csv'] == targets['json'].with_suffix('.csv')
             and targets['xlsx'] in (combined_xlsx, legacy_xlsx), '索引路径不符合当前基金目录')
-    for kind, target in targets.items():
-        require(sha(target) == entry[kind + '_sha256'], f'{kind}主档哈希变化，请核对当前入口')
+    current = {kind: sha(target) for kind, target in targets.items()}
+    for kind in ('json', 'csv'):
+        require(current[kind] == entry[kind + '_sha256'], f'{kind}主档哈希变化，请核对当前入口')
+    if current['xlsx'] != entry['xlsx_sha256']:
+        log(f'{code} 工作簿整本哈希已变化（可能由交易登记写入），继续核验「全部历史净值」sheet')
     old = load(targets['json'])
     require(old['code'] == code, '主档基金代码不一致')
     validate(old, asof)
@@ -371,7 +374,7 @@ def update(folder, directory, asof, check_only, log):
         pointers = sorted(ARCHIVE.glob('*基金历史净值当前入口.*'))
         snapshots = {p: sha(p) for p in [*targets.values(), *pointers]}
         for kind, target in targets.items():
-            require(sha(target) == entry[kind + '_sha256'], '生成期间主档发生变化，原文件保留')
+            require(sha(target) == current[kind], '生成期间主档发生变化，原文件保留')
         require(load(INDEX) == index, '生成期间索引发生变化，原文件保留')
         replacements = list(zip(targets.values(), [staged_json, staged_csv, staged_xlsx]))
         for i, pointer in enumerate(pointers):

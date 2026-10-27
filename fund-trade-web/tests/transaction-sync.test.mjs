@@ -22,14 +22,23 @@ test('local trading calendar rolls after 15:00 and over weekends and closures', 
   assert.throws(() => navDateForOrder('2026-02-30', 'before'), /calendar unavailable/);
 });
 
-test('trade dialog renders the three modes, cutoff switch and transfer shares field', () => {
-  const buy = renderTradeDialog({ draft: { mode: 'buy', code: '005698', targetCode: '016701', date: '2026/10/21', cutoff: 'before', amount: '1000', outShares: '', fee: '' }, navPreview: { date: '2026-10-21' }, currentShares: null });
-  assert.match(buy, /data-mode="buy"/);
-  assert.match(buy, /data-mode="sell"/);
-  assert.match(buy, /data-mode="transfer"/);
+test('trade dialog infers buy, sell and transfer from the two selected cards', () => {
+  const buy = renderTradeDialog({ draft: { mode: 'buy', code: 'CASH', targetCode: '005698', date: '2026/10/21', cutoff: 'before', amount: '1000', outShares: '', fee: '' }, navPreview: { date: '2026-10-21' }, currentShares: null });
+  assert.match(buy, /data-trade-mode="buy"/);
+  assert.doesNotMatch(buy, /data-action="trade-mode"/);
   assert.match(buy, /name="amount"/);
   assert.match(buy, /15:00 前/);
   assert.match(buy, /预计净值日/);
+  assert.doesNotMatch(buy, /name="date"/);
+  const calendar = renderTradeDialog({ draft: { mode: 'buy', code: 'CASH', targetCode: '005698', date: '2026/10/21', cutoff: 'before', amount: '', outShares: '', fee: '' }, navPreview: { date: '2026-10-21' }, calendar: { month: '2026-10' } });
+  assert.match(calendar, /class="trade-calendar"/);
+  assert.match(calendar, /data-action="trade-calendar-pick"/);
+  assert.match(calendar, /2026-10-21/);
+  const sell = renderTradeDialog({ draft: { mode: 'sell', code: '005698', targetCode: 'CASH', date: '2026/10/21', cutoff: 'before', amount: '', outShares: '100', fee: '' }, navPreview: { date: '2026-10-21' }, currentShares: 500 });
+  assert.match(sell, /name="outShares"/);
+  assert.match(sell, /卖出份额/);
+  assert.match(sell, /FIFO/);
+  assert.doesNotMatch(sell, /name="amount"/);
   const transfer = renderTradeDialog({ draft: { mode: 'transfer', code: '005698', targetCode: '016701', date: '2026/10/21', cutoff: 'after', amount: '', outShares: '100', fee: '' }, navPreview: { date: '2026-10-22', orderDate: '2026-10-21' }, currentShares: 1234.567891 });
   assert.match(transfer, /name="outShares"/);
   assert.match(transfer, /name="targetCode"/);
@@ -119,7 +128,7 @@ test('registration metadata keeps the real order date and persists without amoun
 });
 
 test('sell dialog asks for shares and explains the FIFO fee basis', () => {
-  const markup = renderTradeDialog({ draft: { mode: 'sell', code: '005698', targetCode: '016701', date: '2026/10/21', cutoff: 'before', amount: '', outShares: '50', fee: '' }, navPreview: { date: '2026-10-21' }, currentShares: 100 });
+  const markup = renderTradeDialog({ draft: { mode: 'sell', code: '005698', targetCode: 'CASH', date: '2026/10/21', cutoff: 'before', amount: '', outShares: '50', fee: '' }, navPreview: { date: '2026-10-21' }, currentShares: 100 });
   assert.match(markup, /卖出份额/);
   assert.match(markup, /name="outShares"/);
   assert.doesNotMatch(markup, /name="amount"/);

@@ -32,7 +32,7 @@ import { getNavChartDisplay } from '../src/nav-display.js';
 import { createFundViewportKeeper } from '../src/viewport-anchor.js';
 import { navDateForOrder } from '../src/trading-calendar.js';
 import { parseTransactionDate } from '../src/transaction-date.js';
-import { renderTradeDialog, renderReviewDialog, TRADE_FUNDS } from '../src/trade-dialog.js';
+import { renderTradeDialog, renderReviewDialog, TRADE_FUNDS, TRADE_OPTIONS, CASH_CODE, inferTradeMode } from '../src/trade-dialog.js';
 import { buyFee } from '../src/fee-rules.js';
 
 
@@ -142,10 +142,10 @@ function harness(timestamp = '2026-01-08T02:00:00.000Z', options = {}) {
     };
   });
   const fetch = options.fetch || (async url => ({ ok: true, json: async () => ({ code: /([0-9]{6})\.json$/.exec(url)?.[1], history: [] }) }));
-  const api = new Function('BOND_CODES', 'addPendingPurchaseValue', 'describeModeEffect', 'recentNavPeriod', 'calculateLedger', 'estimateApplications', 'GUOFU_TRADING_DATES', 'createRefreshController', 'NAV_PERIODS', 'resolveNavRange', 'latestCoveredTradeDate', 'moveNavBoundary', 'summarizeNavRange', 'resolveNavSliderDomain', 'renderNavChart', 'buildTradeMarkers', 'calculateNavAnnualized', 'evaluateAnnualDiscipline', 'evaluateAddDiscipline', 'getNavDisciplineGap', 'setupNavChartInteractions', 'setupNavSliderInteractions', 'calculateTransactionPerformance', 'FUNDS', 'FUND_CODES', 'DISCIPLINE_ENTRIES', 'createDisciplineSync', 'REGION_DATA', 'evaluateUsExposure', 'calculateHoldingDuration', 'createHoldingDurationScale', 'openBondStore', 'renderBondsPage', 'calculateBondHoldingValue', 'evaluateBondReserve', 'bondReserveTone', 'calculatePortfolioAllocation', 'evaluateHoldingLimit', 'calculateBondHoldingDuration', 'getEstimateDates', 'getEstimateTargetDate', 'parseEstimatePercent', 'buildEstimatedNav', 'loadNavEstimates', 'saveNavEstimates', 'renderEstimatePanel', 'getDisciplineActions', 'adjustDisciplineRule', 'getNavChartDisplay', 'createFundViewportKeeper', 'unlockErrorMessage', 'navDateForOrder', 'parseTransactionDate', 'renderTradeDialog', 'renderReviewDialog', 'TRADE_FUNDS', 'buyFee', 'document', 'location', 'window', 'matchMedia', 'localStorage', 'Date',
+  const api = new Function('BOND_CODES', 'addPendingPurchaseValue', 'describeModeEffect', 'recentNavPeriod', 'calculateLedger', 'estimateApplications', 'GUOFU_TRADING_DATES', 'createRefreshController', 'NAV_PERIODS', 'resolveNavRange', 'latestCoveredTradeDate', 'moveNavBoundary', 'summarizeNavRange', 'resolveNavSliderDomain', 'renderNavChart', 'buildTradeMarkers', 'calculateNavAnnualized', 'evaluateAnnualDiscipline', 'evaluateAddDiscipline', 'getNavDisciplineGap', 'setupNavChartInteractions', 'setupNavSliderInteractions', 'calculateTransactionPerformance', 'FUNDS', 'FUND_CODES', 'DISCIPLINE_ENTRIES', 'createDisciplineSync', 'REGION_DATA', 'evaluateUsExposure', 'calculateHoldingDuration', 'createHoldingDurationScale', 'openBondStore', 'renderBondsPage', 'calculateBondHoldingValue', 'evaluateBondReserve', 'bondReserveTone', 'calculatePortfolioAllocation', 'evaluateHoldingLimit', 'calculateBondHoldingDuration', 'getEstimateDates', 'getEstimateTargetDate', 'parseEstimatePercent', 'buildEstimatedNav', 'loadNavEstimates', 'saveNavEstimates', 'renderEstimatePanel', 'getDisciplineActions', 'adjustDisciplineRule', 'getNavChartDisplay', 'createFundViewportKeeper', 'unlockErrorMessage', 'navDateForOrder', 'parseTransactionDate', 'renderTradeDialog', 'renderReviewDialog', 'TRADE_FUNDS', 'TRADE_OPTIONS', 'CASH_CODE', 'inferTradeMode', 'buyFee', 'document', 'location', 'window', 'matchMedia', 'localStorage', 'Date',
     'setTimeout', 'clearTimeout', 'setInterval', 'clearInterval', 'scrollTo', 'scrollY', 'fetch', 'loadVault',
-    `${source}\nreturn { state, startSession, checkSession, lock, render, remainingTime, actionClick, unlock, saveCashFlow, saveNavEstimateEdits, refreshCurrentData, dataRefresh, disciplineSync, chartOverlays, navRangeControls, navContext, navSliderDomain, navVisualValues, valuation, ledger, navPanel, navRangeProfit, updateNavMeasurement, bondPositions, equityHoldingDistribution, fundRegions, sparkline, estimateHomePanel, bondReserveCheck, portfolioAllocation, annualDisciplineAlert, handles: () => ({ sessionInterval, sessionTimeout, dailyCodeReader }) };`)(
-    BOND_CODES, addPendingPurchaseValue, describeModeEffect, recentNavPeriod, calculateLedger, estimateApplications, GUOFU_TRADING_DATES, createRefreshController, NAV_PERIODS, resolveNavRange, latestCoveredTradeDate, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain, renderNavChart, buildTradeMarkers, calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap, setupNavChartInteractions, setupNavSliderInteractions, calculateTransactionPerformance, FUNDS, FUND_CODES, DISCIPLINE_ENTRIES, createDisciplineSync, REGION_DATA, evaluateUsExposure, calculateHoldingDuration, createHoldingDurationScale, fakeBondOpen, renderBondsPage, calculateBondHoldingValue, evaluateBondReserve, bondReserveTone, calculatePortfolioAllocation, evaluateHoldingLimit, calculateBondHoldingDuration, getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav, loadNavEstimates, saveNavEstimates, renderEstimatePanel, getDisciplineActions, adjustDisciplineRule, getNavChartDisplay, createFundViewportKeeper, unlockErrorMessage, navDateForOrder, parseTransactionDate, renderTradeDialog, renderReviewDialog, TRADE_FUNDS, buyFee, document, location, window, () => ({ matches: false }), localStorage, clock.Date,
+    `${source}\nreturn { state, startSession, checkSession, lock, render, remainingTime, actionClick, useTradeWheel, unlock, saveCashFlow, saveNavEstimateEdits, refreshCurrentData, dataRefresh, disciplineSync, chartOverlays, navRangeControls, navContext, navSliderDomain, navVisualValues, valuation, ledger, navPanel, navRangeProfit, updateNavMeasurement, bondPositions, equityHoldingDistribution, fundRegions, sparkline, estimateHomePanel, bondReserveCheck, portfolioAllocation, annualDisciplineAlert, handles: () => ({ sessionInterval, sessionTimeout, dailyCodeReader }) };`)(
+    BOND_CODES, addPendingPurchaseValue, describeModeEffect, recentNavPeriod, calculateLedger, estimateApplications, GUOFU_TRADING_DATES, createRefreshController, NAV_PERIODS, resolveNavRange, latestCoveredTradeDate, moveNavBoundary, summarizeNavRange, resolveNavSliderDomain, renderNavChart, buildTradeMarkers, calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap, setupNavChartInteractions, setupNavSliderInteractions, calculateTransactionPerformance, FUNDS, FUND_CODES, DISCIPLINE_ENTRIES, createDisciplineSync, REGION_DATA, evaluateUsExposure, calculateHoldingDuration, createHoldingDurationScale, fakeBondOpen, renderBondsPage, calculateBondHoldingValue, evaluateBondReserve, bondReserveTone, calculatePortfolioAllocation, evaluateHoldingLimit, calculateBondHoldingDuration, getEstimateDates, getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav, loadNavEstimates, saveNavEstimates, renderEstimatePanel, getDisciplineActions, adjustDisciplineRule, getNavChartDisplay, createFundViewportKeeper, unlockErrorMessage, navDateForOrder, parseTransactionDate, renderTradeDialog, renderReviewDialog, TRADE_FUNDS, TRADE_OPTIONS, CASH_CODE, inferTradeMode, buyFee, document, location, window, () => ({ matches: false }), localStorage, clock.Date,
     clock.setTimeout, clock.clear, clock.setInterval, clock.clear, settings => scrollCalls.push(settings), scrollY, fetch, loadVault,
   );
   function start() {
@@ -164,7 +164,7 @@ function harness(timestamp = '2026-01-08T02:00:00.000Z', options = {}) {
     const button = { disabled: false, textContent: '', innerHTML: '' };
     return api.unlock({ preventDefault() {}, target: { elements: { password: input }, querySelector: () => button } });
   }
-  return { api, clock, app, document, documentEvents, windowEvents, location, scrollCalls, start, click, submit, day, storage, localStorage, toast,
+  return { api, clock, app, document, documentEvents, windowEvents, window, location, scrollCalls, start, click, submit, day, storage, localStorage, toast,
     get transitionSkips() { return transitionSkips; } };
 }
 
@@ -991,18 +991,20 @@ test('a shared trend does not silently change when the target fund has the oppos
   assert.match(h.app.innerHTML, /暂无上涨区间/);
 });
 
-test('manual dates remain local and a new shared button clears older fund-specific dates and slider domains', () => {
+test('manual dates are shared across funds and a new shared button clears them and slider domains', () => {
   const h = sharedRangeHarness();
   h.click('nav-period', { fund: '005698', period: '3m' });
   h.documentEvents.get('input')({ target: { matches: () => true, dataset: { fund: '005698', navBoundary: 'start' }, value: '4' } });
-  assert.deepEqual(h.api.state.navRanges['005698'], { from: '2026-01-05', to: '2026-01-06' });
+  assert.deepEqual(h.api.state.navRanges, {});
+  assert.deepEqual(h.api.state.navCustomRange, { from: '2026-01-05', to: '2026-01-06' });
   assert.equal(h.api.state.navPreset, '3m');
   h.location.hash = '#/fund/270023';
   h.windowEvents.get('hashchange')();
-  assert.match(h.app.innerHTML, /data-period="3m"[^>]*aria-pressed="true"/);
-  assert.match(h.app.innerHTML, /data-nav-start>2026-01-01</);
+  assert.match(h.app.innerHTML, /data-nav-start>2026-01-05</);
+  assert.match(h.app.innerHTML, /data-nav-end>2026-01-06</);
   h.click('nav-period', { fund: '270023', period: '1m' });
   assert.deepEqual(h.api.state.navRanges, {});
+  assert.equal(h.api.state.navCustomRange, null);
   assert.equal(h.api.state.navDomains['005698'], undefined);
   assert.equal(h.api.state.navVisuals['005698'], undefined);
   h.location.hash = '#/fund/005698';
@@ -1083,9 +1085,11 @@ test('manual dates preserve both cycle cursors and another preset source synchro
   h.click('nav-period', { fund: '005698', period: '3y' });
   h.documentEvents.get('input')({ target: { matches: () => true, dataset: { fund: '005698', navBoundary: 'start' }, value: '4' } });
   assert.deepEqual(h.api.state.navCycles, { months: '6m', years: '3y' });
-  assert.deepEqual(h.api.state.navRanges['005698'], { from: '2026-01-05', to: '2026-01-06' });
+  assert.deepEqual(h.api.state.navCustomRange, { from: '2026-01-05', to: '2026-01-06' });
+  assert.deepEqual(h.api.state.navRanges, {});
   h.click('nav-cycle', { fund: '005698', cycle: 'months' });
   assert.equal(h.api.state.navPreset, '1m');
+  assert.equal(h.api.state.navCustomRange, null);
   assert.deepEqual(h.api.state.navRanges, {});
   assert.deepEqual(h.api.state.navCycles, { months: '1m', years: '3y' });
   h.api.state.navPreset = '6m';
@@ -3416,8 +3420,28 @@ test('switching between fund pages retains the reading section despite different
 
   h.location.hash = '#/';
   h.windowEvents.get('hashchange')();
-  assert.deepEqual(h.scrollCalls.at(-1), { top: 0, behavior: 'instant' }, 'returning home keeps the existing top reset');
+  assert.deepEqual(h.scrollCalls.at(-1), { top: 640, behavior: 'instant' }, 'returning home restores its previous position');
   assert.deepEqual(h.api.state.expandedPanels, {}, 'fund panel choices do not leak into another route type');
+  h.api.lock();
+});
+
+test('equity and bond pages remember their reading position across route switches', () => {
+  const h = harness();
+  h.start();
+  h.location.hash = '#/fund/005698';
+  h.windowEvents.get('hashchange')();
+  h.scrollCalls.length = 0;
+  h.window.scrollY = 800;
+  h.location.hash = '#/bonds';
+  h.windowEvents.get('hashchange')();
+  assert.deepEqual(h.scrollCalls.at(-1), { top: 0, behavior: 'instant' }, 'first visit to bonds starts at the top');
+  h.window.scrollY = 200;
+  h.location.hash = '#/fund/005698';
+  h.windowEvents.get('hashchange')();
+  assert.deepEqual(h.scrollCalls.at(-1), { top: 800, behavior: 'instant' }, 'returning to the equity page restores its position');
+  h.location.hash = '#/bonds';
+  h.windowEvents.get('hashchange')();
+  assert.deepEqual(h.scrollCalls.at(-1), { top: 200, behavior: 'instant' }, 'returning to bonds restores its position');
   h.api.lock();
 });
 
@@ -3455,7 +3479,7 @@ test('a US exposure deep link opens closed basic information after capturing old
   h.api.lock();
 });
 
-test('local mode exposes the + registration button, three modes and the transfer review banner', () => {
+test('local mode exposes the + registration card stack and inferred transfer', () => {
   const h = harness();
   h.api.state.localMode = true;
   h.start();
@@ -3463,21 +3487,23 @@ test('local mode exposes the + registration button, three modes and the transfer
   assert.match(h.app.innerHTML, /同步交易记录/);
   h.click('trade-open');
   assert.match(h.app.innerHTML, /id="trade-form"/);
-  assert.match(h.app.innerHTML, /data-mode="buy"/);
-  assert.match(h.app.innerHTML, /data-mode="sell"/);
-  assert.match(h.app.innerHTML, /data-mode="transfer"/);
-  h.click('trade-mode', { mode: 'transfer' });
+  assert.match(h.app.innerHTML, /data-trade-mode="buy"/);
+  assert.match(h.app.innerHTML, /name="amount"/);
+  assert.match(h.app.innerHTML, /class="trade-calendar"/);
+  h.click('trade-calendar-pick', { date: '2026-10-23' });
+  assert.equal(h.api.state.tradeDraft.date, '2026/10/23');
+  assert.match(h.app.innerHTML, /class="trade-calendar"/);
+  h.click('trade-pick', { side: 'right', code: '016701' });
+  h.click('trade-pick', { side: 'left', code: '005698' });
   assert.match(h.app.innerHTML, /name="outShares"/);
   assert.match(h.app.innerHTML, /name="targetCode"/);
+  assert.match(h.app.innerHTML, /data-trade-mode="transfer"/);
   assert.match(h.app.innerHTML, /class="trade-board"/);
-  assert.match(h.app.innerHTML, /class="fund-carousel"/);
+  assert.match(h.app.innerHTML, /class="trade-stack"/);
   assert.match(h.app.innerHTML, /data-action="trade-reverse"/);
-  const beforeStep = h.api.state.tradeDraft.code;
-  h.click('trade-fund-step', { side: 'out', step: '1' });
-  assert.notEqual(h.api.state.tradeDraft.code, beforeStep);
   const beforeWheel = h.api.state.tradeDraft.code;
-  const carousel = { dataset: { carousel: 'out' } };
-  h.documentEvents.get('wheel')({ target: { closest: selector => selector === '.fund-carousel' ? carousel : null }, deltaY: 1, preventDefault() {} });
+  const stack = { dataset: { stack: 'left' } };
+  h.api.useTradeWheel({ target: { closest: selector => selector === '.trade-stack' ? stack : null }, deltaY: 1, preventDefault() {} });
   assert.notEqual(h.api.state.tradeDraft.code, beforeWheel);
   const outCode = h.api.state.tradeDraft.code, inCode = h.api.state.tradeDraft.targetCode;
   h.api.state.tradeDraft.outShares = '10';
@@ -3491,6 +3517,9 @@ test('local mode exposes the + registration button, three modes and the transfer
   h.api.render();
   assert.match(h.app.innerHTML, /transfer-banner/);
   assert.match(h.app.innerHTML, /1 笔转换待二次核对/);
+  assert.match(h.app.innerHTML, /class="nav-todo"/);
+  assert.match(h.app.innerHTML, /nav-todo-badge/);
+  assert.doesNotMatch(h.app.innerHTML, /nav-add-badge/);
   h.api.lock();
 });
 

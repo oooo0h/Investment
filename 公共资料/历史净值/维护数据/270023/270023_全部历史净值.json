@@ -263,8 +263,8 @@
   ],
   "schema": "public-fund-nav-v1",
   "first_date": "2010-08-18",
-  "last_date": "2026-10-20",
-  "count": 3896,
+  "last_date": "2026-10-26",
+  "count": 3900,
   "rows": [
     {
       "date": "2010-08-18",
@@ -35329,13 +35329,49 @@
       "previous_nav": "5.8671",
       "previous_accumulated_nav": "6.3061",
       "previous_nav_date": "2026-10-19"
+    },
+    {
+      "date": "2026-10-21",
+      "nav": "5.8601",
+      "accumulated_nav": "6.2991",
+      "daily_growth_pct": "0.97",
+      "previous_nav": "5.8037",
+      "previous_accumulated_nav": "6.2427",
+      "previous_nav_date": "2026-10-20"
+    },
+    {
+      "date": "2026-10-22",
+      "nav": "5.5897",
+      "accumulated_nav": "6.0287",
+      "daily_growth_pct": "-4.61",
+      "previous_nav": "5.8601",
+      "previous_accumulated_nav": "6.2991",
+      "previous_nav_date": "2026-10-21"
+    },
+    {
+      "date": "2026-10-23",
+      "nav": "5.6132",
+      "accumulated_nav": "6.0522",
+      "daily_growth_pct": "0.42",
+      "previous_nav": "5.5897",
+      "previous_accumulated_nav": "6.0287",
+      "previous_nav_date": "2026-10-22"
+    },
+    {
+      "date": "2026-10-26",
+      "nav": "5.6303",
+      "accumulated_nav": "6.0693",
+      "daily_growth_pct": "0.30",
+      "previous_nav": "5.6132",
+      "previous_accumulated_nav": "6.0522",
+      "previous_nav_date": "2026-10-23"
     }
   ],
   "storage_policy": "本文件为该份额唯一全历史净值主档；更新时合并新日期、按日期去重，原子替换同名文件。",
   "validation": {
     "mode": "incremental_recent_window",
     "passed": true,
-    "total_rows": 3896,
+    "total_rows": 3900,
     "source_first_page_stable": true,
     "full_history_refetched_this_run": false
   },
@@ -35527,22 +35563,22 @@
   ],
   "supplementary_note": "待官网复核的第三方记录，不混入rows主序列、主CSV或主表；不据此填补或推算官方净值。",
   "incremental_update": {
-    "checked_at": "2026-10-21T22:09:58+08:00",
-    "query_end_date": "2026-10-21",
-    "query_start_date": "2026-10-13",
+    "checked_at": "2026-10-27T21:15:08+08:00",
+    "query_end_date": "2026-10-27",
+    "query_start_date": "2026-10-19",
     "added_dates": [
-      "2026-10-20"
+      "2026-10-26"
     ],
     "revisions": [],
-    "previous_json_sha256": "a2b0d7ba95aebf7b5e66a7eb0add16fe7485787ac77fc4342c3f0e69897d9bb5",
-    "raw_evidence_path": "临时文件/净值更新/20261021_220957_514619/270023",
+    "previous_json_sha256": "55eaca1eac06dae88be241b0acb9443e3b27452155d8c374d581843b86e52b78",
+    "raw_evidence_path": "临时文件/净值更新/20261027_211506_619521/270023",
     "full_history_refetched": false,
     "third_party_supplement_merged": false
   },
   "prior_validation": {
     "mode": "incremental_recent_window",
     "passed": true,
-    "total_rows": 3895,
+    "total_rows": 3899,
     "source_first_page_stable": true,
     "full_history_refetched_this_run": false
   }

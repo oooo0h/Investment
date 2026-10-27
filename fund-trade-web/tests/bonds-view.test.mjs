@@ -95,6 +95,16 @@ test('reserve notes are conditional: red warns about cash, green invites spendin
   }
 });
 
+test('bond cards are collapsed by default and open only when selected', () => {
+  const transactions = { '006485': [] };
+  const collapsed = renderBondsPage({ entries: entries(), transactions });
+  const cards = [...collapsed.matchAll(/<details class="panel bond-card"[^>]*>/g)].map(match => match[0]);
+  assert.equal(cards.length, 3);
+  assert.ok(cards.every(tag => !/\bopen\b/.test(tag)));
+  const opened = renderBondsPage({ entries: entries(), transactions, expandedByCode: { '006485': true } });
+  assert.match(opened, /data-bond-ledger="006485"[^>]* open/);
+});
+
 test('partial screenshot records render all ledgers without inventing account totals or returns', () => {
   const transactions = { '006485': [{ id: 'synthetic-pending', date: '2024-01-02', type: 'buy', amount: 1,
     shares: null, nav: null, fee: null, status: 'pending', sourceStatus: 'unverified' }], '006663': [] };
@@ -103,8 +113,29 @@ test('partial screenshot records render all ledgers without inventing account to
   const overview = html.match(/<section[^>]*aria-label="债基合计"[\s\S]*?<\/section>/)[0];
   assert.match(overview, /合计持仓金额（元）/);
   assert.match(overview, /占总持仓比例（含自由现金流）/);
-  assert.equal((overview.match(/<dl>[\s\S]*?<\/dl>/)[0].match(/待核验/g) || []).length, 2);
+  assert.equal((overview.match(/<dl>[\s\S]*?<\/dl>/)[0].match(/待核验/g) || []).length, 3);
   assert.doesNotMatch(html, /交易记录已接入|暂不展示账户汇总|class="bonds-summary-return|1\.00/);
+});
+
+test('available amount uses the green band when present and falls back to the yellow band', () => {
+  const green = renderBondsPage({ entries: entries(), freeCashFlow: 179_670, reserve: { ratio: .4 }, visible: true });
+  assert.match(green, /data-bond-available="green"/);
+  assert.match(green, /可用金额（元）[\s\S]*?30,000\.00/);
+  const hidden = renderBondsPage({ entries: entries(), freeCashFlow: 179_670, reserve: { ratio: .4 } });
+  assert.match(hidden, /data-bond-available="green"/);
+  assert.doesNotMatch(hidden, /30,000/);
+  const yellow = renderBondsPage({ entries: entries(), freeCashFlow: 59_670, reserve: { ratio: .25 }, visible: true });
+  assert.match(yellow, /data-bond-available="yellow"/);
+  assert.match(yellow, /可用金额（元）[\s\S]*?10,000\.00/);
+  const smallGreen = renderBondsPage({ entries: entries(), freeCashFlow: 59_670, reserve: { ratio: .36 }, visible: true });
+  assert.match(smallGreen, /data-bond-available="yellow"/);
+  assert.match(smallGreen, /data-bond-available="yellow"[\s\S]*?5,555\.56/);
+  const boundary = renderBondsPage({ entries: entries(), freeCashFlow: 54_670, reserve: { ratio: .4 }, visible: true });
+  assert.match(boundary, /data-bond-available="green"/);
+  assert.match(boundary, /data-bond-available="green"[\s\S]*?5,000\.00/);
+  const unknown = renderBondsPage({ entries: entries(), freeCashFlow: 59_670, reserve: { ratio: null } });
+  assert.match(unknown, /data-bond-available="unknown"/);
+  assert.match(unknown, /可用金额（元）[\s\S]*?待核验/);
 });
 
 test('bond cards and totals mask amounts by default while showing cost-based rates', () => {
@@ -166,7 +197,7 @@ test('the overview adds signed cash, preserves fund returns, and withholds unava
   }
   const html = renderBondsPage({ entries: entries(), cashUnavailable: true, visible: true, reserve: { ratio: .25 } });
   const overview = html.match(/aria-label="债基合计"[\s\S]*?<\/section>/)[0];
-  assert.equal((overview.match(/<dl>[\s\S]*?<\/dl>/)[0].match(/待核验/g) || []).length, 2);
+  assert.equal((overview.match(/<dl>[\s\S]*?<\/dl>/)[0].match(/待核验/g) || []).length, 3);
   assert.equal((html.match(/class="panel bond-card"/g) || []).length, 3);
 });
 
@@ -240,6 +271,17 @@ test('bond cards expand a compact read-only ledger with known facts, pending hin
   assert.doesNotMatch(html, /12\.00|10\.000000|3\.000000/);
   const visible = renderBondsPage({ entries: entries(), transactions, visible: true });
   assert.match(visible, /12\.00/); assert.match(visible, /3\.00/); assert.match(visible, /&lt;img src=x&gt;/);
+});
+
+test('a paired transfer-out row is labelled 转出 while an ordinary sell remains 卖出', () => {
+  const base = { date: '2026-10-22', type: 'sell', status: 'confirmed', sourceStatus: 'confirmed', shares: 1, nav: 1, amount: 1, fee: 0 };
+  const transactions = { '006485': [
+    { ...base, id: 'transfer-leg', transferId: 'transfer-synthetic', transferStatus: 'reviewed' },
+    { ...base, id: 'ordinary-sell', date: '2026-10-23' },
+  ] };
+  const html = renderBondsPage({ entries: entries(), transactions, expandedByCode: { '006485': true } });
+  assert.match(html, /transaction-title">转出<span/);
+  assert.match(html, /transaction-title">卖出<span/);
 });
 
 test('calculated transaction labels keep inferred confirmations distinct and leave pending records pending', () => {
