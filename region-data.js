@@ -1,67 +1,43 @@
-// Public fund disclosures only. Percentages use fund net assets as the
-// denominator, not the value of the equity portfolio or an investor's account.
-// Countries/regions follow the listing markets in each report's section 7.2.
-const report = (regions, metadata) => Object.freeze({
-  asOf: '2026-06-30',
+// Public fund percentages transcribed from the user's comparison screenshot.
+// The screenshot does not specify a reporting or publication date; its receipt
+// date must not be presented as either. No investor account values are stored.
+const source = Object.freeze({
+  type: 'user-screenshot',
+  title: '用户提供的上市地区配置截图',
+  updatedAt: '2026-10-28',
+  url: null,
+});
+const report = (regions, totalPercent, roundingNote = '') => Object.freeze({
+  asOf: null,
+  publishedAt: null,
   basis: 'equity-region-percent-of-nav',
-  ...metadata,
+  totalPercent,
   regions: Object.freeze(regions.map(([name, percent]) => Object.freeze({ name, percent }))),
-  source: Object.freeze(metadata.source),
+  source,
+  note: `股票及存托凭证，按上市交易市场统计；来源为用户提供截图，统计截止日及公告日待确认。${roundingNote}`,
 });
 
 export const REGION_DATA = Object.freeze({
   '005698': report([
-    ['美国', 16.66],
-    ['中国内地', 36.61],
-    ['中国香港', 23.17],
-  ], {
-    publishedAt: '2026-08-31',
-    totalPercent: 76.44,
-    source: {
-      title: '华夏全球科技先锋混合型证券投资基金（QDII）2026年中期报告',
-      url: 'https://www.chinaamc.com/upload/resources/file/2026/08/31/010b766eb4fd4326b232f0aa4377a483.pdf',
-    },
-    note: '直接股票口径，不含ETF与衍生品穿透；含存托凭证，按上市交易市场统计。',
-  }),
-  '270023': report([
-    ['美国', 46.65],
-    ['中国', 17.43],
-    ['中国香港', 12.81],
-    ['日本', 7.56],
-    ['韩国', 3.08],
-  ], {
-    publishedAt: '2026-08-31',
-    totalPercent: 87.53,
-    source: {
-      title: '广发全球精选股票型证券投资基金2026年中期报告',
-      url: 'https://www.gffunds.com.cn/jjgg/dqgg/202608/P020260831322788141588.pdf',
-    },
-    note: '直接股票口径，不含ETF与衍生品穿透；含存托凭证，按上市交易市场统计。',
-  }),
-  '016701': report([
-    ['美国', 87.89],
-    ['中国香港', 2.55],
-  ], {
-    publishedAt: '2026-08-29',
-    totalPercent: 90.45,
-    source: {
-      title: '银华海外数字经济量化选股混合型发起式证券投资基金（QDII）2026年中期报告',
-      url: 'https://pdf.dfcfw.com/pdf/H2_AN202608291828680755_1.pdf',
-    },
-    note: '直接股票及存托凭证口径，按上市交易市场统计；分项与合计存在四舍五入差异。',
-  }),
+    ['美国', 26.17],
+    ['中国内地', 36.53],
+    ['中国香港', 16.72],
+  ], 79.43, '分项与合计保留截图原值，存在0.01个百分点的差异，未作归一化。'),
   '006373': report([
-    ['美国', 71.95],
-    ['日本', 8.74],
-    ['中国香港', 3.47],
-    ['中国', 1.14],
-  ], {
-    publishedAt: '2026-08-31',
-    totalPercent: 85.29,
-    source: {
-      title: '富兰克林国海全球科技互联混合型证券投资基金（QDII）2026年中期报告',
-      url: 'https://www.ftsfund.com/ftp/upload/file/202608/28/PELfmhqycOkMVkFw.pdf',
-    },
-    note: '直接股票及存托凭证口径，按上市交易市场统计；分项与合计存在四舍五入差异。',
-  }),
+    ['美国', 79.85],
+    ['中国内地', 1.17],
+    ['中国香港', 2.79],
+    ['日本', 4.52],
+  ], 88.32, '分项与合计保留截图原值，存在0.01个百分点的差异，未作归一化。'),
+  '016701': report([
+    ['美国', 87.52],
+    ['中国香港', 2.48],
+  ], 90.00),
+  '270023': report([
+    ['美国', 55.62],
+    ['中国内地', 16.06],
+    ['中国香港', 8.22],
+    ['日本', 4.50],
+    ['韩国', 4.52],
+  ], 88.92),
 });

@@ -10,8 +10,8 @@ import { calculateTransactionPerformance } from './transaction-performance.js';
 import { FUNDS, FUND_CODES } from './funds.js?v=20261019-collapsible-panels';
 import { DISCIPLINE_ENTRIES } from './discipline.js?v=20261019-sheet-discipline';
 import { createDisciplineSync } from './discipline-sync.js';
-import { REGION_DATA } from './region-data.js';
-import { evaluateUsExposure } from './us-exposure.js';
+import { REGION_DATA } from './region-data.js?v=20261028-region-screenshot';
+import { evaluateUsExposure } from './us-exposure.js?v=20261028-region-screenshot';
 import { calculatePortfolioAllocation, evaluateHoldingLimit } from './portfolio-allocation.js?v=20261020-cash-in-holdings';
 import { calculateHoldingDuration, createHoldingDurationScale } from './holding-duration.js';
 import { openBondStore } from './bond-store.js?v=20261021-third-bond';
@@ -21,7 +21,7 @@ import { calculateBondHoldingDuration } from './bond-holding-duration.js?v=20261
 import { renderBondsPage } from './bonds-view.js?v=20261023-transfer-label';
 import { getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav } from './nav-estimates.js?v=20261020-nav-dates-trades';
 import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js?v=20261020-nav-dates-trades';
-import { renderEstimatePanel } from './estimate-panel.js?v=20261020-nav-dates-trades';
+import { renderEstimatePanel } from './estimate-panel.js?v=20261028-change-first';
 import { getDisciplineActions, adjustDisciplineRule } from './discipline-actions.js?v=20261019-sheet-discipline';
 import { getNavChartDisplay } from './nav-display.js';
 import { createFundViewportKeeper } from './viewport-anchor.js?v=20261019-flow-header';
@@ -962,7 +962,13 @@ function estimateHomePanel() {
   const funds = FUNDS.map(fund => {
     const data = estimatedNav(fund.code);
     const previous = data.points.filter(point => point.date < date).at(-1);
-    return { code: fund.code, name: fund.name, short: fund.navLabel, baseDate: previous?.date || null, official: Boolean(data.latestOfficialDate && data.latestOfficialDate >= date) };
+    const confirmed = data.points.find(point => point.date === date && !point.estimated);
+    const previousOfficial = data.points.filter(point => point.date < date && !point.estimated).at(-1);
+    const change = confirmed && previousOfficial ? confirmed.nav / previousOfficial.nav - 1 : null;
+    return { code: fund.code, name: fund.name, short: fund.navLabel, baseDate: previous?.date || null,
+      official: Boolean(data.latestOfficialDate && data.latestOfficialDate >= date),
+      confirmedNav: confirmed?.nav ?? null, confirmedDate: confirmed?.date ?? null,
+      confirmedChange: Number.isFinite(change) ? change : null, changeBaseDate: previousOfficial?.date || null };
   });
   const saved = Object.fromEntries(state.navEstimateEntries.filter(entry => entry.date === date).map(entry => [entry.code, Number((entry.change * 100).toPrecision(12))]));
   return renderEstimatePanel({ date, funds, saved, drafts: state.estimateDrafts, directions: state.estimateDirections, errors: state.estimateErrors, open: panelExpanded('nav-estimates'), unavailable: !state.estimateStorageAvailable || !date });
@@ -1370,8 +1376,13 @@ function exposureRuleDetails(checks) {
   const below = checks.filter(check => check.status === 'below');
   return `<div class="discipline-compliance-details"><div class="exposure-reasons"><ul class="exposure-checks">${below.map(({ fund, ...check }) => {
     const source = safeSource(check.source?.url);
+    const provenance = check.asOf
+      ? `持仓截至 <time datetime="${esc(check.asOf)}">${esc(check.asOf)}</time>${check.publishedAt ? ` · 公告 ${esc(check.publishedAt)}` : ''}${source ? ` · <a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(check.source.title)}">原报告</a>` : ''}`
+      : check.source?.type === 'user-screenshot'
+        ? `用户提供截图 · 更新 <time datetime="${esc(check.source.updatedAt)}">${esc(check.source.updatedAt)}</time> · 统计日期待确认`
+        : '';
     const comparison = `美股占比 <strong class="num">${number(check.usPercent)}%</strong>，低于规则门槛 <strong>${esc(check.thresholdPercent)}%</strong>，相差 <strong>${number(check.gapPercent)}</strong> 个百分点。`;
-    return `<li class="exposure-check exposure-check-below" data-exposure-fund="${fund.code}"><a class="exposure-check-target" href="#/fund/${fund.code}?section=us-exposure" aria-label="查看${esc(fund.name)}的美国持仓比例"><div class="exposure-check-heading"><span class="exposure-check-name">${esc(fund.name)}<span class="fund-code">${fund.code}</span></span><span class="exposure-check-state">未达标</span></div><p>${comparison}</p>${holdingLimitCopy(fund.code)}</a>${check.asOf ? `<p class="exposure-check-source">持仓截至 <time datetime="${esc(check.asOf)}">${esc(check.asOf)}</time>${check.publishedAt ? ` · 公告 ${esc(check.publishedAt)}` : ''}${source ? ` · <a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(check.source.title)}">原报告</a>` : ''}</p>` : ''}</li>`;
+    return `<li class="exposure-check exposure-check-below" data-exposure-fund="${fund.code}"><a class="exposure-check-target" href="#/fund/${fund.code}?section=us-exposure" aria-label="查看${esc(fund.name)}的美国持仓比例"><div class="exposure-check-heading"><span class="exposure-check-name">${esc(fund.name)}<span class="fund-code">${fund.code}</span></span><span class="exposure-check-state">未达标</span></div><p>${comparison}</p>${holdingLimitCopy(fund.code)}</a>${provenance ? `<p class="exposure-check-source">${provenance}</p>` : ''}</li>`;
   }).join('')}</ul></div></div>`;
 }
 
@@ -1440,7 +1451,10 @@ function fundRegions(fund) {
   const overview = `<div class="fund-basic-overview"><p class="nav-annualized" title="按全部已载入正式净值计算复合年化；不含昨日估值，未计现金分红再投资"><span>平均年化</span><strong class="num ${signClass(annualized)}" data-nav-annualized>${percent(annualized)}</strong></p>${history.at(-1)?.date ? `<p class="helper">净值截至 <time datetime="${esc(history.at(-1).date)}">${esc(history.at(-1).date)}</time></p>` : ''}</div>`;
   const check = fundExposure(fund.code), below = check.status === 'below';
   const source = safeSource(data.source?.url);
-  return `<details class="panel fund-regions panel-disclosure${below ? ' exposure-below' : ''}" aria-label="基金基本信息" data-panel="fund-basics" data-fund="${fund.code}"${panelExpanded('fund-basics', true) ? ' open' : ''}><summary class="panel-toggle"><h2>基金基本信息</h2><time class="helper" datetime="${esc(data.asOf)}" title="报告公告日期 ${esc(data.publishedAt || '待核实')}">地区截至 ${esc(data.asOf)}</time></summary><div class="panel-content">${overview}<p class="region-basis">直接股票持仓 · 占基金净资产</p><ul class="region-shares">${data.regions.map(region => `<li${region.name === '美国' ? ` id="fund-${fund.code}-us-exposure" tabindex="-1" class="region-us${below ? ' region-us-below' : ''}${routeSection() === 'us-exposure' ? ' exposure-location' : ''}"` : ''}><span>${esc(region.name)}${region.name === '美国' && below ? '<small class="region-state">未达标</small>' : ''}</span><strong class="num">${number(region.percent, 2)}%</strong></li>`).join('')}</ul>${data.note ? `<p class="helper region-note">${esc(data.note)}</p>` : ''}${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(data.source.title)}">原报告</a>` : ''}</div></details>`;
+  const date = data.asOf
+    ? `<time class="helper" datetime="${esc(data.asOf)}" title="报告公告日期 ${esc(data.publishedAt || '待核实')}">地区截至 ${esc(data.asOf)}</time>`
+    : `<span class="helper" title="统计日期待确认">截图更新 <time datetime="${esc(data.source.updatedAt)}">${esc(data.source.updatedAt)}</time></span>`;
+  return `<details class="panel fund-regions panel-disclosure${below ? ' exposure-below' : ''}" aria-label="基金基本信息" data-panel="fund-basics" data-fund="${fund.code}"${panelExpanded('fund-basics', true) ? ' open' : ''}><summary class="panel-toggle"><h2>基金基本信息</h2>${date}</summary><div class="panel-content">${overview}<p class="region-basis">股票及存托凭证 · 占基金净资产</p><ul class="region-shares">${data.regions.map(region => `<li${region.name === '美国' ? ` id="fund-${fund.code}-us-exposure" tabindex="-1" class="region-us${below ? ' region-us-below' : ''}${routeSection() === 'us-exposure' ? ' exposure-location' : ''}"` : ''}><span>${esc(region.name)}${region.name === '美国' && below ? '<small class="region-state">未达标</small>' : ''}</span><strong class="num">${number(region.percent, 2)}%</strong></li>`).join('')}<li class="region-total"><span>股票及存托凭证合计</span><strong class="num">${number(data.totalPercent, 2)}%</strong></li></ul>${data.note ? `<p class="helper region-note">${esc(data.note)}</p>` : ''}${source ? `<a class="inline-source" href="${source}" target="_blank" rel="noopener noreferrer" aria-label="${esc(data.source.title)}">原报告</a>` : ''}</div></details>`;
 }
 
 function fundPage(fund) {

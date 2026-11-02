@@ -1,4 +1,4 @@
-// Pure evaluation of a standing rule against public fund disclosures only.
+// Pure evaluation of a standing rule against fund disclosures or user-provided screenshots.
 // A missing rule or disclosure is unknown, never a zero-percent allocation.
 function thresholdFrom(rule) {
   if (!rule || rule.id !== 'us-exposure' || typeof rule.title !== 'string'
@@ -34,14 +34,23 @@ function publicSource(value) {
   } catch { return null; }
 }
 
+function screenshotSource(value) {
+  if (!value || value.type !== 'user-screenshot' || value.url !== null
+    || typeof value.title !== 'string' || !value.title.trim() || value.title.length > 1000
+    || /[\u0000-\u001f]/.test(value.title) || !validDate(value.updatedAt)) return null;
+  return { type: 'user-screenshot', title: value.title.trim(), updatedAt: value.updatedAt, url: null };
+}
+
 function disclosureFrom(disclosure) {
   if (!disclosure || disclosure.basis !== 'equity-region-percent-of-nav'
-    || !validDate(disclosure.asOf) || !Array.isArray(disclosure.regions)
+    || !Array.isArray(disclosure.regions)
     || !disclosure.regions.length) return null;
-  const source = publicSource(disclosure.source);
+  const screenshot = disclosure.source?.type === 'user-screenshot';
+  if (screenshot ? disclosure.asOf !== null || disclosure.publishedAt !== null : !validDate(disclosure.asOf)) return null;
+  const source = screenshot ? screenshotSource(disclosure.source) : publicSource(disclosure.source);
   if (!source) return null;
   const publishedAt = disclosure.publishedAt ?? null;
-  if (publishedAt !== null && (!validDate(publishedAt) || publishedAt < disclosure.asOf)) return null;
+  if (!screenshot && publishedAt !== null && (!validDate(publishedAt) || publishedAt < disclosure.asOf)) return null;
   const names = new Set();
   let usPercent = null;
   for (const region of disclosure.regions) {

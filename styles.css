@@ -306,6 +306,7 @@
   .fund-regions .region-shares > .region-us { border-bottom-color: color-mix(in srgb, var(--blue) 28%, var(--line)); }
   .fund-regions .region-shares > .region-us > span { color: var(--blue); font-weight: 600; }
   .fund-regions .region-shares > .region-us > strong { color: var(--blue); font-weight: 700; }
+  .fund-regions .region-shares > .region-total { grid-column: 1 / -1; border-top: 1px solid var(--line); border-bottom: 0; }
   .fund-regions .region-note { margin-top: 9px; font-size: 11px; line-height: 1.7; }
   .fund-regions > .inline-source { display: inline-block; margin-top: 9px; font-size: 11px; line-height: 1.7; }
   .exposure-warning { color: var(--danger); background: color-mix(in srgb, var(--danger) 9%, var(--paper)); }
