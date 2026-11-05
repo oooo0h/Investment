@@ -39,7 +39,9 @@ export function evaluateAnnualDiscipline(history, { rule = null, now = new Date(
   const text = ['annual-profit', 'annual-profit-100', 'annual-profit-multiple'].includes(rule?.id)
     ? `${typeof rule.title === 'string' ? rule.title : ''}${typeof rule.detail === 'string' ? rule.detail : ''}`.replace(/\s+/g, '').replaceAll('％', '%') : '';
   const parsedMultiple = Number(/平均年化收益率的(\d+(?:\.\d+)?)倍/.exec(text)?.[1]);
-  const parsedAbsolute = Number(/达到(?:了)?(\d+(?:\.\d+)?)%/.exec(text)?.[1]);
+  const absoluteMatch = /年内涨幅收益率(?:达到|超过)(?:了)?(\d+(?:\.\d+)?)%/.exec(text) || /达到(?:了)?(\d+(?:\.\d+)?)%/.exec(text);
+  const strictAbsolute = absoluteMatch?.[0].includes('超过') === true;
+  const parsedAbsolute = Number(absoluteMatch?.[1]);
   const multiple = Number.isFinite(parsedMultiple) && parsedMultiple > 0 ? parsedMultiple : null;
   const absoluteThreshold = Number.isFinite(parsedAbsolute) && parsedAbsolute > 0 ? parsedAbsolute / 100 : null;
   const timestamp = new Date(now).getTime();
@@ -73,7 +75,9 @@ export function evaluateAnnualDiscipline(history, { rule = null, now = new Date(
     Number.EPSILON * Math.max(1, Math.abs(yearReturn), Math.abs(relativeThreshold)) * 4;
   result.triggered = yearReturn > 0 && (
     aboveRelative ||
-    (absoluteThreshold !== null && yearReturn >= absoluteThreshold)
+    (absoluteThreshold !== null && (strictAbsolute
+      ? yearReturn - absoluteThreshold > Number.EPSILON * Math.max(1, Math.abs(yearReturn), Math.abs(absoluteThreshold)) * 4
+      : yearReturn >= absoluteThreshold))
   );
   return result;
 }
@@ -83,7 +87,10 @@ export function evaluateAddDiscipline(history, { rule = null, tradePoint = null,
     ? `${typeof rule.title === 'string' ? rule.title : ''}${typeof rule.detail === 'string' ? rule.detail : ''}`.replace(/\s+/g, '') : '';
   const parsedMultiple = Number(/平均年化收益率的?(\d+(?:\.\d+)?)倍/.exec(text)?.[1]);
   const multiple = Number.isFinite(parsedMultiple) && parsedMultiple > 0 ? parsedMultiple : null;
+  const parsedAbsolute = Number(/跌幅超过(?:了)?([0-9]+(?:\.[0-9]+)?)[%％]/.exec(text)?.[1]) / 100;
+  const absoluteThreshold = Number.isFinite(parsedAbsolute) && parsedAbsolute > 0 && parsedAbsolute <= 1 ? parsedAbsolute : null;
   const result = { triggered: false, asOf: null, baselineDate: null, decline: null, annualized: null, multiple, estimated: tradePoint?.estimated === true };
+  if (absoluteThreshold !== null) result.absoluteThreshold = absoluteThreshold;
   const shifted = new Date(new Date(now).getTime() + 8 * 60 * 60 * 1000);
   if (!Number.isFinite(shifted.getTime())) return result;
   const today = utcDate(shifted.toISOString().slice(0, 10));
@@ -102,8 +109,8 @@ export function evaluateAddDiscipline(history, { rule = null, tradePoint = null,
   const decline = 1 - latestNav / tradePoint.nav;
   if (!Number.isFinite(decline)) return result;
   result.decline = decline;
-  if (multiple === null || result.annualized === null || result.annualized <= 0) return result;
-  const threshold = result.annualized * multiple;
+  if (absoluteThreshold === null && (multiple === null || result.annualized === null || result.annualized <= 0)) return result;
+  const threshold = absoluteThreshold ?? result.annualized * multiple;
   // A mathematical equality must remain false despite logarithmic CAGR rounding.
   result.triggered = Number.isFinite(threshold) && decline - threshold >
     Number.EPSILON * Math.max(1, Math.abs(decline), Math.abs(threshold)) * 4;
@@ -125,7 +132,9 @@ export function getNavDisciplineGap(change, { addSignal = null, profitSignals = 
     candidates.push({ kind, remaining: remaining <= tolerance ? 0 : remaining, triggered: signal.triggered === true });
   };
   if (kind === 'add') {
-    if (addSignal?.annualized > 0 && addSignal?.multiple > 0) {
+    if (Number.isFinite(addSignal?.absoluteThreshold) && addSignal.absoluteThreshold > 0) {
+      consider(addSignal, addSignal.absoluteThreshold, addSignal.decline);
+    } else if (addSignal?.annualized > 0 && addSignal?.multiple > 0) {
       consider(addSignal, addSignal.annualized * addSignal.multiple, addSignal.decline);
     }
   } else {

@@ -89,3 +89,14 @@ export function createHoldingDurationScale(days, fraction) {
   const maximum = Math.max(days, Math.floor(days / fraction));
   return { maximum, ratio: days / maximum };
 }
+
+/** A full calendar year in the current continuous holding period. */
+export function hasHeldForOneYear(duration, { now = new Date() } = {}) {
+  if (duration?.status !== 'holding' || dateStamp(duration.startDate) === null || !Number.isFinite(new Date(now).getTime())) return false;
+  const anniversary = new Date(dateStamp(duration.startDate));
+  const month = anniversary.getUTCMonth();
+  anniversary.setUTCFullYear(anniversary.getUTCFullYear() + 1);
+  if (anniversary.getUTCMonth() !== month) anniversary.setUTCDate(0);
+  const today = new Date(new Date(now).getTime() + 8 * 3600000).toISOString().slice(0, 10);
+  return dateStamp(today) >= anniversary.getTime();
+}

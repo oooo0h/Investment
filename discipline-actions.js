@@ -1,11 +1,11 @@
 // User-defined public rule parameters, never actual account balances or trades.
-const BASE_ADD_BUDGET = 10000;
+const BASE_ADD_BUDGET = null;
 
-/** The fixed budget is a rule setting, not an account amount. */
+/** High-value additions have no fixed budget; preserve exposure multipliers. */
 export function getDisciplineActions(exposure) {
   const adjusted = exposure?.status === 'below';
   return {
-    addBudget: adjusted ? BASE_ADD_BUDGET / 2 : BASE_ADD_BUDGET,
+    addBudget: BASE_ADD_BUDGET,
     addMultiplier: adjusted ? .5 : 1,
     sellMultiplier: adjusted ? 2 : 1,
     adjusted,

@@ -38,7 +38,7 @@ export const DISCIPLINE_ENTRIES = Object.freeze([
   },
   {
     id: 'annual-profit-multiple',
-    title: '如果本年的年内涨幅收益率超过了 平均年化收益率 的 3倍，【一定】要适当止盈（减仓20%）',
+    title: '如果本年的年内涨幅收益率超过了 30%，【一定】要适当止盈',
     detail: '',
   },
   {
@@ -48,7 +48,7 @@ export const DISCIPLINE_ENTRIES = Object.freeze([
   },
   {
     id: 'add-discipline-decline',
-    title: '自上次交易节点后，跌幅超过了 平均年化收益率 的2倍，进行一次加仓（1w元）',
+    title: '自上次交易节点后，跌幅超过20%，进行一次高额加仓',
     detail: '',
   },
 ].map(entry => Object.freeze(entry)));
@@ -150,4 +150,16 @@ export function parseDisciplineMarkdown(markdown) {
     return Object.freeze({ id, title, detail });
   });
   return Object.freeze(entries);
+}
+
+// Public rates and dates only. Notices never display account balances.
+const escapeNotice = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const noticePercent = value => `${(value * 100).toFixed(2)}%`;
+export function renderDisciplineNotices(items = []) {
+  return items.filter(item => Number.isFinite(item.current) && Number.isFinite(item.threshold)).map(item => {
+    const add = item.kind === 'add';
+    const action = add ? '加仓' : item.threshold >= 1 ? '大幅止盈' : '适当止盈';
+    const basis = add ? '自上次交易节点后跌幅' : '年内涨幅';
+    return `<a class="discipline-notice ${add ? 'discipline-notice-add' : 'discipline-notice-profit'}" href="#/fund/${escapeNotice(item.code)}" aria-label="${escapeNotice(item.name)}已触发${action}条件"><span class="discipline-notice-flag">纪律提醒</span><strong>${escapeNotice(item.name)} · 已触发${action}条件</strong><span class="discipline-notice-evidence">${basis} <b class="num">${noticePercent(item.current)}</b> &gt; ${noticePercent(item.threshold)}</span><small>基准 ${escapeNotice(item.baselineDate)} · 截至 ${escapeNotice(item.asOf)}${item.estimated ? ' · 含估值' : ' · 正式净值'}${add ? ' · 进行一次高额加仓' : ''}</small></a>`;
+  }).join('');
 }

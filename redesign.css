@@ -1607,3 +1607,17 @@ body.trade-dialog-open { overflow: hidden; }
   .transfer-banner.is-shaking { animation: none; }
 }
 
+
+/* Rate comparisons state their own baseline beside the chart and estimates. */
+.estimate-discipline-notices { display:grid; gap:12px; margin:16px 0 24px; }
+.estimate-discipline-notices[hidden] { display:none; }
+.discipline-notice { display:grid; grid-template-columns:auto minmax(0,1fr); align-items:center; gap:8px 14px; padding:19px 22px; border:1px solid var(--line); border-left:4px solid var(--add-accent); border-radius:14px; background:var(--add-tint); color:var(--text); text-decoration:none; white-space:normal; }
+.discipline-notice-profit { border-left-color:var(--danger); background:color-mix(in srgb,var(--danger) 9%,var(--surface-glass)); }
+.discipline-notice-flag { grid-row:span 3; align-self:start; color:var(--muted); font-size:11px; padding-top:5px; }
+.discipline-notice > strong { font-size:18px; line-height:1.5; color:var(--add-accent); }
+.discipline-notice-profit > strong { color:var(--danger); }
+.discipline-notice-evidence { font-size:14px; line-height:1.7; }
+.discipline-notice > small { grid-column:2; color:var(--muted); font-size:12px; line-height:1.7; }
+.discipline-notice:focus-visible { outline:2px solid var(--add-accent); outline-offset:3px; }
+.nav-discipline-gap:has(.discipline-notice) { margin:16px 0; }
+@media (max-width:600px) { .discipline-notice { padding:15px; grid-template-columns:minmax(0,1fr); } .discipline-notice-flag { grid-row:auto; } .discipline-notice > small { grid-column:1; } .discipline-notice > strong { font-size:17px; } }

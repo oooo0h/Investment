@@ -3,17 +3,17 @@ import { createRefreshController } from './refresh-controller.js';
 import { unlockErrorMessage } from './unlock-errors.js';
 import { NAV_PERIODS, recentNavPeriod, resolveNavRange, moveNavBoundary, resolveNavSliderDomain, latestCoveredTradeDate } from './nav-range.js?v=20261020-since-trade-orders';
 import { renderNavChart, buildTradeMarkers } from './nav-chart.js?v=20261020-interval-days-caption';
-import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap } from './nav-annualized.js?v=20261019-sheet-discipline';
+import { calculateNavAnnualized, evaluateAnnualDiscipline, evaluateAddDiscipline, getNavDisciplineGap } from './nav-annualized.js?v=20261104-fixed-thresholds';
 import { setupNavChartInteractions } from './nav-interaction.js?v=20261020-interval-days-caption';
 import { setupNavSliderInteractions } from './nav-slider.js?v=20261022-range-wheel';
 import { calculateTransactionPerformance } from './transaction-performance.js';
 import { FUNDS, FUND_CODES } from './funds.js?v=20261019-collapsible-panels';
-import { DISCIPLINE_ENTRIES } from './discipline.js?v=20261019-sheet-discipline';
+import { DISCIPLINE_ENTRIES, renderDisciplineNotices } from './discipline.js?v=20261104-notices';
 import { createDisciplineSync } from './discipline-sync.js';
 import { REGION_DATA } from './region-data.js?v=20261028-region-screenshot';
 import { evaluateUsExposure } from './us-exposure.js?v=20261028-region-screenshot';
 import { calculatePortfolioAllocation, evaluateHoldingLimit } from './portfolio-allocation.js?v=20261020-cash-in-holdings';
-import { calculateHoldingDuration, createHoldingDurationScale } from './holding-duration.js';
+import { calculateHoldingDuration, createHoldingDurationScale, hasHeldForOneYear } from './holding-duration.js?v=20261104-holding-year';
 import { openBondStore } from './bond-store.js?v=20261021-third-bond';
 import { calculateBondHoldingValue, addPendingPurchaseValue, BOND_CODES } from './bond-model.js?v=20261021-third-bond';
 import { evaluateBondReserve, bondReserveTone } from './bond-reserve.js?v=20261020-bond-color-notices';
@@ -22,7 +22,7 @@ import { renderBondsPage } from './bonds-view.js?v=20261023-transfer-label';
 import { getEstimateTargetDate, parseEstimatePercent, buildEstimatedNav } from './nav-estimates.js?v=20261020-nav-dates-trades';
 import { loadNavEstimates, saveNavEstimates } from './nav-estimate-store.js?v=20261020-nav-dates-trades';
 import { renderEstimatePanel } from './estimate-panel.js?v=20261028-change-first';
-import { getDisciplineActions, adjustDisciplineRule } from './discipline-actions.js?v=20261019-sheet-discipline';
+import { getDisciplineActions, adjustDisciplineRule } from './discipline-actions.js?v=20261104-fixed-thresholds';
 import { getNavChartDisplay } from './nav-display.js';
 import { createFundViewportKeeper } from './viewport-anchor.js?v=20261019-flow-header';
 import { navDateForOrder } from './trading-calendar.js';
@@ -971,7 +971,9 @@ function estimateHomePanel() {
       confirmedChange: Number.isFinite(change) ? change : null, changeBaseDate: previousOfficial?.date || null };
   });
   const saved = Object.fromEntries(state.navEstimateEntries.filter(entry => entry.date === date).map(entry => [entry.code, Number((entry.change * 100).toPrecision(12))]));
-  return renderEstimatePanel({ date, funds, saved, drafts: state.estimateDrafts, directions: state.estimateDirections, errors: state.estimateErrors, open: panelExpanded('nav-estimates'), unavailable: !state.estimateStorageAvailable || !date });
+  const panel = renderEstimatePanel({ date, funds, saved, drafts: state.estimateDrafts, directions: state.estimateDirections, errors: state.estimateErrors, open: panelExpanded('nav-estimates'), unavailable: !state.estimateStorageAvailable || !date });
+  const notices = estimateDisciplineNotices();
+  return `${panel}<div class="estimate-discipline-notices" data-estimate-discipline-notices aria-live="polite"${notices ? '' : ' hidden'}>${notices}</div>`;
 }
 
 function cancelEstimateSaves() {
@@ -1009,6 +1011,8 @@ function queueEstimateSave(code, delay = 600) {
 
 function refreshEstimateViews() {
   if (selectedFund() || selectedBonds()) { render(); return; }
+  const notices = app.querySelector?.('[data-estimate-discipline-notices]');
+  if (notices) { notices.innerHTML = estimateDisciplineNotices(); notices.hidden = !notices.innerHTML; }
   const reserve = bondReserveCheck();
   const sheet = app.querySelector?.('.discipline-sheet');
   if (sheet) sheet.outerHTML = homeRules(reserve);
@@ -1331,12 +1335,46 @@ function disciplineCopy(value, linkFunds = false) {
   return copy;
 }
 
+function fundHoldingDuration(code, now = new Date()) {
+  const book = getBook(code), result = ledger(code);
+  const originals = new Map(book.transactions.map(transaction => [transaction.id, transaction]));
+  const rows = result.rows.map(row => ({ ...row, estimated: row.estimated === true || ['estimated', '历史估算'].includes(originals.get(row.id)?.status) }));
+  return calculateHoldingDuration(rows, {now, incomplete: book.incomplete === true, hasErrors: result.errors.length > 0});
+}
+
+function fundEligibleForReminders(code) {
+  const now = new Date();
+  return hasHeldForOneYear(fundHoldingDuration(code, now), {now});
+}
+
+function disciplineNoticeItems(code) {
+  if (!fundEligibleForReminders(code)) return [];
+  const fund = FUNDS.find(item => item.code === code);
+  if (!fund) return [];
+  const data = estimatedNav(code);
+  const estimated = data.points.at(-1)?.estimated === true;
+  const items = [];
+  const add = fundAddSignal(code).signal;
+  if (add.triggered) items.push({ code, name: fund.navLabel, kind: 'add', current: add.decline, threshold: add.absoluteThreshold ?? add.annualized * add.multiple, baselineDate: add.baselineDate, asOf: add.asOf, estimated });
+  const profits = state.disciplines.filter(rule => rule.id === 'annual-profit' || rule.id.startsWith('annual-profit-'))
+    .map(rule => evaluateAnnualDiscipline(data.points, {rule, now: new Date(), annualizedHistory: officialNav(code)})).filter(signal => signal.triggered);
+  const profit = profits.sort((a, b) => (b.absoluteThreshold ?? 0) - (a.absoluteThreshold ?? 0))[0];
+  if (profit) items.push({code, name: fund.navLabel, kind:'profit', current:profit.yearReturn, threshold:profit.absoluteThreshold ?? profit.annualized * profit.multiple, baselineDate:profit.baselineDate, asOf:profit.asOf, estimated});
+  return items;
+}
+
+function estimateDisciplineNotices() {
+  return renderDisciplineNotices(FUNDS.flatMap(fund => disciplineNoticeItems(fund.code)));
+}
+
 function fundAddSignal(code) {
   const rule = state.disciplines.find(entry => entry.id === 'add-discipline-decline');
   const row = ledger(code).rows.filter(item => item.status === 'included' && item.dateBasis !== 'order' && ['buy', 'sip', 'sell', 'transfer-in', 'reinvest'].includes(item.type)).at(-1);
   const original = row && getBook(code).transactions.find(item => item.id === row.id);
   const tradePoint = row ? { date: row.date, nav: row.nav, estimated: row.estimated === true || ['estimated', '历史估算'].includes(original?.status) } : null;
-  return { rule, signal: evaluateAddDiscipline(estimatedNav(code).points, { rule, tradePoint, now: new Date(), annualizedHistory: officialNav(code) }) };
+  const signal = evaluateAddDiscipline(estimatedNav(code).points, { rule, tradePoint, now: new Date(), annualizedHistory: officialNav(code) });
+  if (!fundEligibleForReminders(code)) signal.triggered = false;
+  return { rule, signal };
 }
 
 function addDisciplineMatches() {
@@ -1344,12 +1382,13 @@ function addDisciplineMatches() {
   if (!matches.length) return '';
   return `<div class="add-discipline-matches" aria-label="满足加仓条件的基金">${matches.map(({ fund, signal }) => {
     const actions = getDisciplineActions(fundExposure(fund.code));
-    return `<div class="add-discipline-match" data-add-fund="${fund.code}" data-add-budget="${actions.addBudget}"><a href="#/fund/${fund.code}?section=add-discipline" aria-label="查看${esc(fund.name)}加仓提醒"><div class="add-match-main"><strong>${esc(fund.name)}</strong><span class="add-match-state">满足加仓条件</span></div><p class="add-match-reason">上次交易节点后跌幅 <strong class="num">${number(signal.decline * 100)}%</strong>，超过 ${number(signal.multiple, 0)} 倍平均年化（<span class="num">${number(signal.annualized * signal.multiple * 100)}%</span>）。</p><p class="add-match-budget">单次加仓 <strong class="num">${actions.addBudget === 10000 ? '1万' : number(actions.addBudget, 0)}</strong> 元${actions.adjusted ? '<span> · 美股未达标，已减半</span>' : ''}</p><small class="add-match-date">截至 ${esc(signal.asOf)}${signal.estimated ? ' · 上次交易节点含估算' : ''}${icon('arrow')}</small></a></div>`;
+    return `<div class="add-discipline-match" data-add-fund="${fund.code}"><a href="#/fund/${fund.code}?section=add-discipline" aria-label="查看${esc(fund.name)}加仓提醒"><div class="add-match-main"><strong>${esc(fund.name)}</strong><span class="add-match-state">满足加仓条件</span></div><p class="add-match-reason">上次交易节点后跌幅 <strong class="num">${number(signal.decline * 100)}%</strong>，超过 <span class="num">${number((signal.absoluteThreshold ?? signal.annualized * signal.multiple) * 100)}%</span>。</p><p class="add-match-budget">进行一次<strong>高额加仓</strong>${actions.adjusted ? '<span> · 美股未达标，加仓金额减半</span>' : ''}</p><small class="add-match-date">截至 ${esc(signal.asOf)}${signal.estimated ? ' · 上次交易节点含估算' : ''}${icon('arrow')}</small></a></div>`;
   }).join('')}</div>`;
 }
 
 function annualDisciplineAlert(code) {
-  const matches = state.disciplines.filter(entry => entry.id === 'annual-profit' || entry.id.startsWith('annual-profit-'))
+  const eligible = fundEligibleForReminders(code);
+  const matches = (eligible ? state.disciplines : []).filter(entry => entry.id === 'annual-profit' || entry.id.startsWith('annual-profit-'))
     .map(rule => ({ rule, kind: 'annual', signal: evaluateAnnualDiscipline(estimatedNav(code).points, { rule, now: new Date(), annualizedHistory: officialNav(code) }) }))
     .filter(({ signal }) => signal.triggered);
   const addition = fundAddSignal(code);
@@ -1361,7 +1400,7 @@ function annualDisciplineAlert(code) {
   const annual = matches.find(item => item.kind === 'annual')?.signal;
   const add = matches.find(item => item.kind === 'add')?.signal;
   const exposureNote = below ? `<div class="fund-exposure-note annual-exposure-note">${icon('info')}<p><strong>美股含量未达标</strong>：${number(exposure.usPercent)}%，低于规则门槛 ${esc(exposure.thresholdPercent)}%，相差 ${number(exposure.gapPercent)} 个百分点。<a href="#/?section=us-exposure">查看首页规则与原因</a></p></div>` : '';
-  const summary = `${annual ? `<p class="annual-alert-return">年内涨幅<strong class="num">${percent(annual.yearReturn)}</strong></p>` : ''}${add ? `<p class="annual-alert-return">上次交易节点后跌幅<strong class="num">${number(add.decline * 100)}%</strong></p><p class="annual-action-note">单次加仓 ${number(actions.addBudget, 0)} 元${actions.adjusted ? '（美股未达标，已减半）' : ''}</p>` : ''}`;
+  const summary = `${annual ? `<p class="annual-alert-return">年内涨幅<strong class="num">${percent(annual.yearReturn)}</strong></p>` : ''}${add ? `<p class="annual-alert-return">上次交易节点后跌幅<strong class="num">${number(add.decline * 100)}%</strong></p><p class="annual-action-note">进行一次高额加仓${actions.adjusted ? '（美股未达标，加仓金额减半）' : ''}</p>` : ''}`;
   const date = signal ? `<p class="annual-alert-date">截至 ${esc(signal.asOf)}${annual ? ` · 年初基准 ${esc(annual.baselineDate)}` : ''}${add ? ` · 上次交易节点 ${esc(add.baselineDate)}${add.estimated ? '（估算）' : ''}` : ''}</p>` : '';
   const adjustedNote = annual && actions.adjusted ? '<p class="annual-action-note">美股含量未达标，卖出金额/比例翻倍，上限为当前持仓。</p>' : '';
   const rules = matches.length ? `<div class="annual-alert-rules">${matches.map(({ rule }) => {
@@ -1388,11 +1427,9 @@ function exposureRuleDetails(checks) {
 
 function holdingDurationDetails() {
   const now = new Date();
-  return `<div class="discipline-compliance-details"><ul class="holding-duration-list">${FUNDS.map(fund => {
-    const book = getBook(fund.code), result = ledger(fund.code);
-    const originals = new Map(book.transactions.map(transaction => [transaction.id, transaction]));
-    const rows = result.rows.map(row => ({ ...row, estimated: row.estimated === true || ['estimated', '历史估算'].includes(originals.get(row.id)?.status) }));
-    const duration = calculateHoldingDuration(rows, { now, incomplete: book.incomplete === true, hasErrors: result.errors.length > 0 });
+  return `<div class="discipline-compliance-details"><p class="helper">当前连续持有满一年后，才显示加仓和止盈提醒；清仓后重新买入会重新计时。</p><ul class="holding-duration-list">${FUNDS.map(fund => {
+    const book = getBook(fund.code);
+    const duration = fundHoldingDuration(fund.code, now);
     const text = duration.status === 'holding'
       ? `已持有 <span class="num">${number(duration.days, 0)}</span> 天`
       : duration.status === 'closed' ? '已清仓' : book.transactions.length ? '待核验' : '暂无记录';
@@ -1694,6 +1731,7 @@ function safeSource(value) {
 }
 
 function navDisciplineGap(code, change) {
+  if (!fundEligibleForReminders(code)) return '';
   if (!Number.isFinite(change) || change === 0) return '';
   const gap = getNavDisciplineGap(change, change < 0
     ? { addSignal: fundAddSignal(code).signal }
@@ -1702,6 +1740,7 @@ function navDisciplineGap(code, change) {
   const name = gap.kind === 'add' ? '加仓' : '止盈';
   const context = gap.kind === 'add' ? '按最新净值、上次交易节点及现有加仓纪律计算' : '按最新净值、年内涨幅及现有止盈纪律计算';
   const distance = gap.remaining > 0 && gap.remaining < 0.00005 ? '&lt;0.01' : number(gap.remaining * 100);
+  if (gap.triggered) return renderDisciplineNotices(disciplineNoticeItems(code).filter(item => item.kind === gap.kind));
   const content = gap.triggered ? `已达到${name}标准` : gap.remaining === 0 ? `已到${name}临界值` : `距${name}标准还差 <span class="num">${distance}</span> 个百分点`;
   return `<span class="nav-discipline-distance ${gap.kind === 'add' ? 'negative' : 'positive'}" title="${context}">${content}</span>`;
 }
